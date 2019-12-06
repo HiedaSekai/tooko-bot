@@ -39,8 +39,10 @@ public class AccountPanel extends TwitterHandler {
 
         String info = L.SPLIT + "\n\n";
 
-        info += L.TWI_ACC_MNG + " : " + archive.name + " " + Fn.b("@" + archive.screenName);
-
+        info += L.TWI_ACC_MNG + " : " + archive.parseInfo(L);
+        
+        info += "\n\n" + L.SPLIT_END;
+        
         InlineArray actions = new InlineArray();
 
         // actions.dataLine(L.TWI_ACC_TRACK, DATA_ID, 1, accountId);
