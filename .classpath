@@ -10,5 +10,5 @@
 <classpathentry kind="lib" path="libs/mongodb-driver-sync-3.11.2.jar"/>
 <classpathentry kind="lib" path="libs/thumbnailator-0.4.8.jar"/>
 <classpathentry kind="lib" path="libs/twitter4j-core-4.0.7.jar"/>
-<classpathentry kind="lib" path="libs/libtensorflow-1.15.0.jar"/>
+<classpathentry kind="lib" path="libs/google-cloud-vision-1.99.0.jar"/>
 </classpath>

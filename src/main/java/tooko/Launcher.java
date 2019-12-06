@@ -491,6 +491,8 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
         addHandler(new BotPanel());
 
         addHandler(new SwitchLang());
+        
+        addHandler(new ImageTest());
 
         addHandler(new LICENCE());
 

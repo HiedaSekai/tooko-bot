@@ -12,6 +12,11 @@
     <repositories>
     
         <repository>
+          <id>central</id>
+          <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+    
+        <repository>
           <id>tooko-bson</id>
           <url>https://gitlab.com/tooko/tooko-bson/raw/master/public</url>
         </repository>
@@ -79,7 +84,7 @@
                     <groupId>org.mongodb</groupId>
                     <artifactId>bson</artifactId>
                 </exclusion>
-            </exclusions>
+            </exclusions9>
         </dependency>
 
         <dependency>
