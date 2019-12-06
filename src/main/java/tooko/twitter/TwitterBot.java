@@ -85,7 +85,7 @@ public class TwitterBot extends TdBot {
     @Override
     public void onAuthorizationFailed(TdException ex) {
 
-        log.error("Twitter 子机器人认证失败, 请检查机器人令牌. ( {} )", ex);
+        log.error("Twitter 子机器人认证失败, 请检查机器人令牌.", ex);
 
         destroy();
 

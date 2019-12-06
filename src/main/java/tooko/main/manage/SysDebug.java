@@ -59,60 +59,33 @@ public class SysDebug extends TdFunction {
 
             if (StrUtil.isBlank(param)) {
 
-                send(Fn.sendText(chatId, Fn.plainText("/sys_set_config <json> or /sys_set_config <key> <value>")));
+                send(Fn.sendText(chatId, Fn.plainText("/sys_set_config <json>")));
 
                 return;
 
             }
 
-            if (param.trim().startsWith("{")) {
+            try {
 
-                try {
+                JSONObject json = new JSONObject(param);
 
-                    JSONObject json = new JSONObject(param);
+                Launcher.checkConfig(json);
 
-                    Launcher.checkConfig(json);
-
-                    FileUtil.writeUtf8String(param, Env.getFile("config.json"));
-
-                    send(Fn.sendText(chatId, Fn.plainText("已写入")));
-
-                } catch (JSONException ex) {
-
-                    send(Fn.sendText(chatId, Fn.plainText("JSON语法错误 : {}", ex.getMessage())));
-
-                    return;
-
-                } catch (IllegalStateException ex) {
-
-                    send(Fn.sendText(chatId, Fn.plainText(ex.getMessage())));
-
-                    return;
-                    
-                }
-
-            } else {
-
-                JSONObject json = new JSONObject(FileUtil.readUtf8String(Env.getFile("config.json")));
-
-                json.putByPath(params[0], Fn.shift(originParams));
-
-                try {
-
-                    Launcher.checkConfig(json);    
-
-                } catch (IllegalStateException ex) {
-
-                    send(Fn.sendText(chatId, Fn.plainText(ex.getMessage())));
-
-                    return;
-
-                }
-
-                FileUtil.writeUtf8String(json.toStringPretty(), Env.getFile("config.json"));
+                FileUtil.writeUtf8String(param, Env.getFile("config.json"));
 
                 send(Fn.sendText(chatId, Fn.plainText("已写入")));
 
+            } catch (JSONException ex) {
+
+                send(Fn.sendText(chatId, Fn.plainText("JSON语法错误 : {}", ex.getMessage())));
+
+                return;
+
+            } catch (IllegalStateException ex) {
+
+                send(Fn.sendText(chatId, Fn.plainText(ex.getMessage())));
+
+                return;
 
             }
 
