@@ -101,7 +101,6 @@ public class SysDebug extends TdFunction {
 
                     Launcher.checkConfig(json);    
 
-
                 } catch (IllegalStateException ex) {
 
                     send(Fn.sendText(chatId, Fn.plainText(ex.getMessage())));
@@ -110,7 +109,7 @@ public class SysDebug extends TdFunction {
 
                 }
 
-                FileUtil.writeUtf8String(param, Env.getFile("config.json"));
+                FileUtil.writeUtf8String(json.toStringPretty(), Env.getFile("config.json"));
 
                 send(Fn.sendText(chatId, Fn.plainText("已写入")));
 
