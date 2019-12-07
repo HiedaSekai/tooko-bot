@@ -477,8 +477,6 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
 
         addHandler(new SwitchLang());
 
-        addHandler(new ImageTest());
-
         addHandler(new LICENCE());
 
         super.onLoad();

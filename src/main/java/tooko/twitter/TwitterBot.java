@@ -16,6 +16,7 @@ import tooko.twitter.account.TwitterLogout;
 import tooko.twitter.actions.MuteAndBlock;
 import tooko.twitter.actions.TrackConfig;
 import tooko.twitter.actions.*;
+import tooko.main.extras.*;
 
 public class TwitterBot extends TdBot {
 
@@ -40,6 +41,9 @@ public class TwitterBot extends TdBot {
         addHandler(new MuteAndBlock());
 
         addHandler(new SwitchLang());
+        
+        addHandler(new ImageTest());
+        
 
         addHandler(new LICENCE());
 
