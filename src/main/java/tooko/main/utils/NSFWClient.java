@@ -1,28 +1,19 @@
 package tooko.main.utils;
 
 import cn.hutool.core.img.*;
+import cn.hutool.core.io.*;
+import cn.hutool.crypto.digest.*;
 import cn.hutool.http.*;
 import cn.hutool.json.*;
 import java.awt.image.*;
 import java.io.*;
 import net.coobird.thumbnailator.*;
 import tooko.main.*;
-import cn.hutool.core.io.*;
-import cn.hutool.crypto.digest.*;
-import com.google.protobuf.*;
-import com.google.cloud.vision.v1.*;
+import cn.hutool.core.codec.*;
 
 public class NSFWClient {
 
-    public String serverUrl;
-
-    public NSFWClient(String serverUrl) throws IOException {
-
-        this.serverUrl = serverUrl;
-
-    }
-    
-    public String predict(String... images) throws IOException {
+    public static String predict(String... images) throws IOException {
 
         File[] imageFiles = new File[images.length];
 
@@ -47,55 +38,26 @@ public class NSFWClient {
     }
 
 
-    public String predict(File... images) throws IOException {
+    public static String predict(File... images) throws IOException {
 
-        byte[][] imageBytes = new byte[images.length][];
+        JSONArray request = new JSONArray();
 
-        for (int index = 0; index < images.length; index++) {
+        for (File imageFile : images) request.add(imageFile.getCanonicalPath());
+        
+        HttpResponse respone = HttpUtil.createPost(Env.NSFW_SERVER + "/predict_local").body(request).execute();
 
-            imageBytes[index] = FileUtil.readBytes(images[index]);
-
-        }
-
-        return predict(imageBytes);
+        return respone.body();
 
     }
 
 
-    public String predict(byte[]... images) {
-
-        JSONObject request = new JSONObject();
-
-        JSONArray instances = new JSONArray();
-
-        for (byte[] imageBytes : images) {
-
-            JSONObject instance = new JSONObject();
-           
-            BufferedImage img = ImgUtil.read(new ByteArrayInputStream(imageBytes));
-
-            ByteArrayOutputStream output = new ByteArrayOutputStream();
-
-            try {
-
-                Thumbnails.of(img).size(299, 299).outputQuality(1.0f).outputFormat("jpg").toOutputStream(output);
-                
-            } catch (IOException e) {}
-            
-            imageBytes = output.toByteArray();
-            
-            
-
-            instance.put("input_image",imageBytes);
-            
-            instances.add(instance);
-            
-
-        }
+    public static String predict(byte[]... images) throws IOException  {
         
-        request.put("instances", instances);
+        JSONArray request = new JSONArray();
         
-        HttpResponse respone = HttpUtil.createPost(serverUrl + "/v1/models/nsfw:predict").body(request).execute();
+        for (byte[] imageBytes : images) request.add(Base64.encode(imageBytes));
+        
+        HttpResponse respone = HttpUtil.createPost(Env.NSFW_SERVER + "/predict").body(request).execute();
 
         return respone.body();
 

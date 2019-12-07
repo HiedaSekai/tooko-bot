@@ -156,30 +156,30 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
         String dbPort = config.getStr("db_port");
 
         PojoCodecProvider provider = PojoCodecProvider.builder()
-                //.register(new BLMapPropertyCodecProvider())
-                .register(new ArrayPropertyCodecProvider())
-                .register(registerSubClasses(TdApi.class))
-                .automatic(true)
-                .build();
+            //.register(new BLMapPropertyCodecProvider())
+            .register(new ArrayPropertyCodecProvider())
+            .register(registerSubClasses(TdApi.class))
+            .automatic(true)
+            .build();
 
         try {
 
             MongoClientSettings settings = MongoClientSettings
 
-                    .builder()
-                    .applyConnectionString(new ConnectionString("mongodb://" + dbAddress + ":" + dbPort))
-                    .applyToClusterSettings(new Block<ClusterSettings.Builder>() {
+                .builder()
+                .applyConnectionString(new ConnectionString("mongodb://" + dbAddress + ":" + dbPort))
+                .applyToClusterSettings(new Block<ClusterSettings.Builder>() {
 
-                        @Override
-                        public void apply(ClusterSettings.Builder builder) {
+                    @Override
+                    public void apply(ClusterSettings.Builder builder) {
 
-                            builder.serverSelectionTimeout(1, TimeUnit.SECONDS);
+                        builder.serverSelectionTimeout(1, TimeUnit.SECONDS);
 
-                        }
+                    }
 
-                    })
-                    .codecRegistry(CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), CodecRegistries.fromProviders(provider)))
-                    .build();
+                })
+                .codecRegistry(CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), CodecRegistries.fromProviders(provider)))
+                .build();
 
             MongoClient dbClient = MongoClients.create(settings);
 
@@ -201,28 +201,12 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
         }
 
         Env.PUBLIC_BOT_CREATE = config.getBool("public_bot_create");
-
         Env.BOT_CREATE_MAX = config.getInt("bot_create_max");
-
         Env.LOG_CHANNEL = config.getLong("log_channel");
-
         Env.USE_SERVICE = config.getBool("use_service");
         Env.SERVICE = config.getStr("service");
-
         Env.BOT_TOKEN = config.getStr("bot_token");
-
-        JSONObject googleApplicationCredentials = config.getJSONObject("google_application_credentials");
-
-        if (!googleApplicationCredentials.isEmpty()) {
-
-            String cacheFile = Env.getPath("cache/google_application_credentials.json");
-
-            FileUtil.writeUtf8String(googleApplicationCredentials.toStringPretty(), cacheFile);
-
-            System.setProperty("GOOGLE_APPLICATION_CREDENTIALS", cacheFile);
-
-        }
-
+        Env.NSFW_SERVER = config.getStr("nsfw_server");
         Env.ADMINS = (int[]) config.getJSONArray("admins").toArray(int.class);
 
         JSONObject twitterObj = config.getJSONObject("twitter");
@@ -376,23 +360,24 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
 
         String[] fields = new String[]{
 
-                "db_address",
-                "db_port",
-                "db_name",
+            "db_address",
+            "db_port",
+            "db_name",
 
-                "use_service",
-                "service",
+            "use_service",
+            "service",
 
-                "bot_token",
-                "public_bot_create",
-                "bot_create_max",
+            "bot_token",
+            "nsfw_server",
+            
+            "public_bot_create",
+            "bot_create_max",
 
-                "admins",
-                "log_channel",
+            "admins",
+            "log_channel",
 
-                "google_application_credentials",
-
-                "twitter",
+ 
+            "twitter",
 
         };
 
@@ -412,9 +397,9 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
 
         String[] fields = new String[]{
 
-                "bot_token",
-                "public",
-                "api_tokens",
+            "bot_token",
+            "public",
+            "api_tokens",
 
         };
 
@@ -491,7 +476,7 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
         addHandler(new BotPanel());
 
         addHandler(new SwitchLang());
-        
+
         addHandler(new ImageTest());
 
         addHandler(new LICENCE());

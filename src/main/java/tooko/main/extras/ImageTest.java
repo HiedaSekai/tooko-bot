@@ -1,13 +1,9 @@
 package tooko.main.extras;
 
-import com.google.cloud.vision.v1.SafeSearchAnnotation;
-import tooko.main.Fn;
-import tooko.main.utils.GoogleImageAnnotator;
-import tooko.td.TdApi;
-import tooko.td.client.TdHandler;
-
-import java.io.IOException;
+import tooko.main.*;
 import tooko.main.utils.*;
+import tooko.td.*;
+import tooko.td.client.*;
 
 public class ImageTest extends TdHandler {
 
@@ -23,7 +19,7 @@ public class ImageTest extends TdHandler {
 
         try {
             
-            String result = new NSFWClient(params[0]).predict(params[1]);
+            String result = NSFWClient.predict(params[1]);
 
             send(Fn.sendText(chatId, Fn.plainText(result)));
 

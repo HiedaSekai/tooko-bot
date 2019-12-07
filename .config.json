@@ -5,10 +5,10 @@
   "use_service": false,
   "service": "tooko.service",
   "bot_token": "BotToken",
+  "nsfw_server": "http://127.0.0.1:11221",
   "public_bot_create": false,
   "bot_create_max": -1,
   "admins": [],
-  "google_application_credentials": {},
   "log_channel": "-1",
   "twitter": {}
 }
