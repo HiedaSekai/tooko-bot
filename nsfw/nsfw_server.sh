@@ -1,7 +1,7 @@
-model_server_port = '11220'
+model_server_port='11220'
 
-nsfw_servsr_host = '127.0.0.1'
-nsfw_server_port = '11221'
+nsfw_servsr_host='127.0.0.1'
+nsfw_server_port='11221'
 
 if [ ! -d "models" ]; then
 
