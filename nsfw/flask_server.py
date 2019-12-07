@@ -24,13 +24,13 @@ def predict_raw(image_array):
        
         instances.append({ "input_image": img.astype('float16').tolist() })
 
-    r = requests.post('http://127.0.0.1:' + model_server_port + '/v1/models/' + model_name + ':predict', json = { 
+    response = requests.post('http://127.0.0.1:' + model_server_port + '/v1/models/' + model_name + ':predict', json = { 
     
         "instances": instances
         
     })
     
-    return json.loads(r.content.decode('utf-8'))
+    return response.content.decode('utf-8')
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -39,7 +39,7 @@ def predict():
     
     for image_base64 in request.json:
     
-        image_array.append(image.load_img(BytesIO(base64.b64decode(image_base64)),target_size))
+        image_array.append(image.load_img(BytesIO(base64.b64decode(image_base64)),target_size=target_size))
         
     return predict_raw(image_array)
     
@@ -50,7 +50,7 @@ def predict_local():
     
     for image_path in request.json:
     
-        image_array.append(image.load_img(image_path,target_size))
+        image_array.append(image.load_img(image_path,target_size=target_size))
 
     return predict_raw(image_array)
  
