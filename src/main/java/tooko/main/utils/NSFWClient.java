@@ -9,6 +9,8 @@ import net.coobird.thumbnailator.*;
 import tooko.main.*;
 import cn.hutool.core.io.*;
 import cn.hutool.crypto.digest.*;
+import com.google.protobuf.*;
+import com.google.cloud.vision.v1.*;
 
 public class NSFWClient {
 
@@ -81,6 +83,8 @@ public class NSFWClient {
             } catch (IOException e) {}
             
             imageBytes = output.toByteArray();
+            
+            
 
             instance.put("input_image",imageBytes);
             
