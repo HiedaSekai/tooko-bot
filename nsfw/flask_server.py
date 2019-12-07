@@ -3,8 +3,7 @@ import json, requests, base64, sys
 from flask import Flask, request
 from keras.preprocessing import image
 
-model_server_host = '127.0.0.1'
-model_port = int(sys.argv[1])
+model_server_port = int(sys.argv[1])
 model_name = 'nsfw'
 
 server_host = sys.argv[2]
@@ -26,7 +25,7 @@ def predict_raw(image_array):
 
         instances.append({ "input_image": img })
 
-    return requests.post(model_server + '/v1/models/' + model_name + ':predict', json={ "instances": instances }).json
+    return requests.post('http://127.0.0.1:' + model_server_port + '/v1/models/' + model_name + ':predict', json={ "instances": instances }).json
 
 @app.route('/predict', methods=['POST'])
 def predict():
