@@ -1,12 +1,15 @@
-import json, requests, base64
+import json, requests, base64, sys
 
 from flask import Flask, request
 from keras.preprocessing import image
 
-model_server = 'http://127.0.0.1:11210'
+model_server_host = '127.0.0.1'
+model_port = int(sys.argv[1])
 model_name = 'nsfw'
-server_host = '127.0.0.1'
-server_port = '11221'
+
+server_host = sys.argv[2]
+server_port = int(sys.argv[3])
+
 target_size=(299, 299)
 
 app = Flask(__name__)

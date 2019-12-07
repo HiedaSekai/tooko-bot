@@ -1,4 +1,7 @@
-model_server_port = '11210'
+model_server_port = '11220'
+
+nsfw_servsr_host = '127.0.0.1'
+nsfw_server_port = '11221'
 
 if [ ! -d "models" ]; then
 
@@ -13,4 +16,4 @@ tensorflow_model_server \
   --rest_api_port=model_server_port \
   --model_name=nsfw &
   
-python3 flask_server.py
+python3 flask_server.py model_server_port nsfw_servsr_host nsfw_server_port
