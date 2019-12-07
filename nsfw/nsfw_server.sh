@@ -11,6 +11,8 @@ if [ ! -d "models" ]; then
   
 fi
 
+trap 'kill $(jobs -p)' EXIT
+
 tensorflow_model_server \
   --model_base_path=$(pwd)/models/nsfw.299x299 \
   --rest_api_port=$model_server_port \

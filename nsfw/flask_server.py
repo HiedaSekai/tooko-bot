@@ -25,7 +25,9 @@ def predict_raw(image_array):
 
         instances.append({ "input_image": img })
 
-    return requests.post('http://127.0.0.1:' + model_server_port + '/v1/models/' + model_name + ':predict', json={ "instances": instances }).json
+    r = requests.post('http://127.0.0.1:' + model_server_port + '/v1/models/' + model_name + ':predict', json={ "instances": instances })
+    
+    return json.loads(r.content.decode('utf-8'))
 
 @app.route('/predict', methods=['POST'])
 def predict():
