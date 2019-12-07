@@ -7,6 +7,7 @@ import tooko.td.TdApi;
 import tooko.td.client.TdHandler;
 
 import java.io.IOException;
+import tooko.main.utils.*;
 
 public class ImageTest extends TdHandler {
 
@@ -21,12 +22,12 @@ public class ImageTest extends TdHandler {
     public void onFunction(TdApi.User user, long chatId, TdApi.Message message, String function, String param, String[] params, String[] originParams) {
 
         try {
+            
+            String result = new NSFWClient(params[0]).predict(params[1]);
 
-            SafeSearchAnnotation result = GoogleImageAnnotator.safeSearchDetection(param).get(0).getSafeSearchAnnotation();
+            send(Fn.sendText(chatId, Fn.plainText(result)));
 
-            send(Fn.sendText(chatId, Fn.plainText(result.toString())));
-
-        } catch (IOException e) {
+        } catch (Exception e) {
 
             send(Fn.sendText(chatId, Fn.plainText(Fn.parseError(e))));
 
