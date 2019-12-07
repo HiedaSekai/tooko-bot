@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import com.google.protobuf.*;
 
 public class GoogleImageAnnotator {
 
@@ -62,7 +63,7 @@ public class GoogleImageAnnotator {
 
         for (byte[] image : images) {
 
-            requests.add(AnnotateImageRequest.newBuilder().addFeatures(SAFE_SEARCH_DETECTION).setImage(Image.parseFrom(image)).build());
+            requests.add(AnnotateImageRequest.newBuilder().addFeatures(SAFE_SEARCH_DETECTION).setImage(Image.newBuilder().setContent(ByteString.copyFrom(image))).build());
 
         }
 

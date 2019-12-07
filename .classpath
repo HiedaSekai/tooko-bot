@@ -11,4 +11,6 @@
 <classpathentry kind="lib" path="libs/thumbnailator-0.4.8.jar"/>
 <classpathentry kind="lib" path="libs/twitter4j-core-4.0.7.jar"/>
 <classpathentry kind="lib" path="libs/google-cloud-vision-1.99.0.jar"/>
+<classpathentry kind="lib" path="libs/proto-google-cloud-vision-v1-1.81.0.jar"/>
+<classpathentry kind="lib" path="libs/protobuf-java-3.10.0.jar"/>
 </classpath>
