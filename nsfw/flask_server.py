@@ -1,4 +1,4 @@
-import json, requests, base64, os, signal, subprocess
+import json, requests, base64
 
 from flask import Flask, request
 from keras.preprocessing import image
@@ -10,8 +10,6 @@ server_port = '11221'
 target_size=(299, 299)
 
 app = Flask(__name__)
-
-model_server = subprocess.Popen(["/bin/bash","tensorflow_server.sh"],stdout=subprocess.DEVNULL,shell=True,preexec_fn=os.setsid)
 
 def predict_raw(image_array):
 
@@ -48,11 +46,5 @@ def predict_local():
         image_array.append(image.load_img(image_path,target_size))
 
     return predict_raw(image_array)
-    
-try :
-    
-    app.run(host=server_host, port=server_port)
-    
-except KeyboardInterrupt:
-
-    os.killpg(os.getpgid(model_server.pid), signal.SIGTERM)
+ 
+app.run(host=server_host, port=server_port)
