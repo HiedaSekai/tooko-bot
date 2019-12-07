@@ -1,4 +1,4 @@
-import json, requests, base64
+import json, requests, base64, os, signal, subprocess
 
 from flask import Flask, request
 from keras.preprocessing import image
