@@ -19,7 +19,7 @@ public class ImageTest extends TdHandler {
 
         try {
             
-            String result = NSFWClient.predict(params[1]);
+            String result = NSFWClient.predict(params[0]);
 
             send(Fn.sendText(chatId, Fn.plainText(result)));
 

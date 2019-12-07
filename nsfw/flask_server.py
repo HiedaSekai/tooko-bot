@@ -3,7 +3,7 @@ import json, requests, base64, sys
 from flask import Flask, request
 from keras.preprocessing import image
 
-model_server_port = int(sys.argv[1])
+model_server_port = sys.argv[1]
 model_name = 'nsfw'
 
 server_host = sys.argv[2]
