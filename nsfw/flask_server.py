@@ -25,13 +25,7 @@ def predict_raw(image_array):
     
         img = image.img_to_array(img) / 255.
        
-        img = img.astype('float16')
-
-        payload['instances'].append({
-        
-            "input_image": img
-            
-        })
+        payload['instances'].append({ "input_image": img.astype('float16').tolist() })
 
     r = requests.post('http://127.0.0.1:' + model_server_port + '/v1/models/' + model_name + ':predict', json=payload)
     
