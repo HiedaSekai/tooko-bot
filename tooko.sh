@@ -62,20 +62,6 @@ fi
 
 if [ $1 == "init" ]; then
   
-  if [ ! $2 ]; then
-  
-    echo "./tooko init [BotToken]"
-    
-    exit
-  
-  fi
-  
-  echo ">> 写入配置"
-  
-  cp .config.json config.json
-  
-  sed -i "s/BotToken/$2/g" config.json
- 
   echo ">> 写入服务"
   
   cat > /etc/systemd/system/tooko.service << EOF
@@ -95,11 +81,29 @@ RestartPreventExitStatus=100
 WantedBy=multi-user.target
 EOF
 
+cat > /etc/systemd/system/nsfw-server.service << EOF
+[Unit]
+Description=Tooko
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=$(readlink -e ./)/nsfw
+ExecStart=/bin/bash nsfw_server.sh
+Restart=on-failure
+RestartPreventExitStatus=1
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
   systemctl daemon-reload
   
   echo ">> 写入启动项"
 
-  systemctl enable tooko.service &> /dev/null
+  systemctl enable tooko &> /dev/null
+  systemctl enable nsfw-server &> /dev/null
   
   echo "<< 完毕."
   
