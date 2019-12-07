@@ -42,9 +42,9 @@ public class NSFWClient {
 
         JSONArray request = new JSONArray();
 
-        for (File imageFile : images) request.add(imageFile.getCanonicalPath());
+        for (File imageFile : images) request.add(Base64.encode(imageFile));
         
-        HttpResponse respone = HttpUtil.createPost(Env.NSFW_SERVER + "/predict_local").body(request).execute();
+        HttpResponse respone = HttpUtil.createPost(Env.NSFW_SERVER + "/predict").body(request).execute();
 
         return respone.body();
 

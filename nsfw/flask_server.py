@@ -15,19 +15,19 @@ app = Flask(__name__)
 
 def predict_raw(image_array):
 
-    payload = { 
-    
-        "instances": []
-        
-    }
+    instances = []
     
     for img in image_array:
     
         img = image.img_to_array(img) / 255.
        
-        payload['instances'].append({ "input_image": img.astype('float16').tolist() })
+        instances.append({ "input_image": img.astype('float16').tolist() })
 
-    r = requests.post('http://127.0.0.1:' + model_server_port + '/v1/models/' + model_name + ':predict', json=payload)
+    r = requests.post('http://127.0.0.1:' + model_server_port + '/v1/models/' + model_name + ':predict', json=payload = { 
+    
+        "instances": instances
+        
+    })
     
     return json.loads(r.content.decode('utf-8'))
 
