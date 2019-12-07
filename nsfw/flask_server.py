@@ -15,7 +15,7 @@ app = Flask(__name__)
 
 def predict_raw(image_array):
 
-    instances = []
+    instances = json.loads([])
     
     for img in image_array:
     
