@@ -11,6 +11,6 @@ fi
 tensorflow_model_server \
   --model_base_path=$(pwd)/models/nsfw.299x299 \
   --rest_api_port=model_server_port \
-  --model_name=nsfw > /dev/null &
+  --model_name=nsfw &
   
 python3 flask_server.py
