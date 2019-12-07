@@ -1,5 +1,6 @@
 import json, requests, base64, sys
 
+from io import BytesIO
 from flask import Flask, request
 from keras.preprocessing import image
 
