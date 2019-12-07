@@ -4,24 +4,32 @@ import tooko.main.*;
 import tooko.main.utils.*;
 import tooko.td.*;
 import tooko.td.client.*;
+import twitter4j.*;
+import tooko.twitter.*;
+import tooko.td.TdApi.*;
+import cn.hutool.core.util.*;
+import tooko.twitter.nsfw.*;
+import tooko.twitter.nsfw.NSFWDetector.*;
 
-public class ImageTest extends TdHandler {
+public class ImageTest extends TwitterHandler {
 
     @Override
     public void onLoad() {
 
-        initFunction("img_test");
+        initFunction("status_predict");
 
     }
 
     @Override
-    public void onFunction(TdApi.User user, long chatId, TdApi.Message message, String function, String param, String[] params, String[] originParams) {
-
+    public void onFunction(TdApi.User user, long chatId, TdApi.Message message, String function, String param, String[] params, String[] originParams, TwitterAccount account) {
+        
         try {
             
-            String result = NSFWClient.predict(params[0]);
+            Status status = account.mkApi().showStatus(Fn.parseStatusId(params[0]));
 
-            send(Fn.sendText(chatId, Fn.plainText(result)));
+            NSFWDetector.NSRC result = NSFWDetector.predetectStatus(status);
+
+            send(Fn.sendText(chatId, Fn.plainText(result.toString())));
 
         } catch (Exception e) {
 

@@ -1207,6 +1207,20 @@ public class Fn {
 
     }
 
+    public static long parseStatusId(String status) {
+        
+        if (NumberUtil.isLong(status)) return NumberUtil.parseLong(status);
+        
+        if (status.contains("/")) status = StrUtil.subAfter(status,"/",true);
+        
+        if (status.contains("?")) status = StrUtil.subBefore(status,"?",false);
+        
+        if (NumberUtil.isLong(status)) return NumberUtil.parseLong(status);
+        
+        return -1;
+        
+    }
+    
     public static long parseTime(String message) {
 
         long time = 0;

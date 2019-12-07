@@ -12,8 +12,10 @@ import tooko.main.*;
 import cn.hutool.core.codec.*;
 
 public class NSFWClient {
+    
+    // drawings, hentai, neutral, porn, sexy
 
-    public static String predict(String... images) throws IOException {
+    public static float[][] predict(String... images) throws IOException {
 
         File[] imageFiles = new File[images.length];
 
@@ -38,7 +40,7 @@ public class NSFWClient {
     }
 
 
-    public static String predict(File... images) throws IOException {
+    public static float[][] predict(File... images) throws IOException {
 
         JSONArray request = new JSONArray();
 
@@ -46,12 +48,36 @@ public class NSFWClient {
         
         HttpResponse respone = HttpUtil.createPost(Env.NSFW_SERVER + "/predict").body(request).execute();
 
-        return respone.body();
+        if (respone.getStatus() != 200) {
 
+            throw new IOException("HTTP " + respone.getStatus() + " : " + respone.body());
+
+        }
+
+        JSONObject result = new JSONObject(respone.body());
+
+        if (result.containsKey("error")) {
+
+            throw new IOException(result.getStr("error"));
+
+        }
+
+        JSONArray predictionsArray =  result.getJSONArray("predictions");
+
+        float[][] predictions = new float[predictionsArray.size()][];
+
+        for (int index = 0;index < predictions.length;index ++) {
+
+            predictions[index] = (float[]) predictionsArray.getJSONArray(index).toArray(float.class);
+
+        }
+
+        return predictions;
+       
     }
 
 
-    public static String predict(byte[]... images) throws IOException  {
+    public static float[][] predict(byte[]... images) throws IOException  {
         
         JSONArray request = new JSONArray();
         
@@ -59,8 +85,32 @@ public class NSFWClient {
         
         HttpResponse respone = HttpUtil.createPost(Env.NSFW_SERVER + "/predict").body(request).execute();
 
-        return respone.body();
+        if (respone.getStatus() != 200) {
+           
+            throw new IOException("HTTP " + respone.getStatus() + " : " + respone.body());
+            
+        }
+        
+        JSONObject result = new JSONObject(respone.body());
+        
+        if (result.containsKey("error")) {
+            
+            throw new IOException(result.getStr("error"));
+            
+        }
+        
+        JSONArray predictionsArray =  result.getJSONArray("predictions");
 
+        float[][] predictions = new float[predictionsArray.size()][];
+        
+        for (int index = 0;index < predictions.length;index ++) {
+            
+            predictions[index] = (float[]) predictionsArray.getJSONArray(index).toArray(float.class);
+            
+        }
+        
+        return predictions;
+        
     }
 
 }
