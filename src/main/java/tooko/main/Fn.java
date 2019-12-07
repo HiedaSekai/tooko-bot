@@ -1206,6 +1206,16 @@ public class Fn {
         return array.toArray((T[]) ArrayUtil.newArray(clazz, array.size()));
 
     }
+    
+    public static String parseScreenName(String status) {
+        
+        if (status.contains("/status")) status = StrUtil.subBefore(status,"/status",false);
+
+        if (status.contains("/")) status = StrUtil.subAfter(status,"/",true);
+        
+        return status;
+        
+    }
 
     public static long parseStatusId(String status) {
         

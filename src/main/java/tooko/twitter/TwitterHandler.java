@@ -119,7 +119,21 @@ public abstract class TwitterHandler extends TdFunction {
 
             cache.callback = callback;
 
-            findHandler(Receiver.class).caches.put(userId, cache);
+            Receiver receiver;
+            
+            try {
+                
+               receiver = findHandler(Receiver.class);
+               
+            } catch (IllegalStateException ex) {
+                
+                receiver = new Receiver();
+                
+                client.addHandler(receiver);
+                
+            }
+            
+            receiver.caches.put(userId, cache);
 
             KeyboardArray buttons = new KeyboardArray();
 
