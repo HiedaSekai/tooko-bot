@@ -45,7 +45,21 @@ public class NSFWTest extends TwitterHandler {
 
                             Status status = statuses.get(index);
 
-                            if (status.getMediaEntities().length == 0) continue;
+                            String content = status.getText();
+
+                            for (URLEntity entiry : status.getMediaEntities()) {
+
+                                content =  StrUtil.removeAll(content,entiry.getURL());
+
+                            }
+
+                            for (URLEntity entiry : status.getMediaEntities()) {
+
+                                content = content.replace(entiry.getURL(),entiry.getExpandedURL());
+
+                            }
+                            
+                            if (status.getMediaEntities().length == 0 && StrUtil.isBlank(content)) continue;
 
                             NSFWDetector.NSRC rc = NSFWDetector.predetectStatus(status)[0];
 
@@ -55,20 +69,6 @@ public class NSFWTest extends TwitterHandler {
                                 case HENTAI: hentai ++; break;
                                 case PORN: porn ++;break;
                                 case SEXY: sexy ++;break;
-
-                            }
-                            
-                            String content = status.getText();
-                            
-                            for (URLEntity entiry : status.getMediaEntities()) {
-                                
-                               content =  StrUtil.removeAll(content,entiry.getURL());
-                                
-                            }
-                            
-                            for (URLEntity entiry : status.getMediaEntities()) {
-
-                                content = content.replace(entiry.getURL(),entiry.getExpandedURL());
 
                             }
                             
