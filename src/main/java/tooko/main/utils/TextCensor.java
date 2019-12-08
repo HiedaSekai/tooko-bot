@@ -105,6 +105,10 @@ public abstract class TextCensor {
 
                         porn = true;
 
+                    } else if (label == 4)  {
+                        
+                        continue;
+                        
                     } else {
 
                         spam = true;
