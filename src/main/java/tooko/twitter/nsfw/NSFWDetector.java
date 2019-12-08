@@ -14,110 +14,135 @@ public class NSFWDetector {
         HENTAI,
         NEUTRAL, 
         PORN,
-        SEXY
+        SEXY;
 
-        }
+    }
 
-    public static NSRC predetectStatus(Collection<Status> statuses) {
+    public static NSRC[] predetectStatus(Collection<Status> statuses) {
+
+        return predetectStatus(Fn.toArray(statuses, Status.class));
+
+    }
+
+    public static NSRC[] predetectStatus(Status... statuses) {
 
         LinkedList<String> linkArray = new LinkedList<>();
 
-        for (Status status : statuses) {
+        NSRC[] rcs = new NSRC[statuses.length];
 
-            for (MediaEntity media : status.getMediaEntities()) {
+        for (int index = 0;index < statuses.length;index ++) {
+
+            for (MediaEntity media : statuses[index].getMediaEntities()) {
 
                 linkArray.add(media.getMediaURLHttps());
 
             }
 
-        }
+            float[][] results;
 
-        float[][] results;
+            try {
 
-        try {
+                results = NSFWClient.predict(Fn.toArray(linkArray, String.class));
 
-            results = NSFWClient.predict(Fn.toArray(linkArray, String.class));
+            } catch (IOException e) {
 
-        } catch (IOException e) {
+                rcs[index] = NSRC.NEUTRAL;
 
-            return NSRC.NEUTRAL;
-
-        }
-
-        for (float[] result : results) {
-
-            if (result[3] > 0.8f) return NSRC.PORN;
-
-        }
-
-        for (float[] result : results) {
-
-            if (result[4] > 0.8f) return NSRC.SEXY;
-
-        }
-
-        for (float[] result : results) {
-
-            if (result[1] > 0.8f) return NSRC.HENTAI;
-
-        }
-
-        for (float[] result : results) {
-
-            if (result[1] > 0.8f) return NSRC.DRAWINGS;
-
-        }
-
-        NSRC LIKELY = null;
-
-        float value = -1;
-
-        for (float[] result : results) {
-
-            if (result[0] > value) {
-
-                value = result[0];
-
-                LIKELY = NSRC.DRAWINGS;
+                continue;
 
             }
 
-            if (result[1] > value) {
+            for (float[] result : results) {
 
-                value = result[1];
+                if (result[3] > 0.8f) {
 
-                LIKELY = NSRC.HENTAI;
+                    rcs[index] = NSRC.PORN;
 
-            }
+                    continue;
 
-            if (result[3] > value) {
 
-                value = result[3];
-
-                LIKELY = NSRC.PORN;
+                }
 
             }
 
-            if (result[4] > value) {
+            for (float[] result : results) {
 
-                value = result[1];
+                if (result[4] > 0.8f) {
 
-                LIKELY = NSRC.SEXY;
+                    rcs[index] = NSRC.SEXY;
+
+                    continue;
+
+                }
+
+            }
+
+            for (float[] result : results) {
+
+                if (result[1] > 0.8f) {
+
+                    rcs[index] = NSRC.HENTAI;
+
+                    continue;
+
+                }
 
             }
 
-            if (result[2] > value) {
+            NSRC LIKELY = null;
 
-                value = -1;
+            float value = -1;
 
-                if (LIKELY == null)  LIKELY = NSRC.NEUTRAL;
+            for (float[] result : results) {
+
+                if (result[0] > value) {
+
+                    value = result[0];
+
+                    LIKELY = NSRC.DRAWINGS;
+
+                }
+
+                if (result[1] > value) {
+
+                    value = result[1];
+
+                    LIKELY = NSRC.HENTAI;
+
+                }
+
+                if (result[3] > value) {
+
+                    value = result[3];
+
+                    LIKELY = NSRC.PORN;
+
+                }
+
+                if (result[4] > value) {
+
+                    value = result[1];
+
+                    LIKELY = NSRC.SEXY;
+
+                }
+
+                if (result[2] > value) {
+
+                    value = -1;
+
+                    if (LIKELY == null)  LIKELY = NSRC.NEUTRAL;
+
+                }
 
             }
+
+            rcs[index] = LIKELY;
 
         }
 
-        return LIKELY;
-
+        return rcs;
+        
     }
 
 }
