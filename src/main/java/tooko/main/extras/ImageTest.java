@@ -27,7 +27,7 @@ public class ImageTest extends TwitterHandler {
             
             Status status = account.mkApi().showStatus(Fn.parseStatusId(params[0]));
 
-            NSFWDetector.NSRC result = NSFWDetector.predetectStatus(status);
+            NSFWDetector.NSRC result = NSFWDetector.predetectStatus(status)[0];
 
             send(Fn.sendText(chatId, Fn.plainText(result.toString())));
 
