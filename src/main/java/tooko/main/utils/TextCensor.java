@@ -84,13 +84,13 @@ public abstract class TextCensor {
         public TCRC predictText(String text) {
 
             JSONObject result = censor.antiSpam(text, null).getJSONObject("result");
-            
+
             if (result != null && result.getInt("spam") == 1) {
 
                 JSONArray reject = result.getJSONArray("reject");
 
                 reject.addAll(result.getJSONArray("review"));
-                
+
                 boolean politics = false,spam = false,porn = false;
 
                 for (int index = 0;index < reject.size();index ++) {
@@ -112,8 +112,8 @@ public abstract class TextCensor {
                     }
 
                 }
-                
-                return new TCRC(politics,spam,porn);
+
+                return new TCRC(politics, spam, porn);
 
             }
 
