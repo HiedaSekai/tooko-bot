@@ -32,7 +32,17 @@ public class NSFWDetector {
 
         for (int index = 0;index < statuses.length;index ++) {
 
-            for (MediaEntity media : statuses[index].getMediaEntities()) {
+            Status status = statuses[index];
+            
+            if (status.getMediaEntities().length == 0) {
+                
+                rcs[index] = NSRC.NEUTRAL;
+
+                continue;
+                
+            }
+            
+            for (MediaEntity media : status.getMediaEntities()) {
 
                 linkArray.add(media.getMediaURLHttps());
 
