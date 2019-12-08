@@ -34,6 +34,8 @@ public class NSFWTest extends TwitterHandler {
 
                         int drawings = 0,hentai = 0,porn = 0,sexy = 0;
 
+                        send(Fn.editText(stat, Fn.plainText("predicting...")));
+                        
                         for (int index = 0;index > statuses.size();index ++) {
 
                             Status status = statuses.get(index);
