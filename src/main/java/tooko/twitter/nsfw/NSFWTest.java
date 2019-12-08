@@ -35,25 +35,27 @@ public class NSFWTest extends TwitterHandler {
                         int drawings = 0,hentai = 0,porn = 0,sexy = 0;
 
                         send(Fn.editText(stat, Fn.plainText("predicting...")));
-                        
+
                         for (int index = 0;index > statuses.size();index ++) {
 
                             Status status = statuses.get(index);
-                            
-                            if (status.getMediaEntities().length == 0) continue;
-                          
-                            NSFWDetector.NSRC rc = NSFWDetector.predetectStatus(status)[0];
 
-                            switch (rc) {
+                            if (status.getMediaEntities().length != 0) {
 
-                                case DRAWINGS: drawings ++;break;
-                                case HENTAI: hentai ++; break;
-                                case PORN: porn ++;break;
-                                case SEXY: sexy ++;break;
+                                NSFWDetector.NSRC rc = NSFWDetector.predetectStatus(status)[0];
+
+                                switch (rc) {
+
+                                    case DRAWINGS: drawings ++;break;
+                                    case HENTAI: hentai ++; break;
+                                    case PORN: porn ++;break;
+                                    case SEXY: sexy ++;break;
+
+                                }
 
                             }
 
-                            send(Fn.editText(stat, Fn.plainText("predicting... {} / {},\nDRAWINGS: {}\nHENTAI: {}\nPORN: {}\nSEXY: {}",index + 1,statuses.size(), drawings, hentai, porn, sexy)));
+                            send(Fn.editText(stat, Fn.plainText("predicting... {} / {},\nDRAWINGS: {}\nHENTAI: {}\nPORN: {}\nSEXY: {}", index + 1, statuses.size(), drawings, hentai, porn, sexy)));
 
                         }
 
