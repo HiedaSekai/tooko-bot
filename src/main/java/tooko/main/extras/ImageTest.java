@@ -8,8 +8,8 @@ import twitter4j.*;
 import tooko.twitter.*;
 import tooko.td.TdApi.*;
 import cn.hutool.core.util.*;
-import tooko.twitter.nsfw.*;
-import tooko.twitter.nsfw.NSFWDetector.*;
+import tooko.twitter.spam.*;
+import tooko.twitter.spam.NSFWDetector.*;
 
 public class ImageTest extends TwitterHandler {
 

@@ -28,18 +28,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Fn {
-
-    public static void tensorFlow(String url,String model,String signature) {
-        
-        JSONObject request = new JSONObject();
-        
-        request.put("signature_name",signature);
-        
-        
-        
-    }
     
-    public static byte[] numbyte(Number integer) {
+    public static byte[] num2byte(Number integer) {
 
         return BigInteger.valueOf(integer.longValue()).toByteArray();
 

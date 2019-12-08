@@ -33,7 +33,7 @@ public class AccountPanel extends TwitterHandler {
 
     void main(Lang L, long chatId, long messageId, TwitterAccount account, boolean send) {
 
-        byte[] accountId = Fn.numbyte(account.accountId);
+        byte[] accountId = Fn.num2byte(account.accountId);
 
         UserA archive = account.archive();
 

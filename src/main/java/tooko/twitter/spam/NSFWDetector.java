@@ -1,4 +1,4 @@
-package tooko.twitter.nsfw;
+package tooko.twitter.spam;
 
 import twitter4j.*;
 import java.util.*;

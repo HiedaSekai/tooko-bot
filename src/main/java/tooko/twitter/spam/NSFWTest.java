@@ -1,11 +1,11 @@
-package tooko.twitter.nsfw;
+package tooko.twitter.spam;
 
 import tooko.twitter.*;
 import tooko.td.*;
 import twitter4j.*;
 import tooko.main.*;
 import tooko.twitter.archives.*;
-import tooko.twitter.nsfw.NSFWDetector.*;
+import tooko.twitter.spam.NSFWDetector.*;
 import tooko.td.TdApi.*;
 
 public class NSFWTest extends TwitterHandler {

@@ -206,7 +206,6 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
         Env.USE_SERVICE = config.getBool("use_service");
         Env.SERVICE = config.getStr("service");
         Env.BOT_TOKEN = config.getStr("bot_token");
-        Env.NSFW_SERVER = config.getStr("nsfw_server");
         Env.ADMINS = (int[]) config.getJSONArray("admins").toArray(int.class);
 
         JSONObject twitterObj = config.getJSONObject("twitter");
@@ -304,6 +303,24 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
 
         }
 
+        Env.NSFW_SERVER = config.getStr("nsfw_server");
+
+        JSONObject textCensor = config.getJSONObject("text_censor");
+
+        if (textCensor.containsKey("provider")) {
+
+            if ("baidu".equals(textCensor.getStr("provider"))) {
+
+                Env.TEXT_CENSOR_PROVIDER = "baidu";
+                
+                Env.BAIDU_APP_ID = textCensor.getStr("app_id");
+                Env.BAIDU_API_KEY = textCensor.getStr("api_key");
+                Env.BAIDU_SECRET_KEY = textCensor.getStr("secret_key");
+                
+            }
+
+        }
+
         if (Env.ADMINS.length == 0) {
 
             log.warn("没有设置管理员账号 (ﾟ⊿ﾟ)ﾂ 请使用 /id 命令获取用户ID并填入 ADMINS 配置中 ~");
@@ -368,16 +385,19 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
             "service",
 
             "bot_token",
-            "nsfw_server",
-            
+
             "public_bot_create",
             "bot_create_max",
 
             "admins",
             "log_channel",
 
- 
+
             "twitter",
+
+            "nsfw_server",
+
+            "text_censor",
 
         };
 

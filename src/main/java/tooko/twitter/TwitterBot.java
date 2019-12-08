@@ -17,7 +17,7 @@ import tooko.twitter.actions.MuteAndBlock;
 import tooko.twitter.actions.TrackConfig;
 import tooko.twitter.actions.*;
 import tooko.main.extras.*;
-import tooko.twitter.nsfw.*;
+import tooko.twitter.spam.*;
 
 public class TwitterBot extends TdBot {
 
@@ -44,6 +44,8 @@ public class TwitterBot extends TdBot {
         addHandler(new ImageTest());
         
         addHandler(new NSFWTest());
+        
+        addHandler(new TextDetector());
         
         addHandler(new LICENCE());
 

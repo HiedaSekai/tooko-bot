@@ -1,4 +1,4 @@
-package tooko.twitter.nsfw;
+package tooko.twitter.spam;
 
 import org.bson.codecs.pojo.annotations.*;
 

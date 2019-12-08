@@ -17,7 +17,6 @@ public class Env {
     public static boolean PUBLIC_BOT_CREATE;
     public static int BOT_CREATE_MAX;
     public static String BOT_TOKEN;
-    public static String NSFW_SERVER;
     public static MongoClient DB_CLIENT;
     public static MongoDatabase DB;
     public static int[] ADMINS;
@@ -29,6 +28,14 @@ public class Env {
     public static ApiToken[] TWITTER_API_TOKENS;
     public static int DEVELOPER = 896711046;
 
+    public static String NSFW_SERVER;
+    
+    public static String TEXT_CENSOR_PROVIDER;
+    public static String BAIDU_APP_ID;
+    public static String BAIDU_API_KEY;
+    public static String BAIDU_SECRET_KEY;
+    
+    
     public static String getPath(String path) {
 
         File target = new File(ROOT_PATH, path);

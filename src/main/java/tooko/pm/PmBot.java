@@ -108,7 +108,7 @@ public class PmBot extends TdBot {
 
         if (chat != -1) {
 
-            FileUtil.writeBytes(Fn.numbyte(chat), new File(dataDir, "chat.bin"));
+            FileUtil.writeBytes(Fn.num2byte(chat), new File(dataDir, "chat.bin"));
 
         }
 

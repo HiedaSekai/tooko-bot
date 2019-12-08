@@ -10,5 +10,11 @@
   "admins": [],
   "log_channel": "-1",
   "twitter": {},
-  "nsfw_server": "http://127.0.0.1:11221"
+  "nsfw_server": "http://127.0.0.1:11221",
+  "text_censor": {
+    "provider": "baidu",
+    "app_id": "",
+    "api_key": "",
+    "secret_key": ""
+  }
 }
