@@ -105,11 +105,13 @@ public class NSFWDetector {
 
             for (float[] result : results) {
 
+                NSRC likely = null;
+                
                 if (result[0] > value) {
 
                     value = result[0];
 
-                    LIKELY = NSRC.DRAWINGS;
+                    likely = NSRC.DRAWINGS;
 
                 }
 
@@ -117,7 +119,7 @@ public class NSFWDetector {
 
                     value = result[1];
 
-                    LIKELY = NSRC.HENTAI;
+                    likely = NSRC.HENTAI;
 
                 }
 
@@ -125,7 +127,7 @@ public class NSFWDetector {
 
                     value = result[3];
 
-                    LIKELY = NSRC.PORN;
+                    likely = NSRC.PORN;
 
                 }
 
@@ -133,7 +135,7 @@ public class NSFWDetector {
 
                     value = result[1];
 
-                    LIKELY = NSRC.SEXY;
+                    likely = NSRC.SEXY;
 
                 }
 
@@ -141,9 +143,11 @@ public class NSFWDetector {
 
                     value = -1;
 
-                    if (LIKELY == null)  LIKELY = NSRC.NEUTRAL;
+                    if (LIKELY == null)  likely = NSRC.NEUTRAL;
 
                 }
+                
+                if (likely != null) LIKELY = likely;
 
             }
 
