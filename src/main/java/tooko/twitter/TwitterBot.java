@@ -43,10 +43,6 @@ public class TwitterBot extends TdBot {
         
         addHandler(new ImageTest());
         
-        addHandler(new NSFWTest());
-        
-        addHandler(new TextDetector());
-        
         addHandler(new LICENCE());
 
         super.onLoad();

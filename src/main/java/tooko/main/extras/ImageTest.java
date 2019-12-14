@@ -1,15 +1,10 @@
 package tooko.main.extras;
 
 import tooko.main.*;
-import tooko.main.utils.*;
 import tooko.td.*;
-import tooko.td.client.*;
 import twitter4j.*;
 import tooko.twitter.*;
-import tooko.td.TdApi.*;
-import cn.hutool.core.util.*;
 import tooko.twitter.spam.*;
-import tooko.twitter.spam.NSFWDetector.*;
 
 public class ImageTest extends TwitterHandler {
 
@@ -27,7 +22,7 @@ public class ImageTest extends TwitterHandler {
             
             Status status = account.mkApi().showStatus(Fn.parseStatusId(params[0]));
 
-            NSFWDetector.NSRC result = NSFWDetector.predetectStatus(status)[0];
+            ImageDetector.NSRC result = ImageDetector.predetectStatus(status)[0];
 
             send(Fn.sendText(chatId, Fn.plainText(result.toString())));
 
