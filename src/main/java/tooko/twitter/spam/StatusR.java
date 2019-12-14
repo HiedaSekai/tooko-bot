@@ -1,14 +1,17 @@
 package tooko.twitter.spam;
 
+import cn.hutool.core.util.StrUtil;
 import jdk.internal.org.jline.utils.Log;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
 import tooko.main.Fn;
 import tooko.main.utils.NSFWClient;
+import tooko.main.utils.TextCensor;
 import tooko.td.core.CacheTable;
 import tooko.td.core.Table;
 import twitter4j.MediaEntity;
 import twitter4j.Status;
+import twitter4j.URLEntity;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -45,7 +48,8 @@ public class StatusR {
                 case 3: return PORN;
                 case 4: return SEXY;
 
-                default: throw new IllegalArgumentException();
+                default:
+                    throw new IllegalArgumentException();
 
             }
 
@@ -55,18 +59,23 @@ public class StatusR {
 
     public int type;
 
-    @BsonIgnore public NSRC getType() {
+    public TextCensor.TCRC text;
+
+    @BsonIgnore
+    public NSRC getType() {
 
         return NSRC.valueOf(type);
 
     }
 
-    public StatusR() {}
+    public StatusR() {
+    }
 
-    public StatusR(long statusId, long user, int type) {
+    public StatusR(long statusId, long user, int type, TextCensor.TCRC text) {
         this.statusId = statusId;
         this.user = user;
         this.type = type;
+        this.text = text;
     }
 
     public static NSRC predetectStatus(Status status) {
@@ -193,9 +202,25 @@ public class StatusR {
 
         }
 
-        DATA.setById(status.getId(),new StatusR(status.getId(),status.getUser().getId(),rc.type));
+        String text = status.getText();
 
-        if (rc != NSRC.NEUTRAL) {
+        for (MediaEntity entity : status.getMediaEntities()) {
+
+            text = StrUtil.removeAll(text, entity.getURL());
+
+        }
+
+        for (URLEntity entity : status.getURLEntities()) {
+
+            text = text.replace(entity.getURL(), entity.getExpandedURL());
+
+        }
+
+        TextCensor.TCRC tcrc = TextCensor.getInstance().predictText(text);
+
+        DATA.setById(status.getId(), new StatusR(status.getId(), status.getUser().getId(), rc.type, tcrc));
+
+        if (rc == NSRC.PORN || rc == NSRC.SEXY || tcrc.isPorn()) {
 
             UserR.DATA.setInsert(status.getUser().getId(), "status", status.getId());
 
