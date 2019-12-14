@@ -19,6 +19,8 @@ public class StatusR {
 
     @BsonId public long statusId;
 
+    public long user;
+
     public static enum NSRC {
 
         DRAWINGS(0),
@@ -61,8 +63,9 @@ public class StatusR {
 
     public StatusR() {}
 
-    public StatusR(long statusId, int type) {
+    public StatusR(long statusId, long user, int type) {
         this.statusId = statusId;
+        this.user = user;
         this.type = type;
     }
 
@@ -187,6 +190,14 @@ public class StatusR {
                 if (likely != null) rc = likely;
 
             }
+
+        }
+
+        DATA.setById(status.getId(),new StatusR(status.getId(),status.getUser().getId(),rc.type));
+
+        if (rc != NSRC.NEUTRAL) {
+
+            UserR.DATA.setInsert(status.getUser().getId(), "status", status.getId());
 
         }
 
