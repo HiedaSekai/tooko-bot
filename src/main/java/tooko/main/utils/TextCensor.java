@@ -28,14 +28,14 @@ public abstract class TextCensor {
 
     public static class TCRC {
 
-        private boolean politics;
-        private boolean spam;
-        private boolean porn;
+        private Boolean politics;
+        private Boolean spam;
+        private Boolean porn;
 
-        public TCRC(boolean politics, boolean spam, boolean porn) {
-            this.politics = politics;
-            this.spam = spam;
-            this.porn = porn;
+        public TCRC(Boolean politics, Boolean spam, Boolean porn) {
+            this.politics = politics ? true : null;
+            this.spam = spam ? true : null;
+            this.porn = porn ? true : null;
         }
 
         public boolean isPolitics() {
