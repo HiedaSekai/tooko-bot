@@ -113,7 +113,7 @@ public class FollowersScan extends TwitterHandler {
 
                 send(Fn.sendText(chatId, Fn.plainText(Fn.parseTwitterException(L, e))));
 
-                return;
+                continue;
 
             }
 
