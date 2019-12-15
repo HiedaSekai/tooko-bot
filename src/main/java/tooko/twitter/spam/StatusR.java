@@ -18,42 +18,186 @@ import java.util.LinkedList;
 
 public class StatusR {
 
-    public static Table<Long,StatusR> DATA = new CacheTable<>("spam",StatusR.class);
+    public static Table<Long, StatusR> DATA = new CacheTable<>("spam", StatusR.class);
 
-    @BsonId public long statusId;
+    @BsonId
+    public long statusId;
 
     public long user;
 
-    public static enum NSRC {
+    public static StatusR predetectStatus(Status status) {
 
-        DRAWINGS(0),
-        HENTAI(1),
-        NEUTRAL(2),
-        PORN(3),
-        SEXY(4);
+        LinkedList<String> linkArray = new LinkedList<>();
 
-        NSRC(int type) {
-            this.type = type;
-        }
+        if (DATA.containsId(status.getId())) return DATA.getById(status.getId());
 
-        public final int type;
+        StatusR r = null;
 
-        public static NSRC valueOf(int type) {
+        NSRC rc = null;
 
-            switch (type) {
+        predictImage:
+        if (status.getMediaEntities().length != 0) {
 
-                case 0 : return DRAWINGS;
-                case 1: return HENTAI;
-                case 2: return NEUTRAL;
-                case 3: return PORN;
-                case 4: return SEXY;
+            for (MediaEntity media : status.getMediaEntities()) {
 
-                default:
-                    throw new IllegalArgumentException();
+                linkArray.add(media.getMediaURLHttps());
+
+            }
+
+            float[][] results;
+
+            try {
+
+                results = NSFWClient.predict(Fn.toArray(linkArray, String.class));
+
+            } catch (IOException e) {
+
+                Log.warn(e);
+
+                rc = NSRC.NEUTRAL;
+
+                break predictImage;
+
+            }
+
+            parseResult:
+            {
+
+                for (float[] result : results) {
+
+                    if (result[3] > 0.8f) {
+
+                        rc = NSRC.PORN;
+
+                        break parseResult;
+
+                    }
+
+                }
+
+                for (float[] result : results) {
+
+                    if (result[4] > 0.8f) {
+
+                        rc = NSRC.SEXY;
+
+                        break parseResult;
+
+                    }
+
+                }
+
+                for (float[] result : results) {
+
+                    if (result[1] > 0.8f) {
+
+                        rc = NSRC.HENTAI;
+
+                        break parseResult;
+
+                    }
+
+                }
+
+                float value = -1;
+
+                for (float[] result : results) {
+
+                    NSRC likely = null;
+
+                    if (result[0] > value) {
+
+                        value = result[0];
+
+                        likely = NSRC.DRAWINGS;
+
+                    }
+
+                    if (result[1] > value) {
+
+                        value = result[1];
+
+                        likely = NSRC.HENTAI;
+
+                    }
+
+                    if (result[3] > value) {
+
+                        value = result[3];
+
+                        likely = NSRC.PORN;
+
+                    }
+
+                    if (result[4] > value) {
+
+                        value = result[1];
+
+                        likely = NSRC.SEXY;
+
+                    }
+
+                    if (result[2] > value) {
+
+                        value = -1;
+
+                        if (rc == null) rc = NSRC.NEUTRAL;
+
+                    }
+
+                    if (likely != null) rc = likely;
+
+                }
 
             }
 
         }
+
+        TextCensor.TCRC tcrc = null;
+
+        String text = status.getText();
+
+        for (MediaEntity entity : status.getMediaEntities()) {
+
+            text = StrUtil.removeAll(text, entity.getURL());
+
+        }
+
+        for (URLEntity entity : status.getURLEntities()) {
+
+            text = text.replace(entity.getURL(), entity.getExpandedURL());
+
+        }
+
+        if (StrUtil.isNotBlank(text)) {
+
+            tcrc = TextCensor.getInstance().predictText(text);
+
+        }
+
+        DATA.setById(status.getId(), new StatusR(status.getId(), status.getUser().getId(), rc != null ? rc.type : -1, tcrc));
+
+        if (rc == NSRC.PORN || rc == NSRC.SEXY || (tcrc != null && tcrc.isPorn())) {
+
+            UserR.DATA.setInsert(status.getUser().getId(), "status", status.getId());
+
+        }
+
+        if (status.isRetweet()) {
+
+            Status origin = status.getRetweetedStatus();
+
+            DATA.setById(origin.getId(), new StatusR(origin.getId(), origin.getUser().getId(), rc != null ? rc.type : -1, tcrc));
+
+            if (rc == NSRC.PORN || rc == NSRC.SEXY || (tcrc != null && tcrc.isPorn())) {
+
+                UserR.DATA.setInsert(origin.getUser().getId(), "status", status.getId());
+
+            }
+
+        }
+
+        return r;
 
     }
 
@@ -78,169 +222,41 @@ public class StatusR {
         this.text = text;
     }
 
-    public static NSRC predetectStatus(Status status) {
+    public static enum NSRC {
 
-        LinkedList<String> linkArray = new LinkedList<>();
+        DRAWINGS(0),
+        HENTAI(1),
+        NEUTRAL(2),
+        PORN(3),
+        SEXY(4);
 
-        if (status.getMediaEntities().length == 0) {
-
-            return NSRC.NEUTRAL;
-
+        NSRC(int type) {
+            this.type = type;
         }
 
-        if (DATA.containsId(status.getId())) return DATA.getById(status.getId()).getType();
+        public final int type;
 
-        for (MediaEntity media : status.getMediaEntities()) {
+        public static NSRC valueOf(int type) {
 
-            linkArray.add(media.getMediaURLHttps());
+            switch (type) {
 
-        }
+                case 0:
+                    return DRAWINGS;
+                case 1:
+                    return HENTAI;
+                case 2:
+                    return NEUTRAL;
+                case 3:
+                    return PORN;
+                case 4:
+                    return SEXY;
 
-        float[][] results;
-
-        NSRC rc = null;
-
-        try {
-
-            results = NSFWClient.predict(Fn.toArray(linkArray, String.class));
-
-        } catch (IOException e) {
-
-            Log.warn(e);
-
-            return NSRC.NEUTRAL;
-
-        }
-
-        parseResult : {
-
-            for (float[] result : results) {
-
-                if (result[3] > 0.8f) {
-
-                    rc = NSRC.PORN;
-
-                    break parseResult;
-
-                }
-
-            }
-
-            for (float[] result : results) {
-
-                if (result[4] > 0.8f) {
-
-                    rc = NSRC.SEXY;
-
-                    break parseResult;
-
-                }
-
-            }
-
-            for (float[] result : results) {
-
-                if (result[1] > 0.8f) {
-
-                    rc = NSRC.HENTAI;
-
-                    break parseResult;
-
-                }
-
-            }
-
-            float value = -1;
-
-            for (float[] result : results) {
-
-                NSRC likely = null;
-
-                if (result[0] > value) {
-
-                    value = result[0];
-
-                    likely = NSRC.DRAWINGS;
-
-                }
-
-                if (result[1] > value) {
-
-                    value = result[1];
-
-                    likely = NSRC.HENTAI;
-
-                }
-
-                if (result[3] > value) {
-
-                    value = result[3];
-
-                    likely = NSRC.PORN;
-
-                }
-
-                if (result[4] > value) {
-
-                    value = result[1];
-
-                    likely = NSRC.SEXY;
-
-                }
-
-                if (result[2] > value) {
-
-                    value = -1;
-
-                    if (rc == null) rc = NSRC.NEUTRAL;
-
-                }
-
-                if (likely != null) rc = likely;
+                default:
+                    throw new IllegalArgumentException();
 
             }
 
         }
-
-        String text = status.getText();
-
-        for (MediaEntity entity : status.getMediaEntities()) {
-
-            text = StrUtil.removeAll(text, entity.getURL());
-
-        }
-
-        for (URLEntity entity : status.getURLEntities()) {
-
-            text = text.replace(entity.getURL(), entity.getExpandedURL());
-
-        }
-
-        TextCensor.TCRC tcrc = TextCensor.getInstance().predictText(text);
-
-        DATA.setById(status.getId(), new StatusR(status.getId(), status.getUser().getId(), rc.type, tcrc));
-
-        if (rc == NSRC.PORN || rc == NSRC.SEXY || tcrc.isPorn()) {
-
-            UserR.DATA.setInsert(status.getUser().getId(), "status", status.getId());
-
-        }
-
-        if (status.isRetweet()) {
-
-            Status origin = status.getRetweetedStatus();
-
-            DATA.setById(origin.getId(), new StatusR(origin.getId(), origin.getUser().getId(), rc.type, tcrc));
-
-            if (rc == NSRC.PORN || rc == NSRC.SEXY || tcrc.isPorn()) {
-
-                UserR.DATA.setInsert(origin.getUser().getId(), "status", status.getId());
-
-            }
-
-        }
-
-        return rc;
 
     }
 

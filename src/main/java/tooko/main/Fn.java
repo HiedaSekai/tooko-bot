@@ -5,7 +5,6 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.*;
 import cn.hutool.http.HtmlUtil;
-import cn.hutool.json.JSONObject;
 import tooko.Launcher;
 import tooko.td.TdApi.*;
 import tooko.td.client.TdHandler;
@@ -1198,13 +1197,15 @@ public class Fn {
     }
     
     public static String parseScreenName(String status) {
-        
-        if (status.contains("/status")) status = StrUtil.subBefore(status,"/status",false);
 
-        if (status.contains("/")) status = StrUtil.subAfter(status,"/",true);
-        
+        if (status.contains("/status")) status = StrUtil.subBefore(status, "/status", false);
+
+        if (status.contains("/")) status = StrUtil.subAfter(status, "/", true);
+
+        if (status.startsWith("@")) status = status.substring(1);
+
         return status;
-        
+
     }
 
     public static long parseStatusId(String status) {
@@ -1381,6 +1382,46 @@ public class Fn {
         while (friends.hasNext()) {
 
             friends = api.getFriendsIDs(friends.getNextCursor());
+
+            CollectionUtil.addAll(ids, friends.getIDs());
+
+        }
+
+        return ids;
+
+    }
+
+    public static LinkedList<Long> fetchFollowerIDs(Twitter api, long accountId) throws TwitterException {
+
+        LinkedList<Long> ids = new LinkedList<>();
+
+        IDs followers = api.getFollowersIDs(accountId, -1);
+
+        CollectionUtil.addAll(ids, followers.getIDs());
+
+        while (followers.hasNext()) {
+
+            followers = api.getFollowersIDs(accountId, followers.getNextCursor());
+
+            CollectionUtil.addAll(ids, followers.getIDs());
+
+        }
+
+        return ids;
+
+    }
+
+    public static LinkedList<Long> fetchFriendIDs(Twitter api, long accountId) throws TwitterException {
+
+        LinkedList<Long> ids = new LinkedList<>();
+
+        IDs friends = api.getFriendsIDs(accountId, -1);
+
+        CollectionUtil.addAll(ids, friends.getIDs());
+
+        while (friends.hasNext()) {
+
+            friends = api.getFriendsIDs(accountId, friends.getNextCursor());
 
             CollectionUtil.addAll(ids, friends.getIDs());
 
