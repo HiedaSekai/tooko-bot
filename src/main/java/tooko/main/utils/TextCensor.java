@@ -1,8 +1,9 @@
 package tooko.main.utils;
 
-import tooko.main.*;
-import com.baidu.aip.contentcensor.*;
-import cn.hutool.json.*;
+import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONObject;
+import com.baidu.aip.contentcensor.AipContentCensor;
+import tooko.main.Env;
 
 public abstract class TextCensor {
 
@@ -39,15 +40,15 @@ public abstract class TextCensor {
         }
 
         public boolean isPolitics() {
-            return politics;
+            return politics != null;
         }
 
         public boolean isSpam() {
-            return spam;
+            return spam != null;
         }
 
         public boolean isPorn() {
-            return porn;
+            return porn != null;
         }
 
     }
@@ -105,11 +106,7 @@ public abstract class TextCensor {
 
                         porn = true;
 
-                    } else if (label == 4)  {
-                        
-                        continue;
-                        
-                    } else {
+                    } else if (label != 4) {
 
                         spam = true;
 

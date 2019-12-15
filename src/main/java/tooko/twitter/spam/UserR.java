@@ -80,7 +80,6 @@ public class UserR {
 
             return "PORN STATUS : " + ArrayUtil.join(status, " / ");
 
-
         } else if (name.isPorn()) {
 
             return "PORN NAME";
