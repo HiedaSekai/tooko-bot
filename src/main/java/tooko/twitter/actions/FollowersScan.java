@@ -117,17 +117,25 @@ public class FollowersScan extends TwitterHandler {
 
             }
 
+            int ss = 0;
+
             for (Status status : timeline) {
 
                 StatusR r = StatusR.predictStatus(status);
 
-                if (r.media == StatusR.NSRC.PORN || r.media == StatusR.NSRC.SEXY || (r.text != null && r.text.isPorn())) {
+                if (r.media == StatusR.NSRC.PORN) {
 
-                    count++;
+                    ss++;
 
-                    send(Fn.sendText(chatId, Fn.parseHtml(archive.simpleName() + " : PORN STATUS https://twitter.com/{}/status/{}", archive.screenName, status.getId())));
+                    if (ss == 3) {
 
-                    continue pridectUser;
+                        count++;
+
+                        send(Fn.sendText(chatId, Fn.parseHtml(archive.simpleName() + " : PORN STATUS https://twitter.com/{}/status/{}", archive.screenName, status.getId())));
+
+                        continue pridectUser;
+
+                    }
 
                 }
 
