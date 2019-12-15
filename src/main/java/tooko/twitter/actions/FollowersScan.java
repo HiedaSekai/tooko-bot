@@ -1,5 +1,7 @@
 package tooko.twitter.actions;
 
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
 import tooko.main.Fn;
 import tooko.main.Lang;
 import tooko.td.TdApi;
@@ -12,6 +14,7 @@ import tooko.twitter.spam.UserR;
 import twitter4j.*;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class FollowersScan extends TwitterHandler {
 
@@ -119,19 +122,23 @@ public class FollowersScan extends TwitterHandler {
 
             int ss = 0;
 
+            List<String> sss = new LinkedList<>();
+
             for (Status status : timeline) {
 
                 StatusR r = StatusR.predictStatus(status);
 
-                if (r.media == StatusR.NSRC.PORN) {
+                if (r.media == StatusR.NSRC.PORN || r.media == StatusR.NSRC.SEXY || (r.text != null && r.text.isPorn())) {
 
                     ss++;
 
-                    if (ss == 2) {
+                    sss.add(StrUtil.format("https://twitter.com/{}/status/{}", archive.screenName, status.getId()));
+
+                    if (ss == 4) {
 
                         count++;
 
-                        send(Fn.sendText(chatId, Fn.parseHtml(archive.simpleName() + " : PORN STATUS https://twitter.com/{}/status/{}", archive.screenName, status.getId())));
+                        send(Fn.sendText(chatId, Fn.parseHtml(archive.simpleName() + " : PORN STATUSES {}", CollectionUtil.join(sss, "\n"))));
 
                         continue pridectUser;
 
