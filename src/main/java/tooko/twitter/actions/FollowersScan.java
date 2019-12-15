@@ -125,7 +125,7 @@ public class FollowersScan extends TwitterHandler {
 
                     count++;
 
-                    send(Fn.sendText(chatId, Fn.parseHtml(archive.simpleName() + " : PORN STATUS https://twitter.com/{}/{}", archive.screenName, status.getId())));
+                    send(Fn.sendText(chatId, Fn.parseHtml(archive.simpleName() + " : PORN STATUS https://twitter.com/{}/status/{}", archive.screenName, status.getId())));
 
                     continue pridectUser;
 
