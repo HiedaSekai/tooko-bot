@@ -134,7 +134,7 @@ public class FollowersScan extends TwitterHandler {
 
                     sss.add(StrUtil.format("https://twitter.com/{}/status/{}", archive.screenName, status.getId()));
 
-                    if (ss == 4) {
+                    if (ss == 5) {
 
                         count++;
 
