@@ -127,7 +127,7 @@ public class FollowersScan extends TwitterHandler {
 
                     ss++;
 
-                    if (ss == 3) {
+                    if (ss == 2) {
 
                         count++;
 
