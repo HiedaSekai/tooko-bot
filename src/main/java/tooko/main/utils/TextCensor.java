@@ -33,6 +33,9 @@ public abstract class TextCensor {
         private Boolean spam;
         private Boolean porn;
 
+        public TCRC() {
+        }
+
         public TCRC(Boolean politics, Boolean spam, Boolean porn) {
             this.politics = politics ? true : null;
             this.spam = spam ? true : null;
