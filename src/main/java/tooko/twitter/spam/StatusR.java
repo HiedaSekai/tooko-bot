@@ -207,7 +207,7 @@ public class StatusR {
 
             DATA.setById(origin.getId(), new StatusR(origin.getId(), origin.getUser().getId(), rc, tcrc));
 
-            if (rc == NSRC.PORN || rc == NSRC.SEXY || (tcrc != null && tcrc.isPorn())) {
+            if (rc == NSRC.PORN) {
 
                 UserR.DATA.setInsert(origin.getUser().getId(), "status", status.getId());
 
