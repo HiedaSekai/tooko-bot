@@ -1,8 +1,8 @@
 package tooko.twitter.spam;
 
 import cn.hutool.core.util.StrUtil;
-import jdk.internal.org.jline.utils.Log;
 import org.bson.codecs.pojo.annotations.BsonId;
+import tooko.Launcher;
 import tooko.main.Fn;
 import tooko.main.utils.NSFWClient;
 import tooko.main.utils.TextCensor;
@@ -65,7 +65,7 @@ public class StatusR {
 
             } catch (IOException e) {
 
-                Log.warn(e);
+                Launcher.log.warn(e);
 
                 rc = NSRC.NEUTRAL;
 
