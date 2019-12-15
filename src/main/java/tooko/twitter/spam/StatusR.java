@@ -48,14 +48,14 @@ public class StatusR {
 
         NSRC rc = null;
 
+        for (MediaEntity media : status.getMediaEntities()) {
+
+            linkArray.add(media.getMediaURLHttps());
+
+        }
+
         predictImage:
-        if (status.getMediaEntities().length != 0) {
-
-            for (MediaEntity media : status.getMediaEntities()) {
-
-                linkArray.add(media.getMediaURLHttps());
-
-            }
+        if (!linkArray.isEmpty()) {
 
             float[][] results;
 
