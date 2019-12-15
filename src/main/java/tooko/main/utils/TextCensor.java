@@ -3,6 +3,7 @@ package tooko.main.utils;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import com.baidu.aip.contentcensor.AipContentCensor;
+import org.bson.codecs.pojo.annotations.BsonIgnore;
 import tooko.main.Env;
 
 public abstract class TextCensor {
@@ -42,14 +43,17 @@ public abstract class TextCensor {
             this.porn = porn ? true : null;
         }
 
+        @BsonIgnore
         public boolean isPolitics() {
             return politics != null;
         }
 
+        @BsonIgnore
         public boolean isSpam() {
             return spam != null;
         }
 
+        @BsonIgnore
         public boolean isPorn() {
             return porn != null;
         }
