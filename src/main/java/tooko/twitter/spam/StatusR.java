@@ -226,6 +226,20 @@ public class StatusR {
 
         }
 
+        if (status.isRetweet()) {
+
+            Status origin = status.getRetweetedStatus();
+
+            DATA.setById(origin.getId(), new StatusR(origin.getId(), origin.getUser().getId(), rc.type, tcrc));
+
+            if (rc == NSRC.PORN || rc == NSRC.SEXY || tcrc.isPorn()) {
+
+                UserR.DATA.setInsert(origin.getUser().getId(), "status", status.getId());
+
+            }
+
+        }
+
         return rc;
 
     }
