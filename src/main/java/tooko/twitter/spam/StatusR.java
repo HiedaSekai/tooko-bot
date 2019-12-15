@@ -50,7 +50,11 @@ public class StatusR {
 
         for (MediaEntity media : status.getMediaEntities()) {
 
-            linkArray.add(media.getMediaURLHttps());
+            if (media.getMediaURLHttps().contains("jpg")) {
+
+                linkArray.add(media.getMediaURLHttps());
+
+            }
 
         }
 
