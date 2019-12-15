@@ -16,6 +16,13 @@ import java.util.LinkedList;
 public class FollowersScan extends TwitterHandler {
 
     @Override
+    public void onLoad() {
+
+        initFunction("fo_scan");
+
+    }
+
+    @Override
     public void onFunction(TdApi.User user, final long chatId, TdApi.Message message, String function, String param, String[] params, String[] originParams, TwitterAccount account) {
 
         final Twitter api = account.mkApi();
