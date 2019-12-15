@@ -39,7 +39,7 @@ public class StatusR {
     public StatusR() {
     }
 
-    public static StatusR predetectStatus(Status status) {
+    public static StatusR predictStatus(Status status) {
 
         LinkedList<String> linkArray = new LinkedList<>();
 

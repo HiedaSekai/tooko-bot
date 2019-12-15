@@ -93,7 +93,7 @@ public abstract class TextCensor {
 
                 JSONArray reject = result.getJSONArray("reject");
 
-                reject.addAll(result.getJSONArray("review"));
+//                reject.addAll(result.getJSONArray("review"));
 
                 boolean politics = false,spam = false,porn = false;
 

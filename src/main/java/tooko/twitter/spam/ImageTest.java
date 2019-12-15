@@ -31,7 +31,7 @@ public class ImageTest extends TwitterHandler {
 
         }
 
-        StatusR.predetectStatus(status);
+        StatusR.predictStatus(status);
 
     }
 }
