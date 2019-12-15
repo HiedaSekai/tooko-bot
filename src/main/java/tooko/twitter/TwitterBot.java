@@ -4,6 +4,7 @@ import tooko.Launcher;
 import tooko.main.Env;
 import tooko.main.Fn;
 import tooko.main.Lang;
+import tooko.main.extras.ImageTest;
 import tooko.main.extras.LICENCE;
 import tooko.main.extras.SwitchLang;
 import tooko.td.TdApi.Message;
@@ -13,11 +14,7 @@ import tooko.td.client.TdException;
 import tooko.twitter.account.AccountPanel;
 import tooko.twitter.account.TwitterLogin;
 import tooko.twitter.account.TwitterLogout;
-import tooko.twitter.actions.MuteAndBlock;
-import tooko.twitter.actions.TrackConfig;
 import tooko.twitter.actions.*;
-import tooko.main.extras.*;
-import tooko.twitter.spam.*;
 
 public class TwitterBot extends TdBot {
 
@@ -40,9 +37,11 @@ public class TwitterBot extends TdBot {
         addHandler(new MuteAndBlock());
 
         addHandler(new SwitchLang());
-        
+
         addHandler(new ImageTest());
-        
+
+        addHandler(new FollowersScan());
+
         addHandler(new LICENCE());
 
         super.onLoad();

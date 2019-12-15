@@ -3,7 +3,6 @@ package tooko.twitter.spam;
 import cn.hutool.core.util.StrUtil;
 import jdk.internal.org.jline.utils.Log;
 import org.bson.codecs.pojo.annotations.BsonId;
-import org.bson.codecs.pojo.annotations.BsonIgnore;
 import tooko.main.Fn;
 import tooko.main.utils.NSFWClient;
 import tooko.main.utils.TextCensor;
@@ -24,6 +23,20 @@ public class StatusR {
     public long statusId;
 
     public long user;
+
+    public NSRC media;
+
+    public StatusR(long statusId, long user, NSRC media, TextCensor.TCRC text) {
+        this.statusId = statusId;
+        this.user = user;
+        this.media = media;
+        this.text = text;
+    }
+
+    public TextCensor.TCRC text;
+
+    public StatusR() {
+    }
 
     public static StatusR predetectStatus(Status status) {
 
@@ -175,7 +188,7 @@ public class StatusR {
 
         }
 
-        DATA.setById(status.getId(), new StatusR(status.getId(), status.getUser().getId(), rc != null ? rc.type : -1, tcrc));
+        DATA.setById(status.getId(), new StatusR(status.getId(), status.getUser().getId(), rc, tcrc));
 
         if (rc == NSRC.PORN || rc == NSRC.SEXY || (tcrc != null && tcrc.isPorn())) {
 
@@ -187,7 +200,7 @@ public class StatusR {
 
             Status origin = status.getRetweetedStatus();
 
-            DATA.setById(origin.getId(), new StatusR(origin.getId(), origin.getUser().getId(), rc != null ? rc.type : -1, tcrc));
+            DATA.setById(origin.getId(), new StatusR(origin.getId(), origin.getUser().getId(), rc, tcrc));
 
             if (rc == NSRC.PORN || rc == NSRC.SEXY || (tcrc != null && tcrc.isPorn())) {
 
@@ -199,27 +212,6 @@ public class StatusR {
 
         return r;
 
-    }
-
-    public int type;
-
-    public TextCensor.TCRC text;
-
-    @BsonIgnore
-    public NSRC getType() {
-
-        return NSRC.valueOf(type);
-
-    }
-
-    public StatusR() {
-    }
-
-    public StatusR(long statusId, long user, int type, TextCensor.TCRC text) {
-        this.statusId = statusId;
-        this.user = user;
-        this.type = type;
-        this.text = text;
     }
 
     public static enum NSRC {

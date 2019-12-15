@@ -3,9 +3,12 @@ package tooko.twitter.actions;
 import tooko.main.Fn;
 import tooko.main.Lang;
 import tooko.td.TdApi;
+import tooko.td.client.TdClient;
 import tooko.twitter.TwitterAccount;
 import tooko.twitter.TwitterHandler;
+import tooko.twitter.archives.UserA;
 import tooko.twitter.spam.StatusR;
+import tooko.twitter.spam.UserR;
 import twitter4j.*;
 
 import java.util.LinkedList;
@@ -13,11 +16,11 @@ import java.util.LinkedList;
 public class FollowersScan extends TwitterHandler {
 
     @Override
-    public void onFunction(TdApi.User user, long chatId, TdApi.Message message, String function, String param, String[] params, String[] originParams, TwitterAccount account) {
+    public void onFunction(TdApi.User user, final long chatId, TdApi.Message message, String function, String param, String[] params, String[] originParams, TwitterAccount account) {
 
-        Twitter api = account.mkApi();
+        final Twitter api = account.mkApi();
 
-        Lang L = Lang.get(user);
+        final Lang L = Lang.get(user);
 
         long target;
 
@@ -43,7 +46,7 @@ public class FollowersScan extends TwitterHandler {
 
         }
 
-        LinkedList<Long> followers;
+        final LinkedList<Long> followers;
 
         try {
 
@@ -57,7 +60,41 @@ public class FollowersScan extends TwitterHandler {
 
         }
 
-        for (long followerId : followers) {
+        TdClient.asyncPool.execute(new Runnable() {
+
+            @Override
+            public void run() {
+                startPredict(chatId, L, api, followers);
+            }
+
+        });
+
+    }
+
+    void startPredict(long chatId, Lang L, Twitter api, LinkedList<Long> followers) {
+
+        int count = 0;
+
+        pridectUser:
+        for (int index = 0; index < followers.size(); index++) {
+
+            long followerId = followers.get(index);
+
+            UserA archive = UserA.show(api, followerId);
+
+            UserR ur = UserR.predictUser(archive);
+
+            send(Fn.sendText(chatId, Fn.plainText("{} / {}", index + 1, followers.size())));
+
+            if (ur.isSpam()) {
+
+                count++;
+
+                send(Fn.sendText(chatId, Fn.parseHtml(archive.simpleName() + " : " + ur.parseReason())));
+
+                continue;
+
+            }
 
             ResponseList<Status> timeline;
 
@@ -75,12 +112,23 @@ public class FollowersScan extends TwitterHandler {
 
             for (Status status : timeline) {
 
-                StatusR.NSRC rc = StatusR.predetectStatus(status);
+                StatusR r = StatusR.predetectStatus(status);
 
+                if (r.media == StatusR.NSRC.PORN || r.media == StatusR.NSRC.SEXY || (r.text != null && r.text.isPorn())) {
+
+                    count++;
+
+                    send(Fn.sendText(chatId, Fn.parseHtml(archive.simpleName() + " : PORN STATUS https://twitter.com/{}/{}", archive.screenName, status.getId())));
+
+                    continue pridectUser;
+
+                }
 
             }
 
         }
+
+        send(Fn.sendText(chatId, Fn.plainText("FINISHED : {} / {}", count, followers.size())));
 
     }
 

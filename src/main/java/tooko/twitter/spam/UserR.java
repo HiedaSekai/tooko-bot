@@ -1,12 +1,11 @@
 package tooko.twitter.spam;
 
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import org.bson.codecs.pojo.annotations.BsonId;
 import tooko.main.utils.TextCensor;
 import tooko.td.core.CacheTable;
 import tooko.twitter.archives.UserA;
-
-import java.sql.Struct;
 
 public class UserR {
 
@@ -43,13 +42,21 @@ public class UserR {
 
         if (rc.hash != hash) {
 
-            rc.name = TextCensor.getInstance().predictText(user.name);
+            // rc.name = TextCensor.getInstance().predictText(user.name);
 
-            if (StrUtil.isNotBlank(user.description)) {
+            TextCensor.TCRC newName = TextCensor.getInstance().predictText(user.name);
+
+            if (rc.name == null || !rc.name.isPorn()) {
+
+                rc.name = newName;
+
+            }
+
+            if (StrUtil.isNotBlank(user.description) && (rc.bio == null || !rc.bio.isPorn())) {
 
                 rc.bio = TextCensor.getInstance().predictText(user.description);
 
-            } else {
+            } else if (rc.bio != null && !rc.bio.isPorn()) {
 
                 rc.bio = null;
 
@@ -58,6 +65,33 @@ public class UserR {
         }
 
         return rc;
+
+    }
+
+    public boolean isSpam() {
+
+        return ArrayUtil.isNotEmpty(status) || name.isPorn() || (bio != null && bio.isPorn());
+
+    }
+
+    public String parseReason() {
+
+        if (ArrayUtil.isNotEmpty(status)) {
+
+            return "PORN STATUS : " + ArrayUtil.join(status, " / ");
+
+
+        } else if (name.isPorn()) {
+
+            return "PORN NAME";
+
+        } else if (bio != null && bio.isPorn()) {
+
+            return "PORN DESCRIPTION";
+
+        }
+
+        return "ERROR";
 
     }
 
