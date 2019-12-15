@@ -4,7 +4,6 @@ import tooko.Launcher;
 import tooko.main.Env;
 import tooko.main.Fn;
 import tooko.main.Lang;
-import tooko.main.extras.ImageTest;
 import tooko.main.extras.LICENCE;
 import tooko.main.extras.SwitchLang;
 import tooko.td.TdApi.Message;
@@ -38,8 +37,6 @@ public class TwitterBot extends TdBot {
 
         addHandler(new SwitchLang());
 
-        addHandler(new ImageTest());
-
         addHandler(new FollowersScan());
 
         addHandler(new LICENCE());
@@ -50,12 +47,12 @@ public class TwitterBot extends TdBot {
 
     @Override
     public void onLogin() {
-        
+
         TrackTask.start();
         UserFetchTask.start();
-        
+
     }
-  
+
     @Override
     public void onLaunch(User user, long chatId, Message message) {
 
@@ -103,9 +100,9 @@ public class TwitterBot extends TdBot {
 
     @Override
     public void destroy() {
-        
+
         TrackTask.stop();
-        
+
         UserFetchTask.stop();
 
         Launcher.INSTANCE.twitter = null;

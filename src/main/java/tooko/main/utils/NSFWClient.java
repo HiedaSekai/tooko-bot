@@ -1,15 +1,15 @@
 package tooko.main.utils;
 
-import cn.hutool.core.img.*;
-import cn.hutool.core.io.*;
-import cn.hutool.crypto.digest.*;
-import cn.hutool.http.*;
-import cn.hutool.json.*;
-import java.awt.image.*;
-import java.io.*;
-import net.coobird.thumbnailator.*;
-import tooko.main.*;
-import cn.hutool.core.codec.*;
+import cn.hutool.core.codec.Base64;
+import cn.hutool.crypto.digest.DigestUtil;
+import cn.hutool.http.HttpResponse;
+import cn.hutool.http.HttpUtil;
+import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONObject;
+import tooko.main.Env;
+
+import java.io.File;
+import java.io.IOException;
 
 public class NSFWClient {
     
@@ -45,8 +45,8 @@ public class NSFWClient {
         JSONArray request = new JSONArray();
 
         for (File imageFile : images) request.add(Base64.encode(imageFile));
-        
-        HttpResponse respone = HttpUtil.createPost(Env.NSFW_SERVER + "/predict").body(request).execute();
+
+        HttpResponse respone = HttpUtil.createPost(Env.NSFW_SERVER + "/predict").body(request.toString()).execute();
 
         if (respone.getStatus() != 200) {
 
@@ -82,8 +82,8 @@ public class NSFWClient {
         JSONArray request = new JSONArray();
         
         for (byte[] imageBytes : images) request.add(Base64.encode(imageBytes));
-        
-        HttpResponse respone = HttpUtil.createPost(Env.NSFW_SERVER + "/predict").body(request).execute();
+
+        HttpResponse respone = HttpUtil.createPost(Env.NSFW_SERVER + "/predict").body(request.toString()).execute();
 
         if (respone.getStatus() != 200) {
            

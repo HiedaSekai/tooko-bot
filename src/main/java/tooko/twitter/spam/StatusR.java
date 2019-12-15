@@ -214,7 +214,7 @@ public class StatusR {
 
     }
 
-    public static enum NSRC {
+    public enum NSRC {
 
         DRAWINGS(0),
         HENTAI(1),
