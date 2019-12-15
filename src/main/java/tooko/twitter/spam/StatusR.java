@@ -44,7 +44,7 @@ public class StatusR {
 
         if (DATA.containsId(status.getId())) return DATA.getById(status.getId());
 
-        StatusR r = null;
+        StatusR r;
 
         NSRC rc = null;
 
@@ -188,7 +188,7 @@ public class StatusR {
 
         }
 
-        DATA.setById(status.getId(), new StatusR(status.getId(), status.getUser().getId(), rc, tcrc));
+        DATA.setById(status.getId(), r = new StatusR(status.getId(), status.getUser().getId(), rc, tcrc));
 
         if (rc == NSRC.PORN || (tcrc != null && tcrc.isPorn())) {
 
