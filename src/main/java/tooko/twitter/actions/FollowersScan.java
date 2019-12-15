@@ -121,7 +121,7 @@ public class FollowersScan extends TwitterHandler {
 
                 StatusR r = StatusR.predetectStatus(status);
 
-                if (r.media == StatusR.NSRC.PORN || (r.text != null && r.text.isPorn())) {
+                if (r.media == StatusR.NSRC.PORN || r.media == StatusR.NSRC.SEXY || (r.text != null && r.text.isPorn())) {
 
                     count++;
 
