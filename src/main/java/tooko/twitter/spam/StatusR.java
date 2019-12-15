@@ -1,5 +1,6 @@
 package tooko.twitter.spam;
 
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import org.bson.codecs.pojo.annotations.BsonId;
 import tooko.Launcher;
@@ -50,7 +51,7 @@ public class StatusR {
 
         for (MediaEntity media : status.getMediaEntities()) {
 
-            if (media.getMediaURLHttps().contains("jpg")) {
+            if (media.getMediaURLHttps().contains("jpg") && ArrayUtil.isEmpty(media.getVideoVariants())) {
 
                 linkArray.add(media.getMediaURLHttps());
 
