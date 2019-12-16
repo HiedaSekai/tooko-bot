@@ -3,6 +3,7 @@ package tooko.twitter.spam;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.codecs.pojo.annotations.BsonIgnore;
 import tooko.main.utils.TextCensor;
 import tooko.td.core.CacheTable;
 import tooko.twitter.archives.UserA;
@@ -74,6 +75,7 @@ public class UserR {
 
     }
 
+    @BsonIgnore
     public boolean isSpam() {
 
         return ArrayUtil.isNotEmpty(status) || name == TextCensor.TCRC.PORN || bio == TextCensor.TCRC.PORN;
