@@ -1,6 +1,7 @@
 package tooko.main.utils;
 
 import cn.hutool.core.codec.Base64;
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
@@ -35,7 +36,15 @@ public class NSFWClient {
 
         }
 
-        return predict(imageFiles);
+        try {
+
+            return predict(imageFiles);
+
+        } catch (IOException ex) {
+
+            throw new IOException("ERROR PREDICE IMAGES : " + ArrayUtil.join(images, " "), ex);
+
+        }
 
     }
 
