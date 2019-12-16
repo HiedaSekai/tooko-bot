@@ -202,9 +202,7 @@ class Aes256Cbc {
          */
         private byte[] rotate(byte[] value) {
             byte tmp = value[0];
-            for (int i = 1; i < WORD_SIZE; ++i) {
-                value[i - 1] = value[i];
-            }
+            System.arraycopy(value, 1, value, 0, WORD_SIZE - 1);
             value[WORD_SIZE - 1] = tmp;
             return value;
         }
@@ -389,6 +387,7 @@ class Aes256Cbc {
         }
     }
 
+    @SuppressWarnings("UnusedAssignment")
     static class Cbc {
 
         /**

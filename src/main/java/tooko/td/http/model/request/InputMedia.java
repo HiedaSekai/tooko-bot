@@ -23,6 +23,7 @@ abstract public class InputMedia<T extends InputMedia> implements Serializable {
 
     }
 
+    @SuppressWarnings("unchecked")
     private final T thisAsT = (T) this;
 
     private final String type;

@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class CacheTable<ID, T> extends Table<ID, T> {
 
-    public HashMap<ID, T> idIndex = new HashMap<>();
+    public final HashMap<ID, T> idIndex = new HashMap<>();
 
     public CacheTable(Class<T> clazz) {
 
@@ -17,9 +17,6 @@ public class CacheTable<ID, T> extends Table<ID, T> {
 
         super(collectionName, clazz);
 
-    }
-
-    public void doSave(T obj) {
     }
 
     public void saveAll() {

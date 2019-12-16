@@ -107,8 +107,6 @@ public abstract class TwitterHandler extends TdFunction {
 
             send(Fn.sendText(userId, Fn.plainText(Lang.get(userId).TWI_AUTH_REQUIRED)));
 
-            return;
-
         } else if (accounts.size() == 1) {
 
             callback.onCallback(userId, accounts.get(0));

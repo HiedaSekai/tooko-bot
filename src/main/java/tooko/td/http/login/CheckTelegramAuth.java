@@ -28,7 +28,7 @@ public class CheckTelegramAuth {
         String hash = null;
         long authDate = 0;
         String[] params = authQueryParams.split("&");
-        TreeSet<String> set = new TreeSet<String>();
+        TreeSet<String> set = new TreeSet<>();
         for (String p : params) {
             if (p.startsWith("hash=")) {
                 hash = p.substring(5);

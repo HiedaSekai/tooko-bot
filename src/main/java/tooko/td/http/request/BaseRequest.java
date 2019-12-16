@@ -23,7 +23,7 @@ abstract public class BaseRequest<T extends BaseRequest, R extends BaseResponse>
 
     public BaseRequest(Class<? extends R> responseClass) {
         this.responseClass = responseClass;
-        this.parameters = new HashMap<String, Object>();
+        this.parameters = new HashMap<>();
     }
 
     protected T add(String name, Object val) {
@@ -66,7 +66,7 @@ abstract public class BaseRequest<T extends BaseRequest, R extends BaseResponse>
     }
 
     public String toWebhookResponse() {
-        Map<String, Object> fullMap = new HashMap<String, Object>(parameters);
+        Map<String, Object> fullMap = new HashMap<>(parameters);
         fullMap.put("method", getMethod());
         return gson.toJson(fullMap);
     }

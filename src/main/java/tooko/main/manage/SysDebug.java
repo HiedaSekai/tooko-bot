@@ -79,13 +79,9 @@ public class SysDebug extends TdFunction {
 
                 send(Fn.sendText(chatId, Fn.plainText("JSON语法错误 : {}", ex.getMessage())));
 
-                return;
-
             } catch (IllegalStateException ex) {
 
                 send(Fn.sendText(chatId, Fn.plainText(ex.getMessage())));
-
-                return;
 
             }
 

@@ -147,8 +147,6 @@ public class TwitterLogin extends TdHandler {
 
                 onPersistCancel(user, chatId, message, subId);
 
-                return;
-
             }
 
         } else if (login.type == 1) {
@@ -207,8 +205,6 @@ public class TwitterLogin extends TdHandler {
 
                 onPersistCancel(user, chatId, message, subId);
 
-                return;
-
             }
 
         } else if (login.type == 4) {
@@ -230,8 +226,6 @@ public class TwitterLogin extends TdHandler {
             } catch (TwitterException e) {
 
                 send(Fn.sendText(chatId, Fn.plainText(Fn.parseTwitterException(L, e))));
-
-                return;
 
             }
 

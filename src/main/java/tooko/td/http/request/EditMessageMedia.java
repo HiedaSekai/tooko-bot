@@ -31,6 +31,7 @@ public class EditMessageMedia extends BaseRequest<EditMessageMedia, BaseResponse
     private void addMedia(InputMedia media) {
         this.media = media;
         add("media", serialize(media));
+        //noinspection unchecked
         Map<String, Object> attachments = media.getAttachments();
         if (attachments != null && attachments.size() > 0) {
             addAll(attachments);

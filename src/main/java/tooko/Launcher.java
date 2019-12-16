@@ -365,6 +365,7 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
 
         for (Map.Entry<Class<?>, LinkedList<Class<?>>> subClazz : clazzes.entrySet()) {
 
+            //noinspection unchecked
             providers.add(new SubClassPropertyCodecProvider(subClazz.getKey(), subClazz.getValue()));
 
         }

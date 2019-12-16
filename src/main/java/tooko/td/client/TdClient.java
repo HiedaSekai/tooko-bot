@@ -58,6 +58,7 @@ public class TdClient extends TdHandler {
         for (TdHandler handler : handlers) {
 
             if (clazz.isInstance(handler))
+                //noinspection unchecked
                 return (T) handler;
 
         }
@@ -205,6 +206,7 @@ public class TdClient extends TdHandler {
 
         }
 
+        //noinspection unchecked
         return (T) response;
 
     }
@@ -510,6 +512,7 @@ public class TdClient extends TdHandler {
 
             } else {
 
+                //noinspection unchecked
                 ((TdCallback<TdApi.Object>) callback).onCallback(true, object, null);
 
             }

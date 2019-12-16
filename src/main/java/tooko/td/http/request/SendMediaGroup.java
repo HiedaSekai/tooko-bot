@@ -18,6 +18,7 @@ public class SendMediaGroup extends BaseRequest<SendMediaGroup, MessagesResponse
         add("chat_id", chatId).add("media", serialize(media));
 
         for (InputMedia m : media) {
+            //noinspection unchecked
             Map<String, Object> attachments = m.getAttachments();
             if (attachments != null && attachments.size() > 0) {
                 addAll(attachments);

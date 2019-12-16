@@ -1192,6 +1192,7 @@ public class Fn {
 
     public static <T> T[] toArray(Collection<T> array, Class<T> clazz) {
 
+        //noinspection unchecked
         return array.toArray((T[]) ArrayUtil.newArray(clazz, array.size()));
 
     }

@@ -66,7 +66,7 @@ public class TrackConfig extends TwitterHandler {
 
             }
 
-            Long delay;
+            long delay;
 
             try {
 
