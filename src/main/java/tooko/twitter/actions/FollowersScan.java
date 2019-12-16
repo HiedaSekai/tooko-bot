@@ -127,9 +127,13 @@ public class FollowersScan extends TwitterHandler {
 
             List<String> sss = new LinkedList<>();
 
-            for (Status status : timeline) {
+            for (int sindex = 0; index < timeline.size(); index++) {
+
+                Status status = timeline.get(sindex);
 
                 StatusR r = StatusR.predictStatus(status);
+
+                client.log.debug("{} / {}", sindex + 1, timeline.size());
 
                 if (r.media == StatusR.NSRC.PORN || r.media == StatusR.NSRC.SEXY || r.text == TextCensor.TCRC.PORN) {
 
