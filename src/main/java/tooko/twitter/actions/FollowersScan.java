@@ -127,7 +127,7 @@ public class FollowersScan extends TwitterHandler {
 
             List<String> sss = new LinkedList<>();
 
-            for (int sindex = 0; index < timeline.size(); index++) {
+            for (int sindex = 0; sindex < timeline.size(); sindex++) {
 
                 Status status = timeline.get(sindex);
 
