@@ -14,7 +14,7 @@ public class UserR {
 
     @BsonId public long accountId;
 
-    public long[] status;
+    public Long[] status;
     public Boolean pornStatus;
 
     public TextCensor.TCRC name;
@@ -37,7 +37,7 @@ public class UserR {
             rc.accountId = user.accountId;
             rc.hash = -1;
 
-            rc.status = new long[0];
+            rc.status = new Long[0];
 
         }
 
