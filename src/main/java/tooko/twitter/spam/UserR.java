@@ -5,14 +5,15 @@ import cn.hutool.core.util.StrUtil;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
 import tooko.main.utils.TextCensor;
-import tooko.td.core.CacheTable;
+import tooko.td.core.Table;
 import tooko.twitter.archives.UserA;
 
 public class UserR {
 
-    public static CacheTable<Long,UserR> DATA = new CacheTable<>("user_spam",UserR.class);
+    public static Table<Long, UserR> DATA = new Table<>("user_spam", UserR.class);
 
-    @BsonId public long accountId;
+    @BsonId
+    public long accountId;
 
     public Long[] status;
     public Boolean pornStatus;
