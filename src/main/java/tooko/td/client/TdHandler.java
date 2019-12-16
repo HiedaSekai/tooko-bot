@@ -983,7 +983,7 @@ public class TdHandler {
 
         Lang L = Lang.get(userId);
 
-        send(Fn.sendText(userId, Fn.plainText(timeout ? L.TIMEOUTED : L.CANCELED)));
+        send(Fn.sendText(userId, new ReplyMarkupRemoveKeyboard(), Fn.plainText(timeout ? L.TIMEOUTED : L.CANCELED)));
 
     }
 
