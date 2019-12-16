@@ -46,21 +46,26 @@ public class UserR {
 
             TextCensor.TCRC newName = TextCensor.getInstance().predictText(user.name);
 
-            if (rc.name == null || !rc.name.isPorn()) {
+            if (rc.name != TextCensor.TCRC.PORN) {
 
                 rc.name = newName;
 
             }
 
-            if (StrUtil.isNotBlank(user.description) && (rc.bio == null || !rc.bio.isPorn())) {
+
+            if (StrUtil.isNotBlank(user.description)/* && rc.bio != TextCensor.TCRC.PORN*/) {
 
                 rc.bio = TextCensor.getInstance().predictText(user.description);
 
-            } else if (rc.bio != null && !rc.bio.isPorn()) {
+            } else /*if (StrUtil.isBlank(user.description) && rc.bio != TextCensor.TCRC.PORN) */ {
 
                 rc.bio = null;
 
             }
+
+            rc.hash = hash;
+
+            DATA.setById(user.accountId, rc);
 
         }
 
@@ -70,7 +75,7 @@ public class UserR {
 
     public boolean isSpam() {
 
-        return ArrayUtil.isNotEmpty(status) || name.isPorn() || (bio != null && bio.isPorn());
+        return ArrayUtil.isNotEmpty(status) || name == TextCensor.TCRC.PORN || bio == TextCensor.TCRC.PORN;
 
     }
 
@@ -78,13 +83,13 @@ public class UserR {
 
         if (ArrayUtil.isNotEmpty(status)) {
 
-            return "PORN STATUS : " + ArrayUtil.join(status, " / ");
+            return "PORN STATUS : \n\nhttps://twitter.com/show/status/" + ArrayUtil.join(status, "\nhttps://twitter.com/show/status/");
 
-        } else if (name.isPorn()) {
+        } else if (name == TextCensor.TCRC.PORN) {
 
             return "PORN NAME";
 
-        } else if (bio != null && bio.isPorn()) {
+        } else if (bio != null && bio == TextCensor.TCRC.PORN) {
 
             return "PORN DESCRIPTION";
 

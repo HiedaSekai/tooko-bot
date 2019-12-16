@@ -117,6 +117,10 @@ public class StatusR {
 
                 }
 
+                rc = NSRC.NEUTRAL;
+
+                /*
+
                 float value = -1;
 
                 for (float[] result : results) {
@@ -167,7 +171,10 @@ public class StatusR {
 
                 }
 
+                 */
+
             }
+
 
         }
 
@@ -227,11 +234,11 @@ public class StatusR {
         PORN(3),
         SEXY(4);
 
+        public final int type;
+
         NSRC(int type) {
             this.type = type;
         }
-
-        public final int type;
 
         public static NSRC valueOf(int type) {
 

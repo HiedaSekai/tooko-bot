@@ -3,7 +3,6 @@ package tooko.main.utils;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import com.baidu.aip.contentcensor.AipContentCensor;
-import org.bson.codecs.pojo.annotations.BsonIgnore;
 import tooko.main.Env;
 
 public abstract class TextCensor {
@@ -28,35 +27,11 @@ public abstract class TextCensor {
 
     }
 
-    public static class TCRC {
+    public enum TCRC {
 
-        private Boolean politics;
-        private Boolean spam;
-        private Boolean porn;
-
-        public TCRC() {
-        }
-
-        public TCRC(Boolean politics, Boolean spam, Boolean porn) {
-            this.politics = politics ? true : null;
-            this.spam = spam ? true : null;
-            this.porn = porn ? true : null;
-        }
-
-        @BsonIgnore
-        public boolean isPolitics() {
-            return politics != null;
-        }
-
-        @BsonIgnore
-        public boolean isSpam() {
-            return spam != null;
-        }
-
-        @BsonIgnore
-        public boolean isPorn() {
-            return porn != null;
-        }
+        POLICES,
+        SPAM,
+        PORN
 
     }
 
@@ -66,7 +41,7 @@ public abstract class TextCensor {
 
         @Override
         public TCRC predictText(String text) {
-            return new TCRC(false, false, false);
+            return null;
         }
 
     }
@@ -99,33 +74,48 @@ public abstract class TextCensor {
 
 //                reject.addAll(result.getJSONArray("review"));
 
-                boolean politics = false,spam = false,porn = false;
+                boolean politics = false, spam = false, porn = false;
+                double spamScore = 0, adScore = 0, pornScore = 0;
 
-                for (int index = 0;index < reject.size();index ++) {
+                for (int index = 0; index < reject.size(); index++) {
 
-                    int label = reject.getJSONObject(index).getInt("label");
+                    JSONObject label = reject.getJSONObject(index);
 
-                    if (label == 1 || label == 3) {
+                    int labelIndex = reject.getJSONObject(index).getInt("label");
+                    double score = reject.getJSONObject(index).getDouble("score");
+
+                    if (labelIndex == 1 || labelIndex == 3) {
 
                         politics = true;
 
-                    } else if (label == 2) {
+                    } else if (labelIndex == 2) {
 
                         porn = true;
 
-                    } else if (label != 4) {
+                        pornScore = score;
+
+                    } else if (labelIndex == 4) {
+
+                        adScore = score;
+
+                    } else if (labelIndex == 5) {
 
                         spam = true;
 
+                        spamScore = score;
+
                     }
+
+                    if (politics) return TCRC.POLICES;
+                    else if (spamScore > pornScore) return TCRC.SPAM;
+                    else if (porn || spamScore < adScore) return TCRC.PORN;
+                    else if (spam) return TCRC.SPAM;
 
                 }
 
-                return new TCRC(politics, spam, porn);
-
             }
 
-            return new TCRC(false, false, false);
+            return null;
 
         }
 
