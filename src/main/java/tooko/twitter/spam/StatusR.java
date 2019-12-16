@@ -228,39 +228,11 @@ public class StatusR {
 
     public enum NSRC {
 
-        DRAWINGS(0),
-        HENTAI(1),
-        NEUTRAL(2),
-        PORN(3),
-        SEXY(4);
-
-        public final int type;
-
-        NSRC(int type) {
-            this.type = type;
-        }
-
-        public static NSRC valueOf(int type) {
-
-            switch (type) {
-
-                case 0:
-                    return DRAWINGS;
-                case 1:
-                    return HENTAI;
-                case 2:
-                    return NEUTRAL;
-                case 3:
-                    return PORN;
-                case 4:
-                    return SEXY;
-
-                default:
-                    throw new IllegalArgumentException();
-
-            }
-
-        }
+        DRAWINGS,
+        HENTAI,
+        NEUTRAL,
+        PORN,
+        SEXY
 
     }
 
