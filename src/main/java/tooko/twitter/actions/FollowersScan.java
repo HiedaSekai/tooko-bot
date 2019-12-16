@@ -93,6 +93,8 @@ public class FollowersScan extends TwitterHandler {
 
             UserA archive = UserA.show(api, followerId);
 
+            // if (archive.isProtected && !TrackTask.friends.arrayIsIn(accountId,"array",followerId)) continue;
+
             UserR ur = UserR.predictUser(archive);
 
             send(Fn.sendText(chatId, Fn.plainText("{} / {}", index + 1, followers.size())));
@@ -115,7 +117,7 @@ public class FollowersScan extends TwitterHandler {
 
             } catch (TwitterException e) {
 
-                send(Fn.sendText(chatId, Fn.plainText(Fn.parseTwitterException(L, e))));
+                //send(Fn.sendText(chatId, Fn.plainText(Fn.parseTwitterException(L, e))));
 
                 continue;
 
