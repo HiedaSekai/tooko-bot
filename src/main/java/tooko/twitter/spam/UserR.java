@@ -37,6 +37,7 @@ public class UserR {
             rc.accountId = user.accountId;
             rc.hash = -1;
 
+            rc.status = new long[0];
 
         }
 
