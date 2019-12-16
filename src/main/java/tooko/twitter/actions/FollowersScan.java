@@ -2,6 +2,7 @@ package tooko.twitter.actions;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.HttpException;
 import tooko.main.Fn;
 import tooko.main.Lang;
 import tooko.main.utils.TextCensor;
@@ -131,7 +132,17 @@ public class FollowersScan extends TwitterHandler {
 
                 Status status = timeline.get(sindex);
 
-                StatusR r = StatusR.predictStatus(status);
+                StatusR r;
+
+                try {
+
+                    r = StatusR.predictStatus(status);
+
+                } catch (HttpException ex) {
+
+                    continue;
+
+                }
 
                 client.log.debug("{} / {}", sindex + 1, timeline.size());
 
