@@ -54,7 +54,7 @@ public class PmData {
 
         if (sessions != null) return;
 
-        sessions = new CacheTable<Long, Session>("pm_" + id, Session.class);
+        sessions = new CacheTable<>("pm_" + id, Session.class);
 
     }
 

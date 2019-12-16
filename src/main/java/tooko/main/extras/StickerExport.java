@@ -253,7 +253,7 @@ public class StickerExport extends TdHandler {
                     File src = new File(cacheDir, "src/" + index + ".webp");
 
                     FileUtil.copy(localFile, src, true);
-                    
+
                     try {
 
                         BufferedImage image = ImgUtil.read(src);
@@ -264,7 +264,7 @@ public class StickerExport extends TdHandler {
 
                         img.toFile(new File(cacheDir, index + ".jpg"), "jpg");
 
-                    } catch (Exception e) {
+                    } catch (Exception ignored) {
                     }
 
                 }

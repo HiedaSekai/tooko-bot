@@ -23,7 +23,6 @@ abstract public class InputMedia<T extends InputMedia> implements Serializable {
 
     }
 
-    @SuppressWarnings("unchecked")
     private final T thisAsT = (T) this;
 
     private final String type;
@@ -32,7 +31,7 @@ abstract public class InputMedia<T extends InputMedia> implements Serializable {
     private String caption;
     private String parse_mode;
 
-    transient private Map<String, Object> attachments = new HashMap<String, Object>();
+    transient private Map<String, Object> attachments = new HashMap<>();
     transient private String filename;
 
     InputMedia(String type, Object media) {

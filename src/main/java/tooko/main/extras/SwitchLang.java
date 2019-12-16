@@ -2,6 +2,7 @@ package tooko.main.extras;
 
 import tooko.main.Fn;
 import tooko.main.Lang;
+import tooko.main.lang.ENG;
 import tooko.td.TdApi.FormattedText;
 import tooko.td.TdApi.Message;
 import tooko.td.TdApi.User;
@@ -26,9 +27,9 @@ public class SwitchLang extends TdHandler {
 
     static {
 
-        langs.dataLine(Lang.DEF.LANG_NAME, DATA_ID, 0);
+        langs.dataLine(Lang.DEFAULT.LANG_NAME, DATA_ID, 0);
 
-        langs.dataLine(Lang.ENG.LANG_NAME, DATA_ID, 1);
+        langs.dataLine(ENG.INSTANCE.LANG_NAME, DATA_ID, 1);
 
     }
 

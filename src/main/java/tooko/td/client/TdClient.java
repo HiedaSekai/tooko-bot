@@ -22,12 +22,13 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.ReentrantLock;
 
+@SuppressWarnings("EmptyMethod")
 public class TdClient extends TdHandler {
 
     public static Timer mainTimer = new Timer("Mian Timer");
     public static LinkedList<TdClient> clients = new LinkedList<>();
-    public static LinkedList<TdClient> postAdd = new LinkedList<>();
-    public static LinkedList<TdClient> postDestroy = new LinkedList<>();
+    public static final LinkedList<TdClient> postAdd = new LinkedList<>();
+    public static final LinkedList<TdClient> postDestroy = new LinkedList<>();
 
     public static ThreadPoolExecutor publicPool = new ThreadPoolExecutor(1, 1, 30, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
     public static ThreadPoolExecutor asyncPool = new ThreadPoolExecutor(8, 8, 15, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
@@ -56,7 +57,8 @@ public class TdClient extends TdHandler {
 
         for (TdHandler handler : handlers) {
 
-            if (clazz.isInstance(handler)) return (T) handler;
+            if (clazz.isInstance(handler))
+                return (T) handler;
 
         }
 
@@ -130,15 +132,13 @@ public class TdClient extends TdHandler {
             onLoggingOut();
 
         }
-        
+
 
     }
-    
+
     public void onLoggingOut() {
     }
 
-    public void onLogin() {
-    }
 
     public <T extends TdApi.Object> T E(Function function) {
 
@@ -191,7 +191,7 @@ public class TdClient extends TdHandler {
 
             if (Env.STOP.get()) {
 
-                throw new TdException((TdApi.Error) new TdApi.Error(-1, "Server Stopped"));
+                throw new TdException(new TdApi.Error(-1, "Server Stopped"));
 
             }
 

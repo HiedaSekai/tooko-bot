@@ -1,5 +1,6 @@
 package tooko.main.bots;
 
+import cn.hutool.core.util.NumberUtil;
 import tooko.main.Env;
 import tooko.main.Fn;
 import tooko.main.Lang;
@@ -12,8 +13,7 @@ import tooko.td.core.KeyboardArray;
 import tooko.td.http.request.GetMe;
 
 import java.util.HashMap;
-import java.util.*;
-import cn.hutool.core.util.*;
+import java.util.LinkedList;
 
 public class CreateBot extends TdFunction {
 

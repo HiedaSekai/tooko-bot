@@ -207,16 +207,13 @@ public class Img {
 
             graphics.copyArea(0, i, width, 1, (int) d, 0);
 
-            if (borderGap) {
-                graphics.setColor(color);
-                graphics.drawLine((int) d, i, 0, i);
-                graphics.drawLine((int) d + width, i, width, i);
-            }
+            graphics.setColor(color);
+            graphics.drawLine((int) d, i, 0, i);
+            graphics.drawLine((int) d + width, i, width, i);
         }
 
         period = RandomUtil.randomInt(40) + 10; // 50;
 
-        borderGap = true;
         frames = 20;
         phase = 7;
 
@@ -226,13 +223,9 @@ public class Img {
 
             graphics.copyArea(i, 0, 1, height, 0, (int) d);
 
-            if (borderGap) {
-
-                graphics.setColor(color);
-                graphics.drawLine(i, (int) d, i, 0);
-                graphics.drawLine(i, (int) d + height, i, height);
-
-            }
+            graphics.setColor(color);
+            graphics.drawLine(i, (int) d, i, 0);
+            graphics.drawLine(i, (int) d + height, i, height);
 
         }
 
@@ -330,7 +323,7 @@ public class Img {
 
             drawImage(x, y, Thumbnails.of(image).size(width, height).asBufferedImage(), width, height, bgCplor);
 
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
 
         return this;
@@ -447,7 +440,7 @@ public class Img {
                     .outputQuality(1f)
                     .toOutputStream(out);
 
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
 
         return out.toByteArray();
@@ -472,7 +465,7 @@ public class Img {
                     .outputQuality(1f)
                     .toFile(outPut);
 
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
 
         return this;

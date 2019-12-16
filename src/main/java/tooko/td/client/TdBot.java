@@ -15,15 +15,16 @@ import tooko.td.TdApi.*;
 import tooko.td.core.LongLongArrayMap;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.*;
+import java.util.LinkedList;
 
 public class TdBot extends TdClient {
 
     public File dataDir;
     public LongLongArrayMap startMessages = new LongLongArrayMap();
     public HashMap<String, LongLongArrayMap> startPayloads = new HashMap<>();
-    public HashMap<Integer, TdPersistent> persists = new HashMap<>();
+    public final HashMap<Integer, TdPersistent> persists = new HashMap<>();
     public HashMap<Integer, TdHandler> persistHandlers = new HashMap<>();
     public HashMap<String, TdHandler> payloads = new HashMap<>();
     public HashMap<String, TdHandler> functions = new HashMap<>();
@@ -100,7 +101,6 @@ public class TdBot extends TdClient {
     public void onAuthorizationFailed(TdException ex) {
     }
 
- 
 
     @Override
     public void onLoad() {
@@ -158,12 +158,12 @@ public class TdBot extends TdClient {
 
                 LinkedList<String> data = new LinkedList<>();
 
-                Collections.addAll(data,new String[]{persist.id + "", persist.dataId + "", persist.subId + "", persist.createAt + "", (persist.acceptFunction ? 1 : 0) + ""});
-                
+                Collections.addAll(data, persist.id + "", persist.dataId + "", persist.subId + "", persist.createAt + "", (persist.acceptFunction ? 1 : 0) + "");
+
                 persistHandlers.get(persist.dataId).onPersistStore(persist.id, persist.subId, data);
-                
-                csv.write(Fn.toArray(data,String.class));
-                
+
+                csv.write(Fn.toArray(data, String.class));
+
             }
 
             csv.flush();

@@ -161,7 +161,7 @@ public class SysManage extends TdFunction {
 
                 execute(Fn.editText(chatId, messageId, parseOptions(userId), Fn.parseHtml(parseStat(userId))));
 
-            } catch (TdException ex) {
+            } catch (TdException ignored) {
             }
 
             send(Fn.answerText(queryId, Lang.get(userId).REFRESHED));
@@ -256,7 +256,7 @@ public class SysManage extends TdFunction {
 
             }
 
-        } catch (InterruptedException e) {
+        } catch (InterruptedException ignored) {
         }
 
         try {
@@ -267,7 +267,7 @@ public class SysManage extends TdFunction {
 
             }
 
-        } catch (InterruptedException e) {
+        } catch (InterruptedException ignored) {
         }
 
     }
@@ -345,7 +345,7 @@ public class SysManage extends TdFunction {
 
                     destroyAndRestart(userId, status.id);
 
-                } catch (InterruptedException e) {
+                } catch (InterruptedException ignored) {
                 }
 
 
@@ -383,6 +383,7 @@ public class SysManage extends TdFunction {
 
                 int hitCount = 0;
 
+                //noinspection ConstantConditions
                 while ((line = br.readLine().trim()) != null) {
 
                     if (line.startsWith("MemTotal:")) {
@@ -391,7 +392,7 @@ public class SysManage extends TdFunction {
 
                         String[] infoArray = line.split("\\s+");
 
-                        memTotal = Long.valueOf(infoArray[1]);
+                        memTotal = Long.parseLong(infoArray[1]);
 
                     } else if (line.startsWith("MemFree:")) {
 
@@ -399,7 +400,7 @@ public class SysManage extends TdFunction {
 
                         String[] infoArray = line.split("\\s+");
 
-                        memFree = Long.valueOf(infoArray[1]);
+                        memFree = Long.parseLong(infoArray[1]);
 
                     } else if (line.startsWith("Buffers:")) {
 
@@ -407,7 +408,7 @@ public class SysManage extends TdFunction {
 
                         String[] infoArray = line.split("\\s+");
 
-                        buffers = Long.valueOf(infoArray[1]);
+                        buffers = Long.parseLong(infoArray[1]);
 
                     } else if (line.startsWith("Cached:")) {
 
@@ -415,7 +416,7 @@ public class SysManage extends TdFunction {
 
                         String[] infoArray = line.split("\\s+");
 
-                        cached = Long.valueOf(infoArray[1]);
+                        cached = Long.parseLong(infoArray[1]);
 
                     }
 

@@ -164,7 +164,7 @@ public class WelcomeConfig extends TdHandler {
 
             }
 
-            payload.messages = edit.messages.toArray(new InputMessageContent[edit.messages.size()]);
+            payload.messages = edit.messages.toArray(new InputMessageContent[0]);
 
             send(Fn.sendText(chatId, Fn.plainText(L.PM_WELCOME_FINISH)));
 
@@ -200,8 +200,6 @@ public class WelcomeConfig extends TdHandler {
         bot.data.payloads.remove(params[0]);
 
         send(Fn.sendText(chatId, Fn.plainText(L.DELETED)));
-
-        return;
 
     }
 

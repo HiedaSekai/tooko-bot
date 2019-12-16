@@ -15,8 +15,6 @@ import tooko.main.Fn;
 
 public class TookoLog extends ConsoleLog {
 
-    private static String logFormat = "[{level}] {name}: {msg}";
-
     public TookoLog(String name) {
         super(name);
     }
@@ -28,7 +26,7 @@ public class TookoLog extends ConsoleLog {
     @Override
     public void log(String fqcn, Level level, Throwable t, String format, Object... arguments) {
 
-        if (false == isEnabled(level)) return;
+        if (!isEnabled(level)) return;
 
         final Dict dict = Dict.create()
                 .set("date", DateUtil.now())
@@ -36,6 +34,7 @@ public class TookoLog extends ConsoleLog {
                 .set("name", this.getName())
                 .set("msg", StrUtil.format(format, arguments));
 
+        String logFormat = "[{level}] {name}: {msg}";
         String logMsg = StrUtil.format(logFormat, dict);
 
         if (level.ordinal() >= Level.WARN.ordinal()) {

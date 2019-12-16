@@ -246,8 +246,8 @@ public class MuteAndBlock extends TwitterHandler {
         public LinkedList<Long> targets;
         public Message status;
 
-        public boolean undo = true;
-        public boolean mute = false;
+        public boolean undo;
+        public boolean mute;
 
         public int userId;
         public TwitterAccount account;
@@ -328,7 +328,7 @@ public class MuteAndBlock extends TwitterHandler {
 
                     }
 
-                } catch (TwitterException e) {
+                } catch (TwitterException ignored) {
                 }
 
                 int last = current;

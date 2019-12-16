@@ -17,6 +17,7 @@ import tooko.td.http.response.BaseResponse;
 import java.util.LinkedList;
 import java.util.TimerTask;
 
+@SuppressWarnings("EmptyMethod")
 public class TdHandler {
 
     public Log log = Launcher.log;
@@ -994,7 +995,7 @@ public class TdHandler {
         return false;
 
     }
-    
+
     public void onPersistStore(int userId, int subId, LinkedList<String> data) {
     }
 
@@ -1181,14 +1182,14 @@ public class TdHandler {
         TdPersistent persist = ((TdBot) client).persists.remove(userId);
 
         if (persist != null) {
-            
+
             onPersistFinished(userId,persist.subId);
-            
-            
+
+
         }
-        
+
         return persist;
-        
+
     }
 
     public TdCallback<Message> asStartMessage(Message message) {

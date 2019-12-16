@@ -448,7 +448,7 @@ public class ChatPanel extends TdHandler {
 
             }
 
-        } catch (TdException ex) {
+        } catch (TdException ignored) {
         }
 
         return null;

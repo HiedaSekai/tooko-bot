@@ -45,7 +45,7 @@ public class ForwardInfo extends TdHandler {
 
             Supergroup channel = superGroup(chat);
 
-            if (channel != null && channel != null) {
+            if (channel != null) {
 
                 channelName = chat.title;
 

@@ -86,6 +86,7 @@ public class TrackTask extends TimerTask {
 
     }
 
+    @SuppressWarnings("UnusedAssignment")
     static void fetchInfo(TwitterAccount account, Twitter api) {
 
         boolean followersChanged = true;
@@ -160,9 +161,7 @@ public class TrackTask extends TimerTask {
 
         if (savedFollowers == null) return;
 
-        LinkedList<Long> retain = new LinkedList<>();
-
-        retain.addAll(followerIDs);
+        LinkedList<Long> retain = new LinkedList<>(followerIDs);
 
         retain.retainAll(savedFollowers.array);
 
@@ -176,7 +175,7 @@ public class TrackTask extends TimerTask {
 
         boolean simple = followerIDs.size() + savedFollowers.array.size() > 4;
 
-        if (!followersChanged || archive.followers - account.last_followers != followerIDs.size() - savedFollowers.array.size()) {
+        if (!followersChanged) {
 
             // 有用户账号异常
 

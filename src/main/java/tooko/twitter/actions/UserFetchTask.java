@@ -1,13 +1,16 @@
 package tooko.twitter.actions;
 
+import cn.hutool.core.collection.CollectionUtil;
+import com.mongodb.client.MongoCursor;
+import tooko.main.Fn;
+import tooko.twitter.TwitterAccount;
+import tooko.twitter.archives.UserA;
+import twitter4j.ResponseList;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.User;
+
 import java.util.*;
-import tooko.twitter.*;
-import twitter4j.*;
-import com.mongodb.client.*;
-import tooko.twitter.actions.TrackTask.*;
-import cn.hutool.core.collection.*;
-import tooko.main.*;
-import tooko.twitter.archives.*;
 
 public class UserFetchTask extends TimerTask {
 
@@ -35,56 +38,15 @@ public class UserFetchTask extends TimerTask {
 
     }
 
-    @Override
-    public void run() {
-
-        List<TwitterAccount> accounts = TwitterAccount.DATA.getAll();
-
-        if (accounts.isEmpty()) return;
-
-        reset();
-
-        while (true) for (TwitterAccount account : accounts) {
-
-                if (account.track_last == null || (account.track_delay == null || System.currentTimeMillis() - account.track_last > account.track_delay)) {
-
-                    TwitterAccount.DATA.updateField(account.accountId, "track_last", System.currentTimeMillis());
-
-                    Twitter api = account.mkApi();
-
-                    fetchInfo(account, api);
-                    
-                    if (!hasNext()) return;
-
-                }
-
-            }
-
-    }
-
     static MongoCursor<TrackTask.IdList> foIter;
     static MongoCursor<TrackTask.IdList> frIter;
-
-    static void reset() {
-
-        foIter = TrackTask.followers.collection.find().cursor();
-        frIter = TrackTask.followers.collection.find().cursor();
-
-    }
-
     static HashSet<Long> cache = new HashSet<>();
-
-    static boolean hasNext() {
-
-        return !cache.isEmpty() || foIter.hasNext();
-
-    }
 
     static List<Long> nextArray() {
 
         if (cache.isEmpty()) {
 
-            for (int index = 0;index < 5;index ++) {
+            for (int index = 0; index < 5; index++) {
 
                 if (foIter.hasNext()) {
 
@@ -106,9 +68,7 @@ public class UserFetchTask extends TimerTask {
 
         if (cache.size() <= 100) {
 
-            array = new LinkedList<>();
-
-            array.addAll(cache);
+            array = new LinkedList<>(cache);
 
             cache.clear();
 
@@ -116,9 +76,7 @@ public class UserFetchTask extends TimerTask {
 
             List<Long> arrayList = CollectionUtil.sub(cache, 0, 100);
 
-            array = new LinkedList<>();
-
-            array.addAll(arrayList);
+            array = new LinkedList<>(arrayList);
 
             cache.removeAll(arrayList);
 
@@ -126,6 +84,19 @@ public class UserFetchTask extends TimerTask {
 
         return array;
 
+
+    }
+
+    static void reset() {
+
+        foIter = TrackTask.followers.collection.find().cursor();
+        frIter = TrackTask.followers.collection.find().cursor();
+
+    }
+
+    static boolean hasNext() {
+
+        return !cache.isEmpty() || foIter.hasNext();
 
     }
 
@@ -137,7 +108,7 @@ public class UserFetchTask extends TimerTask {
 
             ResponseList<User> users = api.lookupUsers(Fn.toArray(array));
 
-            for (User user : users) { 
+            for (User user : users) {
 
                 UserA.save(user);
 
@@ -147,7 +118,35 @@ public class UserFetchTask extends TimerTask {
 
             for (long anf : array) UserA.show(api, anf);
 
-        } catch (TwitterException e) {}
+        } catch (TwitterException ignored) {
+        }
+
+    }
+
+    @Override
+    public void run() {
+
+        List<TwitterAccount> accounts = TwitterAccount.DATA.getAll();
+
+        if (accounts.isEmpty()) return;
+
+        reset();
+
+        while (true) for (TwitterAccount account : accounts) {
+
+            if (account.track_last == null || (account.track_delay == null || System.currentTimeMillis() - account.track_last > account.track_delay)) {
+
+                TwitterAccount.DATA.updateField(account.accountId, "track_last", System.currentTimeMillis());
+
+                Twitter api = account.mkApi();
+
+                fetchInfo(account, api);
+
+                if (!hasNext()) return;
+
+            }
+
+        }
 
     }
 

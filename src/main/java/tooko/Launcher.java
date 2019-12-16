@@ -185,7 +185,7 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
 
             MongoDatabase db = dbClient.getDatabase(config.getStr("db_name"));
 
-            db.listCollectionNames().iterator().hasNext();
+            db.listCollectionNames().iterator().tryNext();
 
             Env.DB_CLIENT = dbClient;
             Env.DB = db;
@@ -369,7 +369,7 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
 
         }
 
-        return providers.toArray(new PropertyCodecProvider[providers.size()]);
+        return providers.toArray(new PropertyCodecProvider[0]);
 
     }
 

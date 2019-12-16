@@ -49,8 +49,6 @@ public class BotImage {
 
     }
 
-    public static void stop(BotData data) {
-    }
 
     public static void delete(BotData data) {
 

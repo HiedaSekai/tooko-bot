@@ -51,11 +51,9 @@ class RsaOaep {
         BigInteger exp2 = parser.read().getInteger();
         BigInteger crtCoef = parser.read().getInteger();
 
-        RSAPrivateCrtKeySpec keySpec = new RSAPrivateCrtKeySpec(
+        return new RSAPrivateCrtKeySpec(
                 modulus, publicExp, privateExp, prime1, prime2,
                 exp1, exp2, crtCoef);
-
-        return keySpec;
     }
 
     private static class DerParser {
@@ -142,9 +140,7 @@ class RsaOaep {
             if (n < length)
                 throw new IOException("Invalid DER: stream too short, missing value"); //$NON-NLS-1$
 
-            Asn1Object o = new Asn1Object(tag, length, value);
-
-            return o;
+            return new Asn1Object(tag, length, value);
         }
 
         /**

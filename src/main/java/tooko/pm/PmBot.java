@@ -1,5 +1,6 @@
 package tooko.pm;
 
+import cn.hutool.core.io.FileUtil;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 import tooko.Launcher;
 import tooko.main.Fn;
@@ -18,9 +19,8 @@ import tooko.td.TdApi.User;
 import tooko.td.client.TdBot;
 import tooko.td.client.TdException;
 
+import java.io.File;
 import java.util.HashSet;
-import java.io.*;
-import cn.hutool.core.io.*;
 
 public class PmBot extends TdBot {
 
@@ -93,7 +93,8 @@ public class PmBot extends TdBot {
 
                 chat = Fn.byte2long(FileUtil.readBytes(chatId));
 
-            } catch (Exception ex) {}
+            } catch (Exception ignored) {
+            }
 
             FileUtil.del(chatId);
 
@@ -195,7 +196,7 @@ public class PmBot extends TdBot {
 
         }
 
-        if (!this.data.payloads.containsKey(data)) {
+        if (!this.data.payloads.containsKey(payload)) {
 
             Fn.rejectFunction();
 

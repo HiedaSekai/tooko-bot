@@ -50,7 +50,7 @@ public class Fn {
 
     public static <T> LinkedList<T> newList() {
 
-        return new LinkedList<T>();
+        return new LinkedList<>();
 
     }
 
@@ -247,7 +247,7 @@ public class Fn {
 
                 format.write(data);
 
-            } catch (IOException e) {
+            } catch (IOException ignored) {
             }
 
         }
@@ -1118,7 +1118,7 @@ public class Fn {
 
     public static String a(String link) {
 
-        if (link == null) return link;
+        if (link == null) return "";
 
         if (link.startsWith("http")) link = URLUtil.url(link).toString();
 
@@ -1186,7 +1186,7 @@ public class Fn {
 
     public static long[] toArray(Collection<Long> array) {
 
-        return ArrayUtil.unWrap(array.toArray(new Long[array.size()]));
+        return ArrayUtil.unWrap(array.toArray(new Long[0]));
 
     }
 
@@ -1305,9 +1305,7 @@ public class Fn {
 
             if (ids.size() <= 100) {
 
-                array = new LinkedList<>();
-
-                array.addAll(ids);
+                array = new LinkedList<>(ids);
 
                 ids.clear();
 
@@ -1315,15 +1313,13 @@ public class Fn {
 
                 List<Long> arrayList = CollectionUtil.sub(ids, 0, 100);
 
-                array = new LinkedList<>();
-
-                array.addAll(arrayList);
+                array = new LinkedList<>(arrayList);
 
                 ids.removeAll(arrayList);
 
             }
 
-            users.addAll(api.lookupUsers(toArray(ids)));
+            users.addAll(api.lookupUsers(toArray(array)));
 
         }
 

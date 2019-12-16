@@ -59,13 +59,13 @@ public class UpdateTask extends TimerTask {
 
                     if (process.waitFor() == 1) {
 
-                        Launcher.INSTANCE.send(Fn.sendText(Env.LOG_CHANNEL, Fn.plainText(Lang.DEF.UPDATE_FAILED, RuntimeUtil.getResult(process))));
+                        Launcher.INSTANCE.send(Fn.sendText(Env.LOG_CHANNEL, Fn.plainText(Lang.DEFAULT.UPDATE_FAILED, RuntimeUtil.getResult(process))));
 
                         return;
 
                     }
 
-                } catch (InterruptedException e) {
+                } catch (InterruptedException ignored) {
                 }
 
                 Env.STOP.set(true);
@@ -80,7 +80,7 @@ public class UpdateTask extends TimerTask {
                     while (!TdClient.publicPool.awaitTermination(10, TimeUnit.MILLISECONDS)) {
                     }
 
-                } catch (InterruptedException e) {
+                } catch (InterruptedException ignored) {
                 }
 
                 try {
@@ -88,7 +88,7 @@ public class UpdateTask extends TimerTask {
                     while (!TdClient.asyncPool.awaitTermination(10, TimeUnit.MILLISECONDS)) {
                     }
 
-                } catch (InterruptedException e) {
+                } catch (InterruptedException ignored) {
                 }
 
                 Launcher.INSTANCE.destroy();
@@ -115,7 +115,7 @@ public class UpdateTask extends TimerTask {
 
             RuntimeUtil.exec("git fetch").waitFor();
 
-        } catch (InterruptedException e) {
+        } catch (InterruptedException ignored) {
         }
 
     }
