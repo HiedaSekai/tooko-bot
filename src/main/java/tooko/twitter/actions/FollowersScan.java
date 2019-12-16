@@ -141,7 +141,7 @@ public class FollowersScan extends TwitterHandler {
 
                     sss.add(StrUtil.format("https://twitter.com/{}/status/{}", archive.screenName, status.getId()));
 
-                    if ((float) ss / timeline.size() > 0.1) {
+                    if ((float) ss / timeline.size() > 0.1 && ss > 4) {
 
                         UserR.DATA.updateField(status.getUser().getId(), "pornStatus", true);
 
