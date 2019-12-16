@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import tooko.main.Fn;
 import tooko.main.Lang;
+import tooko.main.utils.TextCensor;
 import tooko.td.TdApi;
 import tooko.td.client.TdClient;
 import tooko.twitter.TwitterAccount;
@@ -128,13 +129,15 @@ public class FollowersScan extends TwitterHandler {
 
                 StatusR r = StatusR.predictStatus(status);
 
-                if (r.media == StatusR.NSRC.PORN) {
+                if (r.media == StatusR.NSRC.PORN || r.media == StatusR.NSRC.SEXY || r.text == TextCensor.TCRC.PORN) {
 
                     ss++;
 
                     sss.add(StrUtil.format("https://twitter.com/{}/status/{}", archive.screenName, status.getId()));
 
-                    if (ss == 5) {
+                    if ((float) ss / timeline.size() > 0.1) {
+
+                        UserR.DATA.updateField(status.getUser().getId(), "pornStatus", true);
 
                         count++;
 

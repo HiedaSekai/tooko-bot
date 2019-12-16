@@ -14,6 +14,7 @@ public class UserR {
     @BsonId public long accountId;
 
     public long[] status;
+    public Boolean pornStatus;
 
     public TextCensor.TCRC name;
     public TextCensor.TCRC bio;
@@ -81,7 +82,7 @@ public class UserR {
 
     public String parseReason() {
 
-        if (ArrayUtil.isNotEmpty(status)) {
+        if (pornStatus != null) {
 
             return "PORN STATUS : \n\nhttps://twitter.com/show/status/" + ArrayUtil.join(status, "\nhttps://twitter.com/show/status/");
 
