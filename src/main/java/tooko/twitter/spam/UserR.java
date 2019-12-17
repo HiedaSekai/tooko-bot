@@ -1,7 +1,6 @@
 package tooko.twitter.spam;
 
 import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.core.util.StrUtil;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
 import tooko.main.utils.TextCensor;
@@ -21,7 +20,7 @@ public class UserR {
     public TextCensor.TCRC name;
     public TextCensor.TCRC bio;
 
-    public int hash;
+    public long lastParse;
 
     public static UserR predictUser(UserA user) {
 
@@ -36,11 +35,13 @@ public class UserR {
             rc = new UserR();
 
             rc.accountId = user.accountId;
-            rc.hash = -1;
+            rc.lastParse = -1;
 
             rc.status = new Long[0];
 
         }
+
+        /*
 
         int hash = (user.name + user.description).hashCode();
 
@@ -57,11 +58,11 @@ public class UserR {
             }
 
 
-            if (StrUtil.isNotBlank(user.description)/* && rc.bio != TextCensor.TCRC.PORN*/) {
+            if (StrUtil.isNotBlank(user.description) && rc.bio != TextCensor.TCRC.PORN) {
 
                 rc.bio = TextCensor.getInstance().predictText(user.description);
 
-            } else /*if (StrUtil.isBlank(user.description) && rc.bio != TextCensor.TCRC.PORN) */ {
+            } else if (StrUtil.isBlank(user.description) && rc.bio != TextCensor.TCRC.PORN) {
 
                 rc.bio = null;
 
@@ -73,6 +74,8 @@ public class UserR {
 
         }
 
+        */
+
         return rc;
 
     }
@@ -80,7 +83,7 @@ public class UserR {
     @BsonIgnore
     public boolean isSpam() {
 
-        return pornStatus != null || name == TextCensor.TCRC.PORN || bio == TextCensor.TCRC.PORN;
+        return pornStatus != null;
 
     }
 
@@ -90,7 +93,7 @@ public class UserR {
 
             return "PORN STATUS : \n\nhttps://twitter.com/show/status/" + ArrayUtil.join(status, "\nhttps://twitter.com/show/status/");
 
-        } else if (name == TextCensor.TCRC.PORN) {
+        } /*else if (name == TextCensor.TCRC.PORN) {
 
             return "PORN NAME";
 
@@ -98,7 +101,7 @@ public class UserR {
 
             return "PORN DESCRIPTION";
 
-        }
+        }*/
 
         return "ERROR";
 
