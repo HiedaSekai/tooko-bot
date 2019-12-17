@@ -235,6 +235,8 @@ public class FollowersScan extends TwitterHandler {
 
                     }
 
+                    log.debug("PRED : {} / {}",index,statusList.size());
+
                     if (r.media == StatusR.NSRC.PORN || r.media == StatusR.NSRC.SEXY || r.text == TextCensor.TCRC.PORN) {
 
                         result.add(StrUtil.format("https://twitter.com/{}/status/{}", nextStatus.getUser().getScreenName(), nextStatus.getId()));
