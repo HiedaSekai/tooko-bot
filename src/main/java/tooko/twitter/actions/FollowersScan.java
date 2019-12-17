@@ -187,6 +187,8 @@ public class FollowersScan extends TwitterHandler {
 
         }
 
+        long last = -1;
+
         private synchronized Status nextStatus() {
 
             if (finish.get()) return null;
@@ -201,7 +203,9 @@ public class FollowersScan extends TwitterHandler {
 
             }
 
-            if ((next + 1) % 10 == 0) {
+            if ((next + 1) % 10 == 0 && System.currentTimeMillis() - last > 500) {
+
+                last = System.currentTimeMillis();
 
                 send(Fn.editText(stat, Fn.plainText("PRDICTING ... {} / {} - {} / {}", userIndex + 1, userMax, next + 1, statusList.size())));
 
