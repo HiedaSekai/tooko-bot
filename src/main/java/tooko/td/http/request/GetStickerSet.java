@@ -9,7 +9,9 @@ import tooko.td.http.response.GetStickerSetResponse;
 public class GetStickerSet extends BaseRequest<GetStickerSet, GetStickerSetResponse> {
 
     public GetStickerSet(String name) {
+
         super(GetStickerSetResponse.class);
         add("name", name);
     }
+
 }

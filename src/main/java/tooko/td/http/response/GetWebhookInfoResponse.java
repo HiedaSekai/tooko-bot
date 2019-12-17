@@ -11,13 +11,14 @@ public class GetWebhookInfoResponse extends BaseResponse {
     private WebhookInfo result;
 
     public WebhookInfo webhookInfo() {
+
         return result;
     }
 
     @Override
     public String toString() {
-        return "GetWebhookInfoResponse{" +
-                "result=" + result +
-                '}';
+
+        return "GetWebhookInfoResponse{" + "result=" + result + '}';
     }
+
 }

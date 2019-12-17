@@ -9,11 +9,14 @@ import tooko.td.http.response.BaseResponse;
 public class PinChatMessage extends BaseRequest<PinChatMessage, BaseResponse> {
 
     public PinChatMessage(Object chatId, int messageId) {
+
         super(BaseResponse.class);
         add("chat_id", chatId).add("message_id", messageId);
     }
 
     public PinChatMessage disableNotification(boolean disableNotification) {
+
         return add("disable_notification", disableNotification);
     }
+
 }

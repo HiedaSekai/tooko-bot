@@ -9,7 +9,9 @@ import tooko.td.http.response.BaseResponse;
 public class DeleteChatStickerSet extends BaseRequest<DeleteChatStickerSet, BaseResponse> {
 
     public DeleteChatStickerSet(Object chatId) {
+
         super(BaseResponse.class);
         add("chat_id", chatId);
     }
+
 }

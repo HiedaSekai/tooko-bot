@@ -31,6 +31,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class MuteAndBlock extends TwitterHandler {
 
     public int PERSIST_ID = Fn.PerststId._6;
+    public HashMap<Integer, Task> threads = new HashMap<>();
 
     @Override
     public void onLoad() {
@@ -223,8 +224,6 @@ public class MuteAndBlock extends TwitterHandler {
         }
 
     }
-
-    public HashMap<Integer, Task> threads = new HashMap<>();
 
     @Override
     public void onPersistCancel(User user, long chatId, Message message, int subId) {

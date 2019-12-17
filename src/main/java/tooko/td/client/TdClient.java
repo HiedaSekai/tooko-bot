@@ -25,11 +25,10 @@ import java.util.concurrent.locks.ReentrantLock;
 @SuppressWarnings("EmptyMethod")
 public class TdClient extends TdHandler {
 
-    public static Timer mainTimer = new Timer("Mian Timer");
-    public static LinkedList<TdClient> clients = new LinkedList<>();
     public static final LinkedList<TdClient> postAdd = new LinkedList<>();
     public static final LinkedList<TdClient> postDestroy = new LinkedList<>();
-
+    public static Timer mainTimer = new Timer("Mian Timer");
+    public static LinkedList<TdClient> clients = new LinkedList<>();
     public static ThreadPoolExecutor publicPool = new ThreadPoolExecutor(1, 1, 30, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
     public static ThreadPoolExecutor asyncPool = new ThreadPoolExecutor(8, 8, 15, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
 
@@ -126,7 +125,8 @@ public class TdClient extends TdHandler {
 
             hasAuth.set(true);
 
-            for (TdHandler handler : handlers) handler.onLogin();
+            for (TdHandler handler : handlers)
+                handler.onLogin();
 
         } else if (authorizationState instanceof AuthorizationStateLoggingOut) {
 
@@ -138,6 +138,7 @@ public class TdClient extends TdHandler {
     }
 
     public void onLoggingOut() {
+
     }
 
 
@@ -560,6 +561,7 @@ public class TdClient extends TdHandler {
     }
 
     interface ReturnBack<T extends TdApi.Object> extends TdCallback<T> {
+
     }
 
     public static class EventTask extends Thread {
@@ -609,13 +611,15 @@ public class TdClient extends TdHandler {
 
                     LinkedList<Client.Event> responseList = client.client.receive(0, 4);
 
-                    for (Client.Event event : responseList) client.processEvent(event);
+                    for (Client.Event event : responseList)
+                        client.processEvent(event);
 
                 }
 
             }
 
         }
+
     }
 
     public class LogCallback implements TdCallback<TdApi.Object> {

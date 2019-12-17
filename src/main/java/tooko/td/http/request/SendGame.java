@@ -7,6 +7,7 @@ package tooko.td.http.request;
 public class SendGame extends AbstractSendRequest<SendGame> {
 
     public SendGame(Object chatId, String gameShortName) {
+
         super(chatId);
         add("game_short_name", gameShortName);
     }

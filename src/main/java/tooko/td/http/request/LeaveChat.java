@@ -9,7 +9,9 @@ import tooko.td.http.response.BaseResponse;
 public class LeaveChat extends BaseRequest<LeaveChat, BaseResponse> {
 
     public LeaveChat(Object chatId) {
+
         super(BaseResponse.class);
         add("chat_id", chatId);
     }
+
 }

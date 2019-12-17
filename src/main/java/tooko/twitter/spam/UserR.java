@@ -87,7 +87,7 @@ public class UserR {
 
         if (pornStatus != null) {
 
-            return "PORN STATUS : \n\nhttps://twitter.com/show/status/" + ArrayUtil.join(status, "\nhttps://twitter.com/show/status/");
+            return "PORN STATUS : \n\nhttps://twitter.com/show/status/" + ArrayUtil.join(status, "\nhttps://twitter" + ".com/show/status/");
 
         } /*else if (name == TextCensor.TCRC.PORN) {
 

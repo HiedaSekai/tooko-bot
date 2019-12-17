@@ -9,7 +9,9 @@ import tooko.td.http.response.BaseResponse;
 public class DeleteChatPhoto extends BaseRequest<DeleteChatPhoto, BaseResponse> {
 
     public DeleteChatPhoto(Object chatId) {
+
         super(BaseResponse.class);
         add("chat_id", chatId);
     }
+
 }

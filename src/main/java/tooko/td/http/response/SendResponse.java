@@ -11,16 +11,18 @@ public class SendResponse extends BaseResponse {
     private Message result;
 
     SendResponse() {
+
     }
 
     public Message message() {
+
         return result;
     }
 
     @Override
     public String toString() {
-        return "SendResponse{" +
-                "result=" + result +
-                '}';
+
+        return "SendResponse{" + "result=" + result + '}';
     }
+
 }

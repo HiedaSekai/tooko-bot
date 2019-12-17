@@ -7,6 +7,7 @@ import java.io.Serializable;
  * 02 August 2018
  */
 public class ResidentialAddress extends DecryptedData implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private String street_line1;
@@ -17,31 +18,38 @@ public class ResidentialAddress extends DecryptedData implements Serializable {
     private String post_code;
 
     public String streetLine1() {
+
         return street_line1;
     }
 
     public String streetLine2() {
+
         return street_line2;
     }
 
     public String city() {
+
         return city;
     }
 
     public String state() {
+
         return state;
     }
 
     public String countryCode() {
+
         return country_code;
     }
 
     public String postCode() {
+
         return post_code;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -57,6 +65,7 @@ public class ResidentialAddress extends DecryptedData implements Serializable {
 
     @Override
     public int hashCode() {
+
         int result = street_line1 != null ? street_line1.hashCode() : 0;
         result = 31 * result + (street_line2 != null ? street_line2.hashCode() : 0);
         result = 31 * result + (city != null ? city.hashCode() : 0);
@@ -68,13 +77,8 @@ public class ResidentialAddress extends DecryptedData implements Serializable {
 
     @Override
     public String toString() {
-        return "ResidentialAddress{" +
-                "street_line1='" + street_line1 + '\'' +
-                ", street_line2='" + street_line2 + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", country_code='" + country_code + '\'' +
-                ", post_code='" + post_code + '\'' +
-                '}';
+
+        return "ResidentialAddress{" + "street_line1='" + street_line1 + '\'' + ", street_line2='" + street_line2 + '\'' + ", city='" + city + '\'' + ", state='" + state + '\'' + ", country_code='" + country_code + '\'' + ", post_code='" + post_code + '\'' + '}';
     }
+
 }

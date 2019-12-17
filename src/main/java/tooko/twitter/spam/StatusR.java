@@ -26,17 +26,18 @@ public class StatusR {
     public long user;
 
     public NSRC media;
+    public TextCensor.TCRC text;
 
     public StatusR(long statusId, long user, NSRC media, TextCensor.TCRC text) {
+
         this.statusId = statusId;
         this.user = user;
         this.media = media;
         this.text = text;
     }
 
-    public TextCensor.TCRC text;
-
     public StatusR() {
+
     }
 
     public static StatusR predictStatus(Status status) {
@@ -228,11 +229,7 @@ public class StatusR {
 
     public enum NSRC {
 
-        DRAWINGS,
-        HENTAI,
-        NEUTRAL,
-        PORN,
-        SEXY
+        DRAWINGS, HENTAI, NEUTRAL, PORN, SEXY
 
     }
 

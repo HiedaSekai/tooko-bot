@@ -9,27 +9,18 @@ import java.io.Serializable;
  * 8/5/15.
  */
 public class Chat implements Serializable {
+
     private final static long serialVersionUID = 0L;
-
-    public enum Type {
-        @SerializedName("private") Private, group, supergroup, channel
-    }
-
     private Long id;
     private Type type;
-
     //Private
     private String first_name;
     private String last_name;
-
     //Private and Channel
     private String username;
-
     //Channel and Group
     private String title;
-
     private Boolean all_members_are_administrators;
-
     private ChatPhoto photo;
     private String description;
     private String invite_link;
@@ -39,63 +30,78 @@ public class Chat implements Serializable {
     private Boolean can_set_sticker_set;
 
     public Long id() {
+
         return id;
     }
 
     public Type type() {
+
         return type;
     }
 
     public String firstName() {
+
         return first_name;
     }
 
     public String lastName() {
+
         return last_name;
     }
 
     public String username() {
+
         return username;
     }
 
     public String title() {
+
         return title;
     }
 
     public Boolean allMembersAreAdministrators() {
+
         return all_members_are_administrators;
     }
 
     public ChatPhoto photo() {
+
         return photo;
     }
 
     public String description() {
+
         return description;
     }
 
     public String inviteLink() {
+
         return invite_link;
     }
 
     public Message pinnedMessage() {
+
         return pinned_message;
     }
 
     public ChatPermissions permissions() {
+
         return permissions;
     }
 
     public String stickerSetName() {
+
         return sticker_set_name;
     }
 
     public Boolean canSetStickerSet() {
+
         return can_set_sticker_set;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -122,26 +128,18 @@ public class Chat implements Serializable {
 
     @Override
     public int hashCode() {
+
         return id != null ? id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return "Chat{" +
-                "id=" + id +
-                ", type=" + type +
-                ", first_name='" + first_name + '\'' +
-                ", last_name='" + last_name + '\'' +
-                ", username='" + username + '\'' +
-                ", title='" + title + '\'' +
-                ", all_members_are_administrators=" + all_members_are_administrators +
-                ", photo=" + photo +
-                ", description='" + description + '\'' +
-                ", invite_link='" + invite_link + '\'' +
-                ", pinned_message=" + pinned_message +
-                ", permissions=" + permissions +
-                ", sticker_set_name='" + sticker_set_name + '\'' +
-                ", can_set_sticker_set=" + can_set_sticker_set +
-                '}';
+
+        return "Chat{" + "id=" + id + ", type=" + type + ", first_name='" + first_name + '\'' + ", last_name='" + last_name + '\'' + ", username='" + username + '\'' + ", title='" + title + '\'' + ", all_members_are_administrators=" + all_members_are_administrators + ", photo=" + photo + ", description='" + description + '\'' + ", invite_link='" + invite_link + '\'' + ", pinned_message=" + pinned_message + ", permissions=" + permissions + ", sticker_set_name='" + sticker_set_name + '\'' + ", can_set_sticker_set=" + can_set_sticker_set + '}';
     }
+
+    public enum Type {
+        @SerializedName("private") Private, group, supergroup, channel
+    }
+
 }

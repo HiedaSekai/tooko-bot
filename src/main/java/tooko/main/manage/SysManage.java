@@ -129,8 +129,7 @@ public class SysManage extends TdFunction {
 
                 UpdateTask.checkUpdate() ? Fn.inlineData(Lang.get(userId).UPDATE_NOW, DATA_ID, 3) : Fn.inlineData(Lang.get(userId).CHECK_UPDATE, DATA_ID, 4),
 
-                Fn.inlineData(SysConfig.isAutoUpdateEnable() ? Lang.get(userId).DISABLE_AUTO_UPDATE : Lang.get(userId).ENABLE_AUTO_UPDATE, DATA_ID, 5),
-                Fn.inlineData(SysConfig.isHookUpdateEnable() ? Lang.get(userId).DISABLE_HOOK_UPDATE : Lang.get(userId).ENABLE_HOOK_UPDATE, DATA_ID, 6)
+                Fn.inlineData(SysConfig.isAutoUpdateEnable() ? Lang.get(userId).DISABLE_AUTO_UPDATE : Lang.get(userId).ENABLE_AUTO_UPDATE, DATA_ID, 5), Fn.inlineData(SysConfig.isHookUpdateEnable() ? Lang.get(userId).DISABLE_HOOK_UPDATE : Lang.get(userId).ENABLE_HOOK_UPDATE, DATA_ID, 6)
 
         };
 

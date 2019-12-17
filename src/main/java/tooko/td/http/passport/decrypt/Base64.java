@@ -23,6 +23,7 @@ package tooko.td.http.passport.decrypt;
  * href="http://www.ietf.org/rfc/rfc3548.txt">3548</a>.
  */
 public class Base64 {
+
     /**
      * Default values for encoder/decoder flags.
      */
@@ -57,34 +58,9 @@ public class Base64 {
      */
     public static final int NO_CLOSE = 16;
 
-    //  --------------------------------------------------------
-    //  shared code
-    //  --------------------------------------------------------
-    /* package */ static abstract class Coder {
-        public byte[] output;
-        public int op;
+    private Base64() {
 
-        /**
-         * Encode/decode another block of input data.  this.output is
-         * provided by the caller, and must be big enough to hold all
-         * the coded data.  On exit, this.opwill be set to the length
-         * of the coded data.
-         *
-         * @param finish true if this is the final call to process for
-         *               this object.  Will finalize the coder state and
-         *               include any final bytes in the output.
-         * @return true if the input so far is good; false if some
-         * error has been detected in the input stream..
-         */
-        public abstract boolean process(byte[] input, int offset, int len, boolean finish);
-
-        /**
-         * @return the maximum number of bytes a call to process()
-         * could produce for the given number of input bytes.  This may
-         * be an overestimate.
-         */
-        public abstract int maxOutputSize(int len);
-    }
+    }   // don't instantiate
     //  --------------------------------------------------------
     //  decoding
     //  --------------------------------------------------------
@@ -104,6 +80,7 @@ public class Base64 {
      *                                  incorrect padding
      */
     public static byte[] decode(String str, int flags) {
+
         return decode(str.getBytes(), flags);
     }
 
@@ -121,6 +98,7 @@ public class Base64 {
      *                                  incorrect padding
      */
     public static byte[] decode(byte[] input, int flags) {
+
         return decode(input, 0, input.length, flags);
     }
 
@@ -157,56 +135,55 @@ public class Base64 {
         return temp;
     }
 
+    //  --------------------------------------------------------
+    //  shared code
+    //  --------------------------------------------------------
+    /* package */ static abstract class Coder {
+
+        public byte[] output;
+        public int op;
+
+        /**
+         * Encode/decode another block of input data.  this.output is
+         * provided by the caller, and must be big enough to hold all
+         * the coded data.  On exit, this.opwill be set to the length
+         * of the coded data.
+         *
+         * @param finish true if this is the final call to process for
+         *               this object.  Will finalize the coder state and
+         *               include any final bytes in the output.
+         * @return true if the input so far is good; false if some
+         * error has been detected in the input stream..
+         */
+        public abstract boolean process(byte[] input, int offset, int len, boolean finish);
+
+        /**
+         * @return the maximum number of bytes a call to process()
+         * could produce for the given number of input bytes.  This may
+         * be an overestimate.
+         */
+        public abstract int maxOutputSize(int len);
+
+    }
+
     /* package */ static class Decoder extends Coder {
+
         /**
          * Lookup table for turning bytes into their position in the
          * Base64 alphabet.
          */
-        private static final int[] DECODE = {
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, -1, 63,
-                52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -2, -1, -1,
-                -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
-                15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, -1,
-                -1, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
-                41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-        };
+        private static final int[] DECODE = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, -1, 63, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -2, -1, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, -1, -1, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,};
         /**
          * Decode lookup table for the "web safe" variant (RFC 3548
          * sec. 4) where - and _ replace + and /.
          */
-        private static final int[] DECODE_WEBSAFE = {
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1,
-                52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -2, -1, -1,
-                -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
-                15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, 63,
-                -1, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
-                41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-        };
+        private static final int[] DECODE_WEBSAFE = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -2, -1, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, 63, -1, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,};
         /**
          * Non-data values in the DECODE arrays.
          */
         private static final int SKIP = -1;
         private static final int EQUALS = -2;
+        final private int[] alphabet;
         /**
          * States 0-3 are reading through the next input tuple.
          * State 4 is having read one '=' and expecting exactly
@@ -218,9 +195,9 @@ public class Base64 {
          */
         private int state;   // state number (0 to 6)
         private int value;
-        final private int[] alphabet;
 
         public Decoder(int flags, byte[] output) {
+
             this.output = output;
             alphabet = ((flags & URL_SAFE) == 0) ? DECODE : DECODE_WEBSAFE;
             state = 0;
@@ -232,6 +209,7 @@ public class Base64 {
          * len} bytes could decode to.
          */
         public int maxOutputSize(int len) {
+
             return len * 3 / 4 + 10;
         }
 
@@ -242,6 +220,7 @@ public class Base64 {
          * bad base-64 data has been detected in the input stream.
          */
         public boolean process(byte[] input, int offset, int len, boolean finish) {
+
             if (this.state == 6) return false;
             int p = offset;
             len += offset;
@@ -271,11 +250,7 @@ public class Base64 {
                 // You can remove this whole block and the output should
                 // be the same, just slower.
                 if (state == 0) {
-                    while (p + 4 <= len &&
-                            (value = ((alphabet[input[p] & 0xff] << 18) |
-                                    (alphabet[input[p + 1] & 0xff] << 12) |
-                                    (alphabet[input[p + 2] & 0xff] << 6) |
-                                    (alphabet[input[p + 3] & 0xff]))) >= 0) {
+                    while (p + 4 <= len && (value = ((alphabet[input[p] & 0xff] << 18) | (alphabet[input[p + 1] & 0xff] << 12) | (alphabet[input[p + 2] & 0xff] << 6) | (alphabet[input[p + 3] & 0xff]))) >= 0) {
                         output[op + 2] = (byte) value;
                         output[op + 1] = (byte) (value >> 8);
                         output[op] = (byte) (value >> 16);
@@ -402,8 +377,7 @@ public class Base64 {
             this.op = op;
             return true;
         }
+
     }
 
-    private Base64() {
-    }   // don't instantiate
 }

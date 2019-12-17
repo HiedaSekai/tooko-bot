@@ -7,6 +7,7 @@ import java.io.Serializable;
  * 8/5/15.
  */
 public class Sticker implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private String file_id;
@@ -20,43 +21,53 @@ public class Sticker implements Serializable {
     private Integer file_size;
 
     public String fileId() {
+
         return file_id;
     }
 
     public Integer width() {
+
         return width;
     }
 
     public Integer height() {
+
         return height;
     }
 
     public Boolean isAnimated() {
+
         return is_animated;
     }
 
     public PhotoSize thumb() {
+
         return thumb;
     }
 
     public String emoji() {
+
         return emoji;
     }
 
     public String setName() {
+
         return set_name;
     }
 
     public MaskPosition maskPosition() {
+
         return mask_position;
     }
 
     public Integer fileSize() {
+
         return file_size;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -76,21 +87,14 @@ public class Sticker implements Serializable {
 
     @Override
     public int hashCode() {
+
         return file_id != null ? file_id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return "Sticker{" +
-                "file_id='" + file_id + '\'' +
-                ", width=" + width +
-                ", height=" + height +
-                ", is_animated=" + is_animated +
-                ", thumb=" + thumb +
-                ", emoji='" + emoji + '\'' +
-                ", set_name='" + set_name + '\'' +
-                ", mask_position=" + mask_position +
-                ", file_size=" + file_size +
-                '}';
+
+        return "Sticker{" + "file_id='" + file_id + '\'' + ", width=" + width + ", height=" + height + ", is_animated" + "=" + is_animated + ", thumb=" + thumb + ", emoji='" + emoji + '\'' + ", set_name='" + set_name + '\'' + ", mask_position=" + mask_position + ", file_size=" + file_size + '}';
     }
+
 }

@@ -8,21 +8,25 @@ import java.util.Arrays;
  * 8/5/15.
  */
 public class UserProfilePhotos implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private Integer total_count;
     private PhotoSize[][] photos;
 
     public Integer totalCount() {
+
         return total_count;
     }
 
     public PhotoSize[][] photos() {
+
         return photos;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -34,6 +38,7 @@ public class UserProfilePhotos implements Serializable {
 
     @Override
     public int hashCode() {
+
         int result = total_count != null ? total_count.hashCode() : 0;
         result = 31 * result + Arrays.deepHashCode(photos);
         return result;
@@ -41,9 +46,8 @@ public class UserProfilePhotos implements Serializable {
 
     @Override
     public String toString() {
-        return "UserProfilePhotos{" +
-                "total_count=" + total_count +
-                ", photos=" + Arrays.deepToString(photos) +
-                '}';
+
+        return "UserProfilePhotos{" + "total_count=" + total_count + ", photos=" + Arrays.deepToString(photos) + '}';
     }
+
 }

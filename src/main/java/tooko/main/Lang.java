@@ -118,13 +118,13 @@ public class Lang {
     public String PM_WELCOME = "你好！\n\n你可以通过这个机器人联系我(们).";
     public String PM_ON_START = "{} 开启了私聊机器人 ({}).";
     public String PM_ON_PAYLOAD = "{} 使用 payload '{}'开启了机器人.";
-    public String PM_OK = "机器人正常运行. 请勿停用本机器人, 否则将无法收到消息.  " + Fn.a("私聊机器人文档", "https://gitlab.com/tooko/tooko-bot/wikis/Bots/PmBot");
+    public String PM_OK = "机器人正常运行. 请勿停用本机器人, 否则将无法收到消息.  " + Fn.a("私聊机器人文档", "https://gitlab" + ".com/tooko/tooko-bot/wikis/Bots/PmBot");
     public String PM_NO_WELCOME_MESSAGE = "默认欢迎消息";
     public String PM_WELCOME_MESSAGE = "欢迎消息 : 已设定 {} 条";
     public String PM_WELCOME_NOTICE = "打开通知";
     public String PM_WELCOME_INPUT = "输入任意消息 :\n\n使用 /submit 完成设定\n使用 /cancel 取消设定";
     public String PM_WELCOME_ADDED = "消息已添加.\n\n使用 /submit 完成设定\n使用 /cancel 取消设定";
-    public String PM_WELCOME_FD_WARN = "无法存储的消息类型, 或消息为投票 / 转发! 请确保机器人可以访问这条消息, 否则这条消息无法转发给接受者 (不要删除这条消息！)\n\n提示 : 如果需要发布对他人的匿名投票, 可以先在一个频道里发布投票, 然后转发给机器人作为消息, 这样就不会暴露身份了.";
+    public String PM_WELCOME_FD_WARN = "无法存储的消息类型, 或消息为投票 / 转发! 请确保机器人可以访问这条消息, 否则这条消息无法转发给接受者 (不要删除这条消息！)\n\n提示 : " + "如果需要发布对他人的匿名投票, 可以先在一个频道里发布投票, 然后转发给机器人作为消息, 这样就不会暴露身份了.";
     public String PM_WELCOME_FINISH = "消息已设定.";
     public String PM_PAYLOADS = "子欢迎消息列表";
     public String PM_PAYLOAD = "子欢迎消息";
@@ -305,19 +305,13 @@ public class Lang {
 
     public String LICENSE =
 
-            "远子 基于 " + Fn.a("Apache License 2.0", "https://gitlab.com/tooko/tooko-bot/blob/master/LICENSE") + " 发行, 欢迎来 " + Fn.a("GitLab", "https://gitlab.com/tooko/tooko-bot") + " 访问我们." + "\n\n" +
+            "远子 基于 " + Fn.a("Apache License 2.0", "https://gitlab.com/tooko/tooko-bot/blob/master/LICENSE") + " 发行, " + "欢迎来 " + Fn.a("GitLab", "https://gitlab.com/tooko/tooko-bot") + " 访问我们." + "\n\n" +
 
                     wikiLink("文档主页", "Home") + " | " + wikiLink("安装说明", "Install") + " | " + wikiLink("命令与更新", "Usage") + " | " + wikiLink("语言与翻译", "Trans") + "\n\n" +
 
                     "子机器人文档 : " + wikiLink("Twitter", "Bots/TwitterBot") + "\n\n" +
 
                     "机器人文档 : " + wikiLink("私聊机器人", "Bots/PmBot");
-
-    static String wikiLink(String name, String link) {
-
-        return Fn.a(name, "https://gitlab.com/tooko/tooko-bot/wikis/" + link);
-
-    }
 
     public Lang() {
 
@@ -326,7 +320,14 @@ public class Lang {
     }
 
     public Lang(String name) {
+
         LANG_NAME = name;
+    }
+
+    static String wikiLink(String name, String link) {
+
+        return Fn.a(name, "https://gitlab.com/tooko/tooko-bot/wikis/" + link);
+
     }
 
     public static Lang get(TdApi.User user) {
@@ -364,9 +365,11 @@ public class Lang {
         public int lang;
 
         public DB() {
+
         }
 
         public DB(int id, int lang) {
+
             this.id = id;
             this.lang = lang;
         }

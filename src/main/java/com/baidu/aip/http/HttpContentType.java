@@ -14,7 +14,8 @@ package com.baidu.aip.http;
 
 public interface HttpContentType {
 
-    public static final String FORM_DATA = "multipart/form-data";
-    public static final String JSON_DATA = "application/json";
-    public static final String FORM_URLENCODE_DATA = "application/x-www-form-urlencoded";
+    String FORM_DATA = "multipart/form-data";
+    String JSON_DATA = "application/json";
+    String FORM_URLENCODE_DATA = "application/x-www-form-urlencoded";
+
 }

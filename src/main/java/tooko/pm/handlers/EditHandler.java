@@ -63,11 +63,7 @@ public class EditHandler extends TdHandler {
 
                     edit = Fn.editText(targetChat, targetMessage, ((MessageText) newContent).text);
 
-                } else if (newContent instanceof MessageAnimation ||
-                        newContent instanceof MessageAudio ||
-                        newContent instanceof MessageDocument ||
-                        newContent instanceof MessagePhoto ||
-                        newContent instanceof MessageVideo) {
+                } else if (newContent instanceof MessageAnimation || newContent instanceof MessageAudio || newContent instanceof MessageDocument || newContent instanceof MessagePhoto || newContent instanceof MessageVideo) {
 
                     edit = new EditMessageMedia(targetChat, targetMessage, null, Fn.convertToInput(newContent));
 

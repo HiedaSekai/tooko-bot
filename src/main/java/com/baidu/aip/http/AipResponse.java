@@ -25,19 +25,23 @@ public class AipResponse {
     private int status;
 
     public AipResponse() {
+
         status = 0;
         charset = "UTF-8";
     }
 
     public int getStatus() {
+
         return status;
     }
 
     public void setStatus(int status) {
+
         this.status = status;
     }
 
     public String getBodyStr() {
+
         if (body == null) {
             return "";
         }
@@ -50,12 +54,14 @@ public class AipResponse {
     }
 
     public Map<String, List<String>> getHeader() {
+
         return header;
     }
 
     public void setHeader(Map<String, List<String>> header) {
+
         this.header = new TreeMap<String, List<String>>(String.CASE_INSENSITIVE_ORDER);
-        for (Map.Entry<String, List<String>> entry: header.entrySet()) {
+        for (Map.Entry<String, List<String>> entry : header.entrySet()) {
             if (entry.getKey() != null) {
                 this.header.put(entry.getKey(), entry.getValue());
             }
@@ -63,18 +69,23 @@ public class AipResponse {
     }
 
     public byte[] getBody() {
+
         return body;
     }
 
     public void setBody(byte[] body) {
+
         this.body = body;
     }
 
     public String getCharset() {
+
         return charset;
     }
 
     public void setCharset(String charset) {
+
         this.charset = charset;
     }
+
 }

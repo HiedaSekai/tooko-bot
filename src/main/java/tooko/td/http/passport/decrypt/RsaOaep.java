@@ -16,6 +16,7 @@ import java.security.spec.RSAPrivateCrtKeySpec;
 class RsaOaep {
 
     static byte[] decrypt(String privateKey, byte[] secret) throws Exception {
+
         String pkcs8Pem = privateKey;
         pkcs8Pem = pkcs8Pem.replace("-----BEGIN RSA PRIVATE KEY-----", "");
         pkcs8Pem = pkcs8Pem.replace("-----END RSA PRIVATE KEY-----", "");
@@ -51,9 +52,7 @@ class RsaOaep {
         BigInteger exp2 = parser.read().getInteger();
         BigInteger crtCoef = parser.read().getInteger();
 
-        return new RSAPrivateCrtKeySpec(
-                modulus, publicExp, privateExp, prime1, prime2,
-                exp1, exp2, crtCoef);
+        return new RSAPrivateCrtKeySpec(modulus, publicExp, privateExp, prime1, prime2, exp1, exp2, crtCoef);
     }
 
     private static class DerParser {
@@ -106,6 +105,7 @@ class RsaOaep {
          * @param in The DER encoded stream
          */
         public DerParser(InputStream in) throws IOException {
+
             this.in = in;
         }
 
@@ -116,6 +116,7 @@ class RsaOaep {
          * @throws IOException
          */
         public DerParser(byte[] bytes) throws IOException {
+
             this(new ByteArrayInputStream(bytes));
         }
 
@@ -128,17 +129,16 @@ class RsaOaep {
          * @throws IOException
          */
         public Asn1Object read() throws IOException {
+
             int tag = in.read();
 
-            if (tag == -1)
-                throw new IOException("Invalid DER: stream too short, missing tag"); //$NON-NLS-1$
+            if (tag == -1) throw new IOException("Invalid DER: stream too short, missing tag"); //$NON-NLS-1$
 
             int length = getLength();
 
             byte[] value = new byte[length];
             int n = in.read(value);
-            if (n < length)
-                throw new IOException("Invalid DER: stream too short, missing value"); //$NON-NLS-1$
+            if (n < length) throw new IOException("Invalid DER: stream too short, missing value"); //$NON-NLS-1$
 
             return new Asn1Object(tag, length, value);
         }
@@ -163,24 +163,20 @@ class RsaOaep {
         private int getLength() throws IOException {
 
             int i = in.read();
-            if (i == -1)
-                throw new IOException("Invalid DER: length missing"); //$NON-NLS-1$
+            if (i == -1) throw new IOException("Invalid DER: length missing"); //$NON-NLS-1$
 
             // A single byte short length
-            if ((i & ~0x7F) == 0)
-                return i;
+            if ((i & ~0x7F) == 0) return i;
 
             int num = i & 0x7F;
 
             // We can't handle length longer than 4 bytes
-            if (i >= 0xFF || num > 4)
-                throw new IOException("Invalid DER: length field too big (" //$NON-NLS-1$
-                        + i + ")"); //$NON-NLS-1$
+            if (i >= 0xFF || num > 4) throw new IOException("Invalid DER: length field too big (" //$NON-NLS-1$
+                    + i + ")"); //$NON-NLS-1$
 
             byte[] bytes = new byte[num];
             int n = in.read(bytes);
-            if (n < num)
-                throw new IOException("Invalid DER: length too short"); //$NON-NLS-1$
+            if (n < num) throw new IOException("Invalid DER: length too short"); //$NON-NLS-1$
 
             return new BigInteger(1, bytes).intValue();
         }
@@ -225,6 +221,7 @@ class RsaOaep {
          * @param value  Encoded octet string for the field.
          */
         public Asn1Object(int tag, int length, byte[] value) {
+
             this.tag = tag;
             this.type = tag & 0x1F;
             this.length = length;
@@ -232,18 +229,22 @@ class RsaOaep {
         }
 
         public int getType() {
+
             return type;
         }
 
         public int getLength() {
+
             return length;
         }
 
         public byte[] getValue() {
+
             return value;
         }
 
         public boolean isConstructed() {
+
             return (tag & DerParser.CONSTRUCTED) == DerParser.CONSTRUCTED;
         }
 
@@ -254,8 +255,8 @@ class RsaOaep {
          * @throws IOException
          */
         public DerParser getParser() throws IOException {
-            if (!isConstructed())
-                throw new IOException("Invalid DER: can't parse primitive entity"); //$NON-NLS-1$
+
+            if (!isConstructed()) throw new IOException("Invalid DER: can't parse primitive entity"); //$NON-NLS-1$
 
             return new DerParser(value);
         }
@@ -267,11 +268,12 @@ class RsaOaep {
          * @throws IOException
          */
         public BigInteger getInteger() throws IOException {
-            if (type != DerParser.INTEGER)
-                throw new IOException("Invalid DER: object is not integer"); //$NON-NLS-1$
+
+            if (type != DerParser.INTEGER) throw new IOException("Invalid DER: object is not integer"); //$NON-NLS-1$
 
             return new BigInteger(value);
         }
+
     }
 
 }

@@ -9,7 +9,9 @@ import tooko.td.http.response.StringResponse;
 public class ExportChatInviteLink extends BaseRequest<ExportChatInviteLink, StringResponse> {
 
     public ExportChatInviteLink(Object chatId) {
+
         super(StringResponse.class);
         add("chat_id", chatId);
     }
+
 }

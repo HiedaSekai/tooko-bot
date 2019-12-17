@@ -21,10 +21,10 @@ import java.util.LinkedList;
 
 public class TdBot extends TdClient {
 
+    public final HashMap<Integer, TdPersistent> persists = new HashMap<>();
     public File dataDir;
     public LongLongArrayMap startMessages = new LongLongArrayMap();
     public HashMap<String, LongLongArrayMap> startPayloads = new HashMap<>();
-    public final HashMap<Integer, TdPersistent> persists = new HashMap<>();
     public HashMap<Integer, TdHandler> persistHandlers = new HashMap<>();
     public HashMap<String, TdHandler> payloads = new HashMap<>();
     public HashMap<String, TdHandler> functions = new HashMap<>();
@@ -99,6 +99,7 @@ public class TdBot extends TdClient {
     }
 
     public void onAuthorizationFailed(TdException ex) {
+
     }
 
 

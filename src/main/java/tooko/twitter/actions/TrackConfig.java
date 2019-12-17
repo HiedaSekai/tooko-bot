@@ -82,7 +82,7 @@ public class TrackConfig extends TwitterHandler {
 
             if (delay < 3 * 60 * 1000) {
 
-                send(Fn.sendText(chatId, Fn.plainText(Lang.get(user).DELAY_TOO_SHORT,"3m")));
+                send(Fn.sendText(chatId, Fn.plainText(Lang.get(user).DELAY_TOO_SHORT, "3m")));
 
                 return;
 

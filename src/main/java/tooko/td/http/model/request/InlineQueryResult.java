@@ -7,6 +7,7 @@ import java.io.Serializable;
  * 1/12/16.
  */
 public abstract class InlineQueryResult<T extends InlineQueryResult> implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     @SuppressWarnings("unchecked")
@@ -18,17 +19,21 @@ public abstract class InlineQueryResult<T extends InlineQueryResult> implements 
     private InlineKeyboardMarkup reply_markup;
 
     public InlineQueryResult(String type, String id) {
+
         this.type = type;
         this.id = id;
     }
 
     public T inputMessageContent(InputMessageContent inputMessageContent) {
+
         this.input_message_content = inputMessageContent;
         return thisAsT;
     }
 
     public T replyMarkup(InlineKeyboardMarkup replyMarkup) {
+
         this.reply_markup = replyMarkup;
         return thisAsT;
     }
+
 }

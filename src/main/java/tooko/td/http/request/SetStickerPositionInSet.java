@@ -9,7 +9,9 @@ import tooko.td.http.response.BaseResponse;
 public class SetStickerPositionInSet extends BaseRequest<SetStickerPositionInSet, BaseResponse> {
 
     public SetStickerPositionInSet(String sticker, int position) {
+
         super(BaseResponse.class);
         add("sticker", sticker).add("position", position);
     }
+
 }

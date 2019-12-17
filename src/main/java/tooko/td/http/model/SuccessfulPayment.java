@@ -7,6 +7,7 @@ import java.io.Serializable;
  * 24 May 2017
  */
 public class SuccessfulPayment implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private String currency;
@@ -18,35 +19,43 @@ public class SuccessfulPayment implements Serializable {
     private String provider_payment_charge_id;
 
     public String currency() {
+
         return currency;
     }
 
     public Integer totalAmount() {
+
         return total_amount;
     }
 
     public String invoicePayload() {
+
         return invoice_payload;
     }
 
     public String shippingOptionId() {
+
         return shipping_option_id;
     }
 
     public OrderInfo orderInfo() {
+
         return order_info;
     }
 
     public String telegramPaymentChargeId() {
+
         return telegram_payment_charge_id;
     }
 
     public String providerPaymentChargeId() {
+
         return provider_payment_charge_id;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -67,6 +76,7 @@ public class SuccessfulPayment implements Serializable {
 
     @Override
     public int hashCode() {
+
         int result = currency != null ? currency.hashCode() : 0;
         result = 31 * result + (total_amount != null ? total_amount.hashCode() : 0);
         result = 31 * result + (invoice_payload != null ? invoice_payload.hashCode() : 0);
@@ -79,14 +89,8 @@ public class SuccessfulPayment implements Serializable {
 
     @Override
     public String toString() {
-        return "SuccessfulPayment{" +
-                "currency='" + currency + '\'' +
-                ", total_amount=" + total_amount +
-                ", invoice_payload='" + invoice_payload + '\'' +
-                ", shipping_option_id='" + shipping_option_id + '\'' +
-                ", order_info=" + order_info +
-                ", telegram_payment_charge_id='" + telegram_payment_charge_id + '\'' +
-                ", provider_payment_charge_id='" + provider_payment_charge_id + '\'' +
-                '}';
+
+        return "SuccessfulPayment{" + "currency='" + currency + '\'' + ", total_amount=" + total_amount + ", " + "invoice_payload='" + invoice_payload + '\'' + ", shipping_option_id='" + shipping_option_id + '\'' + ", order_info=" + order_info + ", telegram_payment_charge_id='" + telegram_payment_charge_id + '\'' + ", provider_payment_charge_id='" + provider_payment_charge_id + '\'' + '}';
     }
+
 }

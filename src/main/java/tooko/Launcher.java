@@ -156,30 +156,23 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
         String dbPort = config.getStr("db_port");
 
         PojoCodecProvider provider = PojoCodecProvider.builder()
-            //.register(new BLMapPropertyCodecProvider())
-            .register(new ArrayPropertyCodecProvider())
-            .register(registerSubClasses(TdApi.class))
-            .automatic(true)
-            .build();
+                //.register(new BLMapPropertyCodecProvider())
+                .register(new ArrayPropertyCodecProvider()).register(registerSubClasses(TdApi.class)).automatic(true).build();
 
         try {
 
             MongoClientSettings settings = MongoClientSettings
 
-                .builder()
-                .applyConnectionString(new ConnectionString("mongodb://" + dbAddress + ":" + dbPort))
-                .applyToClusterSettings(new Block<ClusterSettings.Builder>() {
+                    .builder().applyConnectionString(new ConnectionString("mongodb://" + dbAddress + ":" + dbPort)).applyToClusterSettings(new Block<ClusterSettings.Builder>() {
 
-                    @Override
-                    public void apply(ClusterSettings.Builder builder) {
+                        @Override
+                        public void apply(ClusterSettings.Builder builder) {
 
-                        builder.serverSelectionTimeout(1, TimeUnit.SECONDS);
+                            builder.serverSelectionTimeout(1, TimeUnit.SECONDS);
 
-                    }
+                        }
 
-                })
-                .codecRegistry(CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), CodecRegistries.fromProviders(provider)))
-                .build();
+                    }).codecRegistry(CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), CodecRegistries.fromProviders(provider))).build();
 
             MongoClient dbClient = MongoClients.create(settings);
 
@@ -312,11 +305,11 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
             if ("baidu".equals(textCensor.getStr("provider"))) {
 
                 Env.TEXT_CENSOR_PROVIDER = "baidu";
-                
+
                 Env.BAIDU_APP_ID = textCensor.getStr("app_id");
                 Env.BAIDU_API_KEY = textCensor.getStr("api_key");
                 Env.BAIDU_SECRET_KEY = textCensor.getStr("secret_key");
-                
+
             }
 
         }
@@ -378,27 +371,22 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
 
         String[] fields = new String[]{
 
-            "db_address",
-            "db_port",
-            "db_name",
+                "db_address", "db_port", "db_name",
 
-            "use_service",
-            "service",
+                "use_service", "service",
 
-            "bot_token",
+                "bot_token",
 
-            "public_bot_create",
-            "bot_create_max",
+                "public_bot_create", "bot_create_max",
 
-            "admins",
-            "log_channel",
+                "admins", "log_channel",
 
 
-            "twitter",
+                "twitter",
 
-            "nsfw_server",
+                "nsfw_server",
 
-            "text_censor",
+                "text_censor",
 
         };
 
@@ -418,9 +406,7 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
 
         String[] fields = new String[]{
 
-            "bot_token",
-            "public",
-            "api_tokens",
+                "bot_token", "public", "api_tokens",
 
         };
 
@@ -527,7 +513,8 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
 
             log.debug("加载 托管机器人 (๑•̀ㅂ•́)√");
 
-            for (BotData data : allBots) BotImage.start(data);
+            for (BotData data : allBots)
+                BotImage.start(data);
 
         }
 

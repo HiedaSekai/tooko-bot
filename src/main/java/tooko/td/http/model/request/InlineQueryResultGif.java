@@ -7,6 +7,7 @@ import java.io.Serializable;
  * 1/12/16.
  */
 public class InlineQueryResultGif extends InlineQueryResult<InlineQueryResultGif> implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private String gif_url;
@@ -20,38 +21,46 @@ public class InlineQueryResultGif extends InlineQueryResult<InlineQueryResultGif
     private String parse_mode;
 
     public InlineQueryResultGif(String id, String gifUrl, String thumbUrl) {
+
         super("gif", id);
         this.gif_url = gifUrl;
         this.thumb_url = thumbUrl;
     }
 
     public InlineQueryResultGif gifWidth(Integer gifWidth) {
+
         this.gif_width = gifWidth;
         return this;
     }
 
     public InlineQueryResultGif gifHeight(Integer gifHeight) {
+
         this.gif_height = gifHeight;
         return this;
     }
 
     public InlineQueryResultGif gifDuration(Integer gifDuration) {
+
         this.gif_duration = gifDuration;
         return this;
     }
 
     public InlineQueryResultGif title(String title) {
+
         this.title = title;
         return this;
     }
 
     public InlineQueryResultGif caption(String caption) {
+
         this.caption = caption;
         return this;
     }
 
     public InlineQueryResultGif parseMode(ParseMode parseMode) {
+
         this.parse_mode = parseMode.name();
         return this;
     }
+
 }

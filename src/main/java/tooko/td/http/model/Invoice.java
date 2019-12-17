@@ -7,33 +7,40 @@ import java.io.Serializable;
  * 24 May 2017
  */
 public class Invoice implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private String title, description, start_parameter, currency;
     private Integer total_amount;
 
     public String title() {
+
         return title;
     }
 
     public String description() {
+
         return description;
     }
 
     public String startParameter() {
+
         return start_parameter;
     }
 
     public String currency() {
+
         return currency;
     }
 
     public Integer totalAmount() {
+
         return total_amount;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -49,6 +56,7 @@ public class Invoice implements Serializable {
 
     @Override
     public int hashCode() {
+
         int result = title != null ? title.hashCode() : 0;
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (start_parameter != null ? start_parameter.hashCode() : 0);
@@ -59,12 +67,8 @@ public class Invoice implements Serializable {
 
     @Override
     public String toString() {
-        return "Invoice{" +
-                "title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", start_parameter='" + start_parameter + '\'' +
-                ", currency='" + currency + '\'' +
-                ", total_amount=" + total_amount +
-                '}';
+
+        return "Invoice{" + "title='" + title + '\'' + ", description='" + description + '\'' + ", start_parameter='" + start_parameter + '\'' + ", currency='" + currency + '\'' + ", total_amount=" + total_amount + '}';
     }
+
 }

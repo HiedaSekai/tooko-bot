@@ -7,5 +7,7 @@ import java.io.Serializable;
  * 04 June 2019
  */
 public class CallbackGame implements Serializable {
+
     private final static long serialVersionUID = 0L;
+
 }

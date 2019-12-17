@@ -12,6 +12,7 @@ abstract public class AbstractMultipartRequest<T extends AbstractMultipartReques
     private String fileName;
 
     public AbstractMultipartRequest(Object chatId, Object file) {
+
         super(chatId);
         if (file instanceof String) {
             isMultipart = false;
@@ -27,22 +28,26 @@ abstract public class AbstractMultipartRequest<T extends AbstractMultipartReques
     }
 
     public T fileName(String fileName) {
+
         this.fileName = fileName;
         return thisAsT;
     }
 
     protected T thumb(Object thumb) {
+
         isMultipart = true;
         return add("thumb", thumb);
     }
 
     @Override
     public boolean isMultipart() {
+
         return isMultipart;
     }
 
     @Override
     public String getFileName() {
+
         if (fileName != null && !fileName.isEmpty()) {
             return fileName;
         } else {
@@ -56,4 +61,5 @@ abstract public class AbstractMultipartRequest<T extends AbstractMultipartReques
     abstract protected String getDefaultFileName();
 
     abstract protected String getFileParamName();
+
 }

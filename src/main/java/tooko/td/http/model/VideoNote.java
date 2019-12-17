@@ -7,6 +7,7 @@ import java.io.Serializable;
  * 23 May 2017
  */
 public class VideoNote implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private String file_id;
@@ -16,27 +17,33 @@ public class VideoNote implements Serializable {
     private Integer file_size;
 
     public String fileId() {
+
         return file_id;
     }
 
     public Integer length() {
+
         return length;
     }
 
     public Integer duration() {
+
         return duration;
     }
 
     public PhotoSize thumb() {
+
         return thumb;
     }
 
     public Integer fileSize() {
+
         return file_size;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -51,17 +58,14 @@ public class VideoNote implements Serializable {
 
     @Override
     public int hashCode() {
+
         return file_id != null ? file_id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return "VideoNote{" +
-                "file_id='" + file_id + '\'' +
-                ", length=" + length +
-                ", duration=" + duration +
-                ", thumb=" + thumb +
-                ", file_size=" + file_size +
-                '}';
+
+        return "VideoNote{" + "file_id='" + file_id + '\'' + ", length=" + length + ", duration=" + duration + ", " + "thumb=" + thumb + ", file_size=" + file_size + '}';
     }
+
 }

@@ -48,6 +48,7 @@ public class PmData {
     // message id / target message id
 
     public PmData() {
+
     }
 
     public void initSessions() {

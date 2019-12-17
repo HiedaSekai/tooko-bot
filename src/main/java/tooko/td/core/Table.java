@@ -129,8 +129,7 @@ public class Table<ID, T> {
 
             if (upset) {
 
-                return collection.updateOne(eq("_id", id), and(set(FIELD_ID, id), addToSet(array, element)),
-                        new UpdateOptions().upsert(true)).getModifiedCount() > 1;
+                return collection.updateOne(eq("_id", id), and(set(FIELD_ID, id), addToSet(array, element)), new UpdateOptions().upsert(true)).getModifiedCount() > 1;
 
             } else {
 
@@ -182,8 +181,7 @@ public class Table<ID, T> {
 
             if (upset) {
 
-                return collection.updateOne(eq("_id", id), and(set("_id", id), push(array, element)),
-                        new UpdateOptions().upsert(true)).getModifiedCount() > 1;
+                return collection.updateOne(eq("_id", id), and(set("_id", id), push(array, element)), new UpdateOptions().upsert(true)).getModifiedCount() > 1;
 
             } else {
 

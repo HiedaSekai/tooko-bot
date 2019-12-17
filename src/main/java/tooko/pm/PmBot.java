@@ -68,7 +68,7 @@ public class PmBot extends TdBot {
 
     }
 
-    @Override 
+    @Override
     public void onLoad() {
 
         // addHandler(new PingFunction());

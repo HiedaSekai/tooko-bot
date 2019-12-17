@@ -79,45 +79,45 @@ public class CreateBot extends TdFunction {
 
     @Override
     public void onPersistStore(int userId, int subId, LinkedList<String> data) {
-        
+
         if (subId == 1) {
 
             BotData cache = createCache.remove(userId);
 
             data.add(cache.botId + "");
-            
+
             data.add(cache.userName);
-            
+
             data.add(cache.botToken);
-            
+
         }
-        
+
     }
-    
+
     @Override
     public void onPersistRestore(int userId, int subId, String[] data) {
-        
+
         if (subId == 2) {
-            
+
             BotData cache = new BotData();
-            
+
             cache.botId = NumberUtil.parseInt(data[0]);
-            
+
             cache.owner = userId;
-            
+
             cache.userName = data[1];
-            
+
             cache.botToken = data[2];
-            
+
         }
-        
+
     }
 
     @Override
     public void onPersistRemoved(int userId, int subId, boolean timeout) {
-        
+
         super.onPersistRemoved(userId, subId, timeout);
-        
+
         createCache.remove(userId);
 
     }
@@ -141,7 +141,7 @@ public class CreateBot extends TdFunction {
 
             } catch (TdException ex) {
 
-                send(Fn.sendText(chatId, Fn.plainText(L.BOT_TOKEN_INVALID,ex)));
+                send(Fn.sendText(chatId, Fn.plainText(L.BOT_TOKEN_INVALID, ex)));
 
                 return;
 

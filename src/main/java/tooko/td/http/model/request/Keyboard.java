@@ -9,6 +9,7 @@ import java.io.Serializable;
  * 8/11/15
  */
 public abstract class Keyboard implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     // todo remove gson
@@ -16,6 +17,7 @@ public abstract class Keyboard implements Serializable {
 
     @Override
     public final String toString() {
+
         return gson.toJson(this);
     }
 

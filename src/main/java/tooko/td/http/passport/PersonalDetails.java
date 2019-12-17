@@ -7,6 +7,7 @@ import java.io.Serializable;
  * 02 August 2018
  */
 public class PersonalDetails extends DecryptedData implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private String first_name;
@@ -21,47 +22,58 @@ public class PersonalDetails extends DecryptedData implements Serializable {
     private String middle_name_native;
 
     public String firstName() {
+
         return first_name;
     }
 
     public String lastName() {
+
         return last_name;
     }
 
     public String middleName() {
+
         return middle_name;
     }
 
     public String birthDate() {
+
         return birth_date;
     }
 
     public String gender() {
+
         return gender;
     }
 
     public String countryCode() {
+
         return country_code;
     }
 
     public String residenceCountryCode() {
+
         return residence_country_code;
     }
 
     public String firstNameNative() {
+
         return first_name_native;
     }
 
     public String lastNameNative() {
+
         return last_name_native;
     }
 
     public String middleNameNative() {
+
         return middle_name_native;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -84,6 +96,7 @@ public class PersonalDetails extends DecryptedData implements Serializable {
 
     @Override
     public int hashCode() {
+
         int result = first_name != null ? first_name.hashCode() : 0;
         result = 31 * result + (last_name != null ? last_name.hashCode() : 0);
         result = 31 * result + (middle_name != null ? middle_name.hashCode() : 0);
@@ -99,17 +112,8 @@ public class PersonalDetails extends DecryptedData implements Serializable {
 
     @Override
     public String toString() {
-        return "PersonalDetails{" +
-                "first_name='" + first_name + '\'' +
-                ", last_name='" + last_name + '\'' +
-                ", middle_name='" + middle_name + '\'' +
-                ", birth_date='" + birth_date + '\'' +
-                ", gender='" + gender + '\'' +
-                ", country_code='" + country_code + '\'' +
-                ", residence_country_code='" + residence_country_code + '\'' +
-                ", first_name_native='" + first_name_native + '\'' +
-                ", last_name_native='" + last_name_native + '\'' +
-                ", middle_name_native='" + middle_name_native + '\'' +
-                '}';
+
+        return "PersonalDetails{" + "first_name='" + first_name + '\'' + ", last_name='" + last_name + '\'' + ", " + "middle_name='" + middle_name + '\'' + ", birth_date='" + birth_date + '\'' + ", gender='" + gender + '\'' + ", country_code='" + country_code + '\'' + ", residence_country_code='" + residence_country_code + '\'' + ", first_name_native='" + first_name_native + '\'' + ", last_name_native='" + last_name_native + '\'' + ", middle_name_native='" + middle_name_native + '\'' + '}';
     }
+
 }

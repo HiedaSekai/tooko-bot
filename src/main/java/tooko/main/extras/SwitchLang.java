@@ -13,16 +13,6 @@ import tooko.td.core.InlineArray;
 public class SwitchLang extends TdHandler {
 
     public static int DATA_ID = Fn.DataId._1;
-
-    @Override
-    public void onLoad() {
-
-        initFunction("lang");
-
-        initData(DATA_ID);
-
-    }
-
     public static InlineArray langs = new InlineArray();
 
     static {
@@ -30,6 +20,15 @@ public class SwitchLang extends TdHandler {
         langs.dataLine(Lang.DEFAULT.LANG_NAME, DATA_ID, 0);
 
         langs.dataLine(ENG.INSTANCE.LANG_NAME, DATA_ID, 1);
+
+    }
+
+    @Override
+    public void onLoad() {
+
+        initFunction("lang");
+
+        initData(DATA_ID);
 
     }
 

@@ -11,6 +11,7 @@ import java.util.Arrays;
  * 8/4/15.
  */
 public class Message implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private Integer message_id;
@@ -62,195 +63,243 @@ public class Message implements Serializable {
     private InlineKeyboardMarkup reply_markup;
 
     public Integer messageId() {
+
         return message_id;
     }
 
     public User from() {
+
         return from;
     }
 
     public Integer date() {
+
         return date;
     }
 
     public Chat chat() {
+
         return chat;
     }
 
     public User forwardFrom() {
+
         return forward_from;
     }
 
     public Chat forwardFromChat() {
+
         return forward_from_chat;
     }
 
     public Integer forwardFromMessageId() {
+
         return forward_from_message_id;
     }
 
     public String forwardSignature() {
+
         return forward_signature;
     }
 
     public String forwardSenderName() {
+
         return forward_sender_name;
     }
 
     public Integer forwardDate() {
+
         return forward_date;
     }
 
     public Message replyToMessage() {
+
         return reply_to_message;
     }
 
     public Integer editDate() {
+
         return edit_date;
     }
 
     public String mediaGroupId() {
+
         return media_group_id;
     }
 
     public String authorSignature() {
+
         return author_signature;
     }
 
     public String text() {
+
         return text;
     }
 
     public MessageEntity[] entities() {
+
         return entities;
     }
 
     public MessageEntity[] captionEntities() {
+
         return caption_entities;
     }
 
     public Audio audio() {
+
         return audio;
     }
 
     public Document document() {
+
         return document;
     }
 
     public Animation animation() {
+
         return animation;
     }
 
     public Game game() {
+
         return game;
     }
 
     public PhotoSize[] photo() {
+
         return photo;
     }
 
     public Sticker sticker() {
+
         return sticker;
     }
 
     public Video video() {
+
         return video;
     }
 
     public Voice voice() {
+
         return voice;
     }
 
     public VideoNote videoNote() {
+
         return video_note;
     }
 
     public String caption() {
+
         return caption;
     }
 
     public Contact contact() {
+
         return contact;
     }
 
     public Location location() {
+
         return location;
     }
 
     public Venue venue() {
+
         return venue;
     }
 
     public Poll poll() {
+
         return poll;
     }
 
     public User[] newChatMembers() {
+
         return new_chat_members;
     }
 
     public User leftChatMember() {
+
         return left_chat_member;
     }
 
     public String newChatTitle() {
+
         return new_chat_title;
     }
 
     public PhotoSize[] newChatPhoto() {
+
         return new_chat_photo;
     }
 
     public Boolean deleteChatPhoto() {
+
         return delete_chat_photo;
     }
 
     public Boolean groupChatCreated() {
+
         return group_chat_created;
     }
 
     public Boolean supergroupChatCreated() {
+
         return supergroup_chat_created;
     }
 
     public Boolean channelChatCreated() {
+
         return channel_chat_created;
     }
 
     public Long migrateToChatId() {
+
         return migrate_to_chat_id;
     }
 
     public Long migrateFromChatId() {
+
         return migrate_from_chat_id;
     }
 
     public Message pinnedMessage() {
+
         return pinned_message;
     }
 
     public Invoice invoice() {
+
         return invoice;
     }
 
     public SuccessfulPayment successfulPayment() {
+
         return successful_payment;
     }
 
     public String connectedWebsite() {
+
         return connected_website;
     }
 
     public PassportData passportData() {
+
         return passport_data;
     }
 
     public InlineKeyboardMarkup replyMarkup() {
+
         return reply_markup;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -333,59 +382,14 @@ public class Message implements Serializable {
 
     @Override
     public int hashCode() {
+
         return message_id != null ? message_id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return "Message{" +
-                "message_id=" + message_id +
-                ", from=" + from +
-                ", date=" + date +
-                ", chat=" + chat +
-                ", forward_from=" + forward_from +
-                ", forward_from_chat=" + forward_from_chat +
-                ", forward_from_message_id=" + forward_from_message_id +
-                ", forward_signature='" + forward_signature + '\'' +
-                ", forward_sender_name='" + forward_sender_name + '\'' +
-                ", forward_date=" + forward_date +
-                ", reply_to_message=" + reply_to_message +
-                ", edit_date=" + edit_date +
-                ", media_group_id='" + media_group_id + '\'' +
-                ", author_signature='" + author_signature + '\'' +
-                ", text='" + text + '\'' +
-                ", entities=" + Arrays.toString(entities) +
-                ", caption_entities=" + Arrays.toString(caption_entities) +
-                ", audio=" + audio +
-                ", document=" + document +
-                ", animation=" + animation +
-                ", game=" + game +
-                ", photo=" + Arrays.toString(photo) +
-                ", sticker=" + sticker +
-                ", video=" + video +
-                ", voice=" + voice +
-                ", video_note=" + video_note +
-                ", caption='" + caption + '\'' +
-                ", contact=" + contact +
-                ", location=" + location +
-                ", venue=" + venue +
-                ", poll=" + poll +
-                ", new_chat_members=" + Arrays.toString(new_chat_members) +
-                ", left_chat_member=" + left_chat_member +
-                ", new_chat_title='" + new_chat_title + '\'' +
-                ", new_chat_photo=" + Arrays.toString(new_chat_photo) +
-                ", delete_chat_photo=" + delete_chat_photo +
-                ", group_chat_created=" + group_chat_created +
-                ", supergroup_chat_created=" + supergroup_chat_created +
-                ", channel_chat_created=" + channel_chat_created +
-                ", migrate_to_chat_id=" + migrate_to_chat_id +
-                ", migrate_from_chat_id=" + migrate_from_chat_id +
-                ", pinned_message=" + pinned_message +
-                ", invoice=" + invoice +
-                ", successful_payment=" + successful_payment +
-                ", connected_website='" + connected_website + '\'' +
-                ", passport_data=" + passport_data +
-                ", reply_markup=" + reply_markup +
-                '}';
+
+        return "Message{" + "message_id=" + message_id + ", from=" + from + ", date=" + date + ", chat=" + chat + ", " + "forward_from=" + forward_from + ", forward_from_chat=" + forward_from_chat + ", " + "forward_from_message_id=" + forward_from_message_id + ", forward_signature='" + forward_signature + '\'' + ", forward_sender_name='" + forward_sender_name + '\'' + ", forward_date=" + forward_date + ", reply_to_message=" + reply_to_message + ", edit_date=" + edit_date + ", media_group_id='" + media_group_id + '\'' + ", author_signature='" + author_signature + '\'' + ", text='" + text + '\'' + ", entities=" + Arrays.toString(entities) + ", caption_entities=" + Arrays.toString(caption_entities) + ", audio=" + audio + ", document=" + document + ", animation=" + animation + ", game=" + game + ", photo=" + Arrays.toString(photo) + ", sticker=" + sticker + ", video=" + video + ", voice=" + voice + ", video_note=" + video_note + ", caption='" + caption + '\'' + ", contact=" + contact + ", location=" + location + ", venue=" + venue + ", poll=" + poll + ", new_chat_members=" + Arrays.toString(new_chat_members) + ", left_chat_member=" + left_chat_member + ", new_chat_title='" + new_chat_title + '\'' + ", new_chat_photo=" + Arrays.toString(new_chat_photo) + ", delete_chat_photo=" + delete_chat_photo + ", group_chat_created=" + group_chat_created + ", supergroup_chat_created=" + supergroup_chat_created + ", channel_chat_created=" + channel_chat_created + ", migrate_to_chat_id=" + migrate_to_chat_id + ", migrate_from_chat_id=" + migrate_from_chat_id + ", pinned_message=" + pinned_message + ", invoice=" + invoice + ", successful_payment=" + successful_payment + ", connected_website='" + connected_website + '\'' + ", passport_data=" + passport_data + ", reply_markup=" + reply_markup + '}';
     }
+
 }

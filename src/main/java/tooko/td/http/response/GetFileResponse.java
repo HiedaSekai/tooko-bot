@@ -11,16 +11,18 @@ public class GetFileResponse extends BaseResponse {
     private File result;
 
     GetFileResponse() {
+
     }
 
     public File file() {
+
         return result;
     }
 
     @Override
     public String toString() {
-        return "GetFileResponse{" +
-                "result=" + result +
-                '}';
+
+        return "GetFileResponse{" + "result=" + result + '}';
     }
+
 }

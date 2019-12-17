@@ -8,6 +8,7 @@ import java.util.Arrays;
  * 23 July 2017
  */
 public class StickerSet implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private String name;
@@ -17,27 +18,33 @@ public class StickerSet implements Serializable {
     private Sticker[] stickers;
 
     public String name() {
+
         return name;
     }
 
     public String title() {
+
         return title;
     }
 
     public Boolean isAnimated() {
+
         return is_animated;
     }
 
     public Boolean containsMasks() {
+
         return contains_masks;
     }
 
     public Sticker[] stickers() {
+
         return stickers;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -54,6 +61,7 @@ public class StickerSet implements Serializable {
 
     @Override
     public int hashCode() {
+
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (is_animated != null ? is_animated.hashCode() : 0);
@@ -64,12 +72,8 @@ public class StickerSet implements Serializable {
 
     @Override
     public String toString() {
-        return "StickerSet{" +
-                "name='" + name + '\'' +
-                ", title='" + title + '\'' +
-                ", is_animated=" + is_animated +
-                ", contains_masks=" + contains_masks +
-                ", stickers=" + Arrays.toString(stickers) +
-                '}';
+
+        return "StickerSet{" + "name='" + name + '\'' + ", title='" + title + '\'' + ", is_animated=" + is_animated + ", contains_masks=" + contains_masks + ", stickers=" + Arrays.toString(stickers) + '}';
     }
+
 }

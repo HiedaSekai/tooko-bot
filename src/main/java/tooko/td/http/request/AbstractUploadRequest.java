@@ -13,6 +13,7 @@ abstract public class AbstractUploadRequest<T extends BaseRequest, R extends Bas
     private final boolean isMultipart;
 
     public AbstractUploadRequest(Class<? extends R> responseClass, String paramName, Object data) {
+
         super(responseClass);
         if (data instanceof String) {
             isMultipart = false;
@@ -28,6 +29,8 @@ abstract public class AbstractUploadRequest<T extends BaseRequest, R extends Bas
 
     @Override
     public boolean isMultipart() {
+
         return isMultipart;
     }
+
 }

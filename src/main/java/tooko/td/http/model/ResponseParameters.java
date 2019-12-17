@@ -7,21 +7,25 @@ import java.io.Serializable;
  * 03 October 2016
  */
 public class ResponseParameters implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private Long migrate_to_chat_id;
     private Integer retry_after;
 
     public Long migrateToChatId() {
+
         return migrate_to_chat_id;
     }
 
     public Integer retryAfter() {
+
         return retry_after;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -34,6 +38,7 @@ public class ResponseParameters implements Serializable {
 
     @Override
     public int hashCode() {
+
         int result = migrate_to_chat_id != null ? migrate_to_chat_id.hashCode() : 0;
         result = 31 * result + (retry_after != null ? retry_after.hashCode() : 0);
         return result;
@@ -41,9 +46,8 @@ public class ResponseParameters implements Serializable {
 
     @Override
     public String toString() {
-        return "ResponseParameters{" +
-                "migrate_to_chat_id=" + migrate_to_chat_id +
-                ", retry_after=" + retry_after +
-                '}';
+
+        return "ResponseParameters{" + "migrate_to_chat_id=" + migrate_to_chat_id + ", retry_after=" + retry_after + '}';
     }
+
 }

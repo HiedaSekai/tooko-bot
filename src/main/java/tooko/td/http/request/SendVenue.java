@@ -7,6 +7,7 @@ package tooko.td.http.request;
 public class SendVenue extends AbstractSendRequest<SendVenue> {
 
     public SendVenue(Object chatId, float latitude, float longitude, String title, String address) {
+
         super(chatId);
         add("latitude", latitude);
         add("longitude", longitude);
@@ -15,10 +16,13 @@ public class SendVenue extends AbstractSendRequest<SendVenue> {
     }
 
     public SendVenue foursquareId(String foursquareId) {
+
         return add("foursquare_id", foursquareId);
     }
 
     public SendVenue foursquareType(String foursquareType) {
+
         return add("foursquare_type", foursquareType);
     }
+
 }

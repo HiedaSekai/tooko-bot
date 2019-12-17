@@ -52,7 +52,7 @@ public final class Client {
 
         if (this.receiveLock.isLocked()) {
 
-            throw new IllegalThreadStateException("Thread: " + Thread.currentThread().getName() + " trying receive incoming updates but shouldn't be called simultaneously from two different threads!");
+            throw new IllegalThreadStateException("Thread: " + Thread.currentThread().getName() + " trying receive " + "incoming updates but shouldn't be called simultaneously from two different threads!");
 
         }
 

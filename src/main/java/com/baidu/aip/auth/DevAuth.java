@@ -12,6 +12,7 @@
  */
 package com.baidu.aip.auth;
 
+import cn.hutool.json.JSONObject;
 import com.baidu.aip.http.AipHttpClient;
 import com.baidu.aip.http.AipRequest;
 import com.baidu.aip.http.AipResponse;
@@ -21,18 +22,19 @@ import com.baidu.aip.util.Util;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import cn.hutool.json.*;
 
 public class DevAuth {
 
     /**
      * get access_token from openapi
-     * @param apiKey API key from console
+     *
+     * @param apiKey    API key from console
      * @param secretKey Secret Key from console
-     * @param config network config settings
+     * @param config    network config settings
      * @return JsonObject of response from OAuth server
      */
     public static JSONObject oauth(String apiKey, String secretKey, AipClientConfiguration config) {
+
         try {
             AipRequest request = new AipRequest();
             request.setUri(new URI(AipClientConst.OAUTH_URL));
@@ -60,4 +62,5 @@ public class DevAuth {
         }
         return Util.getGeneralError(-1, "unknown error");
     }
+
 }

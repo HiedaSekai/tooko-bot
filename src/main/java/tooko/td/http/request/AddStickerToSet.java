@@ -10,6 +10,7 @@ import tooko.td.http.response.BaseResponse;
 public class AddStickerToSet extends AbstractUploadRequest<AddStickerToSet, BaseResponse> {
 
     public AddStickerToSet(Integer userId, String name, Object pngSticker, String emojis) {
+
         super(BaseResponse.class, "png_sticker", pngSticker);
         add("user_id", userId);
         add("name", name);
@@ -17,6 +18,8 @@ public class AddStickerToSet extends AbstractUploadRequest<AddStickerToSet, Base
     }
 
     public AddStickerToSet maskPosition(MaskPosition maskPosition) {
+
         return add("mask_position", serialize(maskPosition));
     }
+
 }

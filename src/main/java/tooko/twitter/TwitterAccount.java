@@ -26,23 +26,11 @@ public class TwitterAccount {
     public Boolean track;
     public Long track_delay;
     public Long track_last;
-    
+
     public int last_friends;
     public int last_followers;
 
     public Boolean follow;
-
-    public UserA archive() {
-
-        return UserA.get(accountId);
-
-    }
-
-    public Twitter mkApi() {
-
-        return Fn.mkApi(apiKey, apiSecretKey, accessToken, accessTokenSecret);
-
-    }
 
     public static TwitterAccount getByAccountId(long accountId) {
 
@@ -53,6 +41,18 @@ public class TwitterAccount {
     public static List<TwitterAccount> getByOwner(int owner) {
 
         return DATA.getAllByField("owner", owner);
+
+    }
+
+    public UserA archive() {
+
+        return UserA.get(accountId);
+
+    }
+
+    public Twitter mkApi() {
+
+        return Fn.mkApi(apiKey, apiSecretKey, accessToken, accessTokenSecret);
 
     }
 

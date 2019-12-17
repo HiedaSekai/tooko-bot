@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
@@ -10,28 +10,28 @@
     <version>1.0-SNAPSHOT</version>
 
     <repositories>
-    
+
         <repository>
-          <id>central</id>
-          <url>https://repo.maven.apache.org/maven2</url>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
         </repository>
-    
+
         <repository>
-          <id>tooko-bson</id>
-          <url>https://gitlab.com/tooko/tooko-bson/raw/master/public</url>
+            <id>tooko-bson</id>
+            <url>https://gitlab.com/tooko/tooko-bson/raw/master/public</url>
         </repository>
-        
+
         <repository>
-          <id>tooko-webp</id>
-          <url>https://gitlab.com/tooko/tooko-webp/raw/master/public</url>
+            <id>tooko-webp</id>
+            <url>https://gitlab.com/tooko/tooko-webp/raw/master/public</url>
         </repository>
-        
+
     </repositories>
 
     <properties>
 
         <mongodb.version>3.11.2</mongodb.version>
-        
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -56,7 +56,7 @@
             <artifactId>gson</artifactId>
             <version>2.8.6</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.twitter4j</groupId>
             <artifactId>twitter4j-core</artifactId>
@@ -86,17 +86,17 @@
             <artifactId>bson</artifactId>
             <version>${mongodb.version}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>moe.tooko</groupId>
             <artifactId>webp-imageio</artifactId>
             <version>1.0</version>
         </dependency>
-        
+
     </dependencies>
 
     <build>
-    
+
         <sourceDirectory>${pom.basedir}/src/main/java</sourceDirectory>
 
         <plugins>

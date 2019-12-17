@@ -13,6 +13,5 @@
 package com.baidu.aip.contentcensor;
 
 public enum EImgType {
-    FILE,
-    URL
+    FILE, URL
 }

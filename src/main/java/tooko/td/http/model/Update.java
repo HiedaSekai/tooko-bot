@@ -7,6 +7,7 @@ import java.io.Serializable;
  * 8/4/15.
  */
 public class Update implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private Integer update_id;
@@ -22,51 +23,63 @@ public class Update implements Serializable {
     private Poll poll;
 
     public Integer updateId() {
+
         return update_id;
     }
 
     public Message message() {
+
         return message;
     }
 
     public Message editedMessage() {
+
         return edited_message;
     }
 
     public Message channelPost() {
+
         return channel_post;
     }
 
     public Message editedChannelPost() {
+
         return edited_channel_post;
     }
 
     public InlineQuery inlineQuery() {
+
         return inline_query;
     }
 
     public ChosenInlineResult chosenInlineResult() {
+
         return chosen_inline_result;
     }
 
     public CallbackQuery callbackQuery() {
+
         return callback_query;
     }
 
     public ShippingQuery shippingQuery() {
+
         return shipping_query;
     }
 
     public PreCheckoutQuery preCheckoutQuery() {
+
         return pre_checkout_query;
     }
 
     public Poll poll() {
+
         return poll;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -95,23 +108,14 @@ public class Update implements Serializable {
 
     @Override
     public int hashCode() {
+
         return update_id != null ? update_id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return "Update{" +
-                "update_id=" + update_id +
-                ", message=" + message +
-                ", edited_message=" + edited_message +
-                ", channel_post=" + channel_post +
-                ", edited_channel_post=" + edited_channel_post +
-                ", inline_query=" + inline_query +
-                ", chosen_inline_result=" + chosen_inline_result +
-                ", callback_query=" + callback_query +
-                ", shipping_query=" + shipping_query +
-                ", pre_checkout_query=" + pre_checkout_query +
-                ", poll=" + poll +
-                '}';
+
+        return "Update{" + "update_id=" + update_id + ", message=" + message + ", edited_message=" + edited_message + ", channel_post=" + channel_post + ", edited_channel_post=" + edited_channel_post + ", inline_query=" + inline_query + ", chosen_inline_result=" + chosen_inline_result + ", callback_query=" + callback_query + ", shipping_query=" + shipping_query + ", pre_checkout_query=" + pre_checkout_query + ", poll=" + poll + '}';
     }
+
 }

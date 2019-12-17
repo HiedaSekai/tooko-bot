@@ -9,7 +9,9 @@ import tooko.td.http.response.BaseResponse;
 public class SetChatTitle extends BaseRequest<SetChatTitle, BaseResponse> {
 
     public SetChatTitle(Object chatId, String title) {
+
         super(BaseResponse.class);
         add("chat_id", chatId).add("title", title);
     }
+
 }

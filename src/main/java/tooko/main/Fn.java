@@ -27,7 +27,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Fn {
-    
+
+    private static String arch;
+
     public static byte[] num2byte(Number integer) {
 
         return BigInteger.valueOf(integer.longValue()).toByteArray();
@@ -45,8 +47,6 @@ public class Fn {
         return new BigInteger(integer).intValue();
 
     }
-
-    private static String arch;
 
     public static <T> LinkedList<T> newList() {
 
@@ -1196,7 +1196,7 @@ public class Fn {
         return array.toArray((T[]) ArrayUtil.newArray(clazz, array.size()));
 
     }
-    
+
     public static String parseScreenName(String status) {
 
         if (status.contains("/status")) status = StrUtil.subBefore(status, "/status", false);
@@ -1210,19 +1210,19 @@ public class Fn {
     }
 
     public static long parseStatusId(String status) {
-        
+
         if (NumberUtil.isLong(status)) return NumberUtil.parseLong(status);
-        
-        if (status.contains("/")) status = StrUtil.subAfter(status,"/",true);
-        
-        if (status.contains("?")) status = StrUtil.subBefore(status,"?",false);
-        
+
+        if (status.contains("/")) status = StrUtil.subAfter(status, "/", true);
+
+        if (status.contains("?")) status = StrUtil.subBefore(status, "?", false);
+
         if (NumberUtil.isLong(status)) return NumberUtil.parseLong(status);
-        
+
         return -1;
-        
+
     }
-    
+
     public static long parseTime(String message) {
 
         long time = 0;
@@ -1235,7 +1235,7 @@ public class Fn {
 
             if (NumberUtil.isInteger(str)) {
 
-               int integer = NumberUtil.parseInt(str);
+                int integer = NumberUtil.parseInt(str);
 
                 if (count == -1) {
 
@@ -1285,17 +1285,6 @@ public class Fn {
 
     }
 
-    public static class DataId {
-
-        public static int _1 = 1;
-        public static int _2 = 2;
-        public static int _3 = 3;
-        public static int _4 = 4;
-        public static int _5 = 5;
-        public static int _6 = 6;
-
-    }
-
     public static LinkedList<twitter4j.User> fetchUsers(Twitter api, Collection<Long> ids) throws TwitterException {
 
         LinkedList<twitter4j.User> users = new LinkedList<>();
@@ -1330,21 +1319,13 @@ public class Fn {
 
     public static Twitter mkApi(String apiKey, String apiSecret) {
 
-        return new TwitterFactory(new ConfigurationBuilder()
-                .setOAuthConsumerKey(apiKey)
-                .setOAuthConsumerSecret(apiSecret)
-                .build()).getInstance();
+        return new TwitterFactory(new ConfigurationBuilder().setOAuthConsumerKey(apiKey).setOAuthConsumerSecret(apiSecret).build()).getInstance();
 
     }
 
     public static Twitter mkApi(String apiKey, String apiSecret, String accessToken, String accessTokenSecret) {
 
-        return new TwitterFactory(new ConfigurationBuilder()
-                .setOAuthConsumerKey(apiKey)
-                .setOAuthConsumerSecret(apiSecret)
-                .setOAuthAccessToken(accessToken)
-                .setOAuthAccessTokenSecret(accessTokenSecret)
-                .build()).getInstance();
+        return new TwitterFactory(new ConfigurationBuilder().setOAuthConsumerKey(apiKey).setOAuthConsumerSecret(apiSecret).setOAuthAccessToken(accessToken).setOAuthAccessTokenSecret(accessTokenSecret).build()).getInstance();
 
     }
 
@@ -1598,6 +1579,17 @@ public class Fn {
         }
 
         return ids;
+
+    }
+
+    public static class DataId {
+
+        public static int _1 = 1;
+        public static int _2 = 2;
+        public static int _3 = 3;
+        public static int _4 = 4;
+        public static int _5 = 5;
+        public static int _6 = 6;
 
     }
 

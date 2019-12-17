@@ -7,6 +7,7 @@ import java.io.Serializable;
  * 8/5/15.
  */
 public class Document implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private String file_id;
@@ -16,27 +17,33 @@ public class Document implements Serializable {
     private Integer file_size;
 
     public String fileId() {
+
         return file_id;
     }
 
     public PhotoSize thumb() {
+
         return thumb;
     }
 
     public String fileName() {
+
         return file_name;
     }
 
     public String mimeType() {
+
         return mime_type;
     }
 
     public Integer fileSize() {
+
         return file_size;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -51,17 +58,14 @@ public class Document implements Serializable {
 
     @Override
     public int hashCode() {
+
         return file_id != null ? file_id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return "Document{" +
-                "file_id='" + file_id + '\'' +
-                ", thumb=" + thumb +
-                ", file_name='" + file_name + '\'' +
-                ", mime_type='" + mime_type + '\'' +
-                ", file_size=" + file_size +
-                '}';
+
+        return "Document{" + "file_id='" + file_id + '\'' + ", thumb=" + thumb + ", file_name='" + file_name + '\'' + ", mime_type='" + mime_type + '\'' + ", file_size=" + file_size + '}';
     }
+
 }

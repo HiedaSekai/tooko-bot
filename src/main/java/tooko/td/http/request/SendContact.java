@@ -7,16 +7,20 @@ package tooko.td.http.request;
 public class SendContact extends AbstractSendRequest<SendContact> {
 
     public SendContact(Object chatId, String phoneNumber, String firstName) {
+
         super(chatId);
         add("phone_number", phoneNumber);
         add("first_name", firstName);
     }
 
     public SendContact lastName(String lastName) {
+
         return add("last_name", lastName);
     }
 
     public SendContact vcard(String vcard) {
+
         return add("vcard", vcard);
     }
+
 }

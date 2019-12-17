@@ -8,6 +8,7 @@ import java.util.Arrays;
  * 03 October 2016
  */
 public class Game implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private String title;
@@ -19,31 +20,38 @@ public class Game implements Serializable {
     private Animation animation;
 
     public String title() {
+
         return title;
     }
 
     public String description() {
+
         return description;
     }
 
     public PhotoSize[] photo() {
+
         return photo;
     }
 
     public String text() {
+
         return text;
     }
 
     public MessageEntity[] textEntities() {
+
         return text_entities;
     }
 
     public Animation animation() {
+
         return animation;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -61,6 +69,7 @@ public class Game implements Serializable {
 
     @Override
     public int hashCode() {
+
         int result = title != null ? title.hashCode() : 0;
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + Arrays.hashCode(photo);
@@ -72,13 +81,8 @@ public class Game implements Serializable {
 
     @Override
     public String toString() {
-        return "Game{" +
-                "title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", photo=" + Arrays.toString(photo) +
-                ", text='" + text + '\'' +
-                ", text_entities=" + Arrays.toString(text_entities) +
-                ", animation=" + animation +
-                '}';
+
+        return "Game{" + "title='" + title + '\'' + ", description='" + description + '\'' + ", photo=" + Arrays.toString(photo) + ", text='" + text + '\'' + ", text_entities=" + Arrays.toString(text_entities) + ", animation=" + animation + '}';
     }
+
 }

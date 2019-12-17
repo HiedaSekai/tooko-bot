@@ -7,6 +7,7 @@ import java.io.Serializable;
  * 16 October 2015
  */
 public class File implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private String file_id;
@@ -14,19 +15,23 @@ public class File implements Serializable {
     private String file_path;
 
     public String fileId() {
+
         return file_id;
     }
 
     public Integer fileSize() {
+
         return file_size;
     }
 
     public String filePath() {
+
         return file_path;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -39,15 +44,14 @@ public class File implements Serializable {
 
     @Override
     public int hashCode() {
+
         return file_id != null ? file_id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return "File{" +
-                "file_id='" + file_id + '\'' +
-                ", file_size=" + file_size +
-                ", file_path='" + file_path + '\'' +
-                '}';
+
+        return "File{" + "file_id='" + file_id + '\'' + ", file_size=" + file_size + ", file_path='" + file_path + '\'' + '}';
     }
+
 }

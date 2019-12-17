@@ -7,6 +7,7 @@ import java.io.Serializable;
  * 06 May 2016
  */
 public class InlineKeyboardButton implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private String text;
@@ -21,74 +22,90 @@ public class InlineKeyboardButton implements Serializable {
     //todo can use only one optional field, make different constructors or static methods
 
     public InlineKeyboardButton(String text) {
+
         this.text = text;
     }
 
     public InlineKeyboardButton url(String url) {
+
         this.url = url;
         return this;
     }
 
     public InlineKeyboardButton loginUrl(LoginUrl loginUrl) {
+
         login_url = loginUrl;
         return this;
     }
 
     public InlineKeyboardButton callbackData(String callbackData) {
+
         callback_data = callbackData;
         return this;
     }
 
     public InlineKeyboardButton switchInlineQuery(String switchInlineQuery) {
+
         switch_inline_query = switchInlineQuery;
         return this;
     }
 
     public InlineKeyboardButton switchInlineQueryCurrentChat(String switchInlineQueryCurrentChat) {
+
         switch_inline_query_current_chat = switchInlineQueryCurrentChat;
         return this;
     }
 
     public InlineKeyboardButton callbackGame(String callbackGame) {
+
         callback_game = new CallbackGame();
         return this;
     }
 
     public InlineKeyboardButton pay() {
+
         this.pay = true;
         return this;
     }
 
     public String text() {
+
         return text;
     }
 
     public String url() {
+
         return url;
     }
 
     public String callbackData() {
+
         return callback_data;
     }
 
     public String switchInlineQuery() {
+
         return switch_inline_query;
     }
 
     public String switchInlineQueryCurrentChat() {
+
         return switch_inline_query_current_chat;
     }
 
     public CallbackGame callbackGame() {
+
         return callback_game;
     }
 
     public boolean isPay() {
+
         return pay != null && pay;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -110,6 +127,7 @@ public class InlineKeyboardButton implements Serializable {
 
     @Override
     public int hashCode() {
+
         int result = text != null ? text.hashCode() : 0;
         result = 31 * result + (url != null ? url.hashCode() : 0);
         result = 31 * result + (login_url != null ? login_url.hashCode() : 0);
@@ -123,15 +141,8 @@ public class InlineKeyboardButton implements Serializable {
 
     @Override
     public String toString() {
-        return "InlineKeyboardButton{" +
-                "text='" + text + '\'' +
-                ", url='" + url + '\'' +
-                ", login_url=" + login_url +
-                ", callback_data='" + callback_data + '\'' +
-                ", switch_inline_query='" + switch_inline_query + '\'' +
-                ", switch_inline_query_current_chat='" + switch_inline_query_current_chat + '\'' +
-                ", callback_game=" + callback_game +
-                ", pay=" + pay +
-                '}';
+
+        return "InlineKeyboardButton{" + "text='" + text + '\'' + ", url='" + url + '\'' + ", login_url=" + login_url + ", callback_data='" + callback_data + '\'' + ", switch_inline_query='" + switch_inline_query + '\'' + ", switch_inline_query_current_chat='" + switch_inline_query_current_chat + '\'' + ", callback_game=" + callback_game + ", pay=" + pay + '}';
     }
+
 }

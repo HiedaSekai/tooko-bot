@@ -9,12 +9,15 @@ import tooko.td.http.response.BaseResponse;
 public class AnswerPreCheckoutQuery extends BaseRequest<AnswerPreCheckoutQuery, BaseResponse> {
 
     public AnswerPreCheckoutQuery(String preCheckoutQueryId) {
+
         super(BaseResponse.class);
         add("pre_checkout_query_id", preCheckoutQueryId).add("ok", true);
     }
 
     public AnswerPreCheckoutQuery(String preCheckoutQueryId, String errorMessage) {
+
         super(BaseResponse.class);
         add("pre_checkout_query_id", preCheckoutQueryId).add("ok", false).add("error_message", errorMessage);
     }
+
 }

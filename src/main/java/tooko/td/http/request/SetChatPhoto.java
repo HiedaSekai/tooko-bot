@@ -11,17 +11,21 @@ import java.io.File;
 public class SetChatPhoto extends BaseRequest<SetChatPhoto, BaseResponse> {
 
     public SetChatPhoto(Object chatId, byte[] photo) {
+
         super(BaseResponse.class);
         add("chat_id", chatId).add("photo", photo);
     }
 
     public SetChatPhoto(Object chatId, File photo) {
+
         super(BaseResponse.class);
         add("chat_id", chatId).add("photo", photo);
     }
 
     @Override
     public boolean isMultipart() {
+
         return true;
     }
+
 }

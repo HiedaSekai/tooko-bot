@@ -1,7 +1,9 @@
 package tooko.twitter.actions;
 
-import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.thread.ThreadUtil;
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
+import tooko.main.Env;
 import tooko.main.Fn;
 import tooko.main.Lang;
 import tooko.main.utils.TextCensor;
@@ -16,6 +18,8 @@ import twitter4j.*;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class FollowersScan extends TwitterHandler {
 
@@ -27,8 +31,7 @@ public class FollowersScan extends TwitterHandler {
     }
 
     @Override
-    public void onFunction(TdApi.User user, final long chatId, TdApi.Message message, String function, String param,
-                           String[] params, String[] originParams, TwitterAccount account) {
+    public void onFunction(TdApi.User user, final long chatId, TdApi.Message message, String function, String param, String[] params, String[] originParams, TwitterAccount account) {
 
         final Twitter api = account.mkApi();
 
@@ -92,7 +95,7 @@ public class FollowersScan extends TwitterHandler {
         TdApi.Message stat = sync(Fn.sendText(chatId, Fn.plainText("PREDICTING ...")));
 
         pridectUser:
-        for (int index = 0;index < followers.size();index++) {
+        for (int index = 0; index < followers.size(); index++) {
 
             long followerId = followers.get(index);
 
@@ -128,53 +131,130 @@ public class FollowersScan extends TwitterHandler {
 
             }
 
-            int ss = 0;
+            LinkedList<String> result = new Process(timeline, stat, index, followers.size()).process();
 
-            List<String> sss = new LinkedList<>();
+            if (result != null) {
 
-            for (int sindex = 0;sindex < timeline.size();sindex++) {
+                send(Fn.sendText(chatId, Fn.parseHtml(archive.simpleName() + " : PORN STATUS : \n\nhttps://twitter.com/show/status/" + ArrayUtil.join(result, "\nhttps://twitter" + ".com/show/status/"))));
 
-                Status status = timeline.get(sindex);
+            }
 
-                StatusR r;
+        }
 
-                try {
+    }
 
-                    r = StatusR.predictStatus(status);
+    class Process {
 
-                } catch (Exception ex) {
+        public List<Status> statusList;
+        public TdApi.Message stat;
+        public int userIndex;
+        public int userMax;
 
-                    continue;
+        public Process(List<Status> statusList, TdApi.Message stat, int userIndex, int userMax) {
+            this.statusList = statusList;
+            this.stat = stat;
+            this.userIndex = userIndex;
+            this.userMax = userMax;
+        }
 
-                }
+        public LinkedList<String> result = new LinkedList<>();
 
-                send(Fn.editText(stat, Fn.plainText("PRDICTING ... {} / {} - {} / {}", index + 1, followers.size(),
-                        sindex + 1, timeline.size())));
+        private AtomicInteger index = new AtomicInteger(0);
+        private AtomicBoolean finish = new AtomicBoolean(false);
 
-                if (r.media == StatusR.NSRC.PORN || r.media == StatusR.NSRC.SEXY || r.text == TextCensor.TCRC.PORN) {
+        public LinkedList<String> process() {
 
-                    ss++;
+            send(Fn.editText(stat, Fn.plainText("PRDICTING ... {} / {}", userIndex, userMax);
 
-                    sss.add(StrUtil.format("https://twitter.com/{}/status/{}", archive.screenName, status.getId()));
+            for (int index = 0; index < 5; index++) {
 
-                    if ((float) ss / timeline.size() > 0.1 && ss > 4) {
+                new ProcessTask().start();
 
-                        UserR.DATA.updateField(status.getUser().getId(), "pornStatus", true);
+            }
 
-                        count++;
+            while (!Env.STOP.get() && !finish.get()) {
 
-                        send(Fn.sendText(chatId, Fn.parseHtml(archive.simpleName() + " : PORN STATUSES {}", CollectionUtil.join(sss, "\n"))));
+                ThreadUtil.sleep(233);
 
-                        continue pridectUser;
+            }
+
+            if ((float) result.size() / statusList.size() > 0.1 && result.size() > 4) {
+
+                return result;
+
+            }
+
+            return null;
+
+        }
+
+        private synchronized Status nextStatus() {
+
+            if (finish.get()) return null;
+
+            int next = index.incrementAndGet();
+
+            if (statusList.size() <= next) {
+
+                finish.set(true);
+
+                return null;
+
+            }
+
+            if (next % 10 == 0) {
+
+                send(Fn.editText(stat, Fn.plainText("PRDICTING ... {} / {} - {} / {}", userIndex, userMax, next + 1, statusList);
+
+            }
+
+            return statusList.get(next);
+
+        }
+
+        class ProcessTask extends Thread {
+
+            @Override
+            public void run() {
+
+                while (!Env.STOP.get() && !finish.get()) {
+
+                    Status nextStatus = nextStatus();
+
+                    if (nextStatus == null) return;
+
+                    StatusR r;
+
+                    try {
+
+                        r = StatusR.predictStatus(nextStatus);
+
+                    } catch (Exception ex) {
+
+                        continue;
+
+                    }
+
+                    if (r.media == StatusR.NSRC.PORN || r.media == StatusR.NSRC.SEXY || r.text == TextCensor.TCRC.PORN) {
+
+                        result.add(StrUtil.format("https://twitter.com/{}/status/{}", nextStatus.getUser().getScreenName(), nextStatus.getId()));
+
+                        if ((float) result.size() / statusList.size() > 0.1 && result.size() > 4) {
+
+                            UserR.DATA.updateField(nextStatus.getUser().getId(), "pornStatus", true);
+
+                            finish.set(true);
+
+                            return;
+
+                        }
 
                     }
 
                 }
 
             }
-
         }
-
 
     }
 

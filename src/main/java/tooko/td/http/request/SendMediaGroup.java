@@ -14,6 +14,7 @@ public class SendMediaGroup extends BaseRequest<SendMediaGroup, MessagesResponse
     private boolean isMultipart = false;
 
     public SendMediaGroup(Object chatId, InputMedia... media) {
+
         super(MessagesResponse.class);
         add("chat_id", chatId).add("media", serialize(media));
 
@@ -28,15 +29,19 @@ public class SendMediaGroup extends BaseRequest<SendMediaGroup, MessagesResponse
     }
 
     public SendMediaGroup disableNotification(boolean disableNotification) {
+
         return add("disable_notification", disableNotification);
     }
 
     public SendMediaGroup replyToMessageId(int replyToMessageId) {
+
         return add("reply_to_message_id", replyToMessageId);
     }
 
     @Override
     public boolean isMultipart() {
+
         return isMultipart;
     }
+
 }

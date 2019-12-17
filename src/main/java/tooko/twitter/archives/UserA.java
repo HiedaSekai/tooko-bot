@@ -28,6 +28,23 @@ import static com.mongodb.client.model.Updates.set;
 public class UserA {
 
     public static Table<Long, UserA> DATA = new Table<>("users", UserA.class);
+    @BsonId
+    public long accountId;
+    public Long createAt;
+    public String lang;
+    public String name;
+    public String screenName;
+    public String url;
+    public String location;
+    public String description;
+    public String profileImage;
+    public String bannerImage;
+    public boolean isProtected;
+    public Integer followers;
+    public Integer friends;
+    public Integer status;
+    public LinkedHashSet<String> nameHistory;
+    public LinkedHashSet<String> snHistory;
 
     public static UserA show(Twitter api, long accountId) {
 
@@ -76,13 +93,13 @@ public class UserA {
             if (archive != null) {
 
                 if (e.getErrorCode() == 50) {
-  
+
                     archive.status = 1;
-                    
+
                     DATA.updateField(archive.accountId, "status", 1);
 
                 } else if (e.getErrorCode() == 63) {
-                    
+
                     archive.status = 2;
 
                     DATA.updateField(archive.accountId, "status", 2);
@@ -92,7 +109,7 @@ public class UserA {
             }
 
             return archive;
-            
+
         }
 
     }
@@ -132,33 +149,6 @@ public class UserA {
         return DATA.getByField("screenName", screenName);
 
     }
-
-    @BsonId
-    public long accountId;
-
-    public Long createAt;
-    public String lang;
-
-    public String name;
-    public String screenName;
-
-    public String url;
-    public String location;
-
-    public String description;
-
-    public String profileImage;
-    public String bannerImage;
-
-    public boolean isProtected;
-
-    public Integer followers;
-    public Integer friends;
-
-    public Integer status;
-
-    public LinkedHashSet<String> nameHistory;
-    public LinkedHashSet<String> snHistory;
 
     public Bson readUpdate(User user) {
 
@@ -332,9 +322,9 @@ public class UserA {
         return toMention();
 
     }
-    
+
     public String simpleName() {
-        
+
         String report = Fn.b(name);
 
         if (isProtected) {
@@ -343,10 +333,10 @@ public class UserA {
 
         }
 
-        report += " " + Fn.a("@" + screenName,"https://twitter.com/" + screenName);
-        
+        report += " " + Fn.a("@" + screenName, "https://twitter.com/" + screenName);
+
         return report;
-        
+
     }
 
     /*
@@ -370,8 +360,8 @@ public class UserA {
 
     public String parseInfo(Lang L) {
 
-        String report = simpleName() +  "\n\n";
-        
+        String report = simpleName() + "\n\n";
+
         if (StrUtil.isNotBlank(description)) {
 
             report += HtmlUtil.escape(description) + "\n\n";
@@ -410,7 +400,7 @@ public class UserA {
 
             for (String screenName : snHistory) {
 
-                report += " " + Fn.b(screenName) ;
+                report += " " + Fn.b(screenName);
 
             }
 

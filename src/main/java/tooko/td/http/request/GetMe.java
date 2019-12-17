@@ -9,6 +9,8 @@ import tooko.td.http.response.GetMeResponse;
 public class GetMe extends BaseRequest<GetMe, GetMeResponse> {
 
     public GetMe() {
+
         super(GetMeResponse.class);
     }
+
 }

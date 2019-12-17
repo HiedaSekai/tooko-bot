@@ -7,6 +7,7 @@ import java.io.Serializable;
  * 8/5/15.
  */
 public class Contact implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private String phone_number;
@@ -16,27 +17,33 @@ public class Contact implements Serializable {
     private String vcard;
 
     public String phoneNumber() {
+
         return phone_number;
     }
 
     public String firstName() {
+
         return first_name;
     }
 
     public String lastName() {
+
         return last_name;
     }
 
     public Integer userId() {
+
         return user_id;
     }
 
     public String vcard() {
+
         return vcard;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -52,17 +59,14 @@ public class Contact implements Serializable {
 
     @Override
     public int hashCode() {
+
         return phone_number != null ? phone_number.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return "Contact{" +
-                "phone_number='" + phone_number + '\'' +
-                ", first_name='" + first_name + '\'' +
-                ", last_name='" + last_name + '\'' +
-                ", user_id=" + user_id +
-                ", vcard='" + vcard + '\'' +
-                '}';
+
+        return "Contact{" + "phone_number='" + phone_number + '\'' + ", first_name='" + first_name + '\'' + ", " + "last_name='" + last_name + '\'' + ", user_id=" + user_id + ", vcard='" + vcard + '\'' + '}';
     }
+
 }

@@ -7,12 +7,15 @@ package tooko.td.http.request;
 public class SendLocation extends AbstractSendRequest<SendLocation> {
 
     public SendLocation(Object chatId, float latitude, float longitude) {
+
         super(chatId);
         add("latitude", latitude);
         add("longitude", longitude);
     }
 
     public SendLocation livePeriod(int livePeriod) {
+
         return add("live_period", livePeriod);
     }
+
 }

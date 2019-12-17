@@ -13,16 +13,18 @@ public class MessagesResponse extends BaseResponse {
     private Message[] result;
 
     MessagesResponse() {
+
     }
 
     public Message[] messages() {
+
         return result;
     }
 
     @Override
     public String toString() {
-        return "MessagesResponse{" +
-                "result=" + Arrays.toString(result) +
-                '}';
+
+        return "MessagesResponse{" + "result=" + Arrays.toString(result) + '}';
     }
+
 }

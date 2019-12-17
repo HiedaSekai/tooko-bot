@@ -27,20 +27,19 @@ public abstract class TextCensor {
 
     }
 
+    public abstract TCRC predictText(String text);
+
     public enum TCRC {
 
-        POLICES,
-        SPAM,
-        PORN
+        POLICES, SPAM, PORN, AD
 
     }
-
-    public abstract TCRC predictText(String text);
 
     public static class None extends TextCensor {
 
         @Override
         public TCRC predictText(String text) {
+
             return null;
         }
 
@@ -55,6 +54,7 @@ public abstract class TextCensor {
         public AipContentCensor censor;
 
         public BaiduAntiSpam(String appId, String apiKey, String secretKey) {
+
             this.appId = appId;
             this.apiKey = apiKey;
             this.secretKey = secretKey;
@@ -72,10 +72,9 @@ public abstract class TextCensor {
 
                 JSONArray reject = result.getJSONArray("reject");
 
-//                reject.addAll(result.getJSONArray("review"));
+                //                reject.addAll(result.getJSONArray("review"));
 
-                boolean politics = false, spam = false, porn = false;
-                double spamScore = 0, adScore = 0, pornScore = 0;
+                boolean politics = false, spam = false, porn = false, ad = false;
 
                 for (int index = 0; index < reject.size(); index++) {
 
@@ -92,24 +91,20 @@ public abstract class TextCensor {
 
                         porn = true;
 
-                        pornScore = score;
-
                     } else if (labelIndex == 4) {
 
-                        adScore = score;
+                        ad = true;
 
                     } else if (labelIndex == 5) {
 
                         spam = true;
 
-                        spamScore = score;
-
                     }
 
                     if (politics) return TCRC.POLICES;
-                    else if (spamScore > pornScore) return TCRC.SPAM;
-                    else if (porn || spamScore < adScore) return TCRC.PORN;
                     else if (spam) return TCRC.SPAM;
+                    else if (ad) return TCRC.AD;
+                    else if (porn) return TCRC.PORN;
 
                 }
 

@@ -7,8 +7,10 @@ package tooko.td.http.request;
 public class SendPoll extends AbstractSendRequest<SendPoll> {
 
     public SendPoll(Object chatId, String question, String... options) {
+
         super(chatId);
         add("question", question);
         add("options", serialize(options));
     }
+
 }

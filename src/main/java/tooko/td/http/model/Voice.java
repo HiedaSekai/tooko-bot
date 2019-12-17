@@ -7,6 +7,7 @@ import java.io.Serializable;
  * 10/21/15.
  */
 public class Voice implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private String file_id;
@@ -15,23 +16,28 @@ public class Voice implements Serializable {
     private Integer file_size;
 
     public String fileId() {
+
         return file_id;
     }
 
     public Integer duration() {
+
         return duration;
     }
 
     public String mimeType() {
+
         return mime_type;
     }
 
     public Integer fileSize() {
+
         return file_size;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -45,16 +51,14 @@ public class Voice implements Serializable {
 
     @Override
     public int hashCode() {
+
         return file_id != null ? file_id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return "Voice{" +
-                "file_id='" + file_id + '\'' +
-                ", duration=" + duration +
-                ", mime_type='" + mime_type + '\'' +
-                ", file_size=" + file_size +
-                '}';
+
+        return "Voice{" + "file_id='" + file_id + '\'' + ", duration=" + duration + ", mime_type='" + mime_type + '\'' + ", file_size=" + file_size + '}';
     }
+
 }

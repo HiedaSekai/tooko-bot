@@ -10,12 +10,15 @@ import tooko.td.http.response.BaseResponse;
 public class AnswerShippingQuery extends BaseRequest<AnswerShippingQuery, BaseResponse> {
 
     public AnswerShippingQuery(String shippingQueryId, ShippingOption... shippingOptions) {
+
         super(BaseResponse.class);
         add("shipping_query_id", shippingQueryId).add("ok", true).add("shipping_options", serialize(shippingOptions));
     }
 
     public AnswerShippingQuery(String shippingQueryId, String errorMessage) {
+
         super(BaseResponse.class);
         add("shipping_query_id", shippingQueryId).add("ok", false).add("error_message", errorMessage);
     }
+
 }

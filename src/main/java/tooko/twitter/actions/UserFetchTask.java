@@ -15,6 +15,9 @@ import java.util.*;
 public class UserFetchTask extends TimerTask {
 
     public static Timer timer;
+    static MongoCursor<TrackTask.IdList> foIter;
+    static MongoCursor<TrackTask.IdList> frIter;
+    static HashSet<Long> cache = new HashSet<>();
 
     public static void start() {
 
@@ -37,10 +40,6 @@ public class UserFetchTask extends TimerTask {
         timer = null;
 
     }
-
-    static MongoCursor<TrackTask.IdList> foIter;
-    static MongoCursor<TrackTask.IdList> frIter;
-    static HashSet<Long> cache = new HashSet<>();
 
     static List<Long> nextArray() {
 
@@ -116,7 +115,8 @@ public class UserFetchTask extends TimerTask {
 
             }
 
-            for (long anf : array) UserA.show(api, anf);
+            for (long anf : array)
+                UserA.show(api, anf);
 
         } catch (TwitterException ignored) {
         }

@@ -63,11 +63,11 @@ public class HttpApi {
             }
 
         }
-        
+
         String body;
 
         try {
-            
+
             HttpResponse httpResponse = httpRequest.execute();
 
             if (!httpResponse.isOk()) {

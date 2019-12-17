@@ -25,21 +25,21 @@ import java.util.TreeSet;
 public class CloudAuth {
 
     /**
-     * @param request AipRequest Object
-     * @param ak access key ID
-     * @param sk secret access key
+     * @param request   AipRequest Object
+     * @param ak        access key ID
+     * @param sk        secret access key
      * @param timestamp UTC timestamp
      * @return signed authorization header for cloud auth
      */
     public static String sign(AipRequest request, String ak, String sk, String timestamp) {
+
         HashMap<String, String> headers = request.getHeaders();
         HashMap<String, String> params = request.getParams();
         String httpMethod = request.getHttpMethod().toString();
         String path = request.getUri().getPath();
         // 1. 生成signingKey
         //  1.1 authString,格式为：bce-auth-v1/{accessKeyId}/{timestamp}/{expirationPeriodInSeconds}
-        String authStringPrefix = String.format("bce-auth-v1/%s/%s/%d",
-                ak, timestamp, AipClientConst.BCE_AUTH_EXPIRE_IN_SECONDS);
+        String authStringPrefix = String.format("bce-auth-v1/%s/%s/%d", ak, timestamp, AipClientConst.BCE_AUTH_EXPIRE_IN_SECONDS);
 
         try {
             // 1.2.使用authStringPrefix加上SK，用SHA-256生成sign key
@@ -70,6 +70,7 @@ public class CloudAuth {
     }
 
     private static String getCanonicalUri(String path) {
+
         if (!path.startsWith("/")) {
             path = String.format("/%s", path);
         }
@@ -77,6 +78,7 @@ public class CloudAuth {
     }
 
     private static String getCanonicalQuery(HashMap<String, String> params) {
+
         if (params.isEmpty()) {
             return "";
         }
@@ -84,9 +86,7 @@ public class CloudAuth {
         TreeSet<String> querySet = new TreeSet<String>();
         for (Map.Entry<String, String> entry : params.entrySet()) {
             if (!entry.getKey().toLowerCase().equals("authorization")) {
-                querySet.add(String.format("%s=%s",
-                        Util.uriEncode(entry.getKey(), true),
-                        Util.uriEncode(entry.getValue(), true)));
+                querySet.add(String.format("%s=%s", Util.uriEncode(entry.getKey(), true), Util.uriEncode(entry.getValue(), true)));
             }
         }
 
@@ -103,16 +103,15 @@ public class CloudAuth {
      *   5. 所有以x-bce-开头的header项
      */
     private static String getCanonicalHeaders(HashMap<String, String> headers) {
+
         if (headers.isEmpty()) {
             return "";
         }
         TreeSet<String> headerSet = new TreeSet<String>();
         for (Map.Entry<String, String> entry : headers.entrySet()) {
             String key = entry.getKey().trim().toLowerCase();
-            if (key.startsWith(AipClientConst.BCE_PREFIX)
-                    || AipClientConst.BCE_HEADER_TO_SIGN.contains(key)) {
-                headerSet.add(String.format("%s:%s", Util.uriEncode(key, true),
-                        Util.uriEncode(entry.getValue().trim(), true)));
+            if (key.startsWith(AipClientConst.BCE_PREFIX) || AipClientConst.BCE_HEADER_TO_SIGN.contains(key)) {
+                headerSet.add(String.format("%s:%s", Util.uriEncode(key, true), Util.uriEncode(entry.getValue().trim(), true)));
             }
         }
 

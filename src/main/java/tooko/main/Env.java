@@ -29,13 +29,13 @@ public class Env {
     public static int DEVELOPER = 896711046;
 
     public static String NSFW_SERVER;
-    
+
     public static String TEXT_CENSOR_PROVIDER;
     public static String BAIDU_APP_ID;
     public static String BAIDU_API_KEY;
     public static String BAIDU_SECRET_KEY;
-    
-    
+
+
     public static String getPath(String path) {
 
         File target = new File(ROOT_PATH, path);

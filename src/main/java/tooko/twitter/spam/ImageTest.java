@@ -11,6 +11,7 @@ public class ImageTest extends TwitterHandler {
 
     @Override
     public void onLoad() {
+
         initFunction("img_test");
     }
 
@@ -34,4 +35,5 @@ public class ImageTest extends TwitterHandler {
         StatusR.predictStatus(status);
 
     }
+
 }

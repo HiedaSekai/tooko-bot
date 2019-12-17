@@ -7,13 +7,8 @@ import java.io.Serializable;
  * 5/3/16.
  */
 public class MessageEntity implements Serializable {
+
     private final static long serialVersionUID = 0L;
-
-    public enum Type {
-        mention, hashtag, cashtag, bot_command, url, email, phone_number, bold, italic, code, pre, text_link,
-        text_mention
-    }
-
     private Type type;
     private Integer offset;
     private Integer length;
@@ -21,27 +16,33 @@ public class MessageEntity implements Serializable {
     private User user;
 
     public Type type() {
+
         return type;
     }
 
     public Integer offset() {
+
         return offset;
     }
 
     public Integer length() {
+
         return length;
     }
 
     public String url() {
+
         return url;
     }
 
     public User user() {
+
         return user;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -57,6 +58,7 @@ public class MessageEntity implements Serializable {
 
     @Override
     public int hashCode() {
+
         int result = type != null ? type.hashCode() : 0;
         result = 31 * result + (offset != null ? offset.hashCode() : 0);
         result = 31 * result + (length != null ? length.hashCode() : 0);
@@ -67,12 +69,12 @@ public class MessageEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "MessageEntity{" +
-                "type=" + type +
-                ", offset=" + offset +
-                ", length=" + length +
-                ", url='" + url + '\'' +
-                ", user=" + user +
-                '}';
+
+        return "MessageEntity{" + "type=" + type + ", offset=" + offset + ", length=" + length + ", url='" + url + '\'' + ", user=" + user + '}';
     }
+
+    public enum Type {
+        mention, hashtag, cashtag, bot_command, url, email, phone_number, bold, italic, code, pre, text_link, text_mention
+    }
+
 }

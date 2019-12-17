@@ -8,6 +8,7 @@ import java.util.Arrays;
  * 03 October 2016
  */
 public class WebhookInfo implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private String url;
@@ -19,35 +20,43 @@ public class WebhookInfo implements Serializable {
     private String[] allowed_updates;
 
     public String url() {
+
         return url;
     }
 
     public Boolean hasCustomCertificate() {
+
         return has_custom_certificate;
     }
 
     public Integer pendingUpdateCount() {
+
         return pending_update_count;
     }
 
     public Integer lastErrorDate() {
+
         return last_error_date;
     }
 
     public String lastErrorMessage() {
+
         return last_error_message;
     }
 
     public Integer maxConnections() {
+
         return max_connections;
     }
 
     public String[] allowedUpdates() {
+
         return allowed_updates;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -70,6 +79,7 @@ public class WebhookInfo implements Serializable {
 
     @Override
     public int hashCode() {
+
         int result = url != null ? url.hashCode() : 0;
         result = 31 * result + (has_custom_certificate != null ? has_custom_certificate.hashCode() : 0);
         result = 31 * result + (pending_update_count != null ? pending_update_count.hashCode() : 0);
@@ -82,14 +92,8 @@ public class WebhookInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "WebhookInfo{" +
-                "url='" + url + '\'' +
-                ", has_custom_certificate=" + has_custom_certificate +
-                ", pending_update_count=" + pending_update_count +
-                ", last_error_date=" + last_error_date +
-                ", last_error_message='" + last_error_message + '\'' +
-                ", max_connections=" + max_connections +
-                ", allowed_updates=" + Arrays.toString(allowed_updates) +
-                '}';
+
+        return "WebhookInfo{" + "url='" + url + '\'' + ", has_custom_certificate=" + has_custom_certificate + ", " + "pending_update_count=" + pending_update_count + ", last_error_date=" + last_error_date + ", " + "last_error_message='" + last_error_message + '\'' + ", max_connections=" + max_connections + ", " + "allowed_updates=" + Arrays.toString(allowed_updates) + '}';
     }
+
 }

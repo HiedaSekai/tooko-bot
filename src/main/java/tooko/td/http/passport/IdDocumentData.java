@@ -7,21 +7,25 @@ import java.io.Serializable;
  * 02 August 2018
  */
 public class IdDocumentData extends DecryptedData implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private String document_no;
     private String expiry_date;
 
     public String documentNo() {
+
         return document_no;
     }
 
     public String expiryDate() {
+
         return expiry_date;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -33,6 +37,7 @@ public class IdDocumentData extends DecryptedData implements Serializable {
 
     @Override
     public int hashCode() {
+
         int result = document_no != null ? document_no.hashCode() : 0;
         result = 31 * result + (expiry_date != null ? expiry_date.hashCode() : 0);
         return result;
@@ -40,9 +45,8 @@ public class IdDocumentData extends DecryptedData implements Serializable {
 
     @Override
     public String toString() {
-        return "IdDocumentData{" +
-                "document_no='" + document_no + '\'' +
-                ", expiry_date='" + expiry_date + '\'' +
-                '}';
+
+        return "IdDocumentData{" + "document_no='" + document_no + '\'' + ", expiry_date='" + expiry_date + '\'' + '}';
     }
+
 }

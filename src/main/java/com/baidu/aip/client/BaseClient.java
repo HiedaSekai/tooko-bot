@@ -12,15 +12,12 @@
  */
 package com.baidu.aip.client;
 
+import cn.hutool.json.JSONException;
+import cn.hutool.json.JSONObject;
 import com.baidu.aip.auth.CloudAuth;
 import com.baidu.aip.auth.DevAuth;
 import com.baidu.aip.error.AipError;
-import com.baidu.aip.http.AipHttpClient;
-import com.baidu.aip.http.AipRequest;
-import com.baidu.aip.http.AipResponse;
-import com.baidu.aip.http.Headers;
-import com.baidu.aip.http.HttpContentType;
-import com.baidu.aip.http.HttpMethodName;
+import com.baidu.aip.http.*;
 import com.baidu.aip.util.AipClientConfiguration;
 import com.baidu.aip.util.AipClientConst;
 import com.baidu.aip.util.SignUtil;
@@ -30,7 +27,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.Proxy;
 import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicBoolean;
-import cn.hutool.json.*;
 
 public abstract class BaseClient {
 
@@ -44,74 +40,11 @@ public abstract class BaseClient {
     protected AuthState state;
     protected AipClientConfiguration config;
 
-    class AuthState {
-
-        private EAuthState state;
-
-        public AuthState() {
-            state = EAuthState.STATE_UNKNOWN;
-        }
-
-        public String toString() {
-            return state.name();
-        }
-
-        public EAuthState getState() {
-            return state;
-        }
-
-        public void setState(EAuthState state) {
-            this.state = state;
-        }
-
-        public void transfer(boolean value) {
-            switch (state) {
-                case STATE_UNKNOWN: {
-                        if (value) {
-                            state = EAuthState.STATE_AIP_AUTH_OK;
-                            isBceKey.set(false);
-                        } else {
-                            state = EAuthState.STATE_TRUE_CLOUD_USER;
-                            isBceKey.set(true);
-                        }
-                        break;
-                    }
-                case STATE_AIP_AUTH_OK: {
-                        if (value) {
-                            state = EAuthState.STATE_TRUE_AIP_USER;
-                            isBceKey.set(false);
-                            isAuthorized.set(true);
-                        } else {
-                            state = EAuthState.STATE_POSSIBLE_CLOUD_USER;
-                            isBceKey.set(true);
-                        }
-                        break;
-                    }
-                case STATE_TRUE_AIP_USER:
-                    break;
-                case STATE_POSSIBLE_CLOUD_USER: {
-                        if (value) {
-                            state = EAuthState.STATE_TRUE_CLOUD_USER;
-                            isBceKey.set(true);
-                        } else {
-                            state = EAuthState.STATE_TRUE_AIP_USER;
-                            isBceKey.set(false);
-                            isAuthorized.set(true);
-                        }
-                        break;
-                    }
-                case STATE_TRUE_CLOUD_USER:
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
     /*
      * BaseClient constructor, default as AIP user
      */
     protected BaseClient(String appId, String apiKey, String secretKey) {
+
         this.appId = appId;
         this.aipKey = apiKey;
         this.aipToken = secretKey;
@@ -123,10 +56,10 @@ public abstract class BaseClient {
     }
 
     /**
-     *
      * @param timeout 服务器建立连接的超时时间（单位：毫秒）
      */
     public void setConnectionTimeoutInMillis(int timeout) {
+
         if (config == null) {
             config = new AipClientConfiguration();
         }
@@ -134,10 +67,10 @@ public abstract class BaseClient {
     }
 
     /**
-     *
      * @param timeout 通过打开的连接传输数据的超时时间（单位：毫秒）
      */
     public void setSocketTimeoutInMillis(int timeout) {
+
         if (config == null) {
             config = new AipClientConfiguration();
         }
@@ -146,10 +79,12 @@ public abstract class BaseClient {
 
     /**
      * 设置访问网络需要的http代理
+     *
      * @param host 代理服务器地址
      * @param port 代理服务器端口
      */
     public void setHttpProxy(String host, int port) {
+
         if (config == null) {
             config = new AipClientConfiguration();
         }
@@ -158,10 +93,12 @@ public abstract class BaseClient {
 
     /**
      * 设置访问网络需要的socket代理
+     *
      * @param host 代理服务器地址
      * @param port 代理服务器端口
      */
     public void setSocketProxy(String host, int port) {
+
         if (config == null) {
             config = new AipClientConfiguration();
         }
@@ -170,9 +107,11 @@ public abstract class BaseClient {
 
     /**
      * get OAuth access token, synchronized function
+     *
      * @param config 网络连接设置
      */
     protected synchronized void getAccessToken(AipClientConfiguration config) {
+
         if (!needAuth()) {
             return;
         }
@@ -212,6 +151,7 @@ public abstract class BaseClient {
      *   2. isAuthorized为false，或isAuthorized为true，但当前时间晚于expireDate前一天
      */
     protected Boolean needAuth() {
+
         if (isBceKey.get()) {
             return false;
         }
@@ -224,6 +164,7 @@ public abstract class BaseClient {
      *  为DEV创建的用户填充body
      */
     protected void preOperation(AipRequest request) {
+
         if (needAuth()) {
             getAccessToken(config);
         }
@@ -239,6 +180,7 @@ public abstract class BaseClient {
      *  对于DEV用户，则将access_token放到url中
      */
     protected void postOperation(AipRequest request) {
+
         if (isBceKey.get()) {
             // add aipSdk param
             request.addParam("aipSdk", "java");
@@ -266,6 +208,7 @@ public abstract class BaseClient {
 
     /**
      * send request to server
+     *
      * @param request AipRequest object
      * @return JSONObject of server response
      */
@@ -276,15 +219,12 @@ public abstract class BaseClient {
         Integer status = response.getStatus();
         if (status.equals(200) && !resData.equals("")) {
             try {
-                JSONObject res =  new JSONObject(resData);
+                JSONObject res = new JSONObject(resData);
                 if (state.getState().equals(EAuthState.STATE_POSSIBLE_CLOUD_USER)) {
-                    boolean cloudAuthState = res.isNull("error_code")
-                        || res.getInt("error_code") != AipClientConst.IAM_ERROR_CODE;
+                    boolean cloudAuthState = res.isNull("error_code") || res.getInt("error_code") != AipClientConst.IAM_ERROR_CODE;
                     state.transfer(cloudAuthState);
                     if (!cloudAuthState) {
-                        return Util.getGeneralError(
-                            AipClientConst.OPENAPI_NO_ACCESS_ERROR_CODE,
-                            AipClientConst.OPENAPI_NO_ACCESS_ERROR_MSG);
+                        return Util.getGeneralError(AipClientConst.OPENAPI_NO_ACCESS_ERROR_CODE, AipClientConst.OPENAPI_NO_ACCESS_ERROR_MSG);
                     }
                 }
                 return res;
@@ -297,7 +237,75 @@ public abstract class BaseClient {
         }
     }
 
+    class AuthState {
 
+        private EAuthState state;
+
+        public AuthState() {
+
+            state = EAuthState.STATE_UNKNOWN;
+        }
+
+        public String toString() {
+
+            return state.name();
+        }
+
+        public EAuthState getState() {
+
+            return state;
+        }
+
+        public void setState(EAuthState state) {
+
+            this.state = state;
+        }
+
+        public void transfer(boolean value) {
+
+            switch (state) {
+                case STATE_UNKNOWN: {
+                    if (value) {
+                        state = EAuthState.STATE_AIP_AUTH_OK;
+                        isBceKey.set(false);
+                    } else {
+                        state = EAuthState.STATE_TRUE_CLOUD_USER;
+                        isBceKey.set(true);
+                    }
+                    break;
+                }
+                case STATE_AIP_AUTH_OK: {
+                    if (value) {
+                        state = EAuthState.STATE_TRUE_AIP_USER;
+                        isBceKey.set(false);
+                        isAuthorized.set(true);
+                    } else {
+                        state = EAuthState.STATE_POSSIBLE_CLOUD_USER;
+                        isBceKey.set(true);
+                    }
+                    break;
+                }
+                case STATE_TRUE_AIP_USER:
+                    break;
+                case STATE_POSSIBLE_CLOUD_USER: {
+                    if (value) {
+                        state = EAuthState.STATE_TRUE_CLOUD_USER;
+                        isBceKey.set(true);
+                    } else {
+                        state = EAuthState.STATE_TRUE_AIP_USER;
+                        isBceKey.set(false);
+                        isAuthorized.set(true);
+                    }
+                    break;
+                }
+                case STATE_TRUE_CLOUD_USER:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+    }
 
 
 }

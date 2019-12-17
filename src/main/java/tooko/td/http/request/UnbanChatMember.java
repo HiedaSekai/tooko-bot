@@ -7,6 +7,8 @@ package tooko.td.http.request;
 public class UnbanChatMember extends KickChatMember {
 
     public UnbanChatMember(Object chatId, int userId) {
+
         super(chatId, userId);
     }
+
 }

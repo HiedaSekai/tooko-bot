@@ -11,13 +11,14 @@ public class GetChatMemberResponse extends BaseResponse {
     private ChatMember result;
 
     public ChatMember chatMember() {
+
         return result;
     }
 
     @Override
     public String toString() {
-        return "GetChatMemberResponse{" +
-                "result=" + result +
-                '}';
+
+        return "GetChatMemberResponse{" + "result=" + result + '}';
     }
+
 }

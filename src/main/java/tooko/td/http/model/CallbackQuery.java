@@ -7,6 +7,7 @@ import java.io.Serializable;
  * 07 May 2016
  */
 public class CallbackQuery implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private String id;
@@ -18,35 +19,43 @@ public class CallbackQuery implements Serializable {
     private String game_short_name;
 
     public String id() {
+
         return id;
     }
 
     public User from() {
+
         return from;
     }
 
     public Message message() {
+
         return message;
     }
 
     public String inlineMessageId() {
+
         return inline_message_id;
     }
 
     public String chatInstance() {
+
         return chat_instance;
     }
 
     public String data() {
+
         return data;
     }
 
     public String gameShortName() {
+
         return game_short_name;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -65,19 +74,14 @@ public class CallbackQuery implements Serializable {
 
     @Override
     public int hashCode() {
+
         return id != null ? id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return "CallbackQuery{" +
-                "id='" + id + '\'' +
-                ", from=" + from +
-                ", message=" + message +
-                ", inline_message_id='" + inline_message_id + '\'' +
-                ", chat_instance='" + chat_instance + '\'' +
-                ", data='" + data + '\'' +
-                ", game_short_name='" + game_short_name + '\'' +
-                '}';
+
+        return "CallbackQuery{" + "id='" + id + '\'' + ", from=" + from + ", message=" + message + ", " + "inline_message_id='" + inline_message_id + '\'' + ", chat_instance='" + chat_instance + '\'' + ", " + "data='" + data + '\'' + ", game_short_name='" + game_short_name + '\'' + '}';
     }
+
 }

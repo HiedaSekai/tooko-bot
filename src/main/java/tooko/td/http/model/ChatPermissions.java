@@ -7,6 +7,7 @@ import java.io.Serializable;
  * 30 July 2019
  */
 public class ChatPermissions implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private Boolean can_send_messages;
@@ -19,79 +20,96 @@ public class ChatPermissions implements Serializable {
     private Boolean can_pin_messages;
 
     public Boolean canSendMessages() {
+
         return can_send_messages;
     }
 
     public Boolean canSendMediaMessages() {
+
         return can_send_media_messages;
     }
 
     public Boolean canSendPolls() {
+
         return can_send_polls;
     }
 
     public Boolean canSendOtherMessages() {
+
         return can_send_other_messages;
     }
 
     public Boolean canAddWebPagePreviews() {
+
         return can_add_web_page_previews;
     }
 
     public Boolean canChangeInfo() {
+
         return can_change_info;
     }
 
     public Boolean canInviteUsers() {
+
         return can_invite_users;
     }
 
     public Boolean canPinMessages() {
+
         return can_pin_messages;
     }
 
     public ChatPermissions canSendMessages(boolean canSendMessages) {
+
         can_send_messages = canSendMessages;
         return this;
     }
 
     public ChatPermissions canSendMediaMessages(boolean canSendMediaMessages) {
+
         can_send_media_messages = canSendMediaMessages;
         return this;
     }
 
     public ChatPermissions canSendPolls(boolean canSendPolls) {
+
         can_send_polls = canSendPolls;
         return this;
     }
 
     public ChatPermissions canSendOtherMessages(boolean canSendOtherMessages) {
+
         can_send_other_messages = canSendOtherMessages;
         return this;
     }
 
     public ChatPermissions canAddWebPagePreviews(boolean canAddWebPagePreviews) {
+
         can_add_web_page_previews = canAddWebPagePreviews;
         return this;
     }
 
     public ChatPermissions canChangeInfo(boolean canChangeInfo) {
+
         can_change_info = canChangeInfo;
         return this;
     }
 
     public ChatPermissions canInviteUsers(boolean canInviteUsers) {
+
         can_invite_users = canInviteUsers;
         return this;
     }
 
     public ChatPermissions canPinMessages(boolean canPinMessages) {
+
         can_pin_messages = canPinMessages;
         return this;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -116,6 +134,7 @@ public class ChatPermissions implements Serializable {
 
     @Override
     public int hashCode() {
+
         int result = can_send_messages != null ? can_send_messages.hashCode() : 0;
         result = 31 * result + (can_send_media_messages != null ? can_send_media_messages.hashCode() : 0);
         result = 31 * result + (can_send_polls != null ? can_send_polls.hashCode() : 0);
@@ -129,15 +148,8 @@ public class ChatPermissions implements Serializable {
 
     @Override
     public String toString() {
-        return "ChatPermissions{" +
-                "can_send_messages=" + can_send_messages +
-                ", can_send_media_messages=" + can_send_media_messages +
-                ", can_send_polls=" + can_send_polls +
-                ", can_send_other_messages=" + can_send_other_messages +
-                ", can_add_web_page_previews=" + can_add_web_page_previews +
-                ", can_change_info=" + can_change_info +
-                ", can_invite_users=" + can_invite_users +
-                ", can_pin_messages=" + can_pin_messages +
-                '}';
+
+        return "ChatPermissions{" + "can_send_messages=" + can_send_messages + ", can_send_media_messages=" + can_send_media_messages + ", can_send_polls=" + can_send_polls + ", can_send_other_messages=" + can_send_other_messages + ", can_add_web_page_previews=" + can_add_web_page_previews + ", can_change_info=" + can_change_info + ", can_invite_users=" + can_invite_users + ", can_pin_messages=" + can_pin_messages + '}';
     }
+
 }

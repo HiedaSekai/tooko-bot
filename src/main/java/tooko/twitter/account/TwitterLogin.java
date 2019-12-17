@@ -21,7 +21,9 @@ import java.util.LinkedHashMap;
 
 public class TwitterLogin extends TdHandler {
 
+    public int PERSIST_ID = Fn.PerststId._4;
     private LinkedHashMap<String, ApiToken> apis;
+    private HashMap<Integer, LoginCache> cache = new HashMap<>();
 
     {
 
@@ -34,8 +36,6 @@ public class TwitterLogin extends TdHandler {
         }
 
     }
-
-    public int PERSIST_ID = Fn.PerststId._4;
 
     @Override
     public void onLoad() {
@@ -50,24 +50,6 @@ public class TwitterLogin extends TdHandler {
     public boolean rejectPersistStore(int userId, int subId) {
 
         return true;
-
-    }
-
-    private HashMap<Integer, LoginCache> cache = new HashMap<>();
-
-    private static class LoginCache {
-
-        int type = 0;
-
-        String apiKey;
-        String apiSecretKey;
-        String accessToken;
-        String accessTokenSecret;
-
-        Twitter api;
-
-        RequestToken requestToken;
-
 
     }
 
@@ -289,6 +271,22 @@ public class TwitterLogin extends TdHandler {
         TwitterAccount.DATA.setById(account.accountId, account);
 
         send(Fn.sendText(chatId, Fn.parseHtml(L.TWI_WELCOME, archive)));
+
+    }
+
+    private static class LoginCache {
+
+        int type = 0;
+
+        String apiKey;
+        String apiSecretKey;
+        String accessToken;
+        String accessTokenSecret;
+
+        Twitter api;
+
+        RequestToken requestToken;
+
 
     }
 

@@ -9,7 +9,9 @@ import tooko.td.http.response.BaseResponse;
 public class UnpinChatMessage extends BaseRequest<UnpinChatMessage, BaseResponse> {
 
     public UnpinChatMessage(Object chatId) {
+
         super(BaseResponse.class);
         add("chat_id", chatId);
     }
+
 }

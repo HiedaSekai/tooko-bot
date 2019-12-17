@@ -16,10 +16,12 @@ import tooko.main.Fn;
 public class TookoLog extends ConsoleLog {
 
     public TookoLog(String name) {
+
         super(name);
     }
 
     public TookoLog(Class<?> clazz) {
+
         super(clazz.getSimpleName());
     }
 
@@ -28,11 +30,7 @@ public class TookoLog extends ConsoleLog {
 
         if (!isEnabled(level)) return;
 
-        final Dict dict = Dict.create()
-                .set("date", DateUtil.now())
-                .set("level", level.toString())
-                .set("name", this.getName())
-                .set("msg", StrUtil.format(format, arguments));
+        final Dict dict = Dict.create().set("date", DateUtil.now()).set("level", level.toString()).set("name", this.getName()).set("msg", StrUtil.format(format, arguments));
 
         String logFormat = "[{level}] {name}: {msg}";
         String logMsg = StrUtil.format(logFormat, dict);
@@ -89,6 +87,7 @@ public class TookoLog extends ConsoleLog {
 
                     @Override
                     public void debug(String fqcn, Throwable t, String format, Object... arguments) {
+
                     }
 
                 };

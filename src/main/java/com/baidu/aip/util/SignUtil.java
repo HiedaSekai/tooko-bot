@@ -21,13 +21,18 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class SignUtil {
+
     private static final char[] DIGITS;
 
+    static {
+        DIGITS = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+    }
+
     public static String hmacSha256(String key, String data) throws AipException {
+
         try {
             Mac mac = Mac.getInstance("HmacSHA256");
-            SecretKeySpec signingKey = new SecretKeySpec(key.getBytes(),
-                    mac.getAlgorithm());
+            SecretKeySpec signingKey = new SecretKeySpec(key.getBytes(), mac.getAlgorithm());
             mac.init(signingKey);
             return encodeHex(mac.doFinal(data.getBytes()));
         } catch (Exception e) {
@@ -37,6 +42,7 @@ public class SignUtil {
     }
 
     public static String md5(String data, String charset) {
+
         try {
             byte[] msg = data.getBytes(charset);
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -50,6 +56,7 @@ public class SignUtil {
     }
 
     private static String encodeHex(byte[] data) {
+
         int l = data.length;
         char[] out = new char[l << 1];
         int i = 0;
@@ -60,9 +67,5 @@ public class SignUtil {
         }
 
         return new String(out);
-    }
-
-    static {
-        DIGITS = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
     }
 }

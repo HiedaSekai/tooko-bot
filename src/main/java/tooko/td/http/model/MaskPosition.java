@@ -9,25 +9,24 @@ import java.io.Serializable;
  * 23 July 2017
  */
 public class MaskPosition implements Serializable {
+
     private final static long serialVersionUID = 0L;
     private final static Gson gson = new Gson();
-
-    public enum Point {
-        forehead, eyes, mouth, chin
-    }
-
     private String point;
     private Float x_shift, y_shift;
     private Float scale;
 
     public MaskPosition() {
+
     }
 
     public MaskPosition(Point point, Float x_shift, Float y_shift, Float scale) {
+
         this(point.name(), x_shift, y_shift, scale);
     }
 
     public MaskPosition(String point, Float xShift, Float yShift, Float scale) {
+
         this.point = point;
         this.x_shift = xShift;
         this.y_shift = yShift;
@@ -35,23 +34,28 @@ public class MaskPosition implements Serializable {
     }
 
     public String point() {
+
         return point;
     }
 
     public Float xShift() {
+
         return x_shift;
     }
 
     public Float yShift() {
+
         return y_shift;
     }
 
     public Float scale() {
+
         return scale;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -65,6 +69,7 @@ public class MaskPosition implements Serializable {
 
     @Override
     public int hashCode() {
+
         int result = point != null ? point.hashCode() : 0;
         result = 31 * result + (x_shift != null ? x_shift.hashCode() : 0);
         result = 31 * result + (y_shift != null ? y_shift.hashCode() : 0);
@@ -74,11 +79,12 @@ public class MaskPosition implements Serializable {
 
     @Override
     public String toString() {
-        return "MaskPosition{" +
-                "point='" + point + '\'' +
-                ", x_shift=" + x_shift +
-                ", y_shift=" + y_shift +
-                ", scale=" + scale +
-                '}';
+
+        return "MaskPosition{" + "point='" + point + '\'' + ", x_shift=" + x_shift + ", y_shift=" + y_shift + ", " + "scale=" + scale + '}';
     }
+
+    public enum Point {
+        forehead, eyes, mouth, chin
+    }
+
 }

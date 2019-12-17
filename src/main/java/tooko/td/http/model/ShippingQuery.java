@@ -7,6 +7,7 @@ import java.io.Serializable;
  * 24 May 2017
  */
 public class ShippingQuery implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private String id;
@@ -15,23 +16,28 @@ public class ShippingQuery implements Serializable {
     private ShippingAddress shipping_address;
 
     public String id() {
+
         return id;
     }
 
     public User from() {
+
         return from;
     }
 
     public String invoicePayload() {
+
         return invoice_payload;
     }
 
     public ShippingAddress shippingAddress() {
+
         return shipping_address;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -46,16 +52,14 @@ public class ShippingQuery implements Serializable {
 
     @Override
     public int hashCode() {
+
         return id != null ? id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return "ShippingQuery{" +
-                "id='" + id + '\'' +
-                ", from=" + from +
-                ", invoice_payload='" + invoice_payload + '\'' +
-                ", shipping_address=" + shipping_address +
-                '}';
+
+        return "ShippingQuery{" + "id='" + id + '\'' + ", from=" + from + ", invoice_payload='" + invoice_payload + '\'' + ", shipping_address=" + shipping_address + '}';
     }
+
 }

@@ -59,9 +59,7 @@ public class FollowTask extends TimerTask {
 
                 long accountId = iter.next();
 
-                if (TrackTask.friends.arrayIsIn(account.accountId, "array", accountId) ||
-                    TrackTask.followers.arrayIsIn(account.accountId, "array", accountId) ||
-                    AutoData.DATA.arrayIsIn(account.accountId, "autoFollowedIDs", accountId)) {
+                if (TrackTask.friends.arrayIsIn(account.accountId, "array", accountId) || TrackTask.followers.arrayIsIn(account.accountId, "array", accountId) || AutoData.DATA.arrayIsIn(account.accountId, "autoFollowedIDs", accountId)) {
 
                     iter.remove();
 
@@ -74,7 +72,6 @@ public class FollowTask extends TimerTask {
             for (User user : users) {
 
 
-                
             }
 
         } catch (TwitterException e) {

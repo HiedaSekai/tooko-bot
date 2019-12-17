@@ -11,13 +11,14 @@ public class GetStickerSetResponse extends BaseResponse {
     private StickerSet result;
 
     public StickerSet stickerSet() {
+
         return result;
     }
 
     @Override
     public String toString() {
-        return "GetStickerSetResponse{" +
-                "result=" + result +
-                '}';
+
+        return "GetStickerSetResponse{" + "result=" + result + '}';
     }
+
 }

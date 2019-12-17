@@ -13,5 +13,5 @@
 package com.baidu.aip.http;
 
 public enum HttpMethodName {
-    GET, POST, PUT, DELETE, HEAD;
+    GET, POST, PUT, DELETE, HEAD
 }

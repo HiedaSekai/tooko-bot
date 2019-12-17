@@ -7,6 +7,7 @@ import java.io.Serializable;
  * 8/5/15.
  */
 public class Audio implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private String file_id;
@@ -18,35 +19,43 @@ public class Audio implements Serializable {
     private PhotoSize thumb;
 
     public String fileId() {
+
         return file_id;
     }
 
     public Integer duration() {
+
         return duration;
     }
 
     public String performer() {
+
         return performer;
     }
 
     public String title() {
+
         return title;
     }
 
     public String mimeType() {
+
         return mime_type;
     }
 
     public Integer fileSize() {
+
         return file_size;
     }
 
     public PhotoSize thumb() {
+
         return thumb;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -63,19 +72,14 @@ public class Audio implements Serializable {
 
     @Override
     public int hashCode() {
+
         return file_id != null ? file_id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return "Audio{" +
-                "file_id='" + file_id + '\'' +
-                ", duration=" + duration +
-                ", performer='" + performer + '\'' +
-                ", title='" + title + '\'' +
-                ", mime_type='" + mime_type + '\'' +
-                ", file_size=" + file_size +
-                ", thumb=" + thumb +
-                '}';
+
+        return "Audio{" + "file_id='" + file_id + '\'' + ", duration=" + duration + ", performer='" + performer + '\'' + ", title='" + title + '\'' + ", mime_type='" + mime_type + '\'' + ", file_size=" + file_size + ", thumb=" + thumb + '}';
     }
+
 }

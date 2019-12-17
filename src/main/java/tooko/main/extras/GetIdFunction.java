@@ -26,7 +26,7 @@ public class GetIdFunction extends TdFunction {
 
                     User targetUser = execute(new GetUser(NumberUtil.parseInt(param)));
 
-                    send(Fn.sendText(chatId, Fn.parseHtml("Name : {}\nUID : {}", Fn.a(Fn.displayName(targetUser), "tg://user?id=" + targetUser.id), Fn.code(targetUser.id))));
+                    send(Fn.sendText(chatId, Fn.parseHtml("Name : {}\nUID : {}", Fn.a(Fn.displayName(targetUser), "tg" + "://user?id=" + targetUser.id), Fn.code(targetUser.id))));
 
                     return;
 
@@ -56,7 +56,7 @@ public class GetIdFunction extends TdFunction {
 
                     User targetUser = E(new GetUser(userId));
 
-                    send(Fn.sendText(chatId, Fn.parseHtml("Name : {}\nUID : {}", Fn.a(Fn.displayName(targetUser), "tg://user?id=" + targetUser.id), Fn.code(targetUser.id))));
+                    send(Fn.sendText(chatId, Fn.parseHtml("Name : {}\nUID : {}", Fn.a(Fn.displayName(targetUser), "tg" + "://user?id=" + targetUser.id), Fn.code(targetUser.id))));
 
                     return;
 
@@ -76,7 +76,7 @@ public class GetIdFunction extends TdFunction {
 
                     User targetUser = execute(new GetUser(((ChatTypePrivate) chat.type).userId));
 
-                    send(Fn.sendText(chatId, Fn.parseHtml("Name : {}\nUID : {}", Fn.a(Fn.displayName(targetUser), "tg://user?id=" + targetUser.id), Fn.code(targetUser.id))));
+                    send(Fn.sendText(chatId, Fn.parseHtml("Name : {}\nUID : {}", Fn.a(Fn.displayName(targetUser), "tg" + "://user?id=" + targetUser.id), Fn.code(targetUser.id))));
 
                 }
 

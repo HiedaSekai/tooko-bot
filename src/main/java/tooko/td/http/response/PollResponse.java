@@ -11,13 +11,14 @@ public class PollResponse extends BaseResponse {
     private Poll result;
 
     public Poll poll() {
+
         return result;
     }
 
     @Override
     public String toString() {
-        return "PollResponse{" +
-                "result=" + result +
-                '}';
+
+        return "PollResponse{" + "result=" + result + '}';
     }
+
 }

@@ -22,4 +22,5 @@ abstract public class ContentTypes {
 
     public static final String GENERAL_MIME_TYPE = "application/x-www-form-urlencoded";
     public static final String GENERAL_FILE_NAME = DOC_FILE_NAME;
+
 }

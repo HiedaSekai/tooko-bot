@@ -12,26 +12,39 @@
  */
 package com.baidu.aip.contentcensor;
 
-import cn.hutool.json.*;
-import com.baidu.aip.client.*;
-import com.baidu.aip.error.*;
-import com.baidu.aip.http.*;
-import com.baidu.aip.util.*;
-import java.io.*;
-import java.util.*;
+import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONObject;
+import com.baidu.aip.client.BaseClient;
+import com.baidu.aip.error.AipError;
+import com.baidu.aip.http.AipRequest;
+import com.baidu.aip.http.EBodyFormat;
+import com.baidu.aip.http.Headers;
+import com.baidu.aip.http.HttpContentType;
+import com.baidu.aip.util.Base64Util;
+import com.baidu.aip.util.ImageUtil;
+import com.baidu.aip.util.Util;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class AipContentCensor extends BaseClient {
 
     public AipContentCensor(String appId, String aipKey, String aipToken) {
+
         super(appId, aipKey, aipToken);
     }
 
     /**
      * 色情识别接口
+     *
      * @param imgPath 本地图片路径
      * @return JSONObject
      */
     public JSONObject antiPorn(String imgPath) {
+
         try {
             byte[] imgData = Util.readFileByBytes(imgPath);
             return antiPorn(imgData);
@@ -42,10 +55,12 @@ public class AipContentCensor extends BaseClient {
 
     /**
      * 色情识别接口
+     *
      * @param imgData 图片二进制数据
      * @return JSONObject
      */
     public JSONObject antiPorn(byte[] imgData) {
+
         AipRequest request = new AipRequest();
         // check param
 
@@ -66,10 +81,12 @@ public class AipContentCensor extends BaseClient {
 
     /**
      * GIF色情图像识别
+     *
      * @param imgPath 本地图片路径
      * @return JSONObject
      */
     public JSONObject antiPornGif(String imgPath) {
+
         try {
             byte[] imgData = Util.readFileByBytes(imgPath);
             return antiPornGif(imgData);
@@ -80,10 +97,12 @@ public class AipContentCensor extends BaseClient {
 
     /**
      * GIF色情图像识别
+     *
      * @param imgData 图片二进制数据
      * @return JSONObject
      */
     public JSONObject antiPornGif(byte[] imgData) {
+
         AipRequest request = new AipRequest();
         // check param
 
@@ -105,10 +124,12 @@ public class AipContentCensor extends BaseClient {
 
     /**
      * 暴恐图像识别
+     *
      * @param imgPath 本地图片路径
      * @return JSONObject
      */
     public JSONObject antiTerror(String imgPath) {
+
         try {
             byte[] imgData = Util.readFileByBytes(imgPath);
             return antiTerror(imgData);
@@ -119,10 +140,12 @@ public class AipContentCensor extends BaseClient {
 
     /**
      * 暴恐图像识别
+     *
      * @param imgData 图片二进制数据
      * @return JSONObject
      */
     public JSONObject antiTerror(byte[] imgData) {
+
         AipRequest request = new AipRequest();
 
         preOperation(request);
@@ -138,14 +161,15 @@ public class AipContentCensor extends BaseClient {
 
     /**
      * 组合审核接口
+     *
      * @param imgPath 本地图片路径或url
-     * @param type imgPath类型：FILE或URL
-     * @param scenes 需要审核的服务类型
+     * @param type    imgPath类型：FILE或URL
+     * @param scenes  需要审核的服务类型
      * @param options 可选参数
      * @return JSONObject
      */
-    public JSONObject imageCensorComb(String imgPath, EImgType type,
-                                      List<String> scenes, HashMap<String, String> options) {
+    public JSONObject imageCensorComb(String imgPath, EImgType type, List<String> scenes, HashMap<String, String> options) {
+
         if (type == EImgType.FILE) {
             try {
                 byte[] imgData = Util.readFileByBytes(imgPath);
@@ -165,12 +189,14 @@ public class AipContentCensor extends BaseClient {
 
     /**
      * 组合审核接口
+     *
      * @param imgData 图片二进制数据
-     * @param scenes 需要审核的服务类型
+     * @param scenes  需要审核的服务类型
      * @param options 可选参数
      * @return JSONObject
      */
     public JSONObject imageCensorComb(byte[] imgData, List<String> scenes, HashMap<String, String> options) {
+
         AipRequest request = new AipRequest();
 
         String base64Content = Base64Util.encode(imgData);
@@ -180,6 +206,7 @@ public class AipContentCensor extends BaseClient {
     }
 
     private JSONObject imageCensorCombHelper(AipRequest request, List<String> scenes, HashMap<String, String> options) {
+
         preOperation(request);
         JSONArray obj = new JSONArray();
         for (String scene : scenes) {
@@ -201,13 +228,14 @@ public class AipContentCensor extends BaseClient {
 
     /**
      * 头像审核接口
+     *
      * @param imgPaths 本地图片路径或图片url列表
-     * @param type imgPaths参数类型：FILE或URL
-     * @param options 可选参数
+     * @param type     imgPaths参数类型：FILE或URL
+     * @param options  可选参数
      * @return JSONObject
      */
-    public JSONObject faceAudit(List<String> imgPaths, EImgType type,
-                                HashMap<String, String> options) {
+    public JSONObject faceAudit(List<String> imgPaths, EImgType type, HashMap<String, String> options) {
+
         if (type == EImgType.FILE) {
             try {
                 byte[][] imgData = new byte[imgPaths.size()][];
@@ -231,11 +259,13 @@ public class AipContentCensor extends BaseClient {
 
     /**
      * 头像审核接口
+     *
      * @param imgData 图片二进制数据数组
      * @param options 可选参数
      * @return JSONObject
      */
     public JSONObject faceAudit(byte[][] imgData, HashMap<String, String> options) {
+
         AipRequest request = new AipRequest();
         ArrayList<String> buffer = new ArrayList<String>();
         for (byte[] data : imgData) {
@@ -255,6 +285,7 @@ public class AipContentCensor extends BaseClient {
     }
 
     private JSONObject faceAuditHelper(AipRequest request, HashMap<String, String> options) {
+
         preOperation(request);
         request.setUri(ContentCensorConsts.FACE_AUDIT_URL);
         postOperation(request);
@@ -263,10 +294,12 @@ public class AipContentCensor extends BaseClient {
 
     /**
      * 反馈接口
+     *
      * @param reportData 反馈图片识别结果好坏的json数组
      * @return JSONObject
      */
     public JSONObject report(JSONArray reportData) {
+
         AipRequest request = new AipRequest();
         preOperation(request);
         request.addBody("feedback", reportData);
@@ -281,12 +314,14 @@ public class AipContentCensor extends BaseClient {
     /**
      * 图像审核接口
      * 本接口除了支持自定义配置外，还对返回结果进行了总体的包装，按照用户在控制台中配置的规则直接返回是否合规，如果不合规则指出具体不合规的内容。
-     * @param image 本地图片路径或图片url
-     * @param type image参数类型：FILE或URL
+     *
+     * @param image   本地图片路径或图片url
+     * @param type    image参数类型：FILE或URL
      * @param options 可选参数
      * @return JSONObject
      */
     public JSONObject imageCensorUserDefined(String image, EImgType type, HashMap<String, String> options) {
+
         if (type == EImgType.FILE) {
             try {
                 byte[] imgData = Util.readFileByBytes(image);
@@ -307,11 +342,13 @@ public class AipContentCensor extends BaseClient {
     /**
      * 图像审核接口
      * 本接口除了支持自定义配置外，还对返回结果进行了总体的包装，按照用户在控制台中配置的规则直接返回是否合规，如果不合规则指出具体不合规的内容。
+     *
      * @param imgData 图片二进制数据
      * @param options 可选参数
      * @return JSONObject
      */
     public JSONObject imageCensorUserDefined(byte[] imgData, HashMap<String, String> options) {
+
         AipRequest request = new AipRequest();
 
         String base64Content = Base64Util.encode(imgData);
@@ -321,6 +358,7 @@ public class AipContentCensor extends BaseClient {
     }
 
     private JSONObject imageCensorUserDefinedHelper(AipRequest request, HashMap<String, String> options) {
+
         preOperation(request);
 
         if (options != null) {
@@ -336,10 +374,12 @@ public class AipContentCensor extends BaseClient {
     /**
      * 文本审核接口
      * 本接口除了支持自定义配置外，还对返回结果进行了总体的包装，按照用户在控制台中配置的规则直接返回是否合规，如果不合规则指出具体不合规的内容。
+     *
      * @param text 文本
      * @return JSONObject
      */
     public JSONObject textCensorUserDefined(String text) {
+
         AipRequest request = new AipRequest();
 
         request.addBody("text", text);
@@ -348,6 +388,7 @@ public class AipContentCensor extends BaseClient {
     }
 
     private JSONObject textCensorUserDefinedHelper(AipRequest request, HashMap<String, String> options) {
+
         preOperation(request);
 
         if (options != null) {
@@ -361,6 +402,7 @@ public class AipContentCensor extends BaseClient {
     }
 
     public JSONObject antiSpam(String content, HashMap<String, String> options) {
+
         AipRequest request = new AipRequest();
         preOperation(request);
 
@@ -385,10 +427,12 @@ public class AipContentCensor extends BaseClient {
     }
 
     private JSONObject checkImgFormat(byte[] imgData, String format) {
+
         String realFormat = ImageUtil.getImageFormatByBytes(imgData);
         if (realFormat.equals(format)) {
             return AipError.SUCCESS.toJsonResult();
         }
         return AipError.UNSUPPORTED_IMAGE_FORMAT_ERROR.toJsonResult();
     }
+
 }

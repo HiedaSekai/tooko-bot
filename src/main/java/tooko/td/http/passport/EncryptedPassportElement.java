@@ -14,13 +14,8 @@ import java.util.Arrays;
  * 30 July 2018
  */
 public class EncryptedPassportElement implements Serializable {
+
     private final static long serialVersionUID = 0L;
-
-    public enum Type {
-        personal_details, passport, driver_license, identity_card, internal_passport, address, utility_bill,
-        bank_statement, rental_agreement, passport_registration, temporary_registration, phone_number, email
-    }
-
     private Type type;
     private String data;
     private String phone_number;
@@ -33,6 +28,7 @@ public class EncryptedPassportElement implements Serializable {
     private String hash;
 
     public DecryptedData decryptData(Credentials credentials) throws Exception {
+
         Class<? extends DecryptedData> clazz = dataClass();
         if (clazz == null || data == null) return null;
         SecureValue secureValue = credentials.secureData().ofType(type);
@@ -42,12 +38,14 @@ public class EncryptedPassportElement implements Serializable {
     }
 
     public byte[] decryptFile(PassportFile passportFile, FileCredentials fileCredentials, String botToken) throws Exception {
+
         File file = HttpApi.execute(botToken, new GetFile(passportFile.fileId())).file();
         byte[] fileData = HttpApi.readFile(botToken, file.filePath());
         return decryptFile(fileData, fileCredentials);
     }
 
     public byte[] decryptFile(PassportFile passportFile, Credentials credentials, String botToken) throws Exception {
+
         FileCredentials fileCredentials = findFileCredentials(passportFile, credentials);
         if (fileCredentials == null) {
             throw new IllegalArgumentException("Don't have file credentials for " + passportFile);
@@ -56,10 +54,12 @@ public class EncryptedPassportElement implements Serializable {
     }
 
     public byte[] decryptFile(byte[] fileData, FileCredentials fileCredentials) throws Exception {
+
         return Decrypt.decryptFile(fileData, fileCredentials.fileHash(), fileCredentials.secret());
     }
 
     private FileCredentials findFileCredentials(PassportFile passportFile, Credentials credentials) {
+
         SecureValue secureValue = credentials.secureData().ofType(type);
         if (passportFile.equals(front_side)) return secureValue.frontSide();
         if (passportFile.equals(reverse_side)) return secureValue.reverseSide();
@@ -78,6 +78,7 @@ public class EncryptedPassportElement implements Serializable {
     }
 
     private Class<? extends DecryptedData> dataClass() {
+
         if (Type.personal_details == type) return PersonalDetails.class;
         if (Type.passport == type) return IdDocumentData.class;
         if (Type.internal_passport == type) return IdDocumentData.class;
@@ -88,47 +89,58 @@ public class EncryptedPassportElement implements Serializable {
     }
 
     public Type type() {
+
         return type;
     }
 
     public String data() {
+
         return data;
     }
 
     public String phoneNumber() {
+
         return phone_number;
     }
 
     public String email() {
+
         return email;
     }
 
     public PassportFile[] files() {
+
         return files;
     }
 
     public PassportFile frontSide() {
+
         return front_side;
     }
 
     public PassportFile reverseSide() {
+
         return reverse_side;
     }
 
     public PassportFile selfie() {
+
         return selfie;
     }
 
     public PassportFile[] translation() {
+
         return translation;
     }
 
     public String hash() {
+
         return hash;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -150,6 +162,7 @@ public class EncryptedPassportElement implements Serializable {
 
     @Override
     public int hashCode() {
+
         int result = type != null ? type.hashCode() : 0;
         result = 31 * result + (data != null ? data.hashCode() : 0);
         result = 31 * result + (phone_number != null ? phone_number.hashCode() : 0);
@@ -165,17 +178,12 @@ public class EncryptedPassportElement implements Serializable {
 
     @Override
     public String toString() {
-        return "EncryptedPassportElement{" +
-                "type=" + type +
-                ", data='" + data + '\'' +
-                ", phone_number='" + phone_number + '\'' +
-                ", email='" + email + '\'' +
-                ", files=" + Arrays.toString(files) +
-                ", front_side=" + front_side +
-                ", reverse_side=" + reverse_side +
-                ", selfie=" + selfie +
-                ", translation=" + Arrays.toString(translation) +
-                ", hash='" + hash + '\'' +
-                '}';
+
+        return "EncryptedPassportElement{" + "type=" + type + ", data='" + data + '\'' + ", phone_number='" + phone_number + '\'' + ", email='" + email + '\'' + ", files=" + Arrays.toString(files) + ", front_side=" + front_side + ", reverse_side=" + reverse_side + ", selfie=" + selfie + ", translation=" + Arrays.toString(translation) + ", hash='" + hash + '\'' + '}';
     }
+
+    public enum Type {
+        personal_details, passport, driver_license, identity_card, internal_passport, address, utility_bill, bank_statement, rental_agreement, passport_registration, temporary_registration, phone_number, email
+    }
+
 }

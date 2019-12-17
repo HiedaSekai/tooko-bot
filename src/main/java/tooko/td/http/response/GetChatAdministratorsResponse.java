@@ -13,13 +13,14 @@ public class GetChatAdministratorsResponse extends BaseResponse {
     private List<ChatMember> result;
 
     public List<ChatMember> administrators() {
+
         return result;
     }
 
     @Override
     public String toString() {
-        return "GetChatAdministratorsResponse{" +
-                "result=" + result +
-                '}';
+
+        return "GetChatAdministratorsResponse{" + "result=" + result + '}';
     }
+
 }

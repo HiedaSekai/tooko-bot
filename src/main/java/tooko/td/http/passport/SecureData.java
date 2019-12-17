@@ -8,22 +8,13 @@ import java.lang.reflect.Field;
  * 31 July 2018
  */
 public class SecureData implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
-    private SecureValue
-            personal_details,
-            passport,
-            internal_passport,
-            driver_license,
-            identity_card,
-            address,
-            utility_bill,
-            bank_statement,
-            rental_agreement,
-            passport_registration,
-            temporary_registration;
+    private SecureValue personal_details, passport, internal_passport, driver_license, identity_card, address, utility_bill, bank_statement, rental_agreement, passport_registration, temporary_registration;
 
     public SecureValue ofType(EncryptedPassportElement.Type type) {
+
         try {
             Field field = getClass().getDeclaredField(type.name());
             return (SecureValue) field.get(this);
@@ -33,51 +24,63 @@ public class SecureData implements Serializable {
     }
 
     public SecureValue personalDetails() {
+
         return personal_details;
     }
 
     public SecureValue passport() {
+
         return passport;
     }
 
     public SecureValue internalPassport() {
+
         return internal_passport;
     }
 
     public SecureValue driverLicense() {
+
         return driver_license;
     }
 
     public SecureValue identityCard() {
+
         return identity_card;
     }
 
     public SecureValue address() {
+
         return address;
     }
 
     public SecureValue utilityBill() {
+
         return utility_bill;
     }
 
     public SecureValue bankStatement() {
+
         return bank_statement;
     }
 
     public SecureValue rentalAgreement() {
+
         return rental_agreement;
     }
 
     public SecureValue passportRegistration() {
+
         return passport_registration;
     }
 
     public SecureValue temporaryRegistration() {
+
         return temporary_registration;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -105,6 +108,7 @@ public class SecureData implements Serializable {
 
     @Override
     public int hashCode() {
+
         int result = personal_details != null ? personal_details.hashCode() : 0;
         result = 31 * result + (passport != null ? passport.hashCode() : 0);
         result = 31 * result + (internal_passport != null ? internal_passport.hashCode() : 0);
@@ -121,18 +125,8 @@ public class SecureData implements Serializable {
 
     @Override
     public String toString() {
-        return "SecureData{" +
-                "personal_details=" + personal_details +
-                ", passport=" + passport +
-                ", internal_passport=" + internal_passport +
-                ", driver_license=" + driver_license +
-                ", identity_card=" + identity_card +
-                ", address=" + address +
-                ", utility_bill=" + utility_bill +
-                ", bank_statement=" + bank_statement +
-                ", rental_agreement=" + rental_agreement +
-                ", passport_registration=" + passport_registration +
-                ", temporary_registration=" + temporary_registration +
-                '}';
+
+        return "SecureData{" + "personal_details=" + personal_details + ", passport=" + passport + ", " + "internal_passport=" + internal_passport + ", driver_license=" + driver_license + ", identity_card=" + identity_card + ", address=" + address + ", utility_bill=" + utility_bill + ", bank_statement=" + bank_statement + ", rental_agreement=" + rental_agreement + ", passport_registration=" + passport_registration + ", temporary_registration=" + temporary_registration + '}';
     }
+
 }

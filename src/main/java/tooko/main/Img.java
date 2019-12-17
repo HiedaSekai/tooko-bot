@@ -117,7 +117,9 @@ public class Img {
 
 					}
 
-					DefaultDrawingSupplier drawingSupplier = new DefaultDrawingSupplier(paints,paints,paints,DefaultDrawingSupplier.DEFAULT_STROKE_SEQUENCE,DefaultDrawingSupplier.DEFAULT_OUTLINE_STROKE_SEQUENCE,DefaultDrawingSupplier.DEFAULT_SHAPE_SEQUENCE);
+					DefaultDrawingSupplier drawingSupplier = new DefaultDrawingSupplier(paints,paints,paints,
+					DefaultDrawingSupplier.DEFAULT_STROKE_SEQUENCE,DefaultDrawingSupplier
+					.DEFAULT_OUTLINE_STROKE_SEQUENCE,DefaultDrawingSupplier.DEFAULT_SHAPE_SEQUENCE);
 					setDrawingSupplier(drawingSupplier);
 
 					setPlotBackgroundPaint(Color.WHITE);
@@ -434,11 +436,7 @@ public class Img {
 
         try {
 
-            Thumbnails.of(image)
-                    .size(width, height)
-                    .outputFormat(format)
-                    .outputQuality(1f)
-                    .toOutputStream(out);
+            Thumbnails.of(image).size(width, height).outputFormat(format).outputQuality(1f).toOutputStream(out);
 
         } catch (IOException ignored) {
         }
@@ -459,11 +457,7 @@ public class Img {
 
         try {
 
-            Thumbnails.of(image)
-                    .size(width, height)
-                    .outputFormat(format)
-                    .outputQuality(1f)
-                    .toFile(outPut);
+            Thumbnails.of(image).size(width, height).outputFormat(format).outputQuality(1f).toFile(outPut);
 
         } catch (IOException ignored) {
         }

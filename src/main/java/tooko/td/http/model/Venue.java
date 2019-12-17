@@ -7,6 +7,7 @@ import java.io.Serializable;
  * 5/3/16.
  */
 public class Venue implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private Location location;
@@ -16,27 +17,33 @@ public class Venue implements Serializable {
     private String foursquare_type;
 
     public Location location() {
+
         return location;
     }
 
     public String title() {
+
         return title;
     }
 
     public String address() {
+
         return address;
     }
 
     public String foursquareId() {
+
         return foursquare_id;
     }
 
     public String foursquareType() {
+
         return foursquare_type;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -52,6 +59,7 @@ public class Venue implements Serializable {
 
     @Override
     public int hashCode() {
+
         int result = location != null ? location.hashCode() : 0;
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
@@ -62,12 +70,8 @@ public class Venue implements Serializable {
 
     @Override
     public String toString() {
-        return "Venue{" +
-                "location=" + location +
-                ", title='" + title + '\'' +
-                ", address='" + address + '\'' +
-                ", foursquare_id='" + foursquare_id + '\'' +
-                ", foursquare_type='" + foursquare_type + '\'' +
-                '}';
+
+        return "Venue{" + "location=" + location + ", title='" + title + '\'' + ", address='" + address + '\'' + ", " + "foursquare_id='" + foursquare_id + '\'' + ", foursquare_type='" + foursquare_type + '\'' + '}';
     }
+
 }

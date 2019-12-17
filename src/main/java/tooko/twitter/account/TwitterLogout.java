@@ -6,7 +6,7 @@ import tooko.td.TdApi.Message;
 import tooko.td.TdApi.User;
 import tooko.twitter.TwitterAccount;
 import tooko.twitter.TwitterHandler;
-import tooko.twitter.actions.*;
+import tooko.twitter.actions.TrackTask;
 
 public class TwitterLogout extends TwitterHandler {
 
@@ -24,7 +24,7 @@ public class TwitterLogout extends TwitterHandler {
 
         TrackTask.followers.deleteById(account.accountId);
         TrackTask.friends.deleteById(account.accountId);
-        
+
         send(Fn.sendText(chatId, Fn.plainText(Lang.get(user).TWI_LOGOUT)));
 
     }

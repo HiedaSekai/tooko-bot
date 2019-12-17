@@ -15,84 +15,6 @@ import java.util.List;
 
 public abstract class TwitterHandler extends TdFunction {
 
-    public static class FnCache {
-
-        TwitterCallback callback;
-
-        Message message;
-
-    }
-
-    public static class Receiver extends TdHandler {
-
-        public HashMap<Integer, FnCache> caches = new HashMap<>();
-
-        public static int PERSIST_ID = Fn.PerststId._5;
-
-        @Override
-        public void onLoad() {
-
-            initPersist(PERSIST_ID);
-
-        }
-
-        @Override
-        public boolean rejectPersistStore(int userId, int subId) {
-
-            return true;
-
-        }
-
-        @Override
-        public void onPersistMessage(User user, long chatId, Message message, int subId) {
-
-            removePersist(user);
-            
-            Lang L = Lang.get(user);
-
-            FnCache cache = caches.remove(user.id);
-
-            delay(message);
-            delay(cache.message);
-
-            String screenName = Fn.getText(message);
-
-            if (screenName == null || !screenName.startsWith("@")) {
-
-                delay(Fn.sendText(chatId, Fn.plainText(L.TWI_ANF)));
-
-                return;
-
-            }
-
-            UserA archive = UserA.get(screenName.substring(1));
-
-            if (archive == null) {
-
-                delay(Fn.sendText(chatId, Fn.plainText(L.TWI_ANF)));
-
-                return;
-
-            }
-
-            TwitterAccount account = TwitterAccount.DATA.getById(archive.accountId);
-
-            if (account == null || account.owner != user.id) {
-
-                delay(Fn.sendText(chatId, Fn.plainText(L.TWI_ANF)));
-
-                return;
-
-            }
-
-            delay(Fn.sendText(chatId, Fn.parseHtml(L.TWI_CHOSED, archive)));
-
-            cache.callback.onCallback(user.id, account);
-
-        }
-
-    }
-
     public void requestTwitter(User user, TwitterCallback callback) {
 
         requestTwitter(user.id, callback);
@@ -118,19 +40,19 @@ public abstract class TwitterHandler extends TdFunction {
             cache.callback = callback;
 
             Receiver receiver;
-            
+
             try {
-                
-               receiver = findHandler(Receiver.class);
-               
+
+                receiver = findHandler(Receiver.class);
+
             } catch (IllegalStateException ex) {
-                
+
                 receiver = new Receiver();
-                
+
                 client.addHandler(receiver);
-                
+
             }
-            
+
             receiver.caches.put(userId, cache);
 
             KeyboardArray buttons = new KeyboardArray();
@@ -181,6 +103,84 @@ public abstract class TwitterHandler extends TdFunction {
     }
 
     public void onFunction(User user, long chatId, Message message, String function, String param, String[] params, String[] originParams, TwitterAccount account) {
+
+    }
+
+    public static class FnCache {
+
+        TwitterCallback callback;
+
+        Message message;
+
+    }
+
+    public static class Receiver extends TdHandler {
+
+        public static int PERSIST_ID = Fn.PerststId._5;
+        public HashMap<Integer, FnCache> caches = new HashMap<>();
+
+        @Override
+        public void onLoad() {
+
+            initPersist(PERSIST_ID);
+
+        }
+
+        @Override
+        public boolean rejectPersistStore(int userId, int subId) {
+
+            return true;
+
+        }
+
+        @Override
+        public void onPersistMessage(User user, long chatId, Message message, int subId) {
+
+            removePersist(user);
+
+            Lang L = Lang.get(user);
+
+            FnCache cache = caches.remove(user.id);
+
+            delay(message);
+            delay(cache.message);
+
+            String screenName = Fn.getText(message);
+
+            if (screenName == null || !screenName.startsWith("@")) {
+
+                delay(Fn.sendText(chatId, Fn.plainText(L.TWI_ANF)));
+
+                return;
+
+            }
+
+            UserA archive = UserA.get(screenName.substring(1));
+
+            if (archive == null) {
+
+                delay(Fn.sendText(chatId, Fn.plainText(L.TWI_ANF)));
+
+                return;
+
+            }
+
+            TwitterAccount account = TwitterAccount.DATA.getById(archive.accountId);
+
+            if (account == null || account.owner != user.id) {
+
+                delay(Fn.sendText(chatId, Fn.plainText(L.TWI_ANF)));
+
+                return;
+
+            }
+
+            delay(Fn.sendText(chatId, Fn.parseHtml(L.TWI_CHOSED, archive)));
+
+            cache.callback.onCallback(user.id, account);
+
+        }
+
     }
 
 }

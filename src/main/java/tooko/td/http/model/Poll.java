@@ -8,6 +8,7 @@ import java.util.Arrays;
  * 17 April 2019
  */
 public class Poll implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private String id;
@@ -16,23 +17,28 @@ public class Poll implements Serializable {
     private Boolean is_closed;
 
     public String id() {
+
         return id;
     }
 
     public String question() {
+
         return question;
     }
 
     public PollOption[] options() {
+
         return options;
     }
 
     public Boolean isClosed() {
+
         return is_closed;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -47,16 +53,14 @@ public class Poll implements Serializable {
 
     @Override
     public int hashCode() {
+
         return id != null ? id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return "Poll{" +
-                "id='" + id + '\'' +
-                ", question='" + question + '\'' +
-                ", options=" + Arrays.toString(options) +
-                ", is_closed=" + is_closed +
-                '}';
+
+        return "Poll{" + "id='" + id + '\'' + ", question='" + question + '\'' + ", options=" + Arrays.toString(options) + ", is_closed=" + is_closed + '}';
     }
+
 }

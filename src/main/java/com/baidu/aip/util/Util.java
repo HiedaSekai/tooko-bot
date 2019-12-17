@@ -12,23 +12,15 @@
  */
 package com.baidu.aip.util;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import cn.hutool.json.JSONObject;
+
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.BitSet;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
-import cn.hutool.json.*;
 
 public class Util {
 
@@ -58,6 +50,7 @@ public class Util {
     }
 
     public static String mkString(Iterator<String> iter, char seprator) {
+
         if (!iter.hasNext()) {
             return "";
         }
@@ -79,14 +72,15 @@ public class Util {
      *   <li>Convert the string into a UTF-8 byte array.</li>
      *   <li>Encode all octets into percent-encoding, except all URI unreserved characters per the RFC 3986.</li>
      * </ol>
-     *
+     * <p>
      * All letters used in the percent-encoding are in uppercase.
      *
-     * @param value the string to normalize.
+     * @param value       the string to normalize.
      * @param encodeSlash if encode '/'
      * @return the normalized string.
      */
     public static String uriEncode(String value, boolean encodeSlash) {
+
         try {
             StringBuilder builder = new StringBuilder();
             for (byte b : value.getBytes(AipClientConst.DEFAULT_ENCODING)) {
@@ -107,6 +101,7 @@ public class Util {
     }
 
     public static String getCanonicalTime() {
+
         SimpleDateFormat utcDayFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat utcHourFormat = new SimpleDateFormat("hh:mm:ss");
         utcDayFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -116,13 +111,13 @@ public class Util {
     }
 
     /**
-     *
      * @param filePath 文件路径
      * @return file bytes
      * @throws IOException 读取文件错误
      */
 
     public static byte[] readFileByBytes(String filePath) throws IOException {
+
         File file = new File(filePath);
         if (!file.exists()) {
             throw new FileNotFoundException(filePath);
@@ -152,6 +147,7 @@ public class Util {
     }
 
     public static void writeBytesToFileSystem(byte[] data, String output) throws IOException {
+
         DataOutputStream out = null;
         try {
             out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(output)));
@@ -164,6 +160,7 @@ public class Util {
     }
 
     public static JSONObject getGeneralError(int errorCode, String errorMsg) {
+
         JSONObject json = new JSONObject();
         json.put("error_code", errorCode);
         json.put("error_msg", errorMsg);
@@ -171,7 +168,9 @@ public class Util {
     }
 
     public static boolean isLiteral(String input) {
+
         Pattern pattern = Pattern.compile("[0-9a-zA-Z_]*");
         return pattern.matcher(input).matches();
     }
+
 }

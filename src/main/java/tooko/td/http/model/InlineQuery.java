@@ -7,6 +7,7 @@ import java.io.Serializable;
  * 1/12/16.
  */
 public class InlineQuery implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private String id;
@@ -16,27 +17,33 @@ public class InlineQuery implements Serializable {
     private String offset;
 
     public String id() {
+
         return id;
     }
 
     public User from() {
+
         return from;
     }
 
     public Location location() {
+
         return location;
     }
 
     public String query() {
+
         return query;
     }
 
     public String offset() {
+
         return offset;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -52,17 +59,14 @@ public class InlineQuery implements Serializable {
 
     @Override
     public int hashCode() {
+
         return id != null ? id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return "InlineQuery{" +
-                "id='" + id + '\'' +
-                ", from=" + from +
-                ", location=" + location +
-                ", query='" + query + '\'' +
-                ", offset='" + offset + '\'' +
-                '}';
+
+        return "InlineQuery{" + "id='" + id + '\'' + ", from=" + from + ", location=" + location + ", query='" + query + '\'' + ", offset='" + offset + '\'' + '}';
     }
+
 }

@@ -36,6 +36,7 @@ public class ArrayPropertyCodecProvider<E> implements PropertyCodecProvider {
         private final Codec<E> codec;
 
         public ArrayCodec(Class<T> arrClazz, Class<E> clazz, Codec<E> codec) {
+
             this.arrClazz = arrClazz;
             this.clazz = clazz;
             this.codec = codec;

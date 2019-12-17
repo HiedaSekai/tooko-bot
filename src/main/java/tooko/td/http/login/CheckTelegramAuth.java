@@ -20,11 +20,8 @@ public class CheckTelegramAuth {
     private final String botToken, dataCheck, hash;
     private final long authDate;
 
-    public static CheckTelegramAuth fromUrl(String botToken, String authUrl) {
-        return new CheckTelegramAuth(botToken, URI.create(authUrl).getQuery());
-    }
-
     private CheckTelegramAuth(String botToken, String authQueryParams) {
+
         String hash = null;
         long authDate = 0;
         String[] params = authQueryParams.split("&");
@@ -45,22 +42,19 @@ public class CheckTelegramAuth {
         this.botToken = botToken;
     }
 
-    public Date authDate() {
-        return new Date(authDate * 1000L);
-    }
+    public static CheckTelegramAuth fromUrl(String botToken, String authUrl) {
 
-    public boolean isFromTelegram() throws Exception {
-        byte[] secret = sha256(botToken.getBytes());
-        String result = hmacSha256(secret, dataCheck);
-        return result.equals(hash);
+        return new CheckTelegramAuth(botToken, URI.create(authUrl).getQuery());
     }
 
     private static byte[] sha256(byte[] string) throws NoSuchAlgorithmException {
+
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         return md.digest(string);
     }
 
     private static String hmacSha256(byte[] key, String data) throws NoSuchAlgorithmException, InvalidKeyException {
+
         Mac hmacSha256 = Mac.getInstance("HmacSHA256");
         SecretKeySpec secret_key = new SecretKeySpec(key, "HmacSHA256");
         hmacSha256.init(secret_key);
@@ -69,10 +63,12 @@ public class CheckTelegramAuth {
     }
 
     private static String hex(byte[] str) {
+
         return String.format("%040x", new BigInteger(1, str));
     }
 
     private static String join(Iterable<String> elements, CharSequence separator) {
+
         StringBuilder builder = new StringBuilder();
         Iterator<String> it = elements.iterator();
         if (it.hasNext()) {
@@ -83,4 +79,17 @@ public class CheckTelegramAuth {
         }
         return builder.toString();
     }
+
+    public Date authDate() {
+
+        return new Date(authDate * 1000L);
+    }
+
+    public boolean isFromTelegram() throws Exception {
+
+        byte[] secret = sha256(botToken.getBytes());
+        String result = hmacSha256(secret, dataCheck);
+        return result.equals(hash);
+    }
+
 }

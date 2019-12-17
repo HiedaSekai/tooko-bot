@@ -7,6 +7,7 @@ import java.io.Serializable;
  * 06 May 2016
  */
 public class InputVenueMessageContent extends InputMessageContent implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private Float latitude;
@@ -17,6 +18,7 @@ public class InputVenueMessageContent extends InputMessageContent implements Ser
     private String foursquare_type;
 
     public InputVenueMessageContent(Float latitude, Float longitude, String title, String address) {
+
         this.latitude = latitude;
         this.longitude = longitude;
         this.title = title;
@@ -24,12 +26,15 @@ public class InputVenueMessageContent extends InputMessageContent implements Ser
     }
 
     public InputVenueMessageContent foursquareId(String foursquareId) {
+
         this.foursquare_id = foursquareId;
         return this;
     }
 
     public InputVenueMessageContent foursquareType(String foursquareType) {
+
         this.foursquare_type = foursquareType;
         return this;
     }
+
 }

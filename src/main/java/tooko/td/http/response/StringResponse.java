@@ -9,14 +9,14 @@ public class StringResponse extends BaseResponse {
     private String result;
 
     public String result() {
+
         return result;
     }
 
     @Override
     public String toString() {
-        return "StringResponse{" +
-                "result='" + result + '\'' +
-                ", base=" + super.toString() +
-                '}';
+
+        return "StringResponse{" + "result='" + result + '\'' + ", base=" + super.toString() + '}';
     }
+
 }

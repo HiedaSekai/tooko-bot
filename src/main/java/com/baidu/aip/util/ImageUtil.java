@@ -26,6 +26,7 @@ import java.util.Iterator;
 public class ImageUtil {
 
     public static String getImageFormatByFile(String filePath) {
+
         ImageInputStream input = null;
         try {
             input = ImageIO.createImageInputStream(new File(filePath));
@@ -45,6 +46,7 @@ public class ImageUtil {
     }
 
     public static String getImageFormatByBytes(byte[] content) {
+
         ImageInputStream input = null;
         try {
             input = new MemoryCacheImageInputStream(new ByteArrayInputStream(content));
@@ -62,6 +64,7 @@ public class ImageUtil {
 
     // this function will not close input, need caller to close it.
     public static String getImageFormat(ImageInputStream input) {
+
         Iterator<ImageReader> readers = ImageIO.getImageReaders(input);
         String format = "unknown";
         if (readers.hasNext()) {
@@ -80,6 +83,7 @@ public class ImageUtil {
 
 
     public static HashMap<String, Integer> getImageInfoByFile(String filePath) {
+
         ImageInputStream input;
         try {
             input = ImageIO.createImageInputStream(new File(filePath));
@@ -91,12 +95,14 @@ public class ImageUtil {
     }
 
     public static HashMap<String, Integer> getImageInfoByBytes(byte[] content) {
+
         ImageInputStream input = new MemoryCacheImageInputStream(new ByteArrayInputStream(content));
         return getImageInfo(input);
     }
 
     // this function will not close input, need caller to close it.
     public static HashMap<String, Integer> getImageInfo(ImageInputStream input) {
+
         HashMap<String, Integer> map = new HashMap<String, Integer>(2);
 
         BufferedImage buff = null;

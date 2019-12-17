@@ -7,6 +7,7 @@ import java.io.Serializable;
  * 8/4/15.
  */
 public class ReplyKeyboardMarkup extends Keyboard implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private final KeyboardButton[][] keyboard;
@@ -15,10 +16,12 @@ public class ReplyKeyboardMarkup extends Keyboard implements Serializable {
     private boolean selective;
 
     public ReplyKeyboardMarkup(String[]... keyboard) {
+
         this(keyboard, false, false, false);
     }
 
     public ReplyKeyboardMarkup(String[][] keyboard, boolean resize_keyboard, boolean one_time_keyboard, boolean selective) {
+
         KeyboardButton[][] keyboardButtons = new KeyboardButton[keyboard.length][];
         for (int i = 0; i < keyboard.length; i++) {
             keyboardButtons[i] = new KeyboardButton[keyboard[i].length];
@@ -33,21 +36,26 @@ public class ReplyKeyboardMarkup extends Keyboard implements Serializable {
     }
 
     public ReplyKeyboardMarkup(KeyboardButton[]... keyboard) {
+
         this.keyboard = keyboard;
     }
 
     public ReplyKeyboardMarkup resizeKeyboard(boolean resizeKeyboard) {
+
         this.resize_keyboard = resizeKeyboard;
         return this;
     }
 
     public ReplyKeyboardMarkup oneTimeKeyboard(boolean oneTimeKeyboard) {
+
         this.one_time_keyboard = oneTimeKeyboard;
         return this;
     }
 
     public ReplyKeyboardMarkup selective(boolean selective) {
+
         this.selective = selective;
         return this;
     }
+
 }

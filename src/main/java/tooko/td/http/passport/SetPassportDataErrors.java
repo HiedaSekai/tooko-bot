@@ -10,7 +10,9 @@ import tooko.td.http.response.BaseResponse;
 public class SetPassportDataErrors extends BaseRequest<SetPassportDataErrors, BaseResponse> {
 
     public SetPassportDataErrors(int userId, PassportElementError... errors) {
+
         super(BaseResponse.class);
         add("user_id", userId).add("errors", serialize(errors));
     }
+
 }

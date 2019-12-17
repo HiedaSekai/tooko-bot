@@ -8,4 +8,5 @@ package tooko.td.http.passport;
  * Can be one of the following types: PersonalDetails, IdDocumentData, ResidentialAddress
  */
 abstract public class DecryptedData {
+
 }

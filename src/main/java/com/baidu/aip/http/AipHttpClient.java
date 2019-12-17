@@ -12,11 +12,7 @@
  */
 package com.baidu.aip.http;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.Proxy;
@@ -34,6 +30,7 @@ public class AipHttpClient {
      * @return AipResponse
      */
     public static AipResponse post(AipRequest request) {
+
         String url;
         String charset = request.getContentEncoding();
         String content = request.getBodyStr();
@@ -45,8 +42,7 @@ public class AipHttpClient {
         try {
             if (request.getParams().isEmpty()) {
                 url = request.getUri().toString();
-            }
-            else {
+            } else {
                 url = String.format("%s?%s", request.getUri().toString(), request.getParamStr());
             }
 

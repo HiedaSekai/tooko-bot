@@ -21,6 +21,8 @@ import static com.mongodb.client.model.Updates.set;
 public class TrackTask extends TimerTask {
 
     public static Timer timer;
+    public static Table<Long, IdList> followers = new Table<>("fo", IdList.class);
+    public static Table<Long, IdList> friends = new Table<>("fr", IdList.class);
 
     public static void start() {
 
@@ -41,48 +43,6 @@ public class TrackTask extends TimerTask {
         }
 
         timer = null;
-
-    }
-
-    @Override
-    public void run() {
-
-        List<TwitterAccount> accounts = TwitterAccount.DATA.getAllByField("track", true);
-
-        for (TwitterAccount account : accounts) {
-
-            if (account.track_last == null || (account.track_delay == null || System.currentTimeMillis() - account.track_last > account.track_delay)) {
-
-                TwitterAccount.DATA.updateField(account.accountId, "track_last", System.currentTimeMillis());
-
-                Twitter api = account.mkApi();
-
-                fetchInfo(account, api);
-
-            }
-
-        }
-
-    }
-
-    public static Table<Long, IdList> followers = new Table<>("fo", IdList.class);
-    public static Table<Long, IdList> friends = new Table<>("fr", IdList.class);
-
-    public static class IdList {
-
-        @BsonId
-        public long accountId;
-
-        public LinkedList<Long> array;
-
-        public IdList() {
-        }
-
-        public IdList(long accountId, LinkedList<Long> array) {
-            this.accountId = accountId;
-            this.array = array;
-        }
-
 
     }
 
@@ -262,6 +222,47 @@ public class TrackTask extends TimerTask {
         }
 
         Launcher.twitter.I(Fn.sendText(account.owner, Fn.parseHtml(report)));
+
+    }
+
+    @Override
+    public void run() {
+
+        List<TwitterAccount> accounts = TwitterAccount.DATA.getAllByField("track", true);
+
+        for (TwitterAccount account : accounts) {
+
+            if (account.track_last == null || (account.track_delay == null || System.currentTimeMillis() - account.track_last > account.track_delay)) {
+
+                TwitterAccount.DATA.updateField(account.accountId, "track_last", System.currentTimeMillis());
+
+                Twitter api = account.mkApi();
+
+                fetchInfo(account, api);
+
+            }
+
+        }
+
+    }
+
+    public static class IdList {
+
+        @BsonId
+        public long accountId;
+
+        public LinkedList<Long> array;
+
+        public IdList() {
+
+        }
+
+        public IdList(long accountId, LinkedList<Long> array) {
+
+            this.accountId = accountId;
+            this.array = array;
+        }
+
 
     }
 

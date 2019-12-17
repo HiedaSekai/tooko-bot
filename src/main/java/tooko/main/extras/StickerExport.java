@@ -68,7 +68,7 @@ public class StickerExport extends TdHandler {
 
                 FileUtil.copy(stickerFile.local.path, Env.getPath("cache/sticker"), true);
 
-                send(Fn.sendMessage(message.chatId, new InputMessageDocument(new InputFileLocal(Env.getPath("cache/sticker")), null, Fn.plainText("scource file (.tgs)"))));
+                send(Fn.sendMessage(message.chatId, new InputMessageDocument(new InputFileLocal(Env.getPath("cache" + "/sticker")), null, Fn.plainText("scource file (.tgs)"))));
 
             } else {
 
@@ -100,7 +100,7 @@ public class StickerExport extends TdHandler {
 
                 InlineKeyboardButton[][] options = sticker.setId == 0 ? null : new InlineKeyboardButton[][]{
 
-                    Fn.inlineDataLine(Lang.get(userId).STICKER_EXPORT, DATA_ID, 0, StrUtil.utf8Bytes(setName))
+                        Fn.inlineDataLine(Lang.get(userId).STICKER_EXPORT, DATA_ID, 0, StrUtil.utf8Bytes(setName))
 
 
                 };
@@ -160,13 +160,13 @@ public class StickerExport extends TdHandler {
 
         TdClient.asyncPool.execute(new Runnable() {
 
-                @Override
-                public void run() {
+            @Override
+            public void run() {
 
-                    startDownload(userId, chatId, messageId, stickerSet);
+                startDownload(userId, chatId, messageId, stickerSet);
 
-                }
-            });
+            }
+        });
 
 
     }

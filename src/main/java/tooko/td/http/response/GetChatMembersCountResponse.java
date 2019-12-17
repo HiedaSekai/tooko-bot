@@ -9,13 +9,14 @@ public class GetChatMembersCountResponse extends BaseResponse {
     private int result;
 
     public int count() {
+
         return result;
     }
 
     @Override
     public String toString() {
-        return "GetChatMembersCountResponse{" +
-                "result=" + result +
-                '}';
+
+        return "GetChatMembersCountResponse{" + "result=" + result + '}';
     }
+
 }

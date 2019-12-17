@@ -9,7 +9,9 @@ import tooko.td.http.response.GetChatResponse;
 public class GetChat extends BaseRequest<GetChat, GetChatResponse> {
 
     public GetChat(Object chatId) {
+
         super(GetChatResponse.class);
         add("chat_id", chatId);
     }
+
 }

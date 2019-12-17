@@ -116,9 +116,7 @@ public class BotPanel extends TdHandler {
 
         InlineArray buttons = new InlineArray();
 
-        buttons
-                .dataLine(L.REFRESH, DATA_ID, 2, data[0])
-                .inlineData(L.BOT_DELETE, DATA_ID, 4, data[0]);
+        buttons.dataLine(L.REFRESH, DATA_ID, 2, data[0]).inlineData(L.BOT_DELETE, DATA_ID, 4, data[0]);
 
         buttons.dataLine("🔙", DATA_ID, 0);
 
@@ -134,7 +132,7 @@ public class BotPanel extends TdHandler {
         if (subId == 0) {
 
             send(Fn.answerConfirm(queryId));
-            
+
             showList(L, userId, chatId, messageId, false);
 
             return;

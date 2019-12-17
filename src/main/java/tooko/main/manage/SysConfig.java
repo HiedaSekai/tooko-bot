@@ -62,16 +62,19 @@ public class SysConfig {
         public String str_value;
 
         public DB(String id, long longValue) {
+
             this.id = id;
             this.long_value = longValue;
         }
 
         public DB(String id, boolean boolValue) {
+
             this.id = id;
             this.bool_value = boolValue;
         }
 
         public DB(String id, String strValue) {
+
             this.id = id;
             this.str_value = strValue;
         }

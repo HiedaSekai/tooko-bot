@@ -9,6 +9,7 @@ import tooko.td.http.response.GetWebhookInfoResponse;
 public class GetWebhookInfo extends BaseRequest<GetWebhookInfo, GetWebhookInfoResponse> {
 
     public GetWebhookInfo() {
+
         super(GetWebhookInfoResponse.class);
     }
 

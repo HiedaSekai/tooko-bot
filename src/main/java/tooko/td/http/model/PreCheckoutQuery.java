@@ -7,6 +7,7 @@ import java.io.Serializable;
  * 24 May 2017
  */
 public class PreCheckoutQuery implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private String id;
@@ -18,35 +19,43 @@ public class PreCheckoutQuery implements Serializable {
     private OrderInfo order_info;
 
     public String id() {
+
         return id;
     }
 
     public User from() {
+
         return from;
     }
 
     public String currency() {
+
         return currency;
     }
 
     public Integer totalAmount() {
+
         return total_amount;
     }
 
     public String invoicePayload() {
+
         return invoice_payload;
     }
 
     public String shippingOptionId() {
+
         return shipping_option_id;
     }
 
     public OrderInfo orderInfo() {
+
         return order_info;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -65,19 +74,14 @@ public class PreCheckoutQuery implements Serializable {
 
     @Override
     public int hashCode() {
+
         return id != null ? id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return "PreCheckoutQuery{" +
-                "id='" + id + '\'' +
-                ", from=" + from +
-                ", currency='" + currency + '\'' +
-                ", total_amount=" + total_amount +
-                ", invoice_payload='" + invoice_payload + '\'' +
-                ", shipping_option_id='" + shipping_option_id + '\'' +
-                ", order_info=" + order_info +
-                '}';
+
+        return "PreCheckoutQuery{" + "id='" + id + '\'' + ", from=" + from + ", currency='" + currency + '\'' + ", " + "total_amount=" + total_amount + ", invoice_payload='" + invoice_payload + '\'' + ", " + "shipping_option_id='" + shipping_option_id + '\'' + ", order_info=" + order_info + '}';
     }
+
 }

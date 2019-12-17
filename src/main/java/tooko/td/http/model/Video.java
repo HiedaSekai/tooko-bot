@@ -7,6 +7,7 @@ import java.io.Serializable;
  * 8/5/15.
  */
 public class Video implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private String file_id;
@@ -18,35 +19,43 @@ public class Video implements Serializable {
     private Integer file_size;
 
     public String fileId() {
+
         return file_id;
     }
 
     public Integer width() {
+
         return width;
     }
 
     public Integer height() {
+
         return height;
     }
 
     public Integer duration() {
+
         return duration;
     }
 
     public PhotoSize thumb() {
+
         return thumb;
     }
 
     public String mimeType() {
+
         return mime_type;
     }
 
     public Integer fileSize() {
+
         return file_size;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -63,19 +72,14 @@ public class Video implements Serializable {
 
     @Override
     public int hashCode() {
+
         return file_id != null ? file_id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return "Video{" +
-                "file_id='" + file_id + '\'' +
-                ", width=" + width +
-                ", height=" + height +
-                ", duration=" + duration +
-                ", thumb=" + thumb +
-                ", mime_type='" + mime_type + '\'' +
-                ", file_size=" + file_size +
-                '}';
+
+        return "Video{" + "file_id='" + file_id + '\'' + ", width=" + width + ", height=" + height + ", duration=" + duration + ", thumb=" + thumb + ", mime_type='" + mime_type + '\'' + ", file_size=" + file_size + '}';
     }
+
 }

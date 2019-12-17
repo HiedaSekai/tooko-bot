@@ -12,7 +12,7 @@ public class ENG extends Lang {
 
         CHOOSE_LANG = "Please select a language :";
 
-        LANG_SELECTED = "English language is <b>set</b>.\nPlease note that translators are volunteers, and this localization <i>may be incomplete</i>.You can contact the " + Fn.mention("developer", Env.DEVELOPER) + " to help improve the translations.";
+        LANG_SELECTED = "English language is <b>set</b>.\nPlease note that translators are volunteers, and this " + "localization <i>may be incomplete</i>.You can contact the " + Fn.mention("developer", Env.DEVELOPER) + " to help improve the translations.";
 
         FN_PING_RESULT = "pong！";
 
@@ -79,6 +79,7 @@ public class ENG extends Lang {
     }
 
     public ENG() {
+
         super("English");
     }
 

@@ -8,6 +8,7 @@ import java.util.Arrays;
  * 31 July 2018
  */
 public class SecureValue implements Serializable {
+
     private final static long serialVersionUID = 0L;
 
     private DataCredentials data;
@@ -18,31 +19,38 @@ public class SecureValue implements Serializable {
     private FileCredentials[] files;
 
     public DataCredentials data() {
+
         return data;
     }
 
     public FileCredentials frontSide() {
+
         return front_side;
     }
 
     public FileCredentials reverseSide() {
+
         return reverse_side;
     }
 
     public FileCredentials selfie() {
+
         return selfie;
     }
 
     public FileCredentials[] translation() {
+
         return translation;
     }
 
     public FileCredentials[] files() {
+
         return files;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -60,6 +68,7 @@ public class SecureValue implements Serializable {
 
     @Override
     public int hashCode() {
+
         int result = data != null ? data.hashCode() : 0;
         result = 31 * result + (front_side != null ? front_side.hashCode() : 0);
         result = 31 * result + (reverse_side != null ? reverse_side.hashCode() : 0);
@@ -71,13 +80,8 @@ public class SecureValue implements Serializable {
 
     @Override
     public String toString() {
-        return "SecureValue{" +
-                "data=" + data +
-                ", front_side=" + front_side +
-                ", reverse_side=" + reverse_side +
-                ", selfie=" + selfie +
-                ", translation=" + Arrays.toString(translation) +
-                ", files=" + Arrays.toString(files) +
-                '}';
+
+        return "SecureValue{" + "data=" + data + ", front_side=" + front_side + ", reverse_side=" + reverse_side + "," + " selfie=" + selfie + ", translation=" + Arrays.toString(translation) + ", files=" + Arrays.toString(files) + '}';
     }
+
 }

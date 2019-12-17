@@ -24,6 +24,28 @@ public class TdHandler {
 
     public TdClient client;
 
+    public static <T extends BaseRequest, R extends BaseResponse> R E(String botToken, final BaseRequest<T, R> request) {
+
+        try {
+
+            return execute(botToken, request);
+
+        } catch (TdException e) {
+
+            StaticLog.warn(Fn.parseError(e));
+
+            return null;
+
+        }
+
+    }
+
+    public static <T extends BaseRequest, R extends BaseResponse> R execute(String botToken, final BaseRequest<T, R> request) throws TdException {
+
+        return HttpApi.execute(botToken, request);
+
+    }
+
     public java.io.File getFile(File file) throws TdException {
 
         execute(new DownloadFile(file.id, 0, 0, 0, true));
@@ -123,22 +145,6 @@ public class TdHandler {
         try {
 
             return client.execute(function);
-
-        } catch (TdException e) {
-
-            StaticLog.warn(Fn.parseError(e));
-
-            return null;
-
-        }
-
-    }
-
-    public static <T extends BaseRequest, R extends BaseResponse> R E(String botToken, final BaseRequest<T, R> request) {
-
-        try {
-
-            return execute(botToken, request);
 
         } catch (TdException e) {
 
@@ -253,12 +259,6 @@ public class TdHandler {
     public <T extends BaseRequest, R extends BaseResponse> R execute(final BaseRequest<T, R> request) throws TdException {
 
         return execute(((TdBot) client).botToken, request);
-
-    }
-
-    public static <T extends BaseRequest, R extends BaseResponse> R execute(String botToken, final BaseRequest<T, R> request) throws TdException {
-
-        return HttpApi.execute(botToken, request);
 
     }
 
@@ -719,6 +719,7 @@ public class TdHandler {
     }
 
     public void onAuthorizationState(AuthorizationState authorizationState) {
+
     }
 
     private void onNewMessage(Message message) {
@@ -746,219 +747,291 @@ public class TdHandler {
     }
 
     public void onNewMessage(int userId, long chatId, Message message) {
+
     }
 
     public void onMessageSendAcknowledged(long chatId, long messageId) {
+
     }
 
     public void onMessageSendSucceeded(Message message, long oldMessageId) {
+
     }
 
     public void onMessageSendFailed(Message message, long oldMessageId, int errorCode, String errorMessage) {
+
     }
 
     public void onMessageContent(long chatId, long messageId, MessageContent newContent) {
+
     }
 
     public void onMessageEdited(long chatId, long messageId, int editDate, ReplyMarkup replyMarkup) {
+
     }
 
     public void onMessageViews(long chatId, long messageId, int views) {
+
     }
 
     public void onMessageContentOpened(long chatId, long messageId) {
+
     }
 
     public void onMessageMentionRead(long chatId, long messageId, int unreadMentionCount) {
+
     }
 
     public void onNewChat(Chat chat) {
+
     }
 
     public void onChatTitle(long chatId, String title) {
+
     }
 
     public void onChatPhoto(long chatId, ChatPhoto photo) {
+
     }
 
     public void onChatPermissions(long chatId, ChatPermissions permissions) {
+
     }
 
     public void onChatLastMessage(long chatId, Message lastMessage, long order) {
+
     }
 
     public void onChatOrder(long chatId, long order) {
+
     }
 
     public void onChatIsPinned(long chatId, boolean isPinned, long order) {
+
     }
 
     public void onChatIsMarkedAsUnread(long chatId, boolean isMarkedAsUnread) {
+
     }
 
     public void onChatIsSponsored(long chatId, boolean isSponsored, long order) {
+
     }
 
     public void onChatDefaultDisableNotification(long chatId, boolean defaultDisableNotification) {
+
     }
 
     public void onChatReadInbox(long chatId, long lastReadInboxMessageId, int unreadCount) {
+
     }
 
     public void onChatReadOutbox(long chatId, long lastReadOutboxMessageId) {
+
     }
 
     public void onChatUnreadMentionCount(long chatId, int unreadMentionCount) {
+
     }
 
     public void onChatNotificationSettings(long chatId, ChatNotificationSettings notificationSettings) {
+
     }
 
     public void onScopeNotificationSettings(NotificationSettingsScope scope, ScopeNotificationSettings notificationSettings) {
+
     }
 
     public void onChatPinnedMessage(long chatId, long pinnedMessageId) {
+
     }
 
     public void onChatReplyMarkup(long chatId, long replyMarkupMessageId) {
+
     }
 
     public void onChatDraftMessage(long chatId, DraftMessage draftMessage, long order) {
+
     }
 
     public void onChatOnlineMemberCount(long chatId, int onlineMemberCount) {
+
     }
 
     public void onNotification(int notificationGroupId, Notification notification) {
+
     }
 
     public void onNotificationGroup(int notificationGroupId, NotificationGroupType type, long chatId, long notificationSettingsChatId, boolean isSilent, int totalCount, Notification[] addedNotifications, int[] removedNotificationIds) {
+
     }
 
     public void onActiveNotifications(NotificationGroup[] groups) {
+
     }
 
     public void onHavePendingNotifications(boolean haveDelayedNotifications, boolean haveUnreceivedNotifications) {
+
     }
 
     public void onDeleteMessages(long chatId, long[] messageIds, boolean isPermanent, boolean fromCache) {
+
     }
 
     public void onUserChatAction(long chatId, int userId, ChatAction action) {
+
     }
 
     public void onUserStatus(int userId, UserStatus status) {
+
     }
 
     public void onUser(User user) {
+
     }
 
     public void onBasicGroup(BasicGroup basicGroup) {
+
     }
 
     public void onSupergroup(Supergroup supergroup) {
+
     }
 
     public void onSecretChat(SecretChat secretChat) {
+
     }
 
     public void onUserFullInfo(int userId, UserFullInfo userFullInfo) {
+
     }
 
     public void onBasicGroupFullInfo(int basicGroupId, BasicGroupFullInfo basicGroupFullInfo) {
+
     }
 
     public void onSupergroupFullInfo(int supergroupId, SupergroupFullInfo supergroupFullInfo) {
+
     }
 
     public void onServiceNotification(String type, MessageContent content) {
+
     }
 
     public void onFile(File file) {
+
     }
 
     public void onFileGenerationStart(long generationId, String originalPath, String destinationPath, String conversion) {
+
     }
 
     public void onFileGenerationStop(long generationId) {
+
     }
 
     public void onCall(Call call) {
+
     }
 
     public void onUserPrivacySettingRules(UserPrivacySetting setting, UserPrivacySettingRules rules) {
+
     }
 
     public void onUnreadMessageCount(int unreadCount, int unreadUnmutedCount) {
+
     }
 
     public void onUnreadChatCount(int unreadCount, int unreadUnmutedCount, int markedAsUnreadCount, int markedAsUnreadUnmutedCount) {
+
     }
 
     public void onOption(String name, OptionValue value) {
+
     }
 
     public void onInstalledStickerSets(boolean isMasks, long[] stickerSetIds) {
+
     }
 
     public void onTrendingStickerSets(StickerSets stickerSets) {
+
     }
 
     public void onRecentStickers(boolean isAttached, int[] stickerIds) {
+
     }
 
     public void onFavoriteStickers(int[] stickerIds) {
+
     }
 
     public void onSavedAnimations(int[] animationIds) {
+
     }
 
     public void onSelectedBackground(boolean forDarkTheme, Background background) {
+
     }
 
     public void onLanguagePackStrings(String localizationTarget, String languagePackId, LanguagePackString[] strings) {
+
     }
 
     public void onConnectionState(ConnectionState state) {
+
     }
 
     public void onTermsOfService(String termsOfServiceId, TermsOfService termsOfService) {
+
     }
 
     public void onNewInlineQuery(long id, int senderUserId, Location userLocation, String query, String offset) {
+
     }
 
     public void onNewChosenInlineResult(int senderUserId, Location userLocation, String query, String resultId, String inlineMessageId) {
+
     }
 
     public void handleNewCallbackQuery(long id, int senderUserId, long chatId, long messageId, long chatInstance, CallbackQueryPayload payload) {
+
     }
 
     public void onNewInlineCallbackQuery(long id, int senderUserId, String inlineMessageId, long chatInstance, CallbackQueryPayload payload) {
+
     }
 
     public void onNewShippingQuery(long id, int senderUserId, String invoicePayload, Address shippingAddress) {
+
     }
 
     public void onNewPreCheckoutQuery(long id, int senderUserId, String currency, long totalAmount, byte[] invoicePayload, String shippingOptionId, OrderInfo orderInfo) {
+
     }
 
     public void onNewCustomEvent(String event) {
+
     }
 
     public void onNewCustomQuery(long id, String data, int timeout) {
+
     }
 
     public void onPoll(Poll poll) {
+
     }
 
     public void onLoad() {
+
     }
 
     public void onLogin() {
+
     }
 
     public void onDestroy() {
+
     }
 
     public void onPersistCancel(User user, long chatId, Message message, int subId) {
@@ -988,6 +1061,7 @@ public class TdHandler {
     }
 
     public void onPersistFinished(int userId, int subId) {
+
     }
 
     public boolean rejectPersistStore(int userId, int subId) {
@@ -997,9 +1071,11 @@ public class TdHandler {
     }
 
     public void onPersistStore(int userId, int subId, LinkedList<String> data) {
+
     }
 
     public void onPersistRestore(int userId, int subId, String[] data) {
+
     }
 
     public void handlePersistMessage(User user, long chatId, Message message, int subId, boolean acceptFunction) {
@@ -1070,6 +1146,7 @@ public class TdHandler {
     }
 
     public void onPersistMessage(User user, long chatId, Message message, int subId) {
+
     }
 
     public void onPersistFunction(User user, long chatId, Message message, int subId, String function, String param, String[] params, String[] originParams) {
@@ -1081,12 +1158,15 @@ public class TdHandler {
     }
 
     public void onFunction(User user, long chatId, Message message, String function, String param, String[] params, String[] originParams) {
+
     }
 
     public void onNewCallbackQuery(int userId, long chatId, long messageId, long queryId, int subId, byte[][] data) {
+
     }
 
     public void onPayload(User user, long chatId, Message message, String payload, String[] params) {
+
     }
 
     public void initFunction(String... names) {
@@ -1183,7 +1263,7 @@ public class TdHandler {
 
         if (persist != null) {
 
-            onPersistFinished(userId,persist.subId);
+            onPersistFinished(userId, persist.subId);
 
 
         }
@@ -1200,7 +1280,8 @@ public class TdHandler {
 
     public void insertStartMessages(long chatId, Message... messages) {
 
-        for (Message message : messages) insertStartMessages(chatId, message.id);
+        for (Message message : messages)
+            insertStartMessages(chatId, message.id);
 
     }
 
@@ -1208,7 +1289,8 @@ public class TdHandler {
 
         LinkedList<Long> array = ((TdBot) client).startMessages.get(chatId);
 
-        for (long messageId : ids) array.add(messageId);
+        for (long messageId : ids)
+            array.add(messageId);
 
     }
 
@@ -1233,7 +1315,8 @@ public class TdHandler {
 
     public void insertStartPayloads(long chatId, String payload, Message... messages) {
 
-        for (Message message : messages) insertStartPayloads(chatId, payload, message.id);
+        for (Message message : messages)
+            insertStartPayloads(chatId, payload, message.id);
 
     }
 
@@ -1251,7 +1334,8 @@ public class TdHandler {
 
         LinkedList<Long> array = map.get(chatId);
 
-        for (long messageId : ids) array.add(messageId);
+        for (long messageId : ids)
+            array.add(messageId);
 
 
     }
@@ -1288,7 +1372,8 @@ public class TdHandler {
 
         if (messages == null || messages.isEmpty()) return;
 
-        for (long messageId : messages) I(Fn.deleteMessages(chatId, messageId));
+        for (long messageId : messages)
+            I(Fn.deleteMessages(chatId, messageId));
 
     }
 
@@ -1298,7 +1383,8 @@ public class TdHandler {
 
         if (messages == null || messages.isEmpty() || !messages.containsKey(chatId)) return;
 
-        for (long messageId : messages.remove(chatId)) I(Fn.deleteMessages(chatId, messageId));
+        for (long messageId : messages.remove(chatId))
+            I(Fn.deleteMessages(chatId, messageId));
 
     }
 
@@ -1309,9 +1395,11 @@ public class TdHandler {
     }
 
     public static class Break extends RuntimeException {
+
     }
 
     public static class Reject extends RuntimeException {
+
     }
 
 }

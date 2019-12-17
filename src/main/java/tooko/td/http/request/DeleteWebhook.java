@@ -9,6 +9,8 @@ import tooko.td.http.response.BaseResponse;
 public class DeleteWebhook extends BaseRequest<DeleteWebhook, BaseResponse> {
 
     public DeleteWebhook() {
+
         super(BaseResponse.class);
     }
+
 }

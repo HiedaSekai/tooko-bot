@@ -13,33 +13,41 @@ public class SetWebhook extends BaseRequest<SetWebhook, BaseResponse> {
     private boolean isMultipart = false;
 
     public SetWebhook() {
+
         super(BaseResponse.class);
     }
 
     public SetWebhook url(String url) {
+
         return add("url", url);
     }
 
     public SetWebhook certificate(byte[] certificate) {
+
         isMultipart = true;
         return add("certificate", certificate);
     }
 
     public SetWebhook certificate(File certificate) {
+
         isMultipart = true;
         return add("certificate", certificate);
     }
 
     public SetWebhook maxConnections(int maxConnections) {
+
         return add("max_connections", maxConnections);
     }
 
     public SetWebhook allowedUpdates(String... allowedUpdates) {
+
         return add("allowed_updates", serialize(allowedUpdates));
     }
 
     @Override
     public boolean isMultipart() {
+
         return isMultipart;
     }
+
 }
