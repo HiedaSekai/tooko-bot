@@ -105,7 +105,7 @@ public class FollowersScan extends TwitterHandler {
 
             UserR ur = UserR.predictUser(archive);
 
-            send(Fn.editText(stat, Fn.plainText("PRDICTING ... {} / {}", index + 1, followers.size())));
+            send(Fn.editText(stat, Fn.plainText("PRDICTING ... {} / {} - FETCHING", index + 1, followers.size())));
 
             if (ur.isSpam()) {
 
@@ -164,7 +164,7 @@ public class FollowersScan extends TwitterHandler {
 
         public LinkedList<String> process() {
 
-            //send(Fn.editText(stat, Fn.plainText("PRDICTING ... {} / {}", userIndex + 1, userMax)));
+            send(Fn.editText(stat, Fn.plainText("PRDICTING ... {} / {} = {} / {}", userIndex + 1, userMax,statusList.size())));
 
             for (int index = 0; index < 5; index++) {
 
@@ -202,7 +202,7 @@ public class FollowersScan extends TwitterHandler {
 
             }
 
-            if (next % 10 == 0) {
+            if (next + 1 % 10 == 0) {
 
                 send(Fn.editText(stat, Fn.plainText("PRDICTING ... {} / {} - {} / {}", userIndex + 1, userMax, next + 1, statusList.size())));
 
@@ -239,7 +239,7 @@ public class FollowersScan extends TwitterHandler {
 
                     if (r.media == StatusR.NSRC.PORN || r.media == StatusR.NSRC.SEXY || r.text == TextCensor.TCRC.PORN) {
 
-                        result.add(StrUtil.format("https://twitter.com/{}/status/{}", nextStatus.getUser().getScreenName(), nextStatus.getId()));
+                       // result.add(StrUtil.format("https://twitter.com/{}/status/{}", nextStatus.getUser().getScreenName(), nextStatus.getId()));
 
                         if ((float) result.size() / statusList.size() > 0.1 && result.size() > 4) {
 
