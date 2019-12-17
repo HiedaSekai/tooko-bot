@@ -201,7 +201,7 @@ public class FollowersScan extends TwitterHandler {
 
             }
 
-            if (next + 1 % 10 == 0) {
+            if ((next + 1) % 10 == 0) {
 
                 send(Fn.editText(stat, Fn.plainText("PRDICTING ... {} / {} - {} / {}", userIndex + 1, userMax, next + 1, statusList.size())));
 
