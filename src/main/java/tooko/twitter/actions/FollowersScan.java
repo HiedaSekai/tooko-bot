@@ -138,7 +138,7 @@ public class FollowersScan extends TwitterHandler {
 
                     r = StatusR.predictStatus(status);
 
-                } catch (HttpException ex) {
+                } catch (Exception ex) {
 
                     continue;
 
