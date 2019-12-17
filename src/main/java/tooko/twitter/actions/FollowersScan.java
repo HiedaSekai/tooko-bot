@@ -78,6 +78,7 @@ public class FollowersScan extends TwitterHandler {
             public void run() {
 
                 startPredict(chatId, L, api, followers);
+
             }
 
         });
@@ -147,6 +148,9 @@ public class FollowersScan extends TwitterHandler {
 
                 }
 
+                send(Fn.editText(stat, Fn.plainText("PRDICTING ... {} / {} - {} / {}", index + 1, followers.size(),
+                        sindex + 1, timeline.size())));
+
                 if (r.media == StatusR.NSRC.PORN || r.media == StatusR.NSRC.SEXY || r.text == TextCensor.TCRC.PORN) {
 
                     ss++;
@@ -159,8 +163,7 @@ public class FollowersScan extends TwitterHandler {
 
                         count++;
 
-                        send(Fn.sendText(chatId, Fn.parseHtml(archive.simpleName() + " : PORN STATUSES {}",
-                                CollectionUtil.join(sss, "\n"))));
+                        send(Fn.sendText(chatId, Fn.parseHtml(archive.simpleName() + " : PORN STATUSES {}", CollectionUtil.join(sss, "\n"))));
 
                         continue pridectUser;
 
