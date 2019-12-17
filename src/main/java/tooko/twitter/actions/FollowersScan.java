@@ -2,7 +2,6 @@ package tooko.twitter.actions;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.thread.ThreadUtil;
-import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import tooko.main.Env;
 import tooko.main.Fn;
@@ -164,7 +163,7 @@ public class FollowersScan extends TwitterHandler {
 
         public LinkedList<String> process() {
 
-            send(Fn.editText(stat, Fn.plainText("PRDICTING ... {} / {} = {} / {}", userIndex + 1, userMax,statusList.size())));
+            send(Fn.editText(stat, Fn.plainText("PRDICTING ... {} / {} = {} / {}", userIndex + 1, userMax, statusList.size())));
 
             for (int index = 0; index < 5; index++) {
 
@@ -235,11 +234,11 @@ public class FollowersScan extends TwitterHandler {
 
                     }
 
-                    log.debug("PRED : {} / {}",index,statusList.size());
+                    // log.debug("PRED : {} / {}", index, statusList.size());
 
                     if (r.media == StatusR.NSRC.PORN || r.media == StatusR.NSRC.SEXY || r.text == TextCensor.TCRC.PORN) {
 
-                       // result.add(StrUtil.format("https://twitter.com/{}/status/{}", nextStatus.getUser().getScreenName(), nextStatus.getId()));
+                        result.add(StrUtil.format("https://twitter.com/{}/status/{}", nextStatus.getUser().getScreenName(), nextStatus.getId()));
 
                         if ((float) result.size() / statusList.size() > 0.1 && result.size() > 4) {
 
