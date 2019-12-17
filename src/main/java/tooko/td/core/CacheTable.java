@@ -104,20 +104,20 @@ public class CacheTable<ID, T> extends Table<ID, T> {
     }
 
     @Override
-    public boolean arrayInsert(ID id, String array, Object element) {
+    public boolean arrayInsert(ID id, String array, Object element, boolean upset) {
 
         idIndex.remove(id);
 
-        return super.arrayInsert(id, array, element);
+        return super.arrayInsert(id, array, element, upset);
 
     }
 
     @Override
-    public boolean setInsert(ID id, String array, Object element) {
+    public boolean setInsert(ID id, String array, Object element, boolean upset) {
 
         idIndex.remove(id);
 
-        return super.setInsert(id, array, element);
+        return super.setInsert(id, array, element, upset);
 
     }
 

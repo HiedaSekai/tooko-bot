@@ -12,6 +12,7 @@
  */
 package com.baidu.aip.http;
 
+import cn.hutool.json.JSONObject;
 import com.baidu.aip.util.AipClientConfiguration;
 import com.baidu.aip.util.Util;
 
@@ -20,7 +21,6 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import cn.hutool.json.*;
 
 public class AipRequest {
     private HashMap<String, String> headers;
@@ -81,6 +81,7 @@ public class AipRequest {
 
     public void addBody(HashMap other) {
         if (other != null) {
+            //noinspection unchecked
             body.putAll(other);
         }
     }
@@ -120,7 +121,8 @@ public class AipRequest {
     }
 
     public String getParamStr() {
-        StringBuffer buffer = new StringBuffer();
+
+        StringBuilder buffer = new StringBuilder();
         for (Map.Entry<String, String> entry : params.entrySet()) {
             buffer.append(String.format("%s=%s&", entry.getKey(), entry.getValue()));
         }

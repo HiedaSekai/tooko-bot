@@ -204,7 +204,7 @@ public class StatusR {
 
         if (rc == NSRC.PORN) {
 
-            UserR.DATA.setInsert(status.getUser().getId(), "status", status.getId());
+            UserR.DATA.setInsert(status.getUser().getId(), "status", status.getId(), true);
 
         }
 
@@ -216,7 +216,7 @@ public class StatusR {
 
             if (rc == NSRC.PORN) {
 
-                UserR.DATA.setInsert(origin.getUser().getId(), "status", status.getId());
+                UserR.DATA.setInsert(origin.getUser().getId(), "status", status.getId(), true);
 
             }
 

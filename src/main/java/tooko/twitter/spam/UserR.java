@@ -3,7 +3,6 @@ package tooko.twitter.spam;
 import cn.hutool.core.util.ArrayUtil;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
-import tooko.main.utils.TextCensor;
 import tooko.td.core.Table;
 import tooko.twitter.archives.UserA;
 
@@ -17,10 +16,10 @@ public class UserR {
     public Long[] status;
     public Boolean pornStatus;
 
-    public TextCensor.TCRC name;
-    public TextCensor.TCRC bio;
+    // public TextCensor.TCRC name;
+    // public TextCensor.TCRC bio;
 
-    public long lastParse;
+    public Long lastParse;
 
     public static UserR predictUser(UserA user) {
 
@@ -35,9 +34,6 @@ public class UserR {
             rc = new UserR();
 
             rc.accountId = user.accountId;
-            rc.lastParse = -1;
-
-            rc.status = new Long[0];
 
         }
 

@@ -2,7 +2,6 @@ package tooko.twitter.actions;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.http.HttpException;
 import tooko.main.Fn;
 import tooko.main.Lang;
 import tooko.main.utils.TextCensor;
@@ -28,7 +27,8 @@ public class FollowersScan extends TwitterHandler {
     }
 
     @Override
-    public void onFunction(TdApi.User user, final long chatId, TdApi.Message message, String function, String param, String[] params, String[] originParams, TwitterAccount account) {
+    public void onFunction(TdApi.User user, final long chatId, TdApi.Message message, String function, String param,
+                           String[] params, String[] originParams, TwitterAccount account) {
 
         final Twitter api = account.mkApi();
 
@@ -76,6 +76,7 @@ public class FollowersScan extends TwitterHandler {
 
             @Override
             public void run() {
+
                 startPredict(chatId, L, api, followers);
             }
 
@@ -87,8 +88,10 @@ public class FollowersScan extends TwitterHandler {
 
         int count = 0;
 
+        TdApi.Message stat = sync(Fn.sendText(chatId, Fn.plainText("PREDICTING ...")));
+
         pridectUser:
-        for (int index = 0; index < followers.size(); index++) {
+        for (int index = 0;index < followers.size();index++) {
 
             long followerId = followers.get(index);
 
@@ -98,7 +101,7 @@ public class FollowersScan extends TwitterHandler {
 
             UserR ur = UserR.predictUser(archive);
 
-            send(Fn.sendText(chatId, Fn.plainText("{} / {}", index + 1, followers.size())));
+            send(Fn.editText(stat, Fn.plainText("PRDICTING ... {} / {}", index + 1, followers.size())));
 
             if (ur.isSpam()) {
 
@@ -128,7 +131,7 @@ public class FollowersScan extends TwitterHandler {
 
             List<String> sss = new LinkedList<>();
 
-            for (int sindex = 0; sindex < timeline.size(); sindex++) {
+            for (int sindex = 0;sindex < timeline.size();sindex++) {
 
                 Status status = timeline.get(sindex);
 
@@ -144,8 +147,6 @@ public class FollowersScan extends TwitterHandler {
 
                 }
 
-                client.log.debug("{} / {}", sindex + 1, timeline.size());
-
                 if (r.media == StatusR.NSRC.PORN || r.media == StatusR.NSRC.SEXY || r.text == TextCensor.TCRC.PORN) {
 
                     ss++;
@@ -158,7 +159,8 @@ public class FollowersScan extends TwitterHandler {
 
                         count++;
 
-                        send(Fn.sendText(chatId, Fn.parseHtml(archive.simpleName() + " : PORN STATUSES {}", CollectionUtil.join(sss, "\n"))));
+                        send(Fn.sendText(chatId, Fn.parseHtml(archive.simpleName() + " : PORN STATUSES {}",
+                                CollectionUtil.join(sss, "\n"))));
 
                         continue pridectUser;
 
@@ -170,7 +172,6 @@ public class FollowersScan extends TwitterHandler {
 
         }
 
-        send(Fn.sendText(chatId, Fn.plainText("FINISHED : {} / {}", count, followers.size())));
 
     }
 

@@ -119,9 +119,25 @@ public class Table<ID, T> {
 
     public boolean setInsert(ID id, String array, Object element) {
 
+        return setInsert(id, array, element, false);
+
+    }
+
+    public boolean setInsert(ID id, String array, Object element, boolean upset) {
+
         synchronized (this) {
 
-            return collection.updateOne(eq("_id", id), addToSet(array, element)).getModifiedCount() > 1;
+            if (upset) {
+
+                return collection.updateOne(eq("_id", id), and(set(FIELD_ID, id), addToSet(array, element)),
+                        new UpdateOptions().upsert(true)).getModifiedCount() > 1;
+
+            } else {
+
+                return collection.updateOne(eq("_id", id), addToSet(array, element)).getModifiedCount() > 1;
+
+            }
+
         }
 
     }
@@ -156,9 +172,25 @@ public class Table<ID, T> {
 
     public boolean arrayInsert(ID id, String array, Object element) {
 
+        return arrayInsert(id, array, element, false);
+
+    }
+
+    public boolean arrayInsert(ID id, String array, Object element, boolean upset) {
+
         synchronized (this) {
 
-            return collection.updateOne(eq("_id", id), and(set("_id", id), push(array, element)), new UpdateOptions().upsert(true)).getModifiedCount() > 1;
+            if (upset) {
+
+                return collection.updateOne(eq("_id", id), and(set("_id", id), push(array, element)),
+                        new UpdateOptions().upsert(true)).getModifiedCount() > 1;
+
+            } else {
+
+                return collection.updateOne(eq("_id", id), push(array, element)).getModifiedCount() > 1;
+
+            }
+
         }
 
     }
