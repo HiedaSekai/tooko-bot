@@ -80,7 +80,7 @@ public class UserR {
     @BsonIgnore
     public boolean isSpam() {
 
-        return ArrayUtil.isNotEmpty(status) || name == TextCensor.TCRC.PORN || bio == TextCensor.TCRC.PORN;
+        return pornStatus != null || name == TextCensor.TCRC.PORN || bio == TextCensor.TCRC.PORN;
 
     }
 
