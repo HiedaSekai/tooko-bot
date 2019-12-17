@@ -163,7 +163,7 @@ public class FollowersScan extends TwitterHandler {
 
         public LinkedList<String> process() {
 
-            send(Fn.editText(stat, Fn.plainText("PRDICTING ... {} / {}", userIndex, userMax)));
+            send(Fn.editText(stat, Fn.plainText("PRDICTING ... {} / {}", userIndex + 1, userMax)));
 
             for (int index = 0; index < 5; index++) {
 
@@ -203,7 +203,7 @@ public class FollowersScan extends TwitterHandler {
 
             if (next % 10 == 0) {
 
-                send(Fn.editText(stat, Fn.plainText("PRDICTING ... {} / {} - {} / {}", userIndex, userMax, next + 1, statusList)));
+                send(Fn.editText(stat, Fn.plainText("PRDICTING ... {} / {} - {} / {}", userIndex + 1, userMax, next + 1, statusList.size())));
 
             }
 
