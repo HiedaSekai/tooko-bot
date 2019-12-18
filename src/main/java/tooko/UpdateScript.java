@@ -60,7 +60,7 @@ public class UpdateScript {
 
         if (FROM != VERSION) {
 
-            Launcher.INSTANCE.send(Fn.sendText(Env.LOG_CHANNEL, Fn.plainText("程序已更新 {} -> {}", FROM, VERSION)));
+            Launcher.INSTANCE.send(Fn.sendText(Env.LOG_CHANNEL, Fn.plainText("更新完成 : {} --> {}", FROM, VERSION)));
 
         }
 
