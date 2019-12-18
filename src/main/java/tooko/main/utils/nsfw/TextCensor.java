@@ -1,4 +1,4 @@
-package tooko.main.utils;
+package tooko.main.utils.nsfw;
 
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
@@ -28,12 +28,6 @@ public abstract class TextCensor {
     }
 
     public abstract TCRC predictText(String text);
-
-    public enum TCRC {
-
-        POLICES, SPAM, PORN, AD
-
-    }
 
     public static class None extends TextCensor {
 

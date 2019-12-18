@@ -3,10 +3,10 @@ package tooko.twitter.spam;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import org.bson.codecs.pojo.annotations.BsonId;
-import tooko.Launcher;
-import tooko.main.Fn;
-import tooko.main.utils.NSFWClient;
-import tooko.main.utils.TextCensor;
+import tooko.main.utils.nsfw.NSFW;
+import tooko.main.utils.nsfw.NSRC;
+import tooko.main.utils.nsfw.TCRC;
+import tooko.main.utils.nsfw.TextCensor;
 import tooko.td.core.CacheTable;
 import tooko.td.core.Table;
 import twitter4j.MediaEntity;
@@ -22,13 +22,12 @@ public class StatusR {
 
     @BsonId
     public long statusId;
-
     public long user;
 
     public NSRC media;
-    public TextCensor.TCRC text;
+    public TCRC text;
 
-    public StatusR(long statusId, long user, NSRC media, TextCensor.TCRC text) {
+    public StatusR(long statusId, long user, NSRC media, TCRC text) {
 
         this.statusId = statusId;
         this.user = user;
@@ -37,18 +36,18 @@ public class StatusR {
     }
 
     public StatusR() {
-
     }
 
-    public static StatusR predictStatus(Status status) {
-
-        LinkedList<String> linkArray = new LinkedList<>();
+    public static StatusR predictStatus(Status status) throws IOException {
 
         if (DATA.containsId(status.getId())) return DATA.getById(status.getId());
 
-        StatusR r;
+        StatusR rc = new StatusR();
 
-        NSRC rc = null;
+        rc.statusId = status.getId();
+        rc.user = status.getUser().getId();
+
+        LinkedList<String> linkArray = new LinkedList<>();
 
         for (MediaEntity media : status.getMediaEntities()) {
 
@@ -60,126 +59,11 @@ public class StatusR {
 
         }
 
-        predictImage:
         if (!linkArray.isEmpty()) {
 
-            float[][] results;
-
-            try {
-
-                results = NSFWClient.predict(Fn.toArray(linkArray, String.class));
-
-            } catch (IOException e) {
-
-                Launcher.log.warn(e);
-
-                rc = NSRC.NEUTRAL;
-
-                break predictImage;
-
-            }
-
-            parseResult:
-            {
-
-                for (float[] result : results) {
-
-                    if (result[3] > 0.8f) {
-
-                        rc = NSRC.PORN;
-
-                        break parseResult;
-
-                    }
-
-                }
-
-                for (float[] result : results) {
-
-                    if (result[4] > 0.8f) {
-
-                        rc = NSRC.SEXY;
-
-                        break parseResult;
-
-                    }
-
-                }
-
-                for (float[] result : results) {
-
-                    if (result[1] > 0.8f) {
-
-                        rc = NSRC.HENTAI;
-
-                        break parseResult;
-
-                    }
-
-                }
-
-                rc = NSRC.NEUTRAL;
-
-                /*
-
-                float value = -1;
-
-                for (float[] result : results) {
-
-                    NSRC likely = null;
-
-                    if (result[0] > value) {
-
-                        value = result[0];
-
-                        likely = NSRC.DRAWINGS;
-
-                    }
-
-                    if (result[1] > value) {
-
-                        value = result[1];
-
-                        likely = NSRC.HENTAI;
-
-                    }
-
-                    if (result[3] > value) {
-
-                        value = result[3];
-
-                        likely = NSRC.PORN;
-
-                    }
-
-                    if (result[4] > value) {
-
-                        value = result[1];
-
-                        likely = NSRC.SEXY;
-
-                    }
-
-                    if (result[2] > value) {
-
-                        value = -1;
-
-                        if (rc == null) rc = NSRC.NEUTRAL;
-
-                    }
-
-                    if (likely != null) rc = likely;
-
-                }
-
-                 */
-
-            }
-
+            rc.media = NSFW.predict(linkArray.toArray(new String[0]));
 
         }
-
-        TextCensor.TCRC tcrc = null;
 
         String text = status.getText();
 
@@ -197,13 +81,13 @@ public class StatusR {
 
         if (StrUtil.isNotBlank(text)) {
 
-            tcrc = TextCensor.getInstance().predictText(text);
+            rc.text = TextCensor.getInstance().predictText(text);
 
         }
 
-        DATA.setById(status.getId(), r = new StatusR(status.getId(), status.getUser().getId(), rc, tcrc));
+        DATA.setById(status.getId(), rc);
 
-        if (rc == NSRC.PORN) {
+        if (rc.media == NSRC.PORN) {
 
             UserR.DATA.setInsert(status.getUser().getId(), "status", status.getId(), true);
 
@@ -213,9 +97,12 @@ public class StatusR {
 
             Status origin = status.getRetweetedStatus();
 
-            DATA.setById(origin.getId(), new StatusR(origin.getId(), origin.getUser().getId(), rc, tcrc));
+            rc.statusId = origin.getId();
+            rc.user = origin.getUser().getId();
 
-            if (rc == NSRC.PORN) {
+            DATA.setById(origin.getId(), rc);
+
+            if (rc.media == NSRC.PORN) {
 
                 UserR.DATA.setInsert(origin.getUser().getId(), "status", status.getId(), true);
 
@@ -223,13 +110,7 @@ public class StatusR {
 
         }
 
-        return r;
-
-    }
-
-    public enum NSRC {
-
-        DRAWINGS, HENTAI, NEUTRAL, PORN, SEXY
+        return rc;
 
     }
 

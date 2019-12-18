@@ -3,8 +3,12 @@ package tooko.twitter.spam;
 import cn.hutool.core.util.ArrayUtil;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
+import tooko.main.utils.nsfw.NSFW;
+import tooko.main.utils.nsfw.NSRC;
 import tooko.td.core.Table;
 import tooko.twitter.archives.UserA;
+
+import java.io.IOException;
 
 public class UserR {
 
@@ -16,10 +20,12 @@ public class UserR {
     public Long[] status;
     public Boolean pornStatus;
 
-    // public TextCensor.TCRC name;
-    // public TextCensor.TCRC bio;
+    //    public TCRC name;
+    //  public TCRC bio;
+    public NSRC photo;
 
-    public Long lastParse;
+    public int infoHash;
+    public Long predictAt;
 
     public static UserR predictUser(UserA user) {
 
@@ -37,40 +43,18 @@ public class UserR {
 
         }
 
-        /*
+        int hash = (/*user.name + user.description + */user.profileImage).hashCode();
 
-        int hash = (user.name + user.description).hashCode();
+        if (hash != rc.infoHash && (rc.photo == null || rc.photo == NSRC.DRAWINGS || rc.photo == NSRC.HENTAI)) {
 
-        if (rc.hash != hash) {
+            try {
 
-            // rc.name = TextCensor.getInstance().predictText(user.name);
+                rc.photo = NSFW.predict(user.profileImage);
 
-            TextCensor.TCRC newName = TextCensor.getInstance().predictText(user.name);
-
-            if (rc.name != TextCensor.TCRC.PORN) {
-
-                rc.name = newName;
-
+            } catch (IOException ignored) {
             }
-
-
-            if (StrUtil.isNotBlank(user.description) && rc.bio != TextCensor.TCRC.PORN) {
-
-                rc.bio = TextCensor.getInstance().predictText(user.description);
-
-            } else if (StrUtil.isBlank(user.description) && rc.bio != TextCensor.TCRC.PORN) {
-
-                rc.bio = null;
-
-            }
-
-            rc.hash = hash;
-
-            DATA.setById(user.accountId, rc);
 
         }
-
-        */
 
         return rc;
 
@@ -79,7 +63,7 @@ public class UserR {
     @BsonIgnore
     public boolean isSpam() {
 
-        return pornStatus != null;
+        return photo == NSRC.PORN || photo == NSRC.SEXY || pornStatus != null;
 
     }
 
@@ -87,9 +71,15 @@ public class UserR {
 
         if (pornStatus != null) {
 
-            return "PORN STATUS : \n\nhttps://twitter.com/show/status/" + ArrayUtil.join(status, "\nhttps://twitter" + ".com/show/status/");
+            return "NSFW STATUS : \n\nhttps://twitter.com/show/status/" + ArrayUtil.join(status, "\nhttps://twitter.com/show/status/");
 
-        } /*else if (name == TextCensor.TCRC.PORN) {
+        } else if (photo == NSRC.PORN || photo == NSRC.SEXY) {
+
+            return "NSFW PHOTO";
+
+        }
+
+        /*else if (name == TextCensor.TCRC.PORN) {
 
             return "PORN NAME";
 

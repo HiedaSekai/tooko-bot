@@ -6,7 +6,8 @@ import cn.hutool.core.util.StrUtil;
 import tooko.main.Env;
 import tooko.main.Fn;
 import tooko.main.Lang;
-import tooko.main.utils.TextCensor;
+import tooko.main.utils.nsfw.NSRC;
+import tooko.main.utils.nsfw.TCRC;
 import tooko.td.TdApi;
 import tooko.td.client.TdClient;
 import tooko.twitter.TwitterAccount;
@@ -110,7 +111,13 @@ public class FollowersScan extends TwitterHandler {
 
                 count++;
 
-                send(Fn.sendText(chatId, Fn.parseHtml(archive.simpleName() + " : " + ur.parseReason())));
+                // send(Fn.sendText(chatId, Fn.parseHtml(archive.simpleName() + " : " + ur.parseReason())));
+
+                continue;
+
+            }
+
+            if (ur.predictAt != null && System.currentTimeMillis() - ur.predictAt < 24 * 60 * 60 * 1000L) {
 
                 continue;
 
@@ -134,9 +141,13 @@ public class FollowersScan extends TwitterHandler {
 
             if (result != null) {
 
-                send(Fn.sendText(chatId, Fn.parseHtml(archive.simpleName() + " : PORN STATUS : \n\nhttps://twitter.com/show/status/" + CollectionUtil.join(result, "\nhttps://twitter" + ".com/show/status/"))));
+                count++;
+
+                send(Fn.sendText(chatId, Fn.parseHtml(archive.simpleName() + " : NSFW STATUS : \n\n" + CollectionUtil.join(result, "\n"))));
 
             }
+
+            UserR.DATA.updateField(followerId, "predictAt", System.currentTimeMillis());
 
         }
 
@@ -226,11 +237,11 @@ public class FollowersScan extends TwitterHandler {
 
                     if (nextStatus == null) return;
 
-                    StatusR r;
+                    StatusR rc;
 
                     try {
 
-                        r = StatusR.predictStatus(nextStatus);
+                        rc = StatusR.predictStatus(nextStatus);
 
                     } catch (Exception ex) {
 
@@ -240,7 +251,7 @@ public class FollowersScan extends TwitterHandler {
 
                     // log.debug("PRED : {} / {}", index, statusList.size());
 
-                    if (r.media == StatusR.NSRC.PORN || r.media == StatusR.NSRC.SEXY || r.text == TextCensor.TCRC.PORN) {
+                    if (rc.media == NSRC.PORN || rc.media == NSRC.SEXY || rc.text == TCRC.PORN) {
 
                         result.add(StrUtil.format("https://twitter.com/{}/status/{}", nextStatus.getUser().getScreenName(), nextStatus.getId()));
 

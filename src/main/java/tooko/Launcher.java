@@ -17,6 +17,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.connection.ClusterSettings;
 import org.bson.codecs.configuration.CodecRegistries;
+import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.ArrayPropertyCodecProvider;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.codecs.pojo.PropertyCodecProvider;
@@ -34,6 +35,8 @@ import tooko.main.manage.SysDebug;
 import tooko.main.manage.SysManage;
 import tooko.main.update.UpdateHook;
 import tooko.main.update.UpdateTask;
+import tooko.main.utils.nsfw.NSRC;
+import tooko.main.utils.nsfw.TCRC;
 import tooko.pm.PmData;
 import tooko.td.TdApi;
 import tooko.td.TdApi.Message;
@@ -152,12 +155,16 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
         }
 
         String dbAddress = config.getStr("db_address");
-
         String dbPort = config.getStr("db_port");
 
-        PojoCodecProvider provider = PojoCodecProvider.builder()
-                //.register(new BLMapPropertyCodecProvider())
-                .register(new ArrayPropertyCodecProvider()).register(registerSubClasses(TdApi.class)).automatic(true).build();
+        PojoCodecProvider provider = PojoCodecProvider.builder().register(new ArrayPropertyCodecProvider()).register(registerSubClasses(TdApi.class)).automatic(true).build();
+
+        CodecRegistry registry = CodecRegistries.fromCodecs(
+
+                new NSRC.CODEC(), new TCRC.CODEC()
+
+        );
+
 
         try {
 
@@ -172,7 +179,7 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
 
                         }
 
-                    }).codecRegistry(CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), CodecRegistries.fromProviders(provider))).build();
+                    }).codecRegistry(CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), CodecRegistries.fromProviders(provider), registry)).build();
 
             MongoClient dbClient = MongoClients.create(settings);
 
@@ -319,6 +326,8 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
             log.warn("没有设置管理员账号 (ﾟ⊿ﾟ)ﾂ 请使用 /id 命令获取用户ID并填入 ADMINS 配置中 ~");
 
         }
+
+        UpdateScript.checkUpdate();
 
         INSTANCE = new Launcher(Env.BOT_TOKEN);
 
