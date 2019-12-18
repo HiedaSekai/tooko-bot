@@ -80,7 +80,7 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
 
         log.debug("正在加载 (๑•̀ㅂ•́)√");
 
-        UpdateScript.beforeLaunch();
+        UpdateScript.checkUpdate();
 
         UpdateTask.fetchHead();
 
@@ -328,6 +328,8 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
             log.warn("没有设置管理员账号 (ﾟ⊿ﾟ)ﾂ 请使用 /id 命令获取用户ID并填入 ADMINS 配置中 ~");
 
         }
+
+        UpdateScript.beforeLaunch();
 
         INSTANCE = new Launcher(Env.BOT_TOKEN);
 

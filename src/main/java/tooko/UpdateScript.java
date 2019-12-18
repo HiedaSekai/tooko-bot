@@ -12,7 +12,7 @@ public class UpdateScript {
     public static int VERSION = 1;
     public static int FROM = VERSION;
 
-    private static void checkUpdate() {
+    public static void checkUpdate() {
 
         File versionFile = Env.getFile("data/.version");
 
@@ -41,8 +41,6 @@ public class UpdateScript {
     }
 
     public static void beforeLaunch() {
-
-        checkUpdate();
 
         if (FROM == 0) {
 
