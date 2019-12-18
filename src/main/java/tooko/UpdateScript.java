@@ -51,6 +51,9 @@ public class UpdateScript {
     }
 
     public static void afterLaunch() {
+
+        // ...
+
     }
 
 }
