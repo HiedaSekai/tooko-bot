@@ -9,7 +9,7 @@ import java.io.File;
 
 public class UpdateScript {
 
-    public static int VERSION = 1;
+    public static int VERSION = 2;
     public static int FROM = VERSION;
 
     public static void checkUpdate() {
@@ -42,7 +42,7 @@ public class UpdateScript {
 
     public static void beforeLaunch() {
 
-        if (FROM == 0) {
+        if (FROM == 1) {
 
             for (StatusR status : StatusR.DATA.getAll()) {
 
