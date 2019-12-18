@@ -9,7 +9,7 @@ import java.io.File;
 
 public class UpdateScript {
 
-    public static int VERSION = 2;
+    public static int VERSION = 0;
     public static int FROM = VERSION;
 
     public static void checkUpdate() {
@@ -42,26 +42,15 @@ public class UpdateScript {
 
     public static void beforeLaunch() {
 
-        if (FROM == 1) {
+        for (StatusR status : StatusR.DATA.collection.find()) {
 
-            for (StatusR status : StatusR.DATA.getAll()) {
-
-                StatusR.DATA.setById(status.statusId, status);
-
-            }
+            StatusR.DATA.setById(status.statusId, status);
 
         }
 
     }
 
     public static void afterLaunch() {
-
-        if (FROM != VERSION) {
-
-            Launcher.INSTANCE.send(Fn.sendText(Env.LOG_CHANNEL, Fn.plainText("更新完成 : {} --> {}", FROM, VERSION)));
-
-        }
-
     }
 
 }
