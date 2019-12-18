@@ -3,7 +3,6 @@ package tooko;
 import cn.hutool.core.io.FileUtil;
 import tooko.main.Env;
 import tooko.main.Fn;
-import tooko.twitter.spam.StatusR;
 
 import java.io.File;
 
@@ -42,11 +41,15 @@ public class UpdateScript {
 
     public static void beforeLaunch() {
 
+        /*
+
         for (StatusR status : StatusR.DATA.collection.find()) {
 
             StatusR.DATA.setById(status.statusId, status);
 
         }
+
+         */
 
     }
 
