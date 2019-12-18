@@ -78,9 +78,11 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
 
         log = LogFactory.get("Tooko");
 
-        UpdateTask.fetchHead();
-
         log.debug("正在加载 (๑•̀ㅂ•́)√");
+
+        UpdateScript.beforeLaunch();
+
+        UpdateTask.fetchHead();
 
         try {
 
@@ -327,8 +329,6 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
 
         }
 
-        UpdateScript.checkUpdate();
-
         INSTANCE = new Launcher(Env.BOT_TOKEN);
 
         INSTANCE.start();
@@ -522,10 +522,11 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
 
             log.debug("加载 托管机器人 (๑•̀ㅂ•́)√");
 
-            for (BotData data : allBots)
-                BotImage.start(data);
+            for (BotData data : allBots) BotImage.start(data);
 
         }
+
+        UpdateScript.afterLaunch();
 
     }
 

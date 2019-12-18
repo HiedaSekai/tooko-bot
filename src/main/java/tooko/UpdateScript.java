@@ -9,8 +9,9 @@ import java.io.File;
 public class UpdateScript {
 
     public static int VERSION = 0;
+    public static int FROM = VERSION;
 
-    public static void checkUpdate() {
+    private static void checkUpdate() {
 
         File versionFile = Env.getFile("data/.version");
 
@@ -22,11 +23,9 @@ public class UpdateScript {
 
         }
 
-        int lastVersion;
-
         try {
 
-            lastVersion = Fn.byte2int(FileUtil.readBytes(versionFile));
+            FROM = Fn.byte2int(FileUtil.readBytes(versionFile));
 
         } catch (NumberFormatException ex) {
 
@@ -36,22 +35,23 @@ public class UpdateScript {
 
         }
 
-        if (lastVersion == VERSION) {
-
-            return;
-
-        }
-
-        Launcher.log.info("执行更新程序 : {} -> {}", lastVersion, VERSION);
-
-        doUpdate(lastVersion);
-
         FileUtil.writeBytes(Fn.num2byte(VERSION), versionFile);
 
     }
 
-    public static void doUpdate(int from) {
+    public static void beforeLaunch() {
 
+        checkUpdate();
+
+    }
+
+    public static void afterLaunch() {
+
+        if (FROM != VERSION) {
+
+            Launcher.INSTANCE.send(Fn.sendText(Env.LOG_CHANNEL, Fn.plainText("程序已更新 {} -> {}", FROM, VERSION)));
+
+        }
 
     }
 

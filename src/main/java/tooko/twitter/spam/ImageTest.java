@@ -28,11 +28,7 @@ public class ImageTest extends TwitterHandler {
 
             client.log.warn(e);
 
-            return;
-
         }
-
-        StatusR.predictStatus(status);
 
     }
 
