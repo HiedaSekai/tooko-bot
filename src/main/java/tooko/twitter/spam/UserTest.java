@@ -108,7 +108,7 @@ public class UserTest extends TwitterHandler {
 
             StatusR rc = StatusR.DATA.getById(status.getId());
 
-            if (rc != null && rc.media == null && rc.text == null) continue;
+//if (rc != null && rc.media == null && rc.text == null) continue;
 
             editText(stat, "PRDICTING - {} / {}", index + 1, timeline.size());
 
