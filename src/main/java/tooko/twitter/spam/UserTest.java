@@ -1,6 +1,5 @@
 package tooko.twitter.spam;
 
-import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import tooko.main.Fn;
 import tooko.main.Lang;
@@ -96,11 +95,11 @@ public class UserTest extends TwitterHandler {
 
             for (MediaEntity media : status.getMediaEntities()) {
 
-                if (media.getMediaURLHttps().contains("jpg") && ArrayUtil.isEmpty(media.getVideoVariants())) {
+               // if (media.getMediaURLHttps().contains("jpg") && ArrayUtil.isEmpty(media.getVideoVariants())) {
 
                     linkArray.add(media.getMediaURLHttps());
 
-                }
+                // }
 
             }
 
