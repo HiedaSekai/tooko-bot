@@ -110,7 +110,7 @@ public class StatusR {
 
     public static String statusText(Status status) {
 
-        String text = status.getText();
+        String text = status.isRetweet() ? status.getRetweetedStatus().getText() : status.getText();
 
         for (MediaEntity entity : status.getMediaEntities()) {
 
