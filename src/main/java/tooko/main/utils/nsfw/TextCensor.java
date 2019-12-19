@@ -87,7 +87,7 @@ public abstract class TextCensor {
 
             JSONObject result = new JSONObject(raw);
 
-            if (result.getInt("spam") == 1) {
+            if (result.containsKey("spam") && result.getInt("spam") == 1) {
 
                 JSONArray reject = result.getJSONArray("reject");
 
