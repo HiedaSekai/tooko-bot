@@ -130,13 +130,11 @@ public class NSFW {
 
                 }
 
-                imageArray.add(cacheFile);
-
             }
 
-        }
+            imageArray.add(cacheFile);
 
-        Launcher.log.debug("DLARR : {}", imageArray.size());
+        }
 
         return predictRaw(imageArray.toArray(new File[imageArray.size()]));
 
@@ -181,8 +179,6 @@ public class NSFW {
             }
 
         }
-
-        Launcher.log.debug("RARR : {}", imageArray.size());
 
         return predictRaw(imageArray.toArray(new byte[imageArray.size()][]));
 
@@ -267,8 +263,6 @@ public class NSFW {
                 predictions[index] = (float[]) predictionsArray.getJSONArray(index).toArray(float.class);
 
             }
-
-            Launcher.log.debug("RRAW : {}", predictions.length);
 
             return predictions;
 
