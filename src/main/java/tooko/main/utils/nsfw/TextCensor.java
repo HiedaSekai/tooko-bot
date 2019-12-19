@@ -76,7 +76,7 @@ public abstract class TextCensor {
         @Override
         public String predictRaw(String text) {
 
-            JSONObject result = censor.antiSpam(text, null);
+            JSONObject result = censor.antiSpam(text, null).getJSONObject("result");
 
             return result.toStringPretty();
 
@@ -87,7 +87,7 @@ public abstract class TextCensor {
 
             JSONObject result = new JSONObject(raw);
 
-            if (result.containsKey("spam") && result.getInt("spam") == 1) {
+            if (result.getInt("spam") == 1) {
 
                 JSONArray reject = result.getJSONArray("reject");
 
