@@ -1,5 +1,6 @@
 package tooko.twitter.spam;
 
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import tooko.main.Fn;
 import tooko.main.Lang;
@@ -103,9 +104,12 @@ public class UserTest extends TwitterHandler {
 
             }
 
+            log.debug("{} / {} : {} photo", index + 1, timeline.size(), status.getMediaEntities().length);
+
             if (!linkArray.isEmpty()) {
 
-                log.debug("{} / {} : {} photo", index + 1, timeline.size(), status.getMediaEntities().length);
+                continue;
+
 
             }
 
@@ -125,7 +129,9 @@ public class UserTest extends TwitterHandler {
 
                     float[] result = results[i];
 
-                    if (result[3] > 0.8 || result[4] > 0.8) {
+                    log.debug(ArrayUtil.join(result, " "));
+
+                    if (result[3] > 0.8f || result[4] > 0.8f) {
 
                         spam = true;
 
