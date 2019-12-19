@@ -65,19 +65,7 @@ public class StatusR {
 
         }
 
-        String text = status.getText();
-
-        for (MediaEntity entity : status.getMediaEntities()) {
-
-            text = StrUtil.removeAll(text, entity.getURL());
-
-        }
-
-        for (URLEntity entity : status.getURLEntities()) {
-
-            text = text.replace(entity.getURL(), entity.getExpandedURL());
-
-        }
+        String text = statusText(status);
 
         if (StrUtil.isNotBlank(text)) {
 
@@ -117,6 +105,42 @@ public class StatusR {
         }
 
         return rc;
+
+    }
+
+    public static String statusText(Status status) {
+
+        String text = status.getText();
+
+        for (MediaEntity entity : status.getMediaEntities()) {
+
+            text = StrUtil.removeAll(text, entity.getURL());
+
+        }
+
+        for (URLEntity entity : status.getURLEntities()) {
+
+            text = text.replace(entity.getURL(), entity.getExpandedURL());
+
+        }
+
+        if (status.getQuotedStatusId() > 0) {
+
+            if (text.matches(".*https://(mobile.)?twitter.com/([^/]*)/status/[0-9]*")) {
+
+                text = StrUtil.subBefore(text, "https://", true);
+
+            }
+
+        }
+
+        if (status.getInReplyToStatusId() > 0) {
+
+            while (text.startsWith("@") && text.contains(" ")) text = StrUtil.subAfter(text, " ", false);
+
+        }
+
+        return text;
 
     }
 

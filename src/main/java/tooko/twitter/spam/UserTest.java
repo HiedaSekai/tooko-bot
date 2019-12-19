@@ -132,19 +132,7 @@ public class UserTest extends TwitterHandler {
 
             }
 
-            String text = status.getText();
-
-            for (MediaEntity entity : status.getMediaEntities()) {
-
-                text = StrUtil.removeAll(text, entity.getURL());
-
-            }
-
-            for (URLEntity entity : status.getURLEntities()) {
-
-                text = text.replace(entity.getURL(), entity.getExpandedURL());
-
-            }
+            String text = StatusR.statusText(status);
 
             if (StrUtil.isNotBlank(text)) {
 
