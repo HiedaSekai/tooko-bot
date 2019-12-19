@@ -76,7 +76,7 @@ public class NSFW {
 
         }
 
-        return predict(imageArray.toArray(new File[0]));
+        return predict(imageArray.toArray(new File[imageArray.size()]));
 
     }
 
@@ -134,7 +134,7 @@ public class NSFW {
 
         }
 
-        return predictRaw(imageArray.toArray(new File[0]));
+        return predictRaw(imageArray.toArray(new File[imageArray.size()]));
 
     }
 
@@ -156,7 +156,7 @@ public class NSFW {
 
         }
 
-        return predict(imageArray.toArray(new byte[0][]));
+        return predict(imageArray.toArray(new byte[imageArray.size()][]));
 
     }
 
@@ -178,7 +178,7 @@ public class NSFW {
 
         }
 
-        return predictRaw(imageArray.toArray(new byte[0][]));
+        return predictRaw(imageArray.toArray(new byte[imageArray.size()][]));
 
     }
 
