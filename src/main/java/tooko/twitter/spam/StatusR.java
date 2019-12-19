@@ -22,8 +22,8 @@ public class StatusR {
 
     @BsonId
     public long statusId;
-    public long user;
 
+    public Long user;
     public NSRC media;
     public TCRC text;
 
@@ -82,6 +82,12 @@ public class StatusR {
         if (StrUtil.isNotBlank(text)) {
 
             rc.text = TextCensor.getInstance().predictText(text);
+
+        }
+
+        if (rc.media == null && rc.text == null) {
+
+            rc.user = null;
 
         }
 

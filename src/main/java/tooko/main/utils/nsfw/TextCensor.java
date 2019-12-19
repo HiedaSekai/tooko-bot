@@ -27,14 +27,30 @@ public abstract class TextCensor {
 
     }
 
-    public abstract TCRC predictText(String text);
+    public abstract String predictRaw(String text);
+
+    public abstract TCRC parseRaw(String raw);
+
+    public TCRC predictText(String text) {
+
+        return parseRaw(predictRaw(text));
+
+    }
 
     public static class None extends TextCensor {
 
         @Override
-        public TCRC predictText(String text) {
+        public String predictRaw(String text) {
 
             return null;
+
+        }
+
+        @Override
+        public TCRC parseRaw(String raw) {
+
+            return null;
+
         }
 
     }
@@ -58,11 +74,20 @@ public abstract class TextCensor {
         }
 
         @Override
-        public TCRC predictText(String text) {
+        public String predictRaw(String text) {
 
-            JSONObject result = censor.antiSpam(text, null).getJSONObject("result");
+            JSONObject result = censor.antiSpam(text, null);
 
-            if (result != null && result.getInt("spam") == 1) {
+            return result.toStringPretty();
+
+        }
+
+        @Override
+        public TCRC parseRaw(String raw) {
+
+            JSONObject result = new JSONObject(raw);
+
+            if (result.getInt("spam") == 1) {
 
                 JSONArray reject = result.getJSONArray("reject");
 

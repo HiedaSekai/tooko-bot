@@ -14,6 +14,8 @@ import tooko.twitter.account.AccountPanel;
 import tooko.twitter.account.TwitterLogin;
 import tooko.twitter.account.TwitterLogout;
 import tooko.twitter.actions.*;
+import tooko.twitter.spam.ImageTest;
+import tooko.twitter.spam.UserTest;
 
 public class TwitterBot extends TdBot {
 
@@ -38,6 +40,10 @@ public class TwitterBot extends TdBot {
         addHandler(new SwitchLang());
 
         addHandler(new FollowersScan());
+
+        addHandler(new ImageTest());
+
+        addHandler(new UserTest());
 
         addHandler(new LICENCE());
 

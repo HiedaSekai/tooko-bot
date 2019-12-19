@@ -80,6 +80,64 @@ public class NSFW {
 
     }
 
+    public static float[][] predictRaw(String... images) throws IOException {
+
+        LinkedList<File> imageArray = new LinkedList<>();
+
+        for (String url : images) {
+
+            File cacheFile = Env.getFile("cache/image_cache/" + DigestUtil.md5Hex(url));
+
+            if (!cacheFile.isFile()) {
+
+                try {
+
+                    HttpResponse response = HttpUtil.createGet(url).execute();
+
+                    if (response.isOk()) {
+
+                        response.writeBody(cacheFile);
+
+                    } else if (response.getStatus() >= 300 && response.getStatus() <= 308) {
+
+                        HttpUtil.downloadFile(response.header(Header.LOCATION), cacheFile);
+
+                    } else {
+
+                        continue;
+
+                    }
+
+                } catch (Exception ignored) {
+
+                    FileUtil.del(cacheFile);
+
+                    ThreadUtil.sleep(100);
+
+                    try {
+
+                        HttpUtil.downloadFile(url, cacheFile);
+
+                    } catch (Exception ex) {
+
+                        log.warn(ex, "ERROR DOWNLOAD IMAGE {}", url);
+
+                        continue;
+
+                    }
+
+                }
+
+                imageArray.add(cacheFile);
+
+            }
+
+        }
+
+        return predictRaw(imageArray.toArray(new File[0]));
+
+    }
+
     public static NSRC predict(File... images) throws IOException {
 
         LinkedList<byte[]> imageArray = new LinkedList<>();
@@ -99,6 +157,28 @@ public class NSFW {
         }
 
         return predict(imageArray.toArray(new byte[0][]));
+
+    }
+
+    public static float[][] predictRaw(File... images) throws IOException {
+
+        LinkedList<byte[]> imageArray = new LinkedList<>();
+
+        for (File image : images) {
+
+            try {
+
+                imageArray.add(FileUtil.readBytes(image));
+
+            } catch (Exception ex) {
+
+                log.warn(ex, "ERROR READ IMAGE {}", image);
+
+            }
+
+        }
+
+        return predictRaw(imageArray.toArray(new byte[0][]));
 
     }
 

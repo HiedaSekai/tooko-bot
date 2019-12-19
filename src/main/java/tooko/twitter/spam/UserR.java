@@ -20,7 +20,7 @@ public class UserR {
     public Long[] status;
     public Boolean pornStatus;
 
-    //    public TCRC name;
+    //  public TCRC name;
     //  public TCRC bio;
     public NSRC photo;
 
@@ -28,6 +28,12 @@ public class UserR {
     public Long predictAt;
 
     public static UserR predictUser(UserA user) {
+
+        return predictUser(user, false);
+
+    }
+
+    public static UserR predictUser(UserA user, boolean noCache) {
 
         UserR rc;
 
@@ -45,7 +51,7 @@ public class UserR {
 
         int hash = (/*user.name + user.description + */user.profileImage).hashCode();
 
-        if (hash != rc.infoHash && (rc.photo == null || rc.photo == NSRC.DRAWINGS || rc.photo == NSRC.HENTAI)) {
+        if (noCache || (hash != rc.infoHash && (rc.photo == null || rc.photo == NSRC.DRAWINGS || rc.photo == NSRC.HENTAI))) {
 
             try {
 

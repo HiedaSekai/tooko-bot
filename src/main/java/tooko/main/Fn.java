@@ -1429,17 +1429,17 @@ public class Fn {
 
     }
 
-    public static String parseTwitterException(Lang L, TwitterException ex) {
+        public static String parseTwitterException(Lang L, TwitterException ex) {
 
-        String info = L.TWI_ERR;
+            String info = L.TWI_ERR;
 
-        errorCode:
-        {
+            errorCode:
+            {
 
-            switch (ex.getErrorCode()) {
+                switch (ex.getErrorCode()) {
 
-                case 32:
-                    info += L.TWI_ERR_32;
+                    case 32:
+                        info += L.TWI_ERR_32;
                     break errorCode;
                 case 50:
                     info += L.TWI_ERR_50;

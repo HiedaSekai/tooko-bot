@@ -13,7 +13,9 @@ import tooko.td.core.LongLongArrayMap;
 import tooko.td.http.HttpApi;
 import tooko.td.http.request.BaseRequest;
 import tooko.td.http.response.BaseResponse;
+import twitter4j.TwitterException;
 
+import java.lang.Object;
 import java.util.LinkedList;
 import java.util.TimerTask;
 
@@ -1385,6 +1387,38 @@ public class TdHandler {
 
         for (long messageId : messages.remove(chatId))
             I(Fn.deleteMessages(chatId, messageId));
+
+    }
+
+    public Message postErr(long chatId, Throwable exception) {
+
+        if (exception instanceof TwitterException) {
+
+            return postText(chatId, Fn.parseTwitterException(Lang.get(chatId), (TwitterException) exception));
+
+        } else {
+
+            return postText(chatId, exception.getMessage());
+
+        }
+
+    }
+
+    public Message postText(long chatId, String text, Object... params) {
+
+        return syncE(Fn.sendText(chatId, Fn.plainText(text, params)));
+
+    }
+
+    public void editText(long chatId, long messageId, String text, Object... params) {
+
+        send(Fn.editText(chatId, messageId, Fn.plainText(text, params)));
+
+    }
+
+    public void editText(Message message, String text, Object... params) {
+
+        send(Fn.editText(message, Fn.plainText(text, params)));
 
     }
 
