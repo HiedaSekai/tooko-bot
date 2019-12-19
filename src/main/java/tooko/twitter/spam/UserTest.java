@@ -19,6 +19,13 @@ import java.util.LinkedList;
 public class UserTest extends TwitterHandler {
 
     @Override
+    public void onLoad() {
+
+        initFunction("user_test");
+
+    }
+
+    @Override
     public void onFunction(TdApi.User user, long chatId, TdApi.Message message, String function, String param, String[] params, String[] originParams, TwitterAccount account) {
 
         final Twitter api = account.mkApi();
