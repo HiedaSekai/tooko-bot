@@ -95,15 +95,19 @@ public class UserTest extends TwitterHandler {
 
             for (MediaEntity media : status.getMediaEntities()) {
 
-               // if (media.getMediaURLHttps().contains("jpg") && ArrayUtil.isEmpty(media.getVideoVariants())) {
+                // if (media.getMediaURLHttps().contains("jpg") && ArrayUtil.isEmpty(media.getVideoVariants())) {
 
-                    linkArray.add(media.getMediaURLHttps());
+                linkArray.add(media.getMediaURLHttps());
 
                 // }
 
             }
 
-            if (!linkArray.isEmpty()) continue;
+            if (!linkArray.isEmpty()) {
+
+                log.debug("{} / {} : {} photo", index + 1, timeline.size(), status.getMediaEntities().length);
+
+            }
 
             StatusR rc = StatusR.DATA.getById(status.getId());
 
