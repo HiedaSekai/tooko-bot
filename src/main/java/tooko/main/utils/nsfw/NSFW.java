@@ -136,6 +136,8 @@ public class NSFW {
 
         }
 
+        Launcher.log.debug("DLARR : {}", imageArray.size());
+
         return predictRaw(imageArray.toArray(new File[imageArray.size()]));
 
     }
@@ -179,6 +181,8 @@ public class NSFW {
             }
 
         }
+
+        Launcher.log.debug("RARR : {}", imageArray.size());
 
         return predictRaw(imageArray.toArray(new byte[imageArray.size()][]));
 
