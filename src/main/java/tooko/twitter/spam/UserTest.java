@@ -106,10 +106,9 @@ public class UserTest extends TwitterHandler {
 
             log.debug("{} / {} : {} photo", index + 1, timeline.size(), status.getMediaEntities().length);
 
-            if (!linkArray.isEmpty()) {
+            if (linkArray.isEmpty()) {
 
                 continue;
-
 
             }
 
@@ -123,11 +122,7 @@ public class UserTest extends TwitterHandler {
 
             try {
 
-                log.debug("img size : " + linkArray.size());
-
-                float[][] results = NSFW.predictRaw(linkArray.toArray(new String[linkArray.size()]));
-
-                log.debug("result : {}", results);
+                float[][] results = NSFW.predictRaw(linkArray.toArray(new String[0]));
 
                 for (int i = 0; i < results.length; i++) {
 
