@@ -1,5 +1,6 @@
 package tooko.main.utils.nsfw;
 
+
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.thread.ThreadUtil;
@@ -12,6 +13,7 @@ import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
+import tooko.Launcher;
 import tooko.main.Env;
 
 import java.io.File;
@@ -224,6 +226,8 @@ public class NSFW {
 
         if (ArrayUtil.isEmpty(images)) return new float[0][];
 
+        Launcher.log.debug("PRAW : {}", images.length);
+
         try {
 
             JSONArray request = new JSONArray();
@@ -259,6 +263,8 @@ public class NSFW {
                 predictions[index] = (float[]) predictionsArray.getJSONArray(index).toArray(float.class);
 
             }
+
+            Launcher.log.debug("RRAW : {}", predictions.length);
 
             return predictions;
 
