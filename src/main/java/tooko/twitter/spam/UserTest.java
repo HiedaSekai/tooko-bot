@@ -86,6 +86,8 @@ public class UserTest extends TwitterHandler {
 
         }
 
+        int count = 0;
+
         for (int index = 0; index < timeline.size(); index++) {
 
             Status status = timeline.get(index);
@@ -110,6 +112,8 @@ public class UserTest extends TwitterHandler {
 
             editText(stat, "PRDICTING - {} / {}", index + 1, timeline.size());
 
+            boolean spam = false;
+
             try {
 
                 float[][] results = NSFW.predictRaw(linkArray.toArray(new String[0]));
@@ -119,6 +123,8 @@ public class UserTest extends TwitterHandler {
                     float[] result = results[i];
 
                     if (result[3] > 0.8 || result[4] > 0.8) {
+
+                        spam = true;
 
                         postText(chatId, "STATUS https://twitter.com/{}/status/{} IMAGE :{}\n\nDRAWINGS: {}\nHENTAI: {}\nNEUTRALS: {}\nPORN: {}\nSEXY: {}", status.getUser().getScreenName(), status.getId(), i + 1, result[0], result[1], result[2], result[3], result[4]);
 
@@ -140,14 +146,21 @@ public class UserTest extends TwitterHandler {
 
                 TCRC tcrc = TextCensor.getInstance().parseRaw(raw);
 
+                if (tcrc == TCRC.PORN) spam = true;
+
                 if (tcrc != null) {
 
                     postText(chatId, "STATUS https://twitter.com/{}/status/{} TEXT :{}\n\n{}\n\n{}", status.getUser().getScreenName(), status.getId(), tcrc, text, raw);
+
                 }
 
             }
 
+            if (spam) count++;
+
         }
+
+        editText(stat, "FINISH; {} / {} : {}", count, timeline.size(), (double) count / timeline.size());
 
     }
 
