@@ -124,6 +124,8 @@ public class UserTest extends TwitterHandler {
 
                 float[][] results = NSFW.predictRaw(linkArray.toArray(new String[linkArray.size()]));
 
+                log.debug("result size " + results.length);
+
                 for (int i = 0; i < results.length; i++) {
 
                     float[] result = results[i];
