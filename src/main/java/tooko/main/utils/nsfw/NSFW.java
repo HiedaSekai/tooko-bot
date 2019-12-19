@@ -5,6 +5,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.crypto.digest.DigestUtil;
+import cn.hutool.http.Header;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONArray;
@@ -33,7 +34,21 @@ public class NSFW {
 
                 try {
 
-                    HttpUtil.downloadFile(url, cacheFile);
+                    HttpResponse response = HttpUtil.createGet(url).execute();
+
+                    if (response.isOk()) {
+
+                        response.writeBody(cacheFile);
+
+                    } else if (response.getStatus() >= 300 && response.getStatus() <= 308) {
+
+                        HttpUtil.downloadFile(response.header(Header.LOCATION), cacheFile);
+
+                    } else {
+
+                        continue;
+
+                    }
 
                 } catch (Exception ignored) {
 
@@ -47,7 +62,7 @@ public class NSFW {
 
                     } catch (Exception ex) {
 
-                        log.warn("ERROR DOWNLOAD IMAGE", ex);
+                        log.warn(ex, "ERROR DOWNLOAD IMAGE {}", url);
 
                         continue;
 
@@ -77,7 +92,7 @@ public class NSFW {
 
             } catch (Exception ex) {
 
-                log.warn("ERROR READ IMAGE", ex);
+                log.warn(ex, "ERROR READ IMAGE {}", image);
 
             }
 
