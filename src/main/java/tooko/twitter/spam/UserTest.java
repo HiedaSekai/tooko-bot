@@ -123,7 +123,11 @@ public class UserTest extends TwitterHandler {
 
             try {
 
+                log.debug("img size : " + linkArray.size());
+
                 float[][] results = NSFW.predictRaw(linkArray.toArray(new String[linkArray.size()]));
+
+                log.debug("result : {}", results);
 
                 for (int i = 0; i < results.length; i++) {
 
