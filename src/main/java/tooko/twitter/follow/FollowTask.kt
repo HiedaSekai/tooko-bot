@@ -1,6 +1,5 @@
 package tooko.twitter.follow
 
-import cn.hutool.core.date.DateUtil
 import cn.hutool.log.LogFactory
 import tooko.Launcher
 import tooko.main.Fn
@@ -39,7 +38,7 @@ class FollowTask : TimerTask() {
 
             timer = Timer("Twitter FC Task").apply {
 
-                scheduleAtFixedRate(TrackTask(), DateUtil.tomorrow(), 24 * 60 * 60 * 1000L)
+                scheduleAtFixedRate(TrackTask(), Date(/*System.currentTimeMillis() + 1 * Fn.h*/), 1 * Fn.h)
 
             }
 
