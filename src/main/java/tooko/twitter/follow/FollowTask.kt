@@ -112,6 +112,8 @@ class FollowTask : TimerTask() {
 
             log.debug("NEW ${queue.size} IDS")
 
+            var count = 0
+
             Fn.fetchUsers(api, queue).forEach {
 
                 val archive = UserA.save(it)
@@ -141,9 +143,17 @@ class FollowTask : TimerTask() {
 
                     Launcher.twitter.postHtml(account.owner.toLong(), "Followed {}", archive.parseInfo(Lang.get(account.owner)))
 
-                    log.debug("Followed ${archive.name}, RETURN")
+                    log.debug("Followed ${archive.name}")
 
-                    return
+                    count.inc()
+
+                    if (count == 5) {
+
+                        log.debug("RETURN")
+
+                        return
+
+                    }
 
                 } catch (ex: TwitterException) {
 
