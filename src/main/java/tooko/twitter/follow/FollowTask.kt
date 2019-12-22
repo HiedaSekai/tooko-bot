@@ -68,7 +68,7 @@ class FollowTask : TimerTask() {
 
                 if (it.inReplyToUserId > 0) {
 
-                    queue.add(it.inReplyToStatusId)
+                    queue.add(it.inReplyToUserId)
 
                 }
 
@@ -92,11 +92,9 @@ class FollowTask : TimerTask() {
 
             log.debug("NEW ${queue.size} IDS")
 
-            queue.forEach {
+            Fn.fetchUsers(api, queue).forEach {
 
-                var user = api.showUser(it)
-
-                val archive = UserA.save(user)
+                val archive = UserA.save(it)
 
                 if (PredictProcess.predict(api, UserR.predictUser(archive))) {
 
