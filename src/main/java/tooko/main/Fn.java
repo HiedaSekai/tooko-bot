@@ -5,7 +5,6 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.*;
 import cn.hutool.http.HtmlUtil;
-import cn.hutool.log.StaticLog;
 import tooko.Launcher;
 import tooko.td.TdApi.*;
 import tooko.td.client.TdHandler;
@@ -21,7 +20,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.Object;
 import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Collections;
@@ -1316,8 +1314,6 @@ public class Fn {
                 ids.removeAll(arrayList);
 
             }
-
-            StaticLog.debug("{}", (Object) toArray(array));
 
             users.addAll(api.lookupUsers(toArray(array)));
 

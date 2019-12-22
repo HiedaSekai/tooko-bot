@@ -60,7 +60,7 @@ class FollowTask : TimerTask() {
 
             log.debug("FOLLOW TASK START FOR ${account.archive().name}")
 
-            val queue: HashSet<Long> = LinkedHashSet()
+            val queue = LinkedHashSet<Long>()
 
             api.getHomeTimeline(Paging().count(200)).forEach {
 
@@ -92,9 +92,11 @@ class FollowTask : TimerTask() {
 
             log.debug("NEW ${queue.size} IDS")
 
-            Fn.fetchUsers(api, queue).forEach {
+            queue.forEach {
 
-                val archive = UserA.save(it)
+                var user = api.showUser(it)
+
+                val archive = UserA.save(user)
 
                 if (PredictProcess.predict(api, UserR.predictUser(archive))) {
 
