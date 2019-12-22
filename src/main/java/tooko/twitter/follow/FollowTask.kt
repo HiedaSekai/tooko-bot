@@ -127,6 +127,8 @@ class FollowTask : TimerTask() {
 
                 } catch (ex: TwitterException) {
 
+                    log.debug(ex)
+
                     return@forEach
 
                 }
