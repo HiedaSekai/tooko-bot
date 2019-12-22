@@ -1192,7 +1192,7 @@ public class Fn {
 
     public static long[] toArray(Collection<Long> array) {
 
-        return ArrayUtil.unWrap(array.toArray(new Long[0]));
+        return ArrayUtil.unWrap(array.toArray(new Long[array.size()]));
 
     }
 
