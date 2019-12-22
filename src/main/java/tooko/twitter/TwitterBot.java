@@ -15,6 +15,7 @@ import tooko.twitter.account.TwitterLogin;
 import tooko.twitter.account.TwitterLogout;
 import tooko.twitter.actions.*;
 import tooko.twitter.follow.CheckTask;
+import tooko.twitter.follow.FollowConfig;
 import tooko.twitter.follow.FollowTask;
 import tooko.twitter.spam.ImageTest;
 import tooko.twitter.spam.UserTest;
@@ -40,6 +41,8 @@ public class TwitterBot extends TdBot {
         addHandler(new MuteAndBlock());
 
         addHandler(new SwitchLang());
+
+        addHandler(new FollowConfig());
 
         addHandler(new FollowersScan());
 
