@@ -13,7 +13,6 @@ import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
-import tooko.Launcher;
 import tooko.main.Env;
 
 import java.io.File;
@@ -225,8 +224,6 @@ public class NSFW {
     public static float[][] predictRaw(byte[]... images) throws IOException {
 
         if (ArrayUtil.isEmpty(images)) return new float[0][];
-
-        Launcher.log.debug("PRAW : {}", images.length);
 
         try {
 
