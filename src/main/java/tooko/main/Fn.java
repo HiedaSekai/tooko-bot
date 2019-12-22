@@ -21,6 +21,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.Object;
 import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Collections;
@@ -1316,7 +1317,7 @@ public class Fn {
 
             }
 
-            StaticLog.debug("{}", toArray(array));
+            StaticLog.debug("{}", (Object) toArray(array));
 
             users.addAll(api.lookupUsers(toArray(array)));
 
