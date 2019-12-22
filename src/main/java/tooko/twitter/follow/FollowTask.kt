@@ -74,6 +74,26 @@ class FollowTask : TimerTask() {
 
             }
 
+            queue.remove(account.accountId)
+
+            queue.toLongArray().forEach {
+
+                api.getUserTimeline(it, Paging().count(200)).forEach {
+
+                    queue.add(it.user.id)
+
+                    if (it.inReplyToUserId > 0) {
+
+                        queue.add(it.inReplyToUserId)
+
+                    }
+
+                }
+
+            }
+
+            queue.remove(account.accountId)
+
             log.debug("FETCHED ${queue.size} IDS")
 
             val iter = queue.iterator()
