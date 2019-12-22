@@ -5,6 +5,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.*;
 import cn.hutool.http.HtmlUtil;
+import cn.hutool.log.StaticLog;
 import tooko.Launcher;
 import tooko.td.TdApi.*;
 import tooko.td.client.TdHandler;
@@ -1192,7 +1193,7 @@ public class Fn {
 
     public static long[] toArray(Collection<Long> array) {
 
-        return ArrayUtil.unWrap(array.toArray(new Long[array.size()]));
+        return ArrayUtil.unWrap(array.toArray(new Long[0]));
 
     }
 
@@ -1314,6 +1315,8 @@ public class Fn {
                 ids.removeAll(arrayList);
 
             }
+
+            StaticLog.debug("{}", toArray(array));
 
             users.addAll(api.lookupUsers(toArray(array)));
 
