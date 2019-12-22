@@ -9,7 +9,7 @@ import org.bson.codecs.EncoderContext;
 
 public enum TCRC {
 
-    POLICES, SPAM, PORN, AD;
+    POLITICS, SPAM, PORN, AD;
 
     public static class CODEC implements Codec<TCRC> {
 
@@ -32,7 +32,7 @@ public enum TCRC {
                 switch (bsonReader.readInt32()) {
 
                     case 0:
-                        return POLICES;
+                        return POLITICS;
                     case 1:
                         return SPAM;
                     case 2:
@@ -53,7 +53,7 @@ public enum TCRC {
 
             switch (tcrc) {
 
-                case POLICES:
+                case POLITICS:
                     bsonWriter.writeInt32(0);
                     break;
                 case SPAM:

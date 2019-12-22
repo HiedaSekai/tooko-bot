@@ -1,6 +1,7 @@
-package tooko.twitter.actions;
+package tooko.twitter.follow;
 
 import org.bson.codecs.pojo.annotations.BsonId;
+import org.jetbrains.annotations.Nullable;
 import tooko.td.core.Table;
 
 import java.util.ArrayList;
@@ -19,7 +20,8 @@ public class AutoData {
 
         public long accountId;
         public long followedAt;
-        public long unFollowedAt;
+        @Nullable
+        public Long unFollowedAt;
 
 
     }

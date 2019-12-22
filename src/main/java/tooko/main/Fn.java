@@ -28,6 +28,12 @@ import java.util.List;
 
 public class Fn {
 
+    public static long s = 1000L;
+    public static long m = 60 * s;
+    public static long h = 60 * m;
+    public static long d = 24 * h;
+    public static long M = 30 * d;
+
     private static String arch;
 
     public static byte[] num2byte(Number integer) {

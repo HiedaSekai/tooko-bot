@@ -14,6 +14,8 @@ import tooko.twitter.account.AccountPanel;
 import tooko.twitter.account.TwitterLogin;
 import tooko.twitter.account.TwitterLogout;
 import tooko.twitter.actions.*;
+import tooko.twitter.follow.CheckTask;
+import tooko.twitter.follow.FollowTask;
 import tooko.twitter.spam.ImageTest;
 import tooko.twitter.spam.UserTest;
 
@@ -55,7 +57,12 @@ public class TwitterBot extends TdBot {
     public void onLogin() {
 
         TrackTask.start();
+
         UserFetchTask.start();
+
+        FollowTask.Companion.start();
+
+        CheckTask.Companion.start();
 
     }
 
@@ -110,6 +117,10 @@ public class TwitterBot extends TdBot {
         TrackTask.stop();
 
         UserFetchTask.stop();
+
+        FollowTask.Companion.stop();
+
+        CheckTask.Companion.stop();
 
         Launcher.twitter = null;
 

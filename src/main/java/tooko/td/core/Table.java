@@ -3,6 +3,7 @@ package tooko.td.core;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.UpdateOptions;
+import org.jetbrains.annotations.Nullable;
 import tooko.main.Env;
 
 import java.util.LinkedList;
@@ -52,6 +53,7 @@ public class Table<ID, T> {
 
     }
 
+    @Nullable
     public T getById(ID id) {
 
         return collection.find(eq(FIELD_ID, id)).first();

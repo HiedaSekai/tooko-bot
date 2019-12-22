@@ -1410,6 +1410,12 @@ public class TdHandler {
 
     }
 
+    public Message postHtml(long chatId, String text, Object... params) {
+
+        return syncE(Fn.sendText(chatId, Fn.parseHtml(text, params)));
+
+    }
+
     public void editText(long chatId, long messageId, String text, Object... params) {
 
         send(Fn.editText(chatId, messageId, Fn.plainText(text, params)));
@@ -1419,6 +1425,18 @@ public class TdHandler {
     public void editText(Message message, String text, Object... params) {
 
         send(Fn.editText(message, Fn.plainText(text, params)));
+
+    }
+
+    public void editHtml(long chatId, long messageId, String text, Object... params) {
+
+        send(Fn.editText(chatId, messageId, Fn.parseHtml(text, params)));
+
+    }
+
+    public void editHtml(Message message, String text, Object... params) {
+
+        send(Fn.editText(message, Fn.parseHtml(text, params)));
 
     }
 

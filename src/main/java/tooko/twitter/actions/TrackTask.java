@@ -137,9 +137,7 @@ public class TrackTask extends TimerTask {
 
         if (!followersChanged) {
 
-            // 有用户账号异常
-
-            simple = true;
+            // simple = true;
 
         }
 

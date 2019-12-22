@@ -10,14 +10,23 @@ import tooko.twitter.archives.UserA;
 
 import java.io.IOException;
 
+import static com.mongodb.client.model.Filters.*;
+
 public class UserR {
 
     public static Table<Long, UserR> DATA = new Table<>("user_spam", UserR.class);
+
+    public static boolean isSpam(long accountId) {
+
+        return DATA.collection.countDocuments(and(eq("_id", accountId), or(eq("photo", NSRC.PORN), eq("photo", NSRC.SEXY), eq("pornStatus", true)))) > 0;
+
+    }
 
     @BsonId
     public long accountId;
 
     public Long[] status;
+
     public Boolean pornStatus;
 
     //  public TCRC name;

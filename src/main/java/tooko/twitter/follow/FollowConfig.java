@@ -1,4 +1,4 @@
-package tooko.twitter.actions;
+package tooko.twitter.follow;
 
 import tooko.main.Fn;
 import tooko.main.Lang;
