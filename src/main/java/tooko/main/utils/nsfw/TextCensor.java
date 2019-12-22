@@ -120,7 +120,7 @@ public abstract class TextCensor {
 
                     }
 
-                    if (politics) return TCRC.POLICES;
+                    if (politics) return TCRC.POLITICS;
                     else if (spam) return TCRC.SPAM;
                     else if (ad) return TCRC.AD;
                     else if (porn) return TCRC.PORN;
