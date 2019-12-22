@@ -58,6 +58,8 @@ class FollowTask : TimerTask() {
 
         try {
 
+            log.debug("FOLLOW TASK START FOR ${account.archive().name}")
+
             val queue: HashSet<Long> = LinkedHashSet()
 
             api.getHomeTimeline(Paging().count(200)).forEach {
@@ -71,6 +73,8 @@ class FollowTask : TimerTask() {
                 }
 
             }
+
+            log.debug("FETCHED ${queue.size} IDS")
 
             val iter = queue.iterator()
 
@@ -86,17 +90,27 @@ class FollowTask : TimerTask() {
 
             }
 
+            log.debug("NEW ${queue.size} IDS")
+
             Fn.fetchUsers(api, queue).forEach {
 
                 val archive = UserA.save(it)
 
                 if (PredictProcess.predict(api, UserR.predictUser(archive))) {
 
+                    log.debug("SKIP SPAM :${archive.name}")
+
                     return@forEach
 
                 }
 
-                if (archive.friends > 500 && archive.followers < 20) return@forEach
+                if (archive.friends > 500 && archive.followers < 20) {
+
+                    log.debug("SKIP SJH: ${archive.name}")
+
+                    return@forEach
+
+                }
 
                 try {
 
@@ -106,6 +120,8 @@ class FollowTask : TimerTask() {
                     AutoData.DATA.arrayInsert(account.accountId, "autoFollowedIDs", archive.accountId)
 
                     Launcher.twitter.postHtml(account.owner.toLong(), "Followed {}", archive.parseInfo(Lang.get(account.owner)))
+
+                    log.debug("Followed ${archive.name}, RETURN")
 
                     return
 
