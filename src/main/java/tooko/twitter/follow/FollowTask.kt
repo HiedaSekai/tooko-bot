@@ -128,7 +128,15 @@ class FollowTask : TimerTask() {
 
                 if (archive.friends > 500 && archive.followers < 20) {
 
-                    log.debug("SKIP SJH: ${archive.name}")
+                    log.debug("SKIP SPAM ACCOUNT: ${archive.name}")
+
+                    return@forEach
+
+                }
+
+                if (archive.friends < 500 && archive.followers > 3000) {
+
+                    log.debug("SKIP PUBLIC ACCOUNT: ${archive.name}")
 
                     return@forEach
 
@@ -145,7 +153,7 @@ class FollowTask : TimerTask() {
 
                     log.debug("Followed ${archive.name}")
 
-                    count.inc()
+                    count++
 
                     if (count == 5) {
 
