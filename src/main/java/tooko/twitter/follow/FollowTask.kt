@@ -38,7 +38,7 @@ class FollowTask : TimerTask() {
 
             timer = Timer("Twitter FC Task").apply {
 
-                scheduleAtFixedRate(TrackTask(), Date(/*System.currentTimeMillis() + 1 * Fn.h*/), 1 * Fn.h)
+                scheduleAtFixedRate(FollowTask(), Date(/*System.currentTimeMillis() + 1 * Fn.h*/), 1 * Fn.h)
 
             }
 
