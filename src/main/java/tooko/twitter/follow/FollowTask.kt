@@ -102,6 +102,9 @@ class FollowTask : TimerTask() {
 
                     api.createFriendship(archive.accountId)
 
+                    AutoData.DATA.arrayInsert(account.accountId, "autoFollowed", AutoData.AutoFollowed(archive.accountId, System.currentTimeMillis()))
+                    AutoData.DATA.arrayInsert(account.accountId, "autoFollowedIDs", archive.accountId)
+
                     Launcher.twitter.postHtml(account.owner.toLong(), "Followed {}", archive.parseInfo(Lang.get(account.owner)))
 
                     return

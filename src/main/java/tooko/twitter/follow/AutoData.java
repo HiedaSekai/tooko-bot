@@ -20,6 +20,15 @@ public class AutoData {
 
         public long accountId;
         public long followedAt;
+
+        public AutoFollowed(long accountId, long followedAt) {
+            this.accountId = accountId;
+            this.followedAt = followedAt;
+        }
+
+        public AutoFollowed() {
+        }
+
         @Nullable
         public Long unFollowedAt;
 
