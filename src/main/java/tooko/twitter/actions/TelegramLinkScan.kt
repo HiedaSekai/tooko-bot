@@ -124,7 +124,7 @@ class TelegramLinkScan : TwitterHandler() {
 
                         }
 
-                        if (status.isRetweet && queue.contains(status.retweetedStatus.user.id)) return@forEach
+                        if (status.isRetweet && (exQueue.contains(status.retweetedStatus.user.id) || queue.contains(status.retweetedStatus.user.id)) return@forEach
 
                         status.urlEntities.forEach {
 
