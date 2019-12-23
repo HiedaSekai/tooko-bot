@@ -1,5 +1,7 @@
 package tooko.twitter.actions
 
+import cn.hutool.core.thread.ThreadUtil
+import tooko.main.Fn
 import tooko.td.TdApi
 import tooko.twitter.TwitterAccount
 import tooko.twitter.TwitterHandler
@@ -9,6 +11,7 @@ import twitter4j.Paging
 import twitter4j.Status
 import twitter4j.TwitterException
 import java.util.*
+import java.util.concurrent.Executors
 
 class TelegramLinkScan : TwitterHandler() {
 
@@ -58,10 +61,15 @@ class TelegramLinkScan : TwitterHandler() {
 
         queue.remove(account.accountId)
 
+        val pool = Executors.newSingleThreadExecutor()
 
         for ((index, accountId) in queue.withIndex()) {
 
-            editText(stat, "SEARCHING... ${index.inc()} / ${queue.size} ")
+            if (index.inc() % 10 == 0) {
+
+                editText(stat, "SEARCHING... ${index.inc()} / ${queue.size} ")
+
+            }
 
             try {
 
@@ -71,9 +79,15 @@ class TelegramLinkScan : TwitterHandler() {
 
                     status.urlEntities.forEach {
 
-                        if (it.expandedURL.contains("https://t.me")) {
+                        if (it.expandedURL.contains("https://t\\.me/(joinchat/|[^ /]*( |\$))")) {
 
-                            postText(chatId, "${it.expandedURL}\n\n${status.link}")
+                            pool.execute {
+
+                                postText(chatId, true, "${it.expandedURL}\n\n${status.link}")
+
+                                ThreadUtil.sleep(2 * Fn.s)
+
+                            }
 
                         }
 

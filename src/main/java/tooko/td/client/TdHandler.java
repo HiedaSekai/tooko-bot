@@ -1410,9 +1410,21 @@ public class TdHandler {
 
     }
 
+    public Message postText(long chatId, boolean enableLinkPreview, String text, Object... params) {
+
+        return syncE(Fn.sendText(chatId, Fn.plainText(text, params), enableLinkPreview));
+
+    }
+
     public Message postHtml(long chatId, String text, Object... params) {
 
         return syncE(Fn.sendText(chatId, Fn.parseHtml(text, params)));
+
+    }
+
+    public Message postHtml(long chatId, boolean enableLinkPreview, String text, Object... params) {
+
+        return syncE(Fn.sendText(chatId, Fn.parseHtml(text, params), enableLinkPreview));
 
     }
 
@@ -1439,6 +1451,31 @@ public class TdHandler {
         send(Fn.editText(message, Fn.parseHtml(text, params)));
 
     }
+
+    public void editText(long chatId, long messageId, String text, boolean enableLinkPreview, Object... params) {
+
+        send(Fn.editText(chatId, messageId, Fn.plainText(text, params), enableLinkPreview));
+
+    }
+
+    public void editText(Message message, String text, boolean enableLinkPreview, Object... params) {
+
+        send(Fn.editText(message, Fn.plainText(text, params), enableLinkPreview));
+
+    }
+
+    public void editHtml(long chatId, long messageId, String text, boolean enableLinkPreview, Object... params) {
+
+        send(Fn.editText(chatId, messageId, Fn.parseHtml(text, params), enableLinkPreview));
+
+    }
+
+    public void editHtml(Message message, String text, boolean enableLinkPreview, Object... params) {
+
+        send(Fn.editText(message, Fn.parseHtml(text, params), enableLinkPreview));
+
+    }
+
 
     public <T extends TdHandler> T findHandler(Class<T> clazz) {
 

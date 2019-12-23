@@ -448,6 +448,12 @@ public class Fn {
 
     }
 
+    public static SendMessage sendText(long chatId, FormattedText inputMessageContent, boolean enableLinkPreView) {
+
+        return sendText(chatId, (ReplyMarkup) null, inputMessageContent, enableLinkPreView);
+
+    }
+
     public static SendMessage sendText(long chatId, long replyToMessageId, FormattedText inputMessageContent) {
 
         return sendText(chatId, replyToMessageId, (ReplyMarkup) null, inputMessageContent);
@@ -484,11 +490,36 @@ public class Fn {
 
     }
 
-    public static SendMessage sendText(long chatId, long replyToMessageId, boolean enableNotification, boolean fromBackground, KeyboardArray replyMarkup, FormattedText inputMessageContent) {
+    public static SendMessage sendText(long chatId, long replyToMessageId, KeyboardArray replyMarkup, FormattedText inputMessageContent, boolean enableLinkPreView) {
 
-        return sendText(chatId, replyToMessageId, enableNotification, fromBackground, replyMarkup, inputMessageContent, false);
+        return sendText(chatId, replyToMessageId, false, false, replyMarkup, inputMessageContent, enableLinkPreView);
 
     }
+
+    public static SendMessage sendText(long chatId, InlineArray replyMarkup, FormattedText inputMessageContent, boolean enableLinkPreView) {
+
+        return sendText(chatId, 0, replyMarkup, inputMessageContent, enableLinkPreView);
+
+    }
+
+    public static SendMessage sendText(long chatId, InlineKeyboardButton[][] replyMarkup, FormattedText inputMessageContent, boolean enableLinkPreView) {
+
+        return sendText(chatId, 0, replyMarkup, inputMessageContent, enableLinkPreView);
+
+    }
+
+    public static SendMessage sendText(long chatId, KeyboardButton[][] replyMarkup, FormattedText inputMessageContent, boolean enableLinkPreView) {
+
+        return sendText(chatId, 0, replyMarkup, inputMessageContent, enableLinkPreView);
+
+    }
+
+    public static SendMessage sendText(long chatId, ReplyMarkup replyMarkup, FormattedText inputMessageContent, boolean enableLinkPreView) {
+
+        return sendText(chatId, 0, replyMarkup, inputMessageContent, enableLinkPreView);
+
+    }
+
 
     public static SendMessage sendText(long chatId, long replyToMessageId, InlineArray replyMarkup, FormattedText inputMessageContent) {
 
@@ -513,6 +544,38 @@ public class Fn {
         return sendText(chatId, replyToMessageId, false, false, replyMarkup, inputMessageContent);
 
     }
+
+    public static SendMessage sendText(long chatId, long replyToMessageId, InlineArray replyMarkup, FormattedText inputMessageContent, boolean enableLinkPreView) {
+
+        return sendText(chatId, replyToMessageId, false, false, replyMarkup, inputMessageContent, enableLinkPreView);
+
+    }
+
+    public static SendMessage sendText(long chatId, long replyToMessageId, InlineKeyboardButton[][] replyMarkup, FormattedText inputMessageContent, boolean enableLinkPreView) {
+
+        return sendText(chatId, replyToMessageId, false, false, replyMarkup, inputMessageContent, enableLinkPreView);
+
+    }
+
+    public static SendMessage sendText(long chatId, long replyToMessageId, KeyboardButton[][] replyMarkup, FormattedText inputMessageContent, boolean enableLinkPreView) {
+
+        return sendText(chatId, replyToMessageId, false, false, replyMarkup, inputMessageContent, enableLinkPreView);
+
+    }
+
+    public static SendMessage sendText(long chatId, long replyToMessageId, ReplyMarkup replyMarkup, FormattedText inputMessageContent, boolean enableLinkPreView) {
+
+        return sendText(chatId, replyToMessageId, false, false, replyMarkup, inputMessageContent, enableLinkPreView);
+
+    }
+
+
+    public static SendMessage sendText(long chatId, long replyToMessageId, boolean enableNotification, boolean fromBackground, KeyboardArray replyMarkup, FormattedText inputMessageContent) {
+
+        return sendText(chatId, replyToMessageId, enableNotification, fromBackground, replyMarkup, inputMessageContent, false);
+
+    }
+
 
     public static SendMessage sendText(long chatId, long replyToMessageId, boolean enableNotification, boolean fromBackground, KeyboardArray replyMarkup, FormattedText inputMessageContent, boolean enableLinkPreview) {
 
@@ -788,6 +851,18 @@ public class Fn {
 
     }
 
+    public static EditMessageText editText(Message message, FormattedText inputMessageContent, boolean enableLinklPreview) {
+
+        return editText(message.chatId, message.id, inputMessageContent, enableLinklPreview);
+
+    }
+
+    public static EditMessageText editText(long chatId, long messageId, FormattedText inputMessageContent, boolean enableLinklPreview) {
+
+        return editText(chatId, messageId, (InlineArray) null, inputMessageContent, enableLinklPreview);
+
+    }
+
     public static EditMessageText editText(Message message, InlineArray replyMarkup, FormattedText inputMessageContent) {
 
         return editText(message.chatId, message.id, replyMarkup, inputMessageContent);
@@ -799,6 +874,7 @@ public class Fn {
         return editText(message.chatId, message.id, replyMarkup, inputMessageContent);
 
     }
+
 
     public static EditMessageText editText(long chatId, long messageId, InlineArray replyMarkup, FormattedText inputMessageContent) {
 
