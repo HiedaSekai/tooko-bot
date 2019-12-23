@@ -5,7 +5,6 @@ import tooko.main.Fn
 import tooko.td.TdApi
 import tooko.twitter.TwitterAccount
 import tooko.twitter.TwitterHandler
-import tookox.core.applyIfNot
 import tookox.core.link
 import tookox.core.maxPaging
 import twitter4j.Paging
@@ -107,7 +106,7 @@ class TelegramLinkScan : TwitterHandler() {
 
                     for (pageIndex in 0..page.dec()) {
 
-                        timeline.addAll(api.getUserTimeline(accountId, maxPaging(since)).applyIfNot(since == -1L) {
+                        timeline.addAll(api.getUserTimeline(accountId, maxPaging(since)).apply {
 
                             since = this[size.dec()].id
 

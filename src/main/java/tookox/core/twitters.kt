@@ -7,7 +7,7 @@ val maxPaging = Paging().count(200)
 
 fun maxPaging(since: Long): Paging {
 
-    return Paging().count(200).apply {
+    return Paging().count(200).applyIf(since > 0L) {
 
         sinceId(since)
 
