@@ -79,7 +79,7 @@ class TelegramLinkScan : TwitterHandler() {
 
                     status.urlEntities.forEach {
 
-                        if (it.expandedURL.contains("https://t\\.me/(joinchat/|[^ /]*( |$))")) {
+                        if (it.expandedURL.contains("https://t.me/joinchat/")) {
 
                             pool.execute {
 
