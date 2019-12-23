@@ -46,11 +46,15 @@ public class TwitterBot extends TdBot {
 
         addHandler(new FollowersScan());
 
+        addHandler(new TelegramLinkScan());
+
+
         addHandler(new ImageTest());
 
         addHandler(new UserTest());
 
         addHandler(new LICENCE());
+
 
         super.onLoad();
 
