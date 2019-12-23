@@ -67,6 +67,8 @@ class TelegramLinkScan : TwitterHandler() {
 
                 api.getUserTimeline(accountId, maxPaging).forEach { status: Status ->
 
+                    if (status.isRetweet && queue.contains(status.retweetedStatus.user.id)) return@forEach
+
                     status.urlEntities.forEach {
 
                         if (it.expandedURL.contains("https://t.me")) {
