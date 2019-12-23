@@ -63,6 +63,8 @@ class TelegramLinkScan : TwitterHandler() {
 
         val pool = Executors.newSingleThreadExecutor()
 
+        val matchUserOrGroup = Regex("https://t\\.me/(joinchat/|[^ /]*( |\$))")
+
         for ((index, accountId) in queue.withIndex()) {
 
             if (index.inc() % 10 == 0) {
@@ -79,7 +81,7 @@ class TelegramLinkScan : TwitterHandler() {
 
                     status.urlEntities.forEach {
 
-                        if (it.expandedURL.contains("https://t.me/joinchat/")) {
+                        if (it.expandedURL.matches(matchUserOrGroup)) {
 
                             pool.execute {
 
