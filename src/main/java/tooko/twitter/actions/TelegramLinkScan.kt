@@ -5,6 +5,7 @@ import tooko.main.Fn
 import tooko.td.TdApi
 import tooko.twitter.TwitterAccount
 import tooko.twitter.TwitterHandler
+import tookox.core.applyIfNot
 import tookox.core.link
 import tookox.core.maxPaging
 import twitter4j.Paging
@@ -21,11 +22,32 @@ class TelegramLinkScan : TwitterHandler() {
 
     }
 
-    override fun onFunction(user: TdApi.User, chatId: Long, message: TdApi.Message, function: String?, param: String, params: Array<String>, originParams: Array<String>, account: TwitterAccount) {
+    override fun onFunction(user: TdApi.User, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>, account: TwitterAccount) {
+
+        var depth = if (params.size == 0) 1 else params[0].toInt()
+
+        val page = if (params.size < 2) 1 else params[1].toInt()
+
+        if (depth < 1) {
+
+            postText(chatId, "invalid : depth < 1")
+
+            return
+
+        }
+
+        if (page < 1) {
+
+            postText(chatId, "invalid : page < 1")
+
+            return
+
+        }
 
         val api = account.mkApi()
 
-        val queue = LinkedHashSet<Long>()
+        var queue = LinkedHashSet<Long>()
+        val exQueue = LinkedHashSet<Long>()
 
         val stat = postText(chatId, "FETCHING TL...")
 
@@ -41,9 +63,9 @@ class TelegramLinkScan : TwitterHandler() {
 
         }
 
-        queue.remove(account.accountId)
+        exQueue.toLongArray().forEach {
 
-        queue.toLongArray().forEach {
+            if (it == account.accountId) return@forEach
 
             api.getUserTimeline(it, Paging().count(200)).forEach {
 
@@ -59,35 +81,63 @@ class TelegramLinkScan : TwitterHandler() {
 
         }
 
-        queue.remove(account.accountId)
+        depth--
 
         val pool = Executors.newSingleThreadExecutor()
 
         val matchUserOrGroup = Regex("https://t\\.me/(joinchat/|[^ /]*( |\$))")
 
-        for ((index, accountId) in queue.withIndex()) {
+        for (ignored in 0..depth) {
 
-            if (index.inc() % 10 == 0) {
+            val newQueue = LinkedHashSet<Long>()
 
-                editText(stat, "SEARCHING... ${index.inc()} / ${queue.size} ")
+            for ((index, accountId) in queue.withIndex()) {
 
-            }
+                if (index.inc() % 10 == 0) {
 
-            try {
+                    editText(stat, "SEARCHING... ${index.inc()} / ${queue.size} ")
 
-                api.getUserTimeline(accountId, maxPaging).forEach { status: Status ->
+                }
 
-                    if (status.isRetweet && queue.contains(status.retweetedStatus.user.id)) return@forEach
+                try {
 
-                    status.urlEntities.forEach {
+                    val timeline = LinkedList<Status>()
 
-                        if (it.expandedURL.matches(matchUserOrGroup)) {
+                    var since = -1L
 
-                            pool.execute {
+                    for (pageIndex in 0..page.dec()) {
 
-                                postText(chatId, true, "${it.expandedURL}\n\n${status.link}")
+                        timeline.addAll(api.getUserTimeline(accountId, maxPaging(since)).applyIfNot(since == -1L) {
 
-                                ThreadUtil.sleep(2 * Fn.s)
+                            since = this[size.dec()].id
+
+                        })
+
+                    }
+
+                    timeline.forEach { status: Status ->
+
+                        newQueue.add(status.user.id)
+
+                        if (status.inReplyToUserId > 0) {
+
+                            newQueue.add(status.inReplyToUserId)
+
+                        }
+
+                        if (status.isRetweet && queue.contains(status.retweetedStatus.user.id)) return@forEach
+
+                        status.urlEntities.forEach {
+
+                            if (it.expandedURL.matches(matchUserOrGroup)) {
+
+                                pool.execute {
+
+                                    postText(chatId, true, "${it.expandedURL}\n\n${status.link}")
+
+                                    ThreadUtil.sleep(2 * Fn.s)
+
+                                }
 
                             }
 
@@ -95,10 +145,16 @@ class TelegramLinkScan : TwitterHandler() {
 
                     }
 
+                } catch (ignored: TwitterException) {
                 }
 
-            } catch (ignored: TwitterException) {
             }
+
+            exQueue.addAll(queue)
+
+            queue = newQueue
+
+            queue.removeAll(exQueue)
 
         }
 
