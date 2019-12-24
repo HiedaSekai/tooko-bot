@@ -397,9 +397,9 @@ public class TdClient extends TdHandler {
 
             if (!callbacks.containsKey(event.requestId)) {
 
-                if (event.object instanceof TdApi.Error) {
+                if (event.event instanceof TdApi.Error) {
 
-                    TdApi.Error err = (TdApi.Error) event.object;
+                    TdApi.Error err = (TdApi.Error) event.event;
 
                     log.warn(err.code + " " + err.message);
 
@@ -413,7 +413,7 @@ public class TdClient extends TdHandler {
 
                 TdCallback<?> callback = callbacks.remove(event.requestId);
 
-                callR(event.object, callback, !(callback instanceof ReturnBack));
+                callR(event.event, callback, !(callback instanceof ReturnBack));
 
             } catch (Exception e) {
 
@@ -423,9 +423,9 @@ public class TdClient extends TdHandler {
 
             return;
 
-        } else if (event.object instanceof UpdateMessageSendSucceeded || event.object instanceof UpdateMessageSendFailed) {
+        } else if (event.event instanceof UpdateMessageSendSucceeded || event.event instanceof UpdateMessageSendFailed) {
 
-            callU((Update) event.object);
+            callU((Update) event.event);
 
             return;
 
@@ -433,21 +433,21 @@ public class TdClient extends TdHandler {
 
         long chatId = -1;
 
-        if (event.object instanceof UpdateNewMessage) {
+        if (event.event instanceof UpdateNewMessage) {
 
-            Message message = ((UpdateNewMessage) event.object).message;
+            Message message = ((UpdateNewMessage) event.event).message;
 
             chatId = message.chatId;
 
-        } else if (event.object instanceof UpdateNewCallbackQuery) {
+        } else if (event.event instanceof UpdateNewCallbackQuery) {
 
-            UpdateNewCallbackQuery query = (UpdateNewCallbackQuery) event.object;
+            UpdateNewCallbackQuery query = (UpdateNewCallbackQuery) event.event;
 
             chatId = query.chatId;
 
-        } else if (event.object instanceof UpdateNewInlineQuery) {
+        } else if (event.event instanceof UpdateNewInlineQuery) {
 
-            UpdateNewInlineQuery query = (UpdateNewInlineQuery) event.object;
+            UpdateNewInlineQuery query = (UpdateNewInlineQuery) event.event;
 
             chatId = query.senderUserId;
 
@@ -458,7 +458,7 @@ public class TdClient extends TdHandler {
             @Override
             public void run() {
 
-                callU((Update) event.object);
+                callU((Update) event.event);
 
             }
 

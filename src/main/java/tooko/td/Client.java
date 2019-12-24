@@ -95,12 +95,12 @@ public final class Client {
     public static class Event {
 
         public long requestId;
-        public TdApi.Object object;
+        public TdApi.Object event;
 
-        public Event(long requestId, TdApi.Object object) {
+        public Event(long requestId, TdApi.Object event) {
 
             this.requestId = requestId;
-            this.object = object;
+            this.event = event;
 
         }
 

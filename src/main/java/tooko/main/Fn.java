@@ -34,13 +34,11 @@ public class Fn {
     public static long d = 24 * h;
     public static long M = 30 * d;
 
-    private static String arch;
+     public static byte[] num2byte(Number integer) {
 
-    public static byte[] num2byte(Number integer) {
+         return BigInteger.valueOf(integer.longValue()).toByteArray();
 
-        return BigInteger.valueOf(integer.longValue()).toByteArray();
-
-    }
+     }
 
     public static long byte2long(byte[] integer) {
 
@@ -63,18 +61,6 @@ public class Fn {
     public static <E> void addAll(Collection<E> collection, E[] array) {
 
         Collections.addAll(collection, array);
-
-    }
-
-    private static String getArch() {
-
-        if (arch == null) {
-
-            arch = RuntimeUtil.execForStr("uname -m");
-
-        }
-
-        return arch;
 
     }
 

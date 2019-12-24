@@ -16,3 +16,48 @@ fun maxPaging(since: Long): Paging {
 }
 
 val Status.link get() = "https://twitter.com/${user.screenName}/status/$id"
+
+val Status.plainText: String
+    get() {
+
+        var plainText = text
+
+        urlEntities.forEach {
+
+            plainText = plainText.replace(it.url, "")
+
+        }
+
+        mediaEntities.forEach {
+
+            plainText = plainText.replace(it.url, "")
+
+        }
+
+        hashtagEntities.forEach {
+
+            plainText = plainText.replace("#${it.text}", "")
+
+        }
+
+        symbolEntities.forEach {
+
+            plainText = plainText.replace(it.text, "")
+
+        }
+
+        userMentionEntities.forEach {
+
+            plainText = plainText.replace("@${it.text}", "")
+
+        }
+
+        if (quotedStatusPermalink != null) {
+
+            plainText = text.replace(quotedStatusPermalink.url, "")
+
+        }
+
+        return plainText
+
+    }

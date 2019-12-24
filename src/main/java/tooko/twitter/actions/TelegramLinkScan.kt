@@ -106,11 +106,13 @@ class TelegramLinkScan : TwitterHandler() {
 
                     for (pageIndex in 0..page.dec()) {
 
-                        timeline.addAll(api.getUserTimeline(accountId, maxPaging(since)).apply {
+                        val statuses = api.getUserTimeline(accountId, maxPaging(since))
 
-                            since = this[size.dec()].id
+                        if (statuses.isEmpty()) break
 
-                        })
+                        since = statuses[statuses.size.dec()].id
+
+                        timeline.addAll(statuses)
 
                     }
 

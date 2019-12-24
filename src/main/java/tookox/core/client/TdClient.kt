@@ -1,13 +1,11 @@
 package tookox.core.client
 
-/*
-
+import cn.hutool.core.thread.ThreadUtil
+import cn.hutool.core.util.ArrayUtil
 import tooko.main.Env
 import tooko.td.Client
 import tooko.td.TdApi
 import tooko.td.TdApi.*
-import tooko.td.client.TdClient.LogCallback
-import tooko.td.client.TdClient.ReturnBack
 import tooko.td.client.TdException
 import tooko.td.client.TdOptions
 import tookox.core.createLog
@@ -24,24 +22,142 @@ import kotlin.reflect.KClass
 
 class TdClient(private val options: TdOptions) : TdAbsHandler {
 
-    private val log = createLog("TD")
+    companion object {
+
+        private val log = createLog("TD")
+
+        val postAdd = LinkedList<TdClient>()
+        val postDestroy = LinkedList<TdClient>()
+        var mainTimer = Timer("Mian Timer")
+        var clients = LinkedList<TdClient>()
+        var publicPool = ThreadPoolExecutor(1, 1, 30, TimeUnit.SECONDS, LinkedBlockingQueue())
+        var asyncPool = ThreadPoolExecutor(8, 8, 15, TimeUnit.SECONDS, LinkedBlockingQueue())
+
+    }
+
+    class EventTask : Thread() {
+
+        override fun run() {
+
+            while (true) {
+
+                synchronized(postAdd) {
+
+                    val iter = postAdd.iterator()
+
+                    while (iter.hasNext()) {
+
+                        val toAdd = iter.next()
+
+                        clients.add(toAdd)
+
+                        iter.remove()
+
+                    }
+
+                }
+
+                synchronized(postDestroy) {
+
+                    val iter = postDestroy.iterator()
+
+                    while (iter.hasNext()) {
+
+                        val toDestroy = iter.next()
+
+                        clients.remove(toDestroy)
+
+                        toDestroy.status.set(true)
+
+                        iter.remove()
+
+                    }
+
+                }
+
+                if (clients.isEmpty()) {
+
+                    ThreadUtil.safeSleep(1000)
+
+                    continue
+
+                }
+
+                for (client in clients) {
+
+                    val responseList = client.td.receive(0.0, 4)
+
+                    responseList.forEach { event: Client.Event ->
+
+                        if (event.requestId != 0L) {
+
+                            if (!client.callbacks.containsKey(event.requestId)) {
+
+                                if (event.event is Error) {
+
+                                    val err = event.event as Error
+
+                                    log.warn(err.code.toString() + " " + err.message)
+
+                                }
+
+                                return
+                            }
+
+                            try {
+
+                                val callback = client.callbacks.remove(event.requestId)!!
+
+                                val isOk = event.event is Error
+
+                                callback.invoke(isOk, if (isOk) event.event else null, if (isOk) null else event.event as Error)
+
+                            } catch (e: Exception) {
+
+                                log.error(e, "TdError - Sync")
+
+                            }
+
+                            return
+
+                        }
+
+                        client.handlers.forEach {
+
+                            it.onEvent(event.event)
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+
     private val td = Client()
+
     private val status: AtomicBoolean = AtomicBoolean(false)
 
-    var handlers = LinkedList<TdAbsHandler>();
+    var handlers = LinkedList<TdAbsHandler>()
 
     private val requestId = AtomicLong(1)
     private val executionLock = ReentrantLock()
-    private val callbacks = ConcurrentHashMap<Long, (isOk: Boolean, result: TdApi.Object, error: Error) -> Unit>()
-    private val messages = ConcurrentHashMap<Long, (isOk: Boolean, result: TdApi.Object, error: Error) -> Unit>()
+
+    private val callbacks = ConcurrentHashMap<Long, (isOk: Boolean, result: Object?, error: Error?) -> Unit>()
+    private val messages = ConcurrentHashMap<Long, (isOk: Boolean, result: Message?, error: Error?) -> Unit>()
 
     val auth = AtomicBoolean(false)
 
-    lateinit var me: TdApi.User
+    lateinit var me: User
 
     fun addHandler(handler: TdAbsHandler) {
 
-        handler.onInit(this)
+        handler.onLoad(this)
 
         handlers.add(handler)
 
@@ -62,76 +178,133 @@ class TdClient(private val options: TdOptions) : TdAbsHandler {
     }
 
     @Throws(TdException::class)
-    fun <T : Object> execute(function: TdApi.Function?): T {
+    fun <T : Object> execute(function: TdApi.Function): T {
+
         check(!executionLock.isLocked) { "ClientActor is destroyed" }
+
         val responseAtomicReference = AtomicReference<Object>()
+
         val executedAtomicBoolean = AtomicBoolean(false)
-        send(function, { isOk: Boolean, result: T, error: Error ->
-            if (isOk) {
-                responseAtomicReference.set(result)
-            } else {
-                responseAtomicReference.set(error)
-            }
-            executedAtomicBoolean.set(true)
-        })
+
+        if (function is SendMessage) {
+
+            send(function as TdApi.Function, { isOk: Boolean, result: Message?, error: Error? ->
+
+                if (isOk) messages[result!!.id] = { _isOk: Boolean, _result: Message?, _error: Error? ->
+
+                    if (isOk) {
+
+                        responseAtomicReference.set(result)
+
+                    } else {
+
+                        responseAtomicReference.set(error)
+
+                    }
+
+                    executedAtomicBoolean.set(true)
+
+                }
+
+            })
+
+        } else {
+
+            send(function, { isOk: Boolean, result: Object?, error: Error? ->
+
+                if (isOk) {
+
+                    responseAtomicReference.set(result)
+
+                } else {
+
+                    responseAtomicReference.set(error)
+
+                }
+
+                executedAtomicBoolean.set(true)
+
+
+            })
+
+
+        }
 
         while (!executedAtomicBoolean.get()) {
+
             if (Env.STOP.get()) {
+
                 throw TdException(Error(-1, "Server Stopped"))
+
             }
+
         }
+
         val response = responseAtomicReference.get()
+
         if (response is Error) {
+
             throw TdException(response)
+
         }
+
+        @Suppress("UNCHECKED_CAST")
         return response as T
+
     }
 
-    fun send(function: TdApi.Function?, callback: (isOk: Boolean, result: TdApi.Object, error: Error) -> Unit) {
+    fun <T : Object> send(function: TdApi.Function, callback: (isOk: Boolean, result: T?, error: Error?) -> Unit) {
+
         check(!executionLock.isLocked) { "ClientActor is destroyed" }
-        val requestId = requestId.getAndIncrement()
-        callbacks[requestId] = callback
-        send(requestId, function)
-    }
 
-    fun send(function: TdApi.Function?): Long {
-        check(!executionLock.isLocked) { "Client is destroyed" }
         val requestId = requestId.getAndIncrement()
 
-        callbacks[requestId] = { isOk,_,_  ->
-            
-            if (!isOk)
+        callbacks[requestId] = { isOk: Boolean, result: Object?, error: Error? ->
+
+            @Suppress("UNCHECKED_CAST")
+            callback.invoke(isOk, result as T?, error)
 
         }
+
         send(requestId, function)
+
+    }
+
+    fun send(function: TdApi.Function): Long {
+
+        check(!executionLock.isLocked) { "Client is destroyed" }
+
+        val requestId = requestId.getAndIncrement()
+
+        var stackTrace = ThreadUtil.getStackTrace()
+
+        stackTrace = ArrayUtil.sub<StackTraceElement>(stackTrace, 3, stackTrace.size)
+
+        callbacks[requestId] = { isOk, _, error ->
+
+            if (!isOk) {
+
+                val exception = TdException(error!!)
+
+                exception.stackTrace = stackTrace
+
+                log.warn(exception)
+
+            }
+
+        }
+
+        send(requestId, function)
+
         return requestId
     }
 
-    fun send(requestId: Long, function: TdApi.Function?) {
+    fun send(requestId: Long, function: TdApi.Function) {
+
         check(!executionLock.isLocked) { "Client is destroyed" }
-        client.send(requestId, function)
-    }
 
-    fun send(function: SendMessage?, callback: (isOk: Boolean, result: Message, error: Error) -> Unit) {
-        send(function as TdApi.Function?, object : ReturnBack<Message?> {
-            fun onCallback(isOk: Boolean, result: Message, error: Error) {
-                if (isOk) messages[result.id] = callback
-            }
-        })
-    }
-
-
-    companion object {
-
-        val postAdd = LinkedList<TdClient>()
-        val postDestroy = LinkedList<TdClient>()
-        var mainTimer = Timer("Mian Timer")
-        var clients = LinkedList<TdClient>()
-        var publicPool = ThreadPoolExecutor(1, 1, 30, TimeUnit.SECONDS, LinkedBlockingQueue())
-        var asyncPool = ThreadPoolExecutor(8, 8, 15, TimeUnit.SECONDS, LinkedBlockingQueue())
+        td.send(requestId, function)
 
     }
 
 }
-
- */
