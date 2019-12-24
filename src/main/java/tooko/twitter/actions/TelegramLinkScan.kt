@@ -27,6 +27,8 @@ class TelegramLinkScan : TwitterHandler() {
 
         val page = if (params.size < 2) 1 else params[1].toInt()
 
+        val links = hashSetOf<String>()
+
         if (depth < 1) {
 
             postText(chatId, "invalid : depth < 1")
@@ -131,6 +133,8 @@ class TelegramLinkScan : TwitterHandler() {
                         status.urlEntities.forEach {
 
                             if (it.expandedURL.matches(matchUserOrGroup)) {
+
+                                if (!links.add(it.expandedURL)) return@forEach
 
                                 pool.execute {
 
