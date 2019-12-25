@@ -101,7 +101,7 @@ class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                                 }
 
-                                return
+                                return@forEach
                             }
 
                             try {
@@ -118,7 +118,7 @@ class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                             }
 
-                            return
+                            return@forEach
 
                         }
 
@@ -186,47 +186,19 @@ class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         val executedAtomicBoolean = AtomicBoolean(false)
 
-        if (function is SendMessage) {
+        send(function) { isOk: Boolean, result: Object?, error: Error? ->
 
-            send(function as TdApi.Function, { isOk: Boolean, result: Message?, error: Error? ->
+            if (isOk) {
 
-                if (isOk) messages[result!!.id] = { _isOk: Boolean, _result: Message?, _error: Error? ->
+                responseAtomicReference.set(result)
 
-                    if (isOk) {
+            } else {
 
-                        responseAtomicReference.set(result)
+                responseAtomicReference.set(error)
 
-                    } else {
+            }
 
-                        responseAtomicReference.set(error)
-
-                    }
-
-                    executedAtomicBoolean.set(true)
-
-                }
-
-            })
-
-        } else {
-
-            send(function, { isOk: Boolean, result: Object?, error: Error? ->
-
-                if (isOk) {
-
-                    responseAtomicReference.set(result)
-
-                } else {
-
-                    responseAtomicReference.set(error)
-
-                }
-
-                executedAtomicBoolean.set(true)
-
-
-            })
-
+            executedAtomicBoolean.set(true)
 
         }
 
@@ -259,10 +231,27 @@ class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         val requestId = requestId.getAndIncrement()
 
-        callbacks[requestId] = { isOk: Boolean, result: Object?, error: Error? ->
+        if (function is SendMessage) {
 
-            @Suppress("UNCHECKED_CAST")
-            callback.invoke(isOk, result as T?, error)
+            callbacks[requestId] = { isOk: Boolean, result: Object?, error: Error? ->
+
+                if (isOk) {
+
+                    @Suppress("UNCHECKED_CAST")
+                    messages[(result as Message).id] = (callback as ((isOk: Boolean, result: Message?, error: Error?) -> Unit))
+
+                }
+
+            }
+
+        } else {
+
+            callbacks[requestId] = { isOk: Boolean, result: Object?, error: Error? ->
+
+                @Suppress("UNCHECKED_CAST")
+                callback.invoke(isOk, result as T?, error)
+
+            }
 
         }
 

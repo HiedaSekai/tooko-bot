@@ -12,7 +12,7 @@ fun createLog(name: String): Log {
 
     return object : ConsoleLog(name) {
 
-        override fun log(fqcn: String, level: Level, t: Throwable, format: String, vararg arguments: Any) {
+        override fun log(fqcn: String, level: Level, t: Throwable?, format: String, vararg arguments: Any) {
 
             val dict = Dict.create().set("date", DateUtil.now()).set("level", level.toString()).set("name", name).set("msg", StrUtil.format(format, *arguments))
 

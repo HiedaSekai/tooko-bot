@@ -41,15 +41,7 @@ public class UpdateScript {
 
     public static void beforeLaunch() {
 
-        /*
 
-        for (StatusR status : StatusR.DATA.collection.find()) {
-
-            StatusR.DATA.setById(status.statusId, status);
-
-        }
-
-         */
 
     }
 
