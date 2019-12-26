@@ -14,6 +14,8 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
         super<TdClient>.onAuthorizationState(authorizationState)
 
+        log.trace(authorizationState.javaClass.simpleName)
+
         if (authorizationState is TdApi.AuthorizationStateWaitPhoneNumber) {
 
             log.trace("SEND BOT TOKEN")
@@ -59,6 +61,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
 
             return TdOptions().databaseDirectory(dataDir.path)
+
         }
 
         private fun mkLink(dataDir: File, target: String) {
