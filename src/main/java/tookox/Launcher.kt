@@ -99,7 +99,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             }
 
-            Log.setVerbosityLevel(2)
+            Log.setVerbosityLevel(1)
 
             val configFile = File(Env.ROOT_PATH, "config.json")
 

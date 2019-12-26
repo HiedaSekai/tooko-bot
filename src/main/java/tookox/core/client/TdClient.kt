@@ -540,7 +540,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     override fun onSavedAnimations(animationIds: IntArray) = Unit
 
-    override fun onSelectedBackground(forDarkTheme: Boolean, background: Background) = Unit
+    override fun onSelectedBackground(forDarkTheme: Boolean, background: Background?) = Unit
 
     override fun onLanguagePackStrings(localizationTarget: String, languagePackId: String, strings: Array<LanguagePackString>) = Unit
 
