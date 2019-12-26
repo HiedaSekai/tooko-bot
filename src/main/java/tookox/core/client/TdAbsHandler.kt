@@ -8,437 +8,152 @@ interface TdAbsHandler {
 
     fun onLoad(client: TdClient)
 
-    fun onLoad() {}
+    fun onLoad()
 
-    fun onLogin() {}
+    fun onLogin()
 
-    fun onLogout() {}
+    fun onLogout()
 
-    fun onDestroy() {}
+    fun onDestroy()
 
-    fun onEvent(event: Object) {
+    fun onAuthorizationState(authorizationState: AuthorizationState)
 
-        if (event is UpdateAuthorizationState) {
+    fun onNewMessage(userId: Int, chatId: Long, message: Message)
 
-            onAuthorizationState(event.authorizationState)
+    fun onMessageSendAcknowledged(chatId: Long, messageId: Long)
 
-        } else if (event is UpdateNewMessage) {
+    fun onMessageSendSucceeded(message: Message, oldMessageId: Long)
 
-            onNewMessage(event.message.senderUserId, event.message.chatId, event.message)
+    fun onMessageSendFailed(message: Message, oldMessageId: Long, errorCode: Int, errorMessage: String)
 
-        } else if (event is UpdateMessageSendAcknowledged) {
+    fun onMessageContent(chatId: Long, messageId: Long, newContent: MessageContent)
 
-            onMessageSendAcknowledged(event.chatId, event.messageId)
+    fun onMessageEdited(chatId: Long, messageId: Long, editDate: Int, replyMarkup: ReplyMarkup)
 
-        } else if (event is UpdateMessageSendSucceeded) {
+    fun onMessageViews(chatId: Long, messageId: Long, views: Int)
 
-            onMessageSendSucceeded(event.message, event.oldMessageId)
+    fun onMessageContentOpened(chatId: Long, messageId: Long)
 
-        } else if (event is UpdateMessageSendFailed) {
+    fun onMessageMentionRead(chatId: Long, messageId: Long, unreadMentionCount: Int)
 
-            onMessageSendFailed(event.message, event.oldMessageId, event.errorCode, event.errorMessage)
+    fun onNewChat(chat: Chat)
 
-        } else if (event is UpdateMessageContent) {
+    fun onChatTitle(chatId: Long, title: String)
 
-            onMessageContent(event.chatId, event.messageId, event.newContent)
+    fun onChatPhoto(chatId: Long, photo: ChatPhoto)
 
-        } else if (event is UpdateMessageEdited) {
+    fun onChatPermissions(chatId: Long, permissions: ChatPermissions)
 
-            onMessageEdited(event.chatId, event.messageId, event.editDate, event.replyMarkup)
+    fun onChatLastMessage(chatId: Long, lastMessage: Message, order: Long)
 
-        } else if (event is UpdateMessageViews) {
+    fun onChatOrder(chatId: Long, order: Long)
 
-            onMessageViews(event.chatId, event.messageId, event.views)
+    fun onChatIsPinned(chatId: Long, isPinned: Boolean, order: Long)
 
-        } else if (event is UpdateMessageContentOpened) {
+    fun onChatIsMarkedAsUnread(chatId: Long, isMarkedAsUnread: Boolean)
 
-            onMessageContentOpened(event.chatId, event.messageId)
+    fun onChatIsSponsored(chatId: Long, isSponsored: Boolean, order: Long)
 
-        } else if (event is UpdateMessageMentionRead) {
+    fun onChatDefaultDisableNotification(chatId: Long, defaultDisableNotification: Boolean)
 
-            onMessageMentionRead(event.chatId, event.messageId, event.unreadMentionCount)
+    fun onChatReadInbox(chatId: Long, lastReadInboxMessageId: Long, unreadCount: Int)
 
-        } else if (event is UpdateNewChat) {
+    fun onChatReadOutbox(chatId: Long, lastReadOutboxMessageId: Long)
 
-            onNewChat(event.chat)
+    fun onChatUnreadMentionCount(chatId: Long, unreadMentionCount: Int)
 
-        } else if (event is UpdateChatTitle) {
+    fun onChatNotificationSettings(chatId: Long, notificationSettings: ChatNotificationSettings)
 
-            onChatTitle(event.chatId, event.title)
+    fun onScopeNotificationSettings(scope: NotificationSettingsScope, notificationSettings: ScopeNotificationSettings)
 
-        } else if (event is UpdateChatPhoto) {
+    fun onChatPinnedMessage(chatId: Long, pinnedMessageId: Long)
 
-            onChatPhoto(event.chatId, event.photo)
+    fun onChatReplyMarkup(chatId: Long, replyMarkupMessageId: Long)
 
-        } else if (event is UpdateChatPermissions) {
+    fun onChatDraftMessage(chatId: Long, draftMessage: DraftMessage, order: Long)
 
-            onChatPermissions(event.chatId, event.permissions)
+    fun onChatOnlineMemberCount(chatId: Long, onlineMemberCount: Int)
 
-        } else if (event is UpdateChatLastMessage) {
+    fun onNotification(notificationGroupId: Int, notification: Notification)
 
-            onChatLastMessage(event.chatId, event.lastMessage, event.order)
+    fun onNotificationGroup(notificationGroupId: Int, type: NotificationGroupType, chatId: Long, notificationSettingsChatId: Long, isSilent: Boolean, totalCount: Int, addedNotifications: Array<Notification>, removedNotificationIds: IntArray)
 
-        } else if (event is UpdateChatOrder) {
+    fun onActiveNotifications(groups: Array<NotificationGroup>)
 
-            onChatOrder(event.chatId, event.order)
+    fun onHavePendingNotifications(haveDelayedNotifications: Boolean, haveUnreceivedNotifications: Boolean)
 
-        } else if (event is UpdateChatIsPinned) {
+    fun onDeleteMessages(chatId: Long, messageIds: LongArray, isPermanent: Boolean, fromCache: Boolean)
 
-            onChatIsPinned(event.chatId, event.isPinned, event.order)
+    fun onUserChatAction(chatId: Long, userId: Int, action: ChatAction)
 
-        } else if (event is UpdateChatIsMarkedAsUnread) {
+    fun onUserStatus(userId: Int, status: UserStatus)
 
-            onChatIsMarkedAsUnread(event.chatId, event.isMarkedAsUnread)
+    fun onUser(user: User)
 
-        } else if (event is UpdateChatIsSponsored) {
+    fun onBasicGroup(basicGroup: BasicGroup)
 
-            onChatIsSponsored(event.chatId, event.isSponsored, event.order)
+    fun onSupergroup(supergroup: Supergroup)
 
-        } else if (event is UpdateChatDefaultDisableNotification) {
+    fun onSecretChat(secretChat: SecretChat)
 
-            onChatDefaultDisableNotification(event.chatId, event.defaultDisableNotification)
+    fun onUserFullInfo(userId: Int, userFullInfo: UserFullInfo)
 
-        } else if (event is UpdateChatReadInbox) {
+    fun onBasicGroupFullInfo(basicGroupId: Int, basicGroupFullInfo: BasicGroupFullInfo)
 
-            onChatReadInbox(event.chatId, event.lastReadInboxMessageId, event.unreadCount)
+    fun onSupergroupFullInfo(supergroupId: Int, supergroupFullInfo: SupergroupFullInfo)
 
-        } else if (event is UpdateChatReadOutbox) {
+    fun onServiceNotification(type: String, content: MessageContent)
 
-            onChatReadOutbox(event.chatId, event.lastReadOutboxMessageId)
+    fun onFile(file: File)
 
-        } else if (event is UpdateChatUnreadMentionCount) {
+    fun onFileGenerationStart(generationId: Long, originalPath: String, destinationPath: String, conversion: String)
 
-            onChatUnreadMentionCount(event.chatId, event.unreadMentionCount)
+    fun onFileGenerationStop(generationId: Long)
 
-        } else if (event is UpdateChatNotificationSettings) {
+    fun onCall(call: Call)
 
-            onChatNotificationSettings(event.chatId, event.notificationSettings)
+    fun onUserPrivacySettingRules(setting: UserPrivacySetting, rules: UserPrivacySettingRules)
 
-        } else if (event is UpdateScopeNotificationSettings) {
+    fun onUnreadMessageCount(unreadCount: Int, unreadUnmutedCount: Int)
 
-            onScopeNotificationSettings(event.scope, event.notificationSettings)
+    fun onUnreadChatCount(unreadCount: Int, unreadUnmutedCount: Int, markedAsUnreadCount: Int, markedAsUnreadUnmutedCount: Int)
 
-        } else if (event is UpdateChatPinnedMessage) {
+    fun onOption(name: String, value: OptionValue)
 
-            onChatPinnedMessage(event.chatId, event.pinnedMessageId)
+    fun onInstalledStickerSets(isMasks: Boolean, stickerSetIds: LongArray)
 
-        } else if (event is UpdateChatReplyMarkup) {
+    fun onTrendingStickerSets(stickerSets: StickerSets)
 
-            onChatReplyMarkup(event.chatId, event.replyMarkupMessageId)
+    fun onRecentStickers(isAttached: Boolean, stickerIds: IntArray)
 
-        } else if (event is UpdateChatDraftMessage) {
+    fun onFavoriteStickers(stickerIds: IntArray)
 
-            onChatDraftMessage(event.chatId, event.draftMessage, event.order)
+    fun onSavedAnimations(animationIds: IntArray)
 
-        } else if (event is UpdateChatOnlineMemberCount) {
+    fun onSelectedBackground(forDarkTheme: Boolean, background: Background)
 
-            onChatOnlineMemberCount(event.chatId, event.onlineMemberCount)
+    fun onLanguagePackStrings(localizationTarget: String, languagePackId: String, strings: Array<LanguagePackString>)
 
-        } else if (event is UpdateNotification) {
+    fun onConnectionState(state: ConnectionState)
 
-            onNotification(event.notificationGroupId, event.notification)
+    fun onTermsOfService(termsOfServiceId: String, termsOfService: TermsOfService)
 
-        } else if (event is UpdateNotificationGroup) {
+    fun onNewInlineQuery(id: Long, senderUserId: Int, userLocation: Location, query: String, offset: String)
 
-            onNotificationGroup(event.notificationGroupId, event.type, event.chatId, event.notificationSettingsChatId, event.isSilent, event.totalCount, event.addedNotifications, event.removedNotificationIds)
+    fun onNewChosenInlineResult(senderUserId: Int, userLocation: Location, query: String, resultId: String, inlineMessageId: String)
 
-        } else if (event is UpdateActiveNotifications) {
+    fun handleNewCallbackQuery(id: Long, senderUserId: Int, chatId: Long, messageId: Long, chatInstance: Long, payload: CallbackQueryPayload)
 
-            onActiveNotifications(event.groups)
+    fun onNewInlineCallbackQuery(id: Long, senderUserId: Int, inlineMessageId: String, chatInstance: Long, payload: CallbackQueryPayload)
 
-        } else if (event is UpdateHavePendingNotifications) {
+    fun onNewShippingQuery(id: Long, senderUserId: Int, invoicePayload: String, shippingAddress: Address)
 
-            onHavePendingNotifications(event.haveDelayedNotifications, event.haveUnreceivedNotifications)
+    fun onNewPreCheckoutQuery(id: Long, senderUserId: Int, currency: String, totalAmount: Long, invoicePayload: ByteArray, shippingOptionId: String, orderInfo: OrderInfo)
 
-        } else if (event is UpdateDeleteMessages) {
+    fun onNewCustomEvent(event: String)
 
-            onDeleteMessages(event.chatId, event.messageIds, event.isPermanent, event.fromCache)
+    fun onNewCustomQuery(id: Long, data: String, timeout: Int)
 
-        } else if (event is UpdateUserChatAction) {
-
-            onUserChatAction(event.chatId, event.userId, event.action)
-
-        } else if (event is UpdateUserStatus) {
-
-            onUserStatus(event.userId, event.status)
-
-        } else if (event is UpdateUser) {
-
-            onUser(event.user)
-
-        } else if (event is UpdateBasicGroup) {
-
-            onBasicGroup(event.basicGroup)
-
-        } else if (event is UpdateSupergroup) {
-
-            onSupergroup(event.supergroup)
-
-        } else if (event is UpdateSecretChat) {
-
-            onSecretChat(event.secretChat)
-
-        } else if (event is UpdateUserFullInfo) {
-
-            onUserFullInfo(event.userId, event.userFullInfo)
-
-        } else if (event is UpdateBasicGroupFullInfo) {
-
-            onBasicGroupFullInfo(event.basicGroupId, event.basicGroupFullInfo)
-
-        } else if (event is UpdateSupergroupFullInfo) {
-
-            onSupergroupFullInfo(event.supergroupId, event.supergroupFullInfo)
-
-        } else if (event is UpdateServiceNotification) {
-
-            onServiceNotification(event.type, event.content)
-
-        } else if (event is UpdateFile) {
-
-            onFile(event.file)
-
-        } else if (event is UpdateFileGenerationStart) {
-
-            onFileGenerationStart(event.generationId, event.originalPath, event.destinationPath, event.conversion)
-
-        } else if (event is UpdateFileGenerationStop) {
-
-            onFileGenerationStop(event.generationId)
-
-        } else if (event is UpdateCall) {
-
-            onCall(event.call)
-
-        } else if (event is UpdateUserPrivacySettingRules) {
-
-            onUserPrivacySettingRules(event.setting, event.rules)
-
-        } else if (event is UpdateUnreadMessageCount) {
-
-            onUnreadMessageCount(event.unreadCount, event.unreadUnmutedCount)
-
-        } else if (event is UpdateUnreadChatCount) {
-
-            onUnreadChatCount(event.unreadCount, event.unreadUnmutedCount, event.markedAsUnreadCount, event.markedAsUnreadUnmutedCount)
-
-        } else if (event is UpdateOption) {
-
-            onOption(event.name, event.value)
-
-        } else if (event is UpdateInstalledStickerSets) {
-
-            onInstalledStickerSets(event.isMasks, event.stickerSetIds)
-
-        } else if (event is UpdateTrendingStickerSets) {
-
-            onTrendingStickerSets(event.stickerSets)
-
-        } else if (event is UpdateRecentStickers) {
-
-            onRecentStickers(event.isAttached, event.stickerIds)
-
-        } else if (event is UpdateFavoriteStickers) {
-
-            onFavoriteStickers(event.stickerIds)
-
-        } else if (event is UpdateSavedAnimations) {
-
-            onSavedAnimations(event.animationIds)
-
-        } else if (event is UpdateSelectedBackground) {
-
-            onSelectedBackground(event.forDarkTheme, event.background)
-
-        } else if (event is UpdateLanguagePackStrings) {
-
-            onLanguagePackStrings(event.localizationTarget, event.languagePackId, event.strings)
-
-        } else if (event is UpdateConnectionState) {
-
-            onConnectionState(event.state)
-
-        } else if (event is UpdateTermsOfService) {
-
-            onTermsOfService(event.termsOfServiceId, event.termsOfService)
-
-        } else if (event is UpdateNewInlineQuery) {
-
-            onNewInlineQuery(event.id, event.senderUserId, event.userLocation, event.query, event.offset)
-
-        } else if (event is UpdateNewChosenInlineResult) {
-
-            onNewChosenInlineResult(event.senderUserId, event.userLocation, event.query, event.resultId, event.inlineMessageId)
-
-        } else if (event is UpdateNewCallbackQuery) {
-
-            handleNewCallbackQuery(event.id, event.senderUserId, event.chatId, event.messageId, event.chatInstance, event.payload)
-
-        } else if (event is UpdateNewInlineCallbackQuery) {
-
-            onNewInlineCallbackQuery(event.id, event.senderUserId, event.inlineMessageId, event.chatInstance, event.payload)
-
-        } else if (event is UpdateNewShippingQuery) {
-
-            onNewShippingQuery(event.id, event.senderUserId, event.invoicePayload, event.shippingAddress)
-
-        } else if (event is UpdateNewPreCheckoutQuery) {
-
-            onNewPreCheckoutQuery(event.id, event.senderUserId, event.currency, event.totalAmount, event.invoicePayload, event.shippingOptionId, event.orderInfo)
-
-        } else if (event is UpdateNewCustomEvent) {
-
-            onNewCustomEvent(event.event)
-
-        } else if (event is UpdateNewCustomQuery) {
-
-            onNewCustomQuery(event.id, event.data, event.timeout)
-
-        } else if (event is UpdatePoll) {
-
-            onPoll(event.poll)
-        }
-
-    }
-
-    fun onAuthorizationState(authorizationState: AuthorizationState) {}
-
-    fun onNewMessage(userId: Int, chatId: Long, message: Message) {}
-
-    fun onMessageSendAcknowledged(chatId: Long, messageId: Long) {}
-
-    fun onMessageSendSucceeded(message: Message, oldMessageId: Long) {}
-
-    fun onMessageSendFailed(message: Message, oldMessageId: Long, errorCode: Int, errorMessage: String) {}
-
-    fun onMessageContent(chatId: Long, messageId: Long, newContent: MessageContent) {}
-
-    fun onMessageEdited(chatId: Long, messageId: Long, editDate: Int, replyMarkup: ReplyMarkup) {}
-
-    fun onMessageViews(chatId: Long, messageId: Long, views: Int) {}
-
-    fun onMessageContentOpened(chatId: Long, messageId: Long) {}
-
-    fun onMessageMentionRead(chatId: Long, messageId: Long, unreadMentionCount: Int) {}
-
-    fun onNewChat(chat: Chat) {}
-
-    fun onChatTitle(chatId: Long, title: String) {}
-
-    fun onChatPhoto(chatId: Long, photo: ChatPhoto) {}
-
-    fun onChatPermissions(chatId: Long, permissions: ChatPermissions) {}
-
-    fun onChatLastMessage(chatId: Long, lastMessage: Message, order: Long) {}
-
-    fun onChatOrder(chatId: Long, order: Long) {}
-
-    fun onChatIsPinned(chatId: Long, isPinned: Boolean, order: Long) {}
-
-    fun onChatIsMarkedAsUnread(chatId: Long, isMarkedAsUnread: Boolean) {}
-
-    fun onChatIsSponsored(chatId: Long, isSponsored: Boolean, order: Long) {}
-
-    fun onChatDefaultDisableNotification(chatId: Long, defaultDisableNotification: Boolean) {}
-
-    fun onChatReadInbox(chatId: Long, lastReadInboxMessageId: Long, unreadCount: Int) {}
-
-    fun onChatReadOutbox(chatId: Long, lastReadOutboxMessageId: Long) {}
-
-    fun onChatUnreadMentionCount(chatId: Long, unreadMentionCount: Int) {}
-
-    fun onChatNotificationSettings(chatId: Long, notificationSettings: ChatNotificationSettings) {}
-
-    fun onScopeNotificationSettings(scope: NotificationSettingsScope, notificationSettings: ScopeNotificationSettings) {}
-
-    fun onChatPinnedMessage(chatId: Long, pinnedMessageId: Long) {}
-
-    fun onChatReplyMarkup(chatId: Long, replyMarkupMessageId: Long) {}
-
-    fun onChatDraftMessage(chatId: Long, draftMessage: DraftMessage, order: Long) {}
-
-    fun onChatOnlineMemberCount(chatId: Long, onlineMemberCount: Int) {}
-
-    fun onNotification(notificationGroupId: Int, notification: Notification) {}
-
-    fun onNotificationGroup(notificationGroupId: Int, type: NotificationGroupType, chatId: Long, notificationSettingsChatId: Long, isSilent: Boolean, totalCount: Int, addedNotifications: Array<Notification>, removedNotificationIds: IntArray) {}
-
-    fun onActiveNotifications(groups: Array<NotificationGroup>) {}
-
-    fun onHavePendingNotifications(haveDelayedNotifications: Boolean, haveUnreceivedNotifications: Boolean) {}
-
-    fun onDeleteMessages(chatId: Long, messageIds: LongArray, isPermanent: Boolean, fromCache: Boolean) {}
-
-    fun onUserChatAction(chatId: Long, userId: Int, action: ChatAction) {}
-
-    fun onUserStatus(userId: Int, status: UserStatus) {}
-
-    fun onUser(user: User) {}
-
-    fun onBasicGroup(basicGroup: BasicGroup) {}
-
-    fun onSupergroup(supergroup: Supergroup) {}
-
-    fun onSecretChat(secretChat: SecretChat) {}
-
-    fun onUserFullInfo(userId: Int, userFullInfo: UserFullInfo) {}
-
-    fun onBasicGroupFullInfo(basicGroupId: Int, basicGroupFullInfo: BasicGroupFullInfo) {}
-
-    fun onSupergroupFullInfo(supergroupId: Int, supergroupFullInfo: SupergroupFullInfo) {}
-
-    fun onServiceNotification(type: String, content: MessageContent) {}
-
-    fun onFile(file: File) {}
-
-    fun onFileGenerationStart(generationId: Long, originalPath: String, destinationPath: String, conversion: String) {}
-
-    fun onFileGenerationStop(generationId: Long) {}
-
-    fun onCall(call: Call) {}
-
-    fun onUserPrivacySettingRules(setting: UserPrivacySetting, rules: UserPrivacySettingRules) {}
-
-    fun onUnreadMessageCount(unreadCount: Int, unreadUnmutedCount: Int) {}
-
-    fun onUnreadChatCount(unreadCount: Int, unreadUnmutedCount: Int, markedAsUnreadCount: Int, markedAsUnreadUnmutedCount: Int) {}
-
-    fun onOption(name: String, value: OptionValue) {}
-
-    fun onInstalledStickerSets(isMasks: Boolean, stickerSetIds: LongArray) {}
-
-    fun onTrendingStickerSets(stickerSets: StickerSets) {}
-
-    fun onRecentStickers(isAttached: Boolean, stickerIds: IntArray) {}
-
-    fun onFavoriteStickers(stickerIds: IntArray) {}
-
-    fun onSavedAnimations(animationIds: IntArray) {}
-
-    fun onSelectedBackground(forDarkTheme: Boolean, background: Background) {}
-
-    fun onLanguagePackStrings(localizationTarget: String, languagePackId: String, strings: Array<LanguagePackString>) {}
-
-    fun onConnectionState(state: ConnectionState) {}
-
-    fun onTermsOfService(termsOfServiceId: String, termsOfService: TermsOfService) {}
-
-    fun onNewInlineQuery(id: Long, senderUserId: Int, userLocation: Location, query: String, offset: String) {}
-
-    fun onNewChosenInlineResult(senderUserId: Int, userLocation: Location, query: String, resultId: String, inlineMessageId: String) {}
-
-    fun handleNewCallbackQuery(id: Long, senderUserId: Int, chatId: Long, messageId: Long, chatInstance: Long, payload: CallbackQueryPayload) {}
-
-    fun onNewInlineCallbackQuery(id: Long, senderUserId: Int, inlineMessageId: String, chatInstance: Long, payload: CallbackQueryPayload) {}
-
-    fun onNewShippingQuery(id: Long, senderUserId: Int, invoicePayload: String, shippingAddress: Address) {}
-
-    fun onNewPreCheckoutQuery(id: Long, senderUserId: Int, currency: String, totalAmount: Long, invoicePayload: ByteArray, shippingOptionId: String, orderInfo: OrderInfo) {}
-
-    fun onNewCustomEvent(event: String) {}
-
-    fun onNewCustomQuery(id: Long, data: String, timeout: Int) {}
-
-    fun onPoll(poll: Poll) {}
+    fun onPoll(poll: Poll)
 
 }

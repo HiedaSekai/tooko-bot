@@ -2,7 +2,6 @@ package tookox.core.client
 
 import cn.hutool.core.util.RuntimeUtil
 import cn.hutool.core.util.StrUtil
-import com.google.gson.Gson
 import tooko.main.Env
 import tooko.td.TdApi
 import tooko.td.client.TdException
@@ -12,7 +11,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
     override fun onAuthorizationState(authorizationState: TdApi.AuthorizationState) {
 
-        super<TdClient>.onAuthorizationState(authorizationState)
+        super.onAuthorizationState(authorizationState)
 
         log.trace(authorizationState.javaClass.simpleName)
 
@@ -38,11 +37,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
     }
 
-    override fun onEvent(event: TdApi.Object) {
-
-        super<TdClient>.onEvent(event)
-
-        log.debug("${event.javaClass.simpleName} : ${Gson().toJson(event)}")
+    override fun onLoginFailed(ex: TdException) {
 
     }
 

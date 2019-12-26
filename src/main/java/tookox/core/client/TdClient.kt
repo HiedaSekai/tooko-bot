@@ -9,6 +9,7 @@ import tooko.td.TdApi
 import tooko.td.TdApi.*
 import tooko.td.client.TdException
 import tookox.core.createLog
+import tookox.core.onEvent
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.LinkedBlockingQueue
@@ -430,4 +431,145 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     }
 
+    override fun onLoad() = Unit
+
+    override fun onLogin() = Unit
+
+    override fun onLogout() = Unit
+
+    override fun onDestroy() = Unit
+
+    override fun onNewMessage(userId: Int, chatId: Long, message: Message) = Unit
+
+    override fun onMessageSendAcknowledged(chatId: Long, messageId: Long) = Unit
+
+    override fun onMessageContent(chatId: Long, messageId: Long, newContent: MessageContent) = Unit
+
+    override fun onMessageEdited(chatId: Long, messageId: Long, editDate: Int, replyMarkup: ReplyMarkup) = Unit
+
+    override fun onMessageViews(chatId: Long, messageId: Long, views: Int) = Unit
+
+    override fun onMessageContentOpened(chatId: Long, messageId: Long) = Unit
+
+    override fun onMessageMentionRead(chatId: Long, messageId: Long, unreadMentionCount: Int) = Unit
+
+    override fun onNewChat(chat: Chat) = Unit
+
+    override fun onChatTitle(chatId: Long, title: String) = Unit
+
+    override fun onChatPhoto(chatId: Long, photo: ChatPhoto) = Unit
+
+    override fun onChatPermissions(chatId: Long, permissions: ChatPermissions) = Unit
+
+    override fun onChatLastMessage(chatId: Long, lastMessage: Message, order: Long) = Unit
+
+    override fun onChatOrder(chatId: Long, order: Long) = Unit
+
+    override fun onChatIsPinned(chatId: Long, isPinned: Boolean, order: Long) = Unit
+
+    override fun onChatIsMarkedAsUnread(chatId: Long, isMarkedAsUnread: Boolean) = Unit
+
+    override fun onChatIsSponsored(chatId: Long, isSponsored: Boolean, order: Long) = Unit
+
+    override fun onChatDefaultDisableNotification(chatId: Long, defaultDisableNotification: Boolean) = Unit
+
+    override fun onChatReadInbox(chatId: Long, lastReadInboxMessageId: Long, unreadCount: Int) = Unit
+
+    override fun onChatReadOutbox(chatId: Long, lastReadOutboxMessageId: Long) = Unit
+
+    override fun onChatUnreadMentionCount(chatId: Long, unreadMentionCount: Int) = Unit
+
+    override fun onChatNotificationSettings(chatId: Long, notificationSettings: ChatNotificationSettings) = Unit
+
+    override fun onScopeNotificationSettings(scope: NotificationSettingsScope, notificationSettings: ScopeNotificationSettings) = Unit
+
+    override fun onChatPinnedMessage(chatId: Long, pinnedMessageId: Long) = Unit
+
+    override fun onChatReplyMarkup(chatId: Long, replyMarkupMessageId: Long) = Unit
+
+    override fun onChatDraftMessage(chatId: Long, draftMessage: DraftMessage, order: Long) = Unit
+
+    override fun onChatOnlineMemberCount(chatId: Long, onlineMemberCount: Int) = Unit
+
+    override fun onNotification(notificationGroupId: Int, notification: Notification) = Unit
+
+    override fun onNotificationGroup(notificationGroupId: Int, type: NotificationGroupType, chatId: Long, notificationSettingsChatId: Long, isSilent: Boolean, totalCount: Int, addedNotifications: Array<Notification>, removedNotificationIds: IntArray) = Unit
+
+    override fun onActiveNotifications(groups: Array<NotificationGroup>) = Unit
+
+    override fun onHavePendingNotifications(haveDelayedNotifications: Boolean, haveUnreceivedNotifications: Boolean) = Unit
+
+    override fun onDeleteMessages(chatId: Long, messageIds: LongArray, isPermanent: Boolean, fromCache: Boolean) = Unit
+
+    override fun onUserChatAction(chatId: Long, userId: Int, action: ChatAction) = Unit
+
+    override fun onUserStatus(userId: Int, status: UserStatus) = Unit
+
+    override fun onUser(user: User) = Unit
+
+    override fun onBasicGroup(basicGroup: BasicGroup) = Unit
+
+    override fun onSupergroup(supergroup: Supergroup) = Unit
+
+    override fun onSecretChat(secretChat: SecretChat) = Unit
+
+    override fun onUserFullInfo(userId: Int, userFullInfo: UserFullInfo) = Unit
+
+    override fun onBasicGroupFullInfo(basicGroupId: Int, basicGroupFullInfo: BasicGroupFullInfo) = Unit
+
+    override fun onSupergroupFullInfo(supergroupId: Int, supergroupFullInfo: SupergroupFullInfo) = Unit
+
+    override fun onServiceNotification(type: String, content: MessageContent) = Unit
+
+    override fun onFile(file: File) = Unit
+
+    override fun onFileGenerationStart(generationId: Long, originalPath: String, destinationPath: String, conversion: String) = Unit
+
+    override fun onFileGenerationStop(generationId: Long) = Unit
+
+    override fun onCall(call: Call) = Unit
+
+    override fun onUserPrivacySettingRules(setting: UserPrivacySetting, rules: UserPrivacySettingRules) = Unit
+
+    override fun onUnreadMessageCount(unreadCount: Int, unreadUnmutedCount: Int) = Unit
+
+    override fun onUnreadChatCount(unreadCount: Int, unreadUnmutedCount: Int, markedAsUnreadCount: Int, markedAsUnreadUnmutedCount: Int) = Unit
+
+    override fun onOption(name: String, value: OptionValue) = Unit
+
+    override fun onInstalledStickerSets(isMasks: Boolean, stickerSetIds: LongArray) = Unit
+
+    override fun onTrendingStickerSets(stickerSets: StickerSets) = Unit
+
+    override fun onRecentStickers(isAttached: Boolean, stickerIds: IntArray) = Unit
+
+    override fun onFavoriteStickers(stickerIds: IntArray) = Unit
+
+    override fun onSavedAnimations(animationIds: IntArray) = Unit
+
+    override fun onSelectedBackground(forDarkTheme: Boolean, background: Background) = Unit
+
+    override fun onLanguagePackStrings(localizationTarget: String, languagePackId: String, strings: Array<LanguagePackString>) = Unit
+
+    override fun onConnectionState(state: ConnectionState) = Unit
+
+    override fun onTermsOfService(termsOfServiceId: String, termsOfService: TermsOfService) = Unit
+
+    override fun onNewInlineQuery(id: Long, senderUserId: Int, userLocation: Location, query: String, offset: String) = Unit
+
+    override fun onNewChosenInlineResult(senderUserId: Int, userLocation: Location, query: String, resultId: String, inlineMessageId: String) = Unit
+
+    override fun handleNewCallbackQuery(id: Long, senderUserId: Int, chatId: Long, messageId: Long, chatInstance: Long, payload: CallbackQueryPayload) = Unit
+
+    override fun onNewInlineCallbackQuery(id: Long, senderUserId: Int, inlineMessageId: String, chatInstance: Long, payload: CallbackQueryPayload) = Unit
+
+    override fun onNewShippingQuery(id: Long, senderUserId: Int, invoicePayload: String, shippingAddress: Address) = Unit
+
+    override fun onNewPreCheckoutQuery(id: Long, senderUserId: Int, currency: String, totalAmount: Long, invoicePayload: ByteArray, shippingOptionId: String, orderInfo: OrderInfo) = Unit
+
+    override fun onNewCustomEvent(event: String) = Unit
+
+    override fun onNewCustomQuery(id: Long, data: String, timeout: Int) = Unit
+
+    override fun onPoll(poll: Poll) = Unit
 }

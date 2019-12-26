@@ -4,6 +4,6 @@ import tooko.td.client.TdException
 
 interface TdBotAbsHandler : TdAbsHandler {
 
-    fun onLoginFailed(ex: TdException) {}
+    fun onLoginFailed(ex: TdException)
 
 }
