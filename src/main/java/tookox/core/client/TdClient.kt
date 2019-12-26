@@ -394,7 +394,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                                     val callback = client.callbacks.remove(event.requestId)!!
 
-                                    val isOk = event.event is Error
+                                    val isOk = !(event.event is Error)
 
                                     callback.invoke(isOk, if (isOk) event.event else null, if (isOk) null else event.event as Error)
 
