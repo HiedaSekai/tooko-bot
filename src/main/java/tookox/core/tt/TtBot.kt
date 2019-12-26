@@ -114,7 +114,7 @@ open class TtBot(val botToken: String) : TtHandler() {
 
                 if (clients.isEmpty()) {
 
-                    ThreadUtil.safeSleep(1000)
+                    ThreadUtil.safeSleep(2333L)
 
                     continue
 
@@ -178,9 +178,9 @@ open class TtBot(val botToken: String) : TtHandler() {
 
                 }
 
-                if (System.currentTimeMillis() - start < 100L) {
+                if (System.currentTimeMillis() - start < 1000L) {
 
-                    ThreadUtil.safeSleep(100L)
+                    ThreadUtil.safeSleep(1000L - System.currentTimeMillis() - start)
 
                 }
 

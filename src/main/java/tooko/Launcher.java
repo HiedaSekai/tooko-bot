@@ -46,6 +46,7 @@ import tooko.td.client.TdException;
 import tooko.td.core.TookoLog;
 import tooko.twitter.ApiToken;
 import tooko.twitter.TwitterBot;
+import tookox.UpdateScript;
 
 import java.io.File;
 import java.util.HashMap;
@@ -80,7 +81,7 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
 
         log.debug("正在加载 (๑•̀ㅂ•́)√");
 
-        UpdateScript.checkUpdate();
+        UpdateScript.INSTANCE.checkUpdate();
 
         UpdateTask.fetchHead();
 
@@ -329,7 +330,7 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
 
         }
 
-        UpdateScript.beforeLaunch();
+        UpdateScript.INSTANCE.beforeLaunch();
 
         INSTANCE = new Launcher(Env.BOT_TOKEN);
 
@@ -528,7 +529,7 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
 
         }
 
-        UpdateScript.afterLaunch();
+        UpdateScript.INSTANCE.afterLaunch();
 
     }
 

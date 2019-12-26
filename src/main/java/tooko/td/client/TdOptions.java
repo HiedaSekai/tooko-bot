@@ -22,7 +22,7 @@ public class TdOptions {
     private boolean enableStorageOptimizer = false;
     private boolean ignoreFileNames = false;
 
-    TdApi.TdlibParameters build() {
+    public TdApi.TdlibParameters build() {
 
         if (parameters == null) {
 

@@ -33,7 +33,6 @@ public class TwitterBot extends TdBot {
 
         addHandler(new TwitterLogin());
         addHandler(new TwitterLogout());
-
         addHandler(new AccountPanel());
 
         addHandler(new TrackConfig());

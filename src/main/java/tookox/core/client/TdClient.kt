@@ -3,11 +3,11 @@ package tookox.core.client
 import cn.hutool.core.thread.ThreadUtil
 import cn.hutool.core.util.ArrayUtil
 import tooko.main.Env
+import tooko.main.Fn
 import tooko.td.Client
 import tooko.td.TdApi
 import tooko.td.TdApi.*
 import tooko.td.client.TdException
-import tooko.td.client.TdOptions
 import tookox.core.createLog
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
@@ -20,124 +20,12 @@ import java.util.concurrent.atomic.AtomicReference
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.reflect.KClass
 
-class TdClient(private val options: TdOptions) : TdAbsHandler {
+open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
-    companion object {
+    override var client = this
+        set
 
-        private val log = createLog("TD")
-
-        val postAdd = LinkedList<TdClient>()
-        val postDestroy = LinkedList<TdClient>()
-        var mainTimer = Timer("Mian Timer")
-        var clients = LinkedList<TdClient>()
-        var publicPool = ThreadPoolExecutor(1, 1, 30, TimeUnit.SECONDS, LinkedBlockingQueue())
-        var asyncPool = ThreadPoolExecutor(8, 8, 15, TimeUnit.SECONDS, LinkedBlockingQueue())
-
-    }
-
-    class EventTask : Thread() {
-
-        override fun run() {
-
-            while (true) {
-
-                synchronized(postAdd) {
-
-                    val iter = postAdd.iterator()
-
-                    while (iter.hasNext()) {
-
-                        val toAdd = iter.next()
-
-                        clients.add(toAdd)
-
-                        iter.remove()
-
-                    }
-
-                }
-
-                synchronized(postDestroy) {
-
-                    val iter = postDestroy.iterator()
-
-                    while (iter.hasNext()) {
-
-                        val toDestroy = iter.next()
-
-                        clients.remove(toDestroy)
-
-                        toDestroy.status.set(true)
-
-                        iter.remove()
-
-                    }
-
-                }
-
-                if (clients.isEmpty()) {
-
-                    ThreadUtil.safeSleep(1000)
-
-                    continue
-
-                }
-
-                for (client in clients) {
-
-                    val responseList = client.td.receive(0.0, 4)
-
-                    responseList.forEach { event: Client.Event ->
-
-                        if (event.requestId != 0L) {
-
-                            if (!client.callbacks.containsKey(event.requestId)) {
-
-                                if (event.event is Error) {
-
-                                    val err = event.event as Error
-
-                                    log.warn(err.code.toString() + " " + err.message)
-
-                                }
-
-                                return@forEach
-                            }
-
-                            try {
-
-                                val callback = client.callbacks.remove(event.requestId)!!
-
-                                val isOk = event.event is Error
-
-                                callback.invoke(isOk, if (isOk) event.event else null, if (isOk) null else event.event as Error)
-
-                            } catch (e: Exception) {
-
-                                log.error(e, "TdError - Sync")
-
-                            }
-
-                            return@forEach
-
-                        }
-
-                        client.handlers.forEach {
-
-                            it.onEvent(event.event)
-
-                        }
-
-                    }
-
-                }
-
-            }
-
-        }
-
-    }
-
+    override fun onLoad(client: TdClient) = Unit
 
     private val td = Client()
 
@@ -163,7 +51,52 @@ class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     }
 
-    @Throws(IllegalStateException::class)
+    fun clearHandlers() {
+
+        handlers.clear()
+
+    }
+
+    fun start() {
+
+        check(!status.get()) { "已经启动." }
+
+        clearHandlers()
+
+        addHandler(this)
+
+        if (!eventTask.isInitialized()) {
+
+            eventTask.value
+
+        }
+
+        postAdd.add(this)
+
+    }
+
+    fun stop() {
+
+        check(status.get()) { "未启动." }
+
+        handlers.forEach { it.onDestroy() }
+
+        postDestroy.add(this)
+
+    }
+
+    fun destroy() {
+
+        if (status.get()) stop()
+
+        check(!executionLock.isLocked) { "Client is destroyed" }
+
+        executionLock.lock()
+
+        td.destroyClient()
+
+    }
+
     fun <T : TdAbsHandler> findHandler(clazz: KClass<T>): T {
 
         for (handler in handlers) {
@@ -173,11 +106,91 @@ class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         }
 
-        throw IllegalStateException("Hanlder ${clazz.java.name} not found !")
+        error("Hanlder ${clazz.java.name} not found !")
 
     }
 
-    @Throws(TdException::class)
+    override fun onAuthorizationState(authorizationState: AuthorizationState) {
+
+        if (authorizationState is AuthorizationStateWaitTdlibParameters) {
+
+            send(SetTdlibParameters(options.build()))
+
+        } else if (authorizationState is AuthorizationStateWaitEncryptionKey) {
+
+            send(CheckDatabaseEncryptionKey())
+
+        } else if (authorizationState is AuthorizationStateReady) {
+
+            try {
+
+                me = execute(GetMe())
+
+            } catch (e: TdException) {
+
+                try {
+
+                    me = execute(GetMe())
+
+                } catch (ex: TdException) {
+
+                    log.error(e)
+
+                    Fn.finishEvent()
+
+                }
+
+            }
+
+            log.debug("认证完成 : {}", Fn.displayName(me))
+
+            auth.set(true)
+
+            for (handler in handlers) handler.onLogin()
+
+        } else if (authorizationState is AuthorizationStateLoggingOut) {
+
+            for (handler in handlers) handler.onLogout()
+
+        }
+
+    }
+
+    override fun onMessageSendSucceeded(message: Message, oldMessageId: Long) {
+
+        try {
+
+            val callback = messages.remove(oldMessageId)
+
+            if (callback == null) return
+
+            callback.invoke(true, message, null)
+
+        } catch (e: Exception) {
+
+            log.error(e, "TdError - Sync")
+
+        }
+    }
+
+    override fun onMessageSendFailed(message: Message, oldMessageId: Long, errorCode: Int, errorMessage: String) {
+
+        val callback = messages.remove(oldMessageId)
+
+        if (callback == null) return
+
+        try {
+
+            callback.invoke(false, null, TdApi.Error(errorCode, errorMessage))
+
+        } catch (e: Exception) {
+
+            log.error(e, "TdError - Sync")
+
+        }
+
+    }
+
     fun <T : Object> execute(function: TdApi.Function): T {
 
         check(!executionLock.isLocked) { "ClientActor is destroyed" }
@@ -293,6 +306,128 @@ class TdClient(private val options: TdOptions) : TdAbsHandler {
         check(!executionLock.isLocked) { "Client is destroyed" }
 
         td.send(requestId, function)
+
+    }
+
+
+    companion object {
+
+        val log = createLog("TD")
+
+        val postAdd = LinkedList<TdClient>()
+        val postDestroy = LinkedList<TdClient>()
+        var mainTimer = Timer("Mian Timer")
+        var clients = LinkedList<TdClient>()
+        var publicPool = ThreadPoolExecutor(1, 1, 30, TimeUnit.SECONDS, LinkedBlockingQueue())
+        var asyncPool = ThreadPoolExecutor(8, 8, 15, TimeUnit.SECONDS, LinkedBlockingQueue())
+
+        val eventTask = lazy {
+
+            Thread {
+
+                while (true) {
+
+                    synchronized(postAdd) {
+
+                        val iter = postAdd.iterator()
+
+                        while (iter.hasNext()) {
+
+                            val toAdd = iter.next()
+
+                            clients.add(toAdd)
+
+                            iter.remove()
+
+                        }
+
+                    }
+
+                    synchronized(postDestroy) {
+
+                        val iter = postDestroy.iterator()
+
+                        while (iter.hasNext()) {
+
+                            val toDestroy = iter.next()
+
+                            clients.remove(toDestroy)
+
+                            toDestroy.status.set(true)
+
+                            iter.remove()
+
+                        }
+
+                    }
+
+                    if (clients.isEmpty()) {
+
+                        ThreadUtil.safeSleep(1000)
+
+                        continue
+
+                    }
+
+                    for (client in clients) {
+
+                        val responseList = client.td.receive(0.0, 4)
+
+                        responseList.forEach { event: Client.Event ->
+
+                            if (event.requestId != 0L) {
+
+                                if (!client.callbacks.containsKey(event.requestId)) {
+
+                                    if (event.event is Error) {
+
+                                        val err = event.event as Error
+
+                                        log.warn(err.code.toString() + " " + err.message)
+
+                                    }
+
+                                    return@forEach
+                                }
+
+                                try {
+
+                                    val callback = client.callbacks.remove(event.requestId)!!
+
+                                    val isOk = event.event is Error
+
+                                    callback.invoke(isOk, if (isOk) event.event else null, if (isOk) null else event.event as Error)
+
+                                } catch (e: Exception) {
+
+                                    log.error(e, "TdError - Sync")
+
+                                }
+
+                                return@forEach
+
+                            }
+
+                            client.handlers.forEach {
+
+                                it.onEvent(event.event)
+
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }.apply {
+
+                start()
+
+            }
+
+        }
 
     }
 
