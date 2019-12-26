@@ -11,27 +11,13 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
     override fun onAuthorizationState(authorizationState: TdApi.AuthorizationState) {
 
-        try {
-
-            super.onAuthorizationState(authorizationState)
-
-        } catch (ex: Exception) {
-
-            ex.printStackTrace()
-
-        }
-
-        log.trace("BOT " + authorizationState.javaClass.simpleName)
+        super.onAuthorizationState(authorizationState)
 
         if (authorizationState is TdApi.AuthorizationStateWaitPhoneNumber) {
-
-            log.trace("SEND BOT TOKEN")
 
             send(TdApi.CheckAuthenticationBotToken(botToken)) {
 
                 isOk, _: TdApi.Object?, error ->
-
-                log.trace("BOT LOGIN ${if (isOk) "OK" else "Failed"}")
 
                 if (!isOk) {
 

@@ -380,6 +380,8 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                             if (event.requestId != 0L) {
 
+                                log.debug("CALLBACK : ${event.event}")
+
                                 if (!client.callbacks.containsKey(event.requestId)) {
 
                                     if (event.event is Error) {
