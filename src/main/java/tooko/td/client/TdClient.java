@@ -3,12 +3,12 @@ package tooko.td.client;
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.log.Log;
-import tooko.Launcher;
 import tooko.main.Env;
 import tooko.main.Fn;
 import tooko.td.Client;
 import tooko.td.TdApi;
 import tooko.td.TdApi.*;
+import tookox.core.LogsKt;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -32,7 +32,7 @@ public class TdClient extends TdHandler {
     public static ThreadPoolExecutor publicPool = new ThreadPoolExecutor(1, 1, 30, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
     public static ThreadPoolExecutor asyncPool = new ThreadPoolExecutor(8, 8, 15, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
 
-    public Log log = Launcher.log;
+    public Log log = LogsKt.createLog("TD - OLD");
     public Client client = new Client();
     public AtomicBoolean status;
     public User me;
