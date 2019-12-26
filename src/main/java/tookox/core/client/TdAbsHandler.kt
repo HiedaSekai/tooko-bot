@@ -130,7 +130,7 @@ interface TdAbsHandler {
 
     fun onSavedAnimations(animationIds: IntArray)
 
-    fun onSelectedBackground(forDarkTheme: Boolean, background: Background)
+    fun onSelectedBackground(forDarkTheme: Boolean, background: Background?)
 
     fun onLanguagePackStrings(localizationTarget: String, languagePackId: String, strings: Array<LanguagePackString>)
 
