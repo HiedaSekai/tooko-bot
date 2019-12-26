@@ -3,12 +3,13 @@ package tookox.core.client
 import cn.hutool.core.thread.ThreadUtil
 import cn.hutool.core.util.ArrayUtil
 import tooko.main.Env
-import tooko.main.Fn
 import tooko.td.Client
 import tooko.td.TdApi
 import tooko.td.TdApi.*
 import tooko.td.client.TdException
+import tookox.core.async
 import tookox.core.createLog
+import tookox.core.displayName
 import tookox.core.onEvent
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
@@ -42,7 +43,13 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     val auth = AtomicBoolean(false)
 
-    lateinit var me: User
+    private val _me = lazy {
+
+        execute<User>(GetMe())
+
+    }
+
+    val me get() = _me.value
 
     fun addHandler(handler: TdAbsHandler) {
 
@@ -125,31 +132,15 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         } else if (authorizationState is AuthorizationStateReady) {
 
-            try {
+            async {
 
-                me = execute(GetMe())
+                log.debug("认证完成 : ${me.displayName}")
 
-            } catch (e: TdException) {
+                auth.set(true)
 
-                try {
-
-                    me = execute(GetMe())
-
-                } catch (ex: TdException) {
-
-                    log.error(e)
-
-                    return
-
-                }
+                for (handler in handlers) handler.onLogin()
 
             }
-
-            log.debug("认证完成 : {}", Fn.displayName(me))
-
-            auth.set(true)
-
-            for (handler in handlers) handler.onLogin()
 
         } else if (authorizationState is AuthorizationStateLoggingOut) {
 
@@ -379,8 +370,6 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
                         responseList.forEach { event: Client.Event ->
 
                             if (event.requestId != 0L) {
-
-                                log.debug("CALLBACK : ${event.event}")
 
                                 if (!client.callbacks.containsKey(event.requestId)) {
 

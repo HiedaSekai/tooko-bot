@@ -4,7 +4,13 @@ import tooko.main.Fn
 import tooko.main.Lang
 import tooko.td.TdApi
 import tookox.core.client.TdAbsHandler
+import tookox.core.client.TdClient
 import twitter4j.TwitterException
+
+fun async(block: () -> Unit) = TdClient.asyncPool.execute(block)
+
+val TdApi.User.displayName get() = "$firstName $lastName".trim()
+
 
 fun <T : TdApi.Object> TdAbsHandler.execute(function: TdApi.Function): T = client.execute(function)
 fun <T : TdApi.Object> TdAbsHandler.send(function: TdApi.Function, callback: (isOk: Boolean, result: T?, error: TdApi.Error?) -> Unit) = client.send(function, callback)
