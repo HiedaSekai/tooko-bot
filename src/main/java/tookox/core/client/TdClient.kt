@@ -132,13 +132,13 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         } else if (authorizationState is AuthorizationStateReady) {
 
+            auth.set(true)
+
+            for (handler in handlers) handler.onLogin()
+
             async {
 
                 log.debug("认证完成 : ${me.displayName}")
-
-                auth.set(true)
-
-                for (handler in handlers) handler.onLogin()
 
             }
 
