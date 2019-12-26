@@ -2,7 +2,7 @@ package tookox.core.client
 
 import cn.hutool.core.util.RuntimeUtil
 import cn.hutool.core.util.StrUtil
-import cn.hutool.json.JSONObject
+import com.google.gson.Gson
 import tooko.main.Env
 import tooko.td.TdApi
 import tooko.td.client.TdException
@@ -40,7 +40,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
         super<TdClient>.onEvent(event)
 
-        log.debug("${event.javaClass.simpleName} : ${JSONObject(event).toStringPretty()}")
+        log.debug("${event.javaClass.simpleName} : ${Gson().toJson(event)}")
 
     }
 
