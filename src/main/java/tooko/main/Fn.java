@@ -5,11 +5,11 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.*;
 import cn.hutool.http.HtmlUtil;
-import tooko.Launcher;
 import tooko.td.TdApi.*;
 import tooko.td.client.TdHandler;
 import tooko.td.core.InlineArray;
 import tooko.td.core.KeyboardArray;
+import tookox.Launcher;
 import twitter4j.IDs;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -418,13 +418,13 @@ public class Fn {
 
     public static FormattedText parseHtml(String text, java.lang.Object... params) {
 
-        return Launcher.INSTANCE.E(new ParseTextEntities(StrUtil.format(text, params), new TextParseModeHTML()));
+        return Launcher.INSTANCE.execute(new ParseTextEntities(StrUtil.format(text, params), new TextParseModeHTML()));
 
     }
 
     public static FormattedText parseMarkdown(String text, java.lang.Object... params) {
 
-        return Launcher.INSTANCE.E(new ParseTextEntities(StrUtil.format(text, params), new TextParseModeMarkdown()));
+        return Launcher.INSTANCE.execute(new ParseTextEntities(StrUtil.format(text, params), new TextParseModeMarkdown()));
 
     }
 
