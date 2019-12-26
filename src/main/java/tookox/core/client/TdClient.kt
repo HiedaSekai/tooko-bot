@@ -113,6 +113,8 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     override fun onAuthorizationState(authorizationState: AuthorizationState) {
 
+        log.trace(authorizationState.javaClass.simpleName)
+
         if (authorizationState is AuthorizationStateWaitTdlibParameters) {
 
             send(SetTdlibParameters(options.build()))
@@ -137,7 +139,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                     log.error(e)
 
-                    Fn.finishEvent()
+                    return
 
                 }
 

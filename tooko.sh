@@ -171,7 +171,7 @@ elif [ $1 == "update" ]; then
 
   git checkout master &>/dev/null
 
-  mvn clean compile
+  mvn compile
 
   exit $?
 
