@@ -45,7 +45,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
     override fun onLogin() {
 
-        TwitterBot().start()
+        tooko.Launcher.twitter = TwitterBot().apply { start() }
 
         val allBots = BotData.DATA.all
 
