@@ -13,7 +13,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
         super.onAuthorizationState(authorizationState)
 
-        log.trace(authorizationState.javaClass.simpleName)
+        log.trace("BOT " + authorizationState.javaClass.simpleName)
 
         if (authorizationState is TdApi.AuthorizationStateWaitPhoneNumber) {
 

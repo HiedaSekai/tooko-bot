@@ -113,7 +113,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     override fun onAuthorizationState(authorizationState: AuthorizationState) {
 
-        log.trace(authorizationState.javaClass.simpleName)
+        log.trace("client" + authorizationState.javaClass.simpleName)
 
         if (authorizationState is AuthorizationStateWaitTdlibParameters) {
 
