@@ -25,9 +25,8 @@ import tooko.td.client.TdClient.EventTask
 import tooko.td.core.TookoLog
 import tooko.twitter.ApiToken
 import tooko.twitter.TwitterBot
-import tookox.core.async
 import tookox.core.client.TdBot
-import tookox.core.postText
+import tookox.core.sendText
 import java.io.File
 import java.lang.Thread.UncaughtExceptionHandler
 import java.util.*
@@ -64,21 +63,13 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
     override fun onLaunch(userId: Int, chatId: Long, message: TdApi.Message) {
 
-        async {
-
-            postText(chatId, "Sorry, this bot is being rewritten :)")
-
-        }
+        sendText(chatId, "Sorry, this bot is being rewritten :)")
 
     }
 
     override fun onUndefinedFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
 
-        async {
-
-            postText(chatId, "no such function: $function ;)")
-
-        }
+        sendText(chatId, "no such function: $function ;)")
 
     }
 
