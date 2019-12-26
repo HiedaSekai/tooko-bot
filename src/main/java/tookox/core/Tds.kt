@@ -11,7 +11,6 @@ fun async(block: () -> Unit) = TdClient.asyncPool.execute(block)
 
 val TdApi.User.displayName get() = "$firstName $lastName".trim()
 
-
 fun <T : TdApi.Object> TdAbsHandler.execute(function: TdApi.Function): T = client.execute(function)
 fun <T : TdApi.Object> TdAbsHandler.send(function: TdApi.Function, callback: (isOk: Boolean, result: T?, error: TdApi.Error?) -> Unit) = client.send(function, callback)
 
@@ -28,6 +27,11 @@ fun TdAbsHandler.postErr(chatId: Long, exception: Throwable): TdApi.Message {
     }
 
 }
+
+val TdApi.Message.fromPrivate get() = chatId > 0L
+val TdApi.Message.fromBasicGroup get() = chatId > -1000000000000L
+val TdApi.Message.fromSuperGroup get() = chatId < -1000000000000L && !isChannelPost
+val TdApi.Message.fromChannel get() = isChannelPost
 
 fun TdAbsHandler.postText(chatId: Long, text: String, enableLinkPreview: Boolean = false): TdApi.Message {
 

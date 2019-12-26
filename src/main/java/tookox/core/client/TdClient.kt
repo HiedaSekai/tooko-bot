@@ -24,10 +24,11 @@ import kotlin.reflect.KClass
 
 open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
-    override var client = this
-        set
+    override val client get() = this
 
-    override fun onLoad(client: TdClient) = Unit
+    override fun onLoad(client: TdClient) {
+        onLoad()
+    }
 
     private val td = Client()
 
@@ -41,15 +42,13 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
     private val callbacks = ConcurrentHashMap<Long, (isOk: Boolean, result: Object?, error: Error?) -> Unit>()
     private val messages = ConcurrentHashMap<Long, (isOk: Boolean, result: Message?, error: Error?) -> Unit>()
 
-    val auth = AtomicBoolean(false)
+    private val _auth = AtomicBoolean(false)
 
-    private val _me = lazy {
+    var authed
+        get() = _auth.get()
+        set(value) = _auth.set(value)
 
-        execute<User>(GetMe())
-
-    }
-
-    val me get() = _me.value
+    val me by lazy { execute<User>(GetMe()) }
 
     fun addHandler(handler: TdAbsHandler) {
 
@@ -120,8 +119,6 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     override fun onAuthorizationState(authorizationState: AuthorizationState) {
 
-        log.trace("client" + authorizationState.javaClass.simpleName)
-
         if (authorizationState is AuthorizationStateWaitTdlibParameters) {
 
             send(SetTdlibParameters(options.build()))
@@ -132,7 +129,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         } else if (authorizationState is AuthorizationStateReady) {
 
-            auth.set(true)
+            authed = true
 
             for (handler in handlers) handler.onLogin()
 
@@ -565,4 +562,5 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
     override fun onNewCustomQuery(id: Long, data: String, timeout: Int) = Unit
 
     override fun onPoll(poll: Poll) = Unit
+
 }

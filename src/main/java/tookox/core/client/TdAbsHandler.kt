@@ -4,7 +4,7 @@ import tooko.td.TdApi.*
 
 interface TdAbsHandler {
 
-    var client: TdClient
+    val client: TdClient
 
     fun onLoad(client: TdClient)
 
