@@ -412,7 +412,6 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                                 it.onEvent(event.event)
 
-
                             }
 
                         }

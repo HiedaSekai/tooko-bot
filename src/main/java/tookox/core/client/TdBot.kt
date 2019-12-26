@@ -19,11 +19,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
                 isOk, _: TdApi.Object?, error ->
 
-                if (isOk) {
-
-                    onLogin()
-
-                } else {
+                if (!isOk) {
 
                     onLoginFailed(TdException(error!!))
 
@@ -32,6 +28,14 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
             }
 
         }
+
+    }
+
+    override fun onEvent(event: TdApi.Object) {
+
+        super<TdClient>.onEvent(event)
+
+        log.debug("${event.javaClass.simpleName}")
 
     }
 
