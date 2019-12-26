@@ -9,7 +9,6 @@ import java.io.File
 
 open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotAbsHandler {
 
-
     override fun onAuthorizationState(authorizationState: TdApi.AuthorizationState) {
 
         super<TdClient>.onAuthorizationState(authorizationState)
@@ -21,6 +20,10 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
                 isOk, _: TdApi.Object?, error ->
 
                 if (isOk) {
+
+                    onLogin()
+
+                } else {
 
                     onLoginFailed(TdException(error!!))
 
