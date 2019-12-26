@@ -2,6 +2,7 @@ package tookox.core.client
 
 import cn.hutool.core.util.RuntimeUtil
 import cn.hutool.core.util.StrUtil
+import cn.hutool.json.JSONObject
 import tooko.main.Env
 import tooko.td.TdApi
 import tooko.td.client.TdException
@@ -15,9 +16,13 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
         if (authorizationState is TdApi.AuthorizationStateWaitPhoneNumber) {
 
+            log.trace("SEND BOT TOKEN")
+
             send(TdApi.CheckAuthenticationBotToken(botToken)) {
 
                 isOk, _: TdApi.Object?, error ->
+
+                log.trace("BOT LOGIN ${if (isOk) "OK" else "Failed"}")
 
                 if (!isOk) {
 
@@ -35,7 +40,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
         super<TdClient>.onEvent(event)
 
-        log.debug("${event.javaClass.simpleName}")
+        log.debug("${event.javaClass.simpleName} : ${JSONObject(event).toStringPretty()}")
 
     }
 
