@@ -130,6 +130,7 @@ public class Lang {
     public String PM_PAYLOAD = "子欢迎消息";
     public String PM_PAYLOAD_INVALID = "无效的 Payload : 仅允许 [a-zA-Z_-] 且最多64字.";
     public String USER_ID = "用户ID";
+    public String USER_ID_NOT_FOUND = "找不到 ID {} 对应的用户.";
     public String USER_NAME = "用户名称";
     public String PM_DELETE_MESSAGE = "删除这条消息";
     public String PM_DELETED_RECEIVED_FROM = "已删除来自 {} 的 {} 条消息";
@@ -169,6 +170,7 @@ public class Lang {
     public String CHAT_UNBLOCK = "取消屏蔽该会话";
     public String CHAT = "会话";
     public String CHAT_ID = "会话ID";
+    public String CHAT_NOT_FOUND = "找不到这个会话.";
     public String CHAT_BLOCKED = "已屏蔽";
     public String CHAT_UNBLOCKED = "已取消";
     public String CHAT_EMPTY = "没有消息以删除";

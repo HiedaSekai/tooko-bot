@@ -165,4 +165,8 @@ interface TdAbsHandler {
 
     fun <T : Object> post(function: TdApi.Function): T = client.post(function)
 
+    val String.asHtml: FormattedText get() = post(ParseTextEntities(this, TextParseModeHTML()))
+
+    val String.asMarkdown: FormattedText get() = post(ParseTextEntities(this, TextParseModeMarkdown()))
+
 }

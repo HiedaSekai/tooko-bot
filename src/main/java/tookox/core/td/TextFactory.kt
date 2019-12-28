@@ -13,6 +13,12 @@ infix fun TdAbsHandler.make(block: MessageFactory.() -> Unit): MessageFactory {
 
 }
 
+infix fun TdAbsHandler.make(text: TdApi.FormattedText): MessageFactory {
+
+    return make { input = MessageFactory.TextBuilder(text).makeInput() }
+
+}
+
 infix fun TdAbsHandler.make(text: String): MessageFactory {
 
     return make { inputText = text }

@@ -70,12 +70,6 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         addHandler(this)
 
-        if (!eventTask.isInitialized()) {
-
-            eventTask.value
-
-        }
-
         postAdd.add(this)
 
     }
@@ -266,83 +260,70 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         val postAdd = LinkedList<TdClient>()
         val postDestroy = LinkedList<TdClient>()
-        var mainTimer = Timer("Mian Timer")
-        var clients = LinkedList<TdClient>()
-        var publicPool = ThreadPoolExecutor(1, 1, 30, TimeUnit.SECONDS, LinkedBlockingQueue())
-        var asyncPool = ThreadPoolExecutor(8, 8, 15, TimeUnit.SECONDS, LinkedBlockingQueue())
+        val mainTimer = Timer("Mian Timer")
+        val clients = LinkedList<TdClient>()
+        val publicPool = ThreadPoolExecutor(1, 1, 30, TimeUnit.SECONDS, LinkedBlockingQueue())
+        val asyncPool = ThreadPoolExecutor(16, 16, 15, TimeUnit.SECONDS, LinkedBlockingQueue())
 
-        val eventTask = lazy {
+        val eventTask = Thread {
 
-            Thread {
+            while (true) {
 
-                while (true) {
+                synchronized(postAdd) {
 
-                    synchronized(postAdd) {
+                    val iter = postAdd.iterator()
 
-                        val iter = postAdd.iterator()
+                    while (iter.hasNext()) {
 
-                        while (iter.hasNext()) {
+                        val toAdd = iter.next()
 
-                            val toAdd = iter.next()
+                        clients.add(toAdd)
 
-                            clients.add(toAdd)
-
-                            iter.remove()
-
-                        }
+                        iter.remove()
 
                     }
 
-                    synchronized(postDestroy) {
+                }
 
-                        val iter = postDestroy.iterator()
+                synchronized(postDestroy) {
 
-                        while (iter.hasNext()) {
+                    val iter = postDestroy.iterator()
 
-                            val toDestroy = iter.next()
+                    while (iter.hasNext()) {
 
-                            clients.remove(toDestroy)
+                        val toDestroy = iter.next()
 
-                            toDestroy.status.set(true)
+                        clients.remove(toDestroy)
 
-                            iter.remove()
+                        toDestroy.status.set(true)
 
-                        }
-
-                    }
-
-                    if (clients.isEmpty()) {
-
-                        ThreadUtil.safeSleep(1000)
-
-                        continue
+                        iter.remove()
 
                     }
 
-                    for (client in clients) {
+                }
 
-                        val responseList = client.td.receive(0.0, 4)
+                if (clients.isEmpty()) {
 
-                        responseList.forEach { event: Client.Event ->
+                    ThreadUtil.safeSleep(1000)
 
-                            if (event.requestId != 0L) {
+                    continue
 
-                                if (!client.callbacks.containsKey(event.requestId)) {
+                }
 
-                                    if (event.event is Error) {
+                for (client in clients) {
 
-                                        val err = event.event as Error
+                    val responseList = client.td.receive(0.0, 4)
 
-                                        defaultLog.warn(err.code.toString() + " " + err.message)
+                    responseList.forEach { event: Client.Event ->
 
-                                    }
+                        if (event.requestId != 0L && client.callbacks.containsKey(event.requestId)) {
 
-                                    return@forEach
-                                }
+                            val callback = client.callbacks.remove(event.requestId)!!
+
+                            asyncPool.execute {
 
                                 try {
-
-                                    val callback = client.callbacks.remove(event.requestId)!!
 
                                     if (event.event is Error) {
 
@@ -360,13 +341,19 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                                 }
 
-                                return@forEach
-
                             }
 
-                            client.handlers.forEach {
 
-                                it.onEvent(event.event)
+                        } else {
+
+                            publicPool.execute {
+
+                                client.handlers.forEach {
+
+                                    it.onEvent(event.event)
+
+                                }
+
 
                             }
 
@@ -375,10 +362,6 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
                     }
 
                 }
-
-            }.apply {
-
-                start()
 
             }
 

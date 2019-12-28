@@ -1,11 +1,11 @@
 package tookox.core.funs
 
+import cn.hutool.core.util.NumberUtil
 import tooko.main.Lang
 import tooko.td.TdApi
-import tookox.core.blod
+import tooko.td.TdApi.*
+import tookox.core.*
 import tookox.core.client.TdBotHandler
-import tookox.core.fromChannel
-import tookox.core.fromPrivate
 import tookox.core.td.make
 import java.util.*
 
@@ -45,19 +45,87 @@ class BaseFuncs : TdBotHandler() {
 
             if (message.fromPrivate) {
 
-                sudo make "${"UID".blod} : $userId" sendTo chatId
+                sudo make "${"UID".blod} : ${userId.code}".asHtml sendTo chatId
 
             } else if (message.fromChannel) {
 
+                sudo make "${"CID".blod} : ${chatId.code}".asHtml sendTo chatId
+
+            } else {
+
+                sudo make "${"CID".blod} : ${chatId.code}\n${"UID".blod} : ${userId.code}".asHtml sendTo chatId
+
+            }
+
+            return@function
+
+        }
+
+        if (NumberUtil.isInteger(param)) {
+
+            send<User>(GetUser(param.toInt())) {
+
+                sudo make "${L.USER_NAME.blod} : ${it.displayName.inlineMention(it.id)}" +
+                        "\n${L.USER_ID.blod} : ${it.id.code}".asHtml sendTo chatId
+
+
+            } onError {
+
+                sudo make L.USER_ID_NOT_FOUND.input(param) sendTo chatId
+
+            }
+
+        } else {
+
+            for (entity in (message.content as MessageText).text.entities) {
+
+                if (entity.type is TextEntityTypeMentionName) {
+
+                    val targetUserId = (entity.type as TextEntityTypeMentionName).userId
+
+                    send<User>(GetUser(targetUserId)) {
+
+                        sudo make "${L.USER_NAME.blod} : ${it.displayName.inlineMention(it.id)}" +
+                                "\n${L.USER_ID.blod} : ${it.id.code}".asHtml sendTo chatId
+
+                    } onError {
+
+                        sudo make L.USER_ID_NOT_FOUND.input(targetUserId) sendTo chatId
+
+                    }
+
+                    return@function
+
+                }
+            }
+
+            var userName = params[0]
+
+            if (userName.startsWith("@")) userName = userName.substring(1)
+
+            send<Chat>(SearchPublicChat(userName)) {
+
+                if (it.type is ChatTypePrivate) {
+
+                    val targetUser = post<User>(GetUser((it.type as ChatTypePrivate).userId))
+
+                    sudo make "${L.USER_NAME.blod} : ${targetUser.displayName.inlineMention(targetUser.id)}" +
+                            "\n${L.USER_ID.blod} : ${targetUser.id.code}".asHtml sendTo chatId
+
+                } else {
+
+                    sudo make "${"CID".blod} : ${it.id.code}".asHtml sendTo chatId
+
+                }
+
+            } onError {
+
+                sudo make L.CHAT_NOT_FOUND sendTo chatId
 
             }
 
         }
 
     }
-
-}
-
-private infix fun Unit.el(function: () -> Unit) {
 
 }

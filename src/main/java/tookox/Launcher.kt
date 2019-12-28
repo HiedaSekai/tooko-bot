@@ -312,6 +312,8 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             INSTANCE.start()
 
+            eventTask.start()
+
         }
 
         private fun registerSubClasses(apiClazz: Class<*>): Array<PropertyCodecProvider> {
