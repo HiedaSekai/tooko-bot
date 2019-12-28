@@ -6,7 +6,6 @@ import cn.hutool.core.util.StrUtil
 import tooko.main.Env
 import tooko.td.TdApi
 import tooko.td.TdApi.*
-import tooko.td.client.TdException
 import tookox.core.fromPrivate
 import java.io.File
 import java.util.*
@@ -26,13 +25,11 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
         if (authorizationState is TdApi.AuthorizationStateWaitPhoneNumber) {
 
-            sendRaw(CheckAuthenticationBotToken(botToken)).onError(::onLoginFailed)
+            sendRaw(CheckAuthenticationBotToken(botToken)).onError(::onAuthorizationFailed)
 
         }
 
     }
-
-    override fun onLoginFailed(ex: TdException) = Unit
 
     override fun onNewMessage(userId: Int, chatId: Long, message: Message) {
 

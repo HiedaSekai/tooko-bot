@@ -6,7 +6,6 @@ import tooko.td.Client
 import tooko.td.TdApi
 import tooko.td.TdApi.*
 import tooko.td.client.TdException
-import tookox.core.async
 import tookox.core.defaultLog
 import tookox.core.displayName
 import tookox.core.onEvent
@@ -47,7 +46,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
         get() = _auth.get()
         set(value) = _auth.set(value)
 
-    val me by lazy { post<User>(GetMe()) }
+    lateinit var me: User
 
     fun addHandler(handler: TdAbsHandler) {
 
@@ -128,17 +127,17 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         } else if (authorizationState is AuthorizationStateReady) {
 
-            send<User>(GetUser())
+            send<User>(GetMe()) {
 
-            authed = true
-
-            for (handler in handlers) handler.onLogin()
-
-            async {
+                me = it
 
                 defaultLog.debug("认证完成 : ${me.displayName}")
 
-            }
+                authed = true
+
+                for (handler in handlers) handler.onLogin()
+
+            }.onError(::onAuthorizationFailed)
 
         } else if (authorizationState is AuthorizationStateLoggingOut) {
 
@@ -147,6 +146,8 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
         }
 
     }
+
+    open fun onAuthorizationFailed(ex: TdException) {}
 
     override fun onMessageSendSucceeded(message: Message, oldMessageId: Long) {
 

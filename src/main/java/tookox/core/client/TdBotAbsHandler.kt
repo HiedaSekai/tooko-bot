@@ -1,13 +1,10 @@
 package tookox.core.client
 
 import tooko.td.TdApi
-import tooko.td.client.TdException
 
 interface TdBotAbsHandler : TdAbsHandler {
 
     override val client: TdBot
-
-    fun onLoginFailed(ex: TdException)
 
     fun initFunction(vararg functions: String) {
 
