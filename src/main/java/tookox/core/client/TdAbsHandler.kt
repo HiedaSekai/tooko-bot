@@ -2,6 +2,8 @@ package tookox.core.client
 
 import tooko.td.TdApi
 import tooko.td.TdApi.*
+import tooko.td.client.TdException
+import tookox.core.defaultLog
 
 interface TdAbsHandler {
 
@@ -165,7 +167,22 @@ interface TdAbsHandler {
 
     fun <T : Object> post(function: TdApi.Function): T = client.post(function)
 
-    val String.asHtml: FormattedText get() = post(ParseTextEntities(this, TextParseModeHTML()))
+    val String.asHtml: FormattedText
+        get() {
+
+            try {
+
+                return post(ParseTextEntities(this, TextParseModeHTML()))
+
+            } catch (ex: TdException) {
+
+                defaultLog.error(ex, "error parsing $this")
+
+                throw ex
+
+            }
+
+        }
 
     val String.asMarkdown: FormattedText get() = post(ParseTextEntities(this, TextParseModeMarkdown()))
 
