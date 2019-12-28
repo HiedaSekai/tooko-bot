@@ -85,8 +85,7 @@ class BaseFuncs : TdBotHandler() {
 
                     send<User>(GetUser(targetUserId)) {
 
-                        sudo make "${L.USER_NAME.blod} : ${it.displayName.inlineMention(it.id)}" +
-                                "\n${L.USER_ID.blod} : ${it.id.code}".asHtml sendTo chatId
+                        sudo make "${L.USER_NAME.blod} : ${it.displayName.inlineMention(it.id)}K\n${L.USER_ID.blod} : ${it.id.code}".asHtml sendTo chatId
 
                     } onError {
 
