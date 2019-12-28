@@ -26,7 +26,9 @@ import tooko.td.core.TookoLog
 import tooko.twitter.ApiToken
 import tooko.twitter.TwitterBot
 import tookox.core.client.TdBot
-import tookox.core.sendText
+import tookox.core.defaultLog
+import tookox.core.funs.BaseFuncs
+import tookox.core.td.make
 import java.io.File
 import java.lang.Thread.UncaughtExceptionHandler
 import java.util.*
@@ -39,7 +41,13 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
     override fun uncaughtException(t: Thread, e: Throwable) {
 
-        log.error(e)
+        defaultLog.error(e)
+
+    }
+
+    override fun onLoad() {
+
+        addHandler(BaseFuncs())
 
     }
 
@@ -51,7 +59,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
         if (!allBots.isEmpty()) {
 
-            log.debug("加载 托管机器人 (๑•̀ㅂ•́)√")
+            defaultLog.debug("加载 托管机器人 (๑•̀ㅂ•́)√")
 
             for (data in allBots) BotImage.start(data)
 
@@ -63,14 +71,13 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
     override fun onLaunch(userId: Int, chatId: Long, message: TdApi.Message) {
 
-        sendText(chatId, "Sorry, this bot is being rewritten :)")
+        sudo make "你好! 这个机器人正在重写 (" sendTo chatId
 
     }
 
     override fun onUndefinedFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
 
-        sendText(chatId, "no such function: $function ;)")
-
+        sudo make "function $function not found :(" sendTo chatId
     }
 
     companion object {
@@ -86,7 +93,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             LogFactory.setCurrentLogFactory(TookoLog.Factory())
 
-            log.debug("正在加载 (๑•̀ㅂ•́)√")
+            defaultLog.debug("正在加载 (๑•̀ㅂ•́)√")
 
             try {
 
@@ -94,7 +101,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             } catch (ex: Exception) {
 
-                log.error("加载 TDLib 失败. ( {} )", ex.message)
+                defaultLog.error("加载 TDLib 失败. ( {} )", ex.message)
 
                 exitProcess(100)
 
@@ -106,7 +113,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             } catch (ex: Exception) {
 
-                log.error("加载 WebP 失败. ( {} )", ex.message)
+                defaultLog.error("加载 WebP 失败. ( {} )", ex.message)
 
                 exitProcess(100)
 
@@ -118,7 +125,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             if (!configFile.isFile) {
 
-                log.error("配置文件 (config.json) 不存在, 请放置.")
+                defaultLog.error("配置文件 (config.json) 不存在, 请放置.")
 
                 exitProcess(100)
 
@@ -132,7 +139,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             } catch (err: JSONException) {
 
-                log.error("配置文件无法解析, 请检查JSON语法错误 : {}", err.message)
+                defaultLog.error("配置文件无法解析, 请检查JSON语法错误 : {}", err.message)
 
                 exitProcess(100)
 
@@ -144,7 +151,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             } catch (err: IllegalStateException) {
 
-                log.error(err)
+                defaultLog.error(err)
 
                 exitProcess(100)
 
@@ -178,7 +185,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             } catch (err: MongoException) {
 
-                log.error("MongoDB 连接失败, 请检查配置 ( {}:{} ) : {}", dbAddress, dbPort, err.message)
+                defaultLog.error("MongoDB 连接失败, 请检查配置 ( {}:{} ) : {}", dbAddress, dbPort, err.message)
 
                 exitProcess(100)
             }
@@ -201,7 +208,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
                 } catch (err: IllegalStateException) {
 
-                    log.error(err)
+                    defaultLog.error(err)
 
                     exitProcess(100)
 
@@ -215,7 +222,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
                 if (apiTokenArray == null || apiTokenArray.isEmpty()) {
 
-                    log.error("启用了 Twitter 子机器人, 但没有填写 Twitter Api Token 列表.")
+                    defaultLog.error("启用了 Twitter 子机器人, 但没有填写 Twitter Api Token 列表.")
 
                     exitProcess(100)
 
@@ -229,7 +236,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
                     if (apiObj == null || apiObj.isEmpty()) {
 
-                        log.error("Twitter Api Token 第 {} 项格式非法.", index + 1)
+                        defaultLog.error("Twitter Api Token 第 {} 项格式非法.", index + 1)
 
                         exitProcess(100)
 
@@ -239,7 +246,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
                     if (name == null) {
 
-                        log.error("Twitter Api Token 第 {} 项没有填写名称 ( name 字段 ).", index + 1)
+                        defaultLog.error("Twitter Api Token 第 {} 项没有填写名称 ( name 字段 ).", index + 1)
 
                         exitProcess(100)
 
@@ -249,7 +256,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
                     if (apiKey == null) {
 
-                        log.error("Twitter Api Token 第 {} 项没有填写 Api Key ( api_key 字段 ).", index + 1)
+                        defaultLog.error("Twitter Api Token 第 {} 项没有填写 Api Key ( api_key 字段 ).", index + 1)
 
                         exitProcess(100)
 
@@ -259,7 +266,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
                     if (apiSecretKey == null) {
 
-                        log.error("Twitter Api Token 第 {} 项没有填写 Api Secret Key ( api_secret_key 字段 ).", index + 1)
+                        defaultLog.error("Twitter Api Token 第 {} 项没有填写 Api Secret Key ( api_secret_key 字段 ).", index + 1)
 
                         exitProcess(100)
 
@@ -295,7 +302,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             if (Env.ADMINS.isEmpty()) {
 
-                log.warn("没有设置管理员账号 (ﾟ⊿ﾟ)ﾂ 请使用 /id 命令获取用户ID并填入 ADMINS 配置中 ~")
+                defaultLog.warn("没有设置管理员账号 (ﾟ⊿ﾟ)ﾂ 请使用 /id 命令获取用户ID并填入 ADMINS 配置中 ~")
 
             }
 

@@ -8,6 +8,8 @@ import cn.hutool.log.Log
 import cn.hutool.log.dialect.console.ConsoleLog
 import cn.hutool.log.level.Level
 
+val defaultLog = createLog("Tooko")
+
 fun createLog(name: String): Log {
 
     return object : ConsoleLog(name) {

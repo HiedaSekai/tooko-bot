@@ -9,7 +9,7 @@ interface TdBotAbsHandler : TdAbsHandler {
 
     fun onLoginFailed(ex: TdException)
 
-    fun initFunction(functions: Array<String>) {
+    fun initFunction(vararg functions: String) {
 
         functions.forEach {
 

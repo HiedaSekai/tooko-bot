@@ -1,62 +1,17 @@
 package tookox.core
 
-import tooko.main.Fn
-import tooko.main.Lang
 import tooko.td.TdApi
 import tookox.core.client.TdAbsHandler
 import tookox.core.client.TdClient
-import twitter4j.TwitterException
 
 fun async(block: () -> Unit) = TdClient.asyncPool.execute(block)
 
 val TdApi.User.displayName get() = "$firstName $lastName".trim()
 
-fun <T : TdApi.Object> TdAbsHandler.execute(function: TdApi.Function): T = client.execute(function)
-fun <T : TdApi.Object> TdAbsHandler.send(function: TdApi.Function, callback: (isOk: Boolean, result: T?, error: TdApi.Error?) -> Unit) = client.send(function, callback)
-fun TdAbsHandler.send(function: TdApi.Function) = client.send(function)
-
-fun TdAbsHandler.postErr(chatId: Long, exception: Throwable): TdApi.Message {
-
-    return if (exception is TwitterException) {
-
-        postText(chatId, Fn.parseTwitterException(Lang.get(chatId), exception))
-
-    } else {
-
-        postText(chatId, "${exception.message}")
-
-    }
-
-}
-
 val TdApi.Message.fromPrivate get() = chatId > 0L
 val TdApi.Message.fromBasicGroup get() = chatId > -1000000000000L
 val TdApi.Message.fromSuperGroup get() = chatId < -1000000000000L && !isChannelPost
 val TdApi.Message.fromChannel get() = isChannelPost
-
-fun TdAbsHandler.postText(chatId: Long, text: String, enableLinkPreview: Boolean = false): TdApi.Message {
-
-    return execute(Fn.sendText(chatId, Fn.plainText(text), enableLinkPreview))
-
-}
-
-fun TdAbsHandler.postHtml(chatId: Long, text: String, enableLinkPreview: Boolean = false): TdApi.Message {
-
-    return execute(Fn.sendText(chatId, Fn.parseHtml(text), enableLinkPreview))
-
-}
-
-fun TdAbsHandler.sendText(chatId: Long, text: String, enableLinkPreview: Boolean = false) {
-
-    send(Fn.sendText(chatId, Fn.plainText(text), enableLinkPreview))
-
-}
-
-fun TdAbsHandler.sendHtml(chatId: Long, text: String, enableLinkPreview: Boolean = false) {
-
-    send(Fn.sendText(chatId, Fn.parseHtml(text), enableLinkPreview))
-
-}
 
 fun TdAbsHandler.onEvent(event: TdApi.Object) {
 

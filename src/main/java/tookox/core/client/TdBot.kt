@@ -26,17 +26,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
         if (authorizationState is TdApi.AuthorizationStateWaitPhoneNumber) {
 
-            send(TdApi.CheckAuthenticationBotToken(botToken)) {
-
-                isOk, _: TdApi.Object?, error ->
-
-                if (!isOk) {
-
-                    onLoginFailed(TdException(error!!))
-
-                }
-
-            }
+            sendRaw(CheckAuthenticationBotToken(botToken)).onError(::onLoginFailed)
 
         }
 

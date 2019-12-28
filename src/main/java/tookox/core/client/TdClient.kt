@@ -1,14 +1,13 @@
 package tookox.core.client
 
 import cn.hutool.core.thread.ThreadUtil
-import cn.hutool.core.util.ArrayUtil
 import tooko.main.Env
 import tooko.td.Client
 import tooko.td.TdApi
 import tooko.td.TdApi.*
 import tooko.td.client.TdException
 import tookox.core.async
-import tookox.core.createLog
+import tookox.core.defaultLog
 import tookox.core.displayName
 import tookox.core.onEvent
 import java.util.*
@@ -39,8 +38,8 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
     private val requestId = AtomicLong(1)
     private val executionLock = ReentrantLock()
 
-    private val callbacks = ConcurrentHashMap<Long, (isOk: Boolean, result: Object?, error: Error?) -> Unit>()
-    private val messages = ConcurrentHashMap<Long, (isOk: Boolean, result: Message?, error: Error?) -> Unit>()
+    private val callbacks = ConcurrentHashMap<Long, TdCallback<*>>()
+    private val messages = ConcurrentHashMap<Long, TdCallback<Message>>()
 
     private val _auth = AtomicBoolean(false)
 
@@ -48,7 +47,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
         get() = _auth.get()
         set(value) = _auth.set(value)
 
-    val me by lazy { execute<User>(GetMe()) }
+    val me by lazy { post<User>(GetMe()) }
 
     fun addHandler(handler: TdAbsHandler) {
 
@@ -121,13 +120,15 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         if (authorizationState is AuthorizationStateWaitTdlibParameters) {
 
-            send(SetTdlibParameters(options.build()))
+            sendRaw(SetTdlibParameters(options.build())).onError(defaultLog::warn)
 
         } else if (authorizationState is AuthorizationStateWaitEncryptionKey) {
 
-            send(CheckDatabaseEncryptionKey())
+            sendRaw(CheckDatabaseEncryptionKey())
 
         } else if (authorizationState is AuthorizationStateReady) {
+
+            send<User>(GetUser())
 
             authed = true
 
@@ -135,7 +136,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
             async {
 
-                log.debug("认证完成 : ${me.displayName}")
+                defaultLog.debug("认证完成 : ${me.displayName}")
 
             }
 
@@ -155,11 +156,11 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
             if (callback == null) return
 
-            callback.invoke(true, message, null)
+            callback.postResult(message)
 
         } catch (e: Exception) {
 
-            log.error(e, "TdError - Sync")
+            defaultLog.error(e, "TdError - Sync")
 
         }
     }
@@ -172,35 +173,34 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         try {
 
-            callback.invoke(false, null, TdApi.Error(errorCode, errorMessage))
+            callback.postError(TdException(Error(errorCode, errorMessage)))
 
         } catch (e: Exception) {
 
-            log.error(e, "TdError - Sync")
+            defaultLog.error(e, "TdError - Sync")
 
         }
 
     }
 
-    fun <T : Object> execute(function: TdApi.Function): T {
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : Object> post(function: TdApi.Function): T {
 
         check(!executionLock.isLocked) { "ClientActor is destroyed" }
 
-        val responseAtomicReference = AtomicReference<Object>()
+        val responseAtomicReference = AtomicReference<Any>()
 
         val executedAtomicBoolean = AtomicBoolean(false)
 
-        send(function) { isOk: Boolean, result: Object?, error: Error? ->
+        send<T>(function, 1) {
 
-            if (isOk) {
+            responseAtomicReference.set(it)
 
-                responseAtomicReference.set(result)
+            executedAtomicBoolean.set(true)
 
-            } else {
+        } onError {
 
-                responseAtomicReference.set(error)
-
-            }
+            responseAtomicReference.set(it)
 
             executedAtomicBoolean.set(true)
 
@@ -216,83 +216,44 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         }
 
-        val response = responseAtomicReference.get()
+        return responseAtomicReference.get().apply {
 
-        if (response is Error) {
+            if (this is TdException) throw this
 
-            throw TdException(response)
-
-        }
-
-        @Suppress("UNCHECKED_CAST")
-        return response as T
+        } as T
 
     }
 
-    fun <T : Object> send(function: TdApi.Function, callback: (isOk: Boolean, result: T?, error: Error?) -> Unit) {
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : Object> send(function: TdApi.Function, stackIgnore: Int, block: ((T) -> Unit)?): TdCallback<T> {
 
         check(!executionLock.isLocked) { "ClientActor is destroyed" }
 
         val requestId = requestId.getAndIncrement()
 
-        if (function is SendMessage) {
+        return if (function is SendMessage && block != null) {
 
-            callbacks[requestId] = { isOk: Boolean, result: Object?, error: Error? ->
+            TdCallback<Message> {
 
-                if (isOk) {
+                messages[it.id] = block as TdCallback<Message>
 
-                    @Suppress("UNCHECKED_CAST")
-                    messages[(result as Message).id] = (callback as ((isOk: Boolean, result: Message?, error: Error?) -> Unit))
-
-                }
-
-            }
+            } as TdCallback<T>
 
         } else {
 
-            callbacks[requestId] = { isOk: Boolean, result: Object?, error: Error? ->
+            TdCallback(stackIgnore.inc(), block)
 
-                @Suppress("UNCHECKED_CAST")
-                callback.invoke(isOk, result as T?, error)
+        }.apply {
 
-            }
+            callbacks[requestId] = this
 
-        }
-
-        send(requestId, function)
-
-    }
-
-    fun send(function: TdApi.Function): Long {
-
-        check(!executionLock.isLocked) { "Client is destroyed" }
-
-        val requestId = requestId.getAndIncrement()
-
-        var stackTrace = ThreadUtil.getStackTrace()
-
-        stackTrace = ArrayUtil.sub<StackTraceElement>(stackTrace, 3, stackTrace.size)
-
-        callbacks[requestId] = { isOk, _, error ->
-
-            if (!isOk) {
-
-                val exception = TdException(error!!)
-
-                exception.stackTrace = stackTrace
-
-                log.warn(exception)
-
-            }
+            send(requestId, function)
 
         }
 
-        send(requestId, function)
-
-        return requestId
     }
 
-    fun send(requestId: Long, function: TdApi.Function) {
+    private fun send(requestId: Long, function: TdApi.Function) {
 
         check(!executionLock.isLocked) { "Client is destroyed" }
 
@@ -300,10 +261,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     }
 
-
     companion object {
-
-        val log = createLog("TD")
 
         val postAdd = LinkedList<TdClient>()
         val postDestroy = LinkedList<TdClient>()
@@ -374,7 +332,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                                         val err = event.event as Error
 
-                                        log.warn(err.code.toString() + " " + err.message)
+                                        defaultLog.warn(err.code.toString() + " " + err.message)
 
                                     }
 
@@ -385,13 +343,19 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                                     val callback = client.callbacks.remove(event.requestId)!!
 
-                                    val isOk = !(event.event is Error)
+                                    if (event.event is Error) {
 
-                                    callback.invoke(isOk, if (isOk) event.event else null, if (isOk) null else event.event as Error)
+                                        callback.postError(TdException(event.event as Error))
+
+                                    } else {
+
+                                        callback.postResult(event.event)
+
+                                    }
 
                                 } catch (e: Exception) {
 
-                                    log.error(e, "TdError - Sync")
+                                    defaultLog.error(e, "TdError - Sync")
 
                                 }
 

@@ -11,8 +11,4 @@ open class TdBotHandler : TdHandler(), TdBotAbsHandler {
     override fun onUndefinedFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) = Unit
     override fun onFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) = Unit
 
-    open fun onFunction() = Unit
-
-    fun initFunction() {}
-
 }
