@@ -48,6 +48,28 @@ class MessageFactory(val context: TdAbsHandler) {
     var fromBackground = false
     var replyMarkup: TdApi.ReplyMarkup? = null
 
+    var schedulingState: TdApi.MessageSchedulingState? = null
+
+    val WHEN_ONLINE = -1
+
+    var sendAt: Int
+
+        set(value) {
+
+            schedulingState = if (sendAt > 0) TdApi.MessageSchedulingStateSendAtDate(value) else TdApi.MessageSchedulingStateSendWhenOnline()
+
+        }
+
+        get() = throw IllegalAccessError()
+
+    infix fun sendAt(date: Number): MessageFactory {
+
+        sendAt = date.toInt()
+
+        return this
+
+    }
+
     class TextBuilder(val text: TdApi.FormattedText) {
 
         var enableWebPagePreview = false
@@ -112,21 +134,27 @@ class MessageFactory(val context: TdAbsHandler) {
 
     }
 
+    private fun mkOptions(): TdApi.SendMessageOptions {
+
+        return TdApi.SendMessageOptions(disableNotification, fromBackground, schedulingState)
+
+    }
+
     infix fun postTo(chatId: Number): TdApi.Message {
 
-        return context.post(TdApi.SendMessage(chatId.toLong(), replyToMessageId, disableNotification, fromBackground, replyMarkup, input))
+        return context.post(TdApi.SendMessage(chatId.toLong(), replyToMessageId, mkOptions(), replyMarkup, input))
 
     }
 
     infix fun sendTo(chatId: Number): TdCallback<TdApi.Message> {
 
-        return context.send(TdApi.SendMessage(chatId.toLong(), replyToMessageId, disableNotification, fromBackground, replyMarkup, input), 1)
+        return context.send(TdApi.SendMessage(chatId.toLong(), replyToMessageId, mkOptions(), replyMarkup, input), 1)
 
     }
 
     infix fun send(handler: ((TdApi.Message) -> Unit)): TdCallback<TdApi.Message> {
 
-        return context.send(TdApi.SendMessage(chatId.toLong(), replyToMessageId, disableNotification, fromBackground, replyMarkup, input), 1, handler)
+        return context.send(TdApi.SendMessage(chatId.toLong(), replyToMessageId, mkOptions(), replyMarkup, input), 1, handler)
 
     }
 

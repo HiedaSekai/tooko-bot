@@ -821,7 +821,7 @@ public class Fn {
 
     public static SendMessage sendMessage(long chatId, long replyToMessageId, boolean enableNotification, boolean fromBackground, ReplyMarkup replyMarkup, InputMessageContent inputMessageContent) {
 
-        return new SendMessage(chatId, replyToMessageId, !enableNotification, fromBackground, replyMarkup, inputMessageContent);
+        return new SendMessage(chatId, replyToMessageId, new SendMessageOptions(!enableNotification, fromBackground,null), replyMarkup, inputMessageContent);
 
     }
 
@@ -1024,7 +1024,7 @@ public class Fn {
 
     public static ForwardMessages forwardMessages(long chatId, long fromChatId, long... messageIds) {
 
-        return new ForwardMessages(chatId, fromChatId, messageIds, false, false, false, false, false);
+        return new ForwardMessages(chatId, fromChatId, messageIds,null, false, false, false);
 
     }
 
@@ -1260,8 +1260,7 @@ public class Fn {
 
     public static <T> T[] toArray(Collection<T> array, Class<T> clazz) {
 
-        //noinspection unchecked
-        return array.toArray((T[]) ArrayUtil.newArray(clazz, array.size()));
+        return array.toArray(ArrayUtil.newArray(clazz, array.size()));
 
     }
 
