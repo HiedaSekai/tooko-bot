@@ -15,13 +15,13 @@ class BaseFuncs : TdBotHandler() {
 
     override fun onLoad() = functions.forEach(client::addHandler)
 
-    fun function(name: String, function: (userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) -> Unit) {
+    fun function(name: String, function: (userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>) -> Unit) {
 
         functions.add(object : TdBotHandler() {
 
             override fun onLoad() = initFunction(name)
 
-            override fun onFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) = function(userId, chatId, message, function, param, params, originParams)
+            override fun onFunction(userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>) = function(userId, chatId, message, function, param, params, originParams)
 
         })
 
@@ -65,8 +65,13 @@ class BaseFuncs : TdBotHandler() {
 
             send<User>(GetUser(param.toInt())) {
 
-                sudo make "${L.USER_NAME.blod} : ${it.displayName.inlineMention(it.id)}" +
-                        "\n${L.USER_ID.blod} : ${it.id.code}".asHtml sendTo chatId
+                make {
+
+                    inputHtml = "${L.USER_NAME.blod} : " +
+                            "${it.displayName.inlineMention(it.id)}\n" +
+                            "${L.USER_ID.blod} : ${it.id.code}"
+
+                } sendTo chatId
 
 
             } onError {

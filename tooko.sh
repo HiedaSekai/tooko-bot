@@ -1,36 +1,40 @@
 #!/bin/bash
 
+LIBS_UPDATE="2020-01-01"
+
+info() { echo "I: $*"; }; error() { echo "E: $*";exit 1; }
+
+if [ -x "$(command -v wget)" ]; then
+
+  download() { wget "$2" -O "$1"; }
+
+elif [ -x "$(command -v curl)" ]; then
+
+  download() { curl "$2" -o "$1"; }
+
+else
+
+  error "curl or wget required."
+
+fi
+
 function installTDLib() {
 
   case "$(uname -m)" in
 
-  aarch64 | arm64) arch="arm64" ;;
-  arm*)
-
-    HARDFLOAT=$(readelf -a /usr/bin/readelf | grep armhf)
-
-    if [ -z "$HARDFLOAT" ]; then
-
-      arch="armhf"
-
-    else
-
-      arch="armel"
-
-    fi
-
-    ;;
-  x86_64 | amd64) arch="amd64" ;;
-  i[3-6]86 | x86) arch="i386" ;;
+  # aarch64 | arm64) arch="aarch64" ;;
+  x86_64 | amd64) arch="x86_64" ;;
+  i[3-6]86 | x86) arch="x86" ;;
 
   *)
+
     echo "<< 无当前架构的预编译TDLib链接库"
     return 1
     ;;
 
   esac
 
-  wget -O "libs/jni/libtdjni.so" "https://gitlab.com/tooko/tooko-tdlib/raw/binary/$arch/libtdjni.so"
+  download "libs/jni/libtdjni.so" "https://gitlab.com/tooko/tooko-tdlib/raw/$arch/libtdjni.so"
 
   return $?
 
@@ -40,10 +44,9 @@ function installWebP() {
 
   case "$(uname -m)" in
 
-  aarch64 | arm64) arch="amd64" ;;
-  arm*) arch="arm" ;;
-  x86_64 | amd64) arch="amd64" ;;
-  i[3-6]86 | x86) arch="i386" ;;
+ # aarch64 | arm64) arch="aarch64" ;;
+  x86_64 | amd64) arch="x86_64" ;;
+  i[3-6]86 | x86) arch="x86" ;;
 
   *)
     echo "<< 无当前架构的预编译Webp链接库"
@@ -52,7 +55,7 @@ function installWebP() {
 
   esac
 
-  wget -O "libs/jni/libwebp-imageio.so" "https://gitlab.com/tooko/tooko-webp/raw/binary/$arch/libwebp-imageio.so"
+  download "libs/jni/libwebp-imageio.so" "https://gitlab.com/tooko/tooko-webp/raw/binary/$arch/libwebp-imageio.so"
 
   return $?
 
@@ -117,7 +120,17 @@ EOF
 
 elif [ $1 == "run" ]; then
 
-  [ -d "libs/jni" ] || mkdir -p "libs/jni"
+  LOCAL_LIBS_VER="$(cat libs/.version 2> /dev/null)"
+
+  if ! [[ $LOCAL_LIBS_VER -eq $LIBS_UPDATE ]]; then
+
+    rm -rf libs/jni
+
+    echo $$LIBS_UPDATE > libs/.version
+
+  fi
+
+  [ -d libs/jni ] || mkdir -p libs/jni
 
   if [ ! -f "libs/jni/libtdjni.so" ]; then
 
@@ -155,7 +168,7 @@ elif [ $1 == "update" ]; then
 
   git fetch &>/dev/null
 
-  if [ $(git rev-parse HEAD) = $(git rev-parse FETCH_HEAD) ]; then
+  if [ "$(git rev-parse HEAD)" = "$(git rev-parse FETCH_HEAD)" ]; then
 
     echo "<< 没有更新"
 
