@@ -44,9 +44,10 @@ function installWebP() {
 
   case "$(uname -m)" in
 
- # aarch64 | arm64) arch="aarch64" ;;
-  x86_64 | amd64) arch="x86_64" ;;
-  i[3-6]86 | x86) arch="x86" ;;
+  aarch64 | arm64) arch="arm64" ;;
+  arm*) arch="arm" ;;
+  x86_64 | amd64) arch="amd64" ;;
+  i[3-6]86 | x86) arch="i386" ;;
 
   *)
     echo "<< 无当前架构的预编译Webp链接库"
