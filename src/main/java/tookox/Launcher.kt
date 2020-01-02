@@ -129,7 +129,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             if (!configFile.isFile) {
 
-                defaultLog.error("配置文件 (config.json) 不存在, 请放置.")
+                defaultLog.error("配置文件 (config.yml) 不存在, 请放置.")
 
                 exitProcess(100)
 

@@ -123,7 +123,7 @@ elif [ $1 == "run" ]; then
 
   LOCAL_LIBS_VER="$(cat libs/.version 2> /dev/null)"
 
-  if ! [[ $LOCAL_LIBS_VER -eq $LIBS_UPDATE ]]; then
+  if ! [[ $LOCAL_LIBS_VER == "$LIBS_UPDATE" ]]; then
 
     rm -rf libs/jni
 
