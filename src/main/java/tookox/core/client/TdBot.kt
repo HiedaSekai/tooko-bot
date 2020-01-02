@@ -3,27 +3,30 @@ package tookox.core.client
 import cn.hutool.core.thread.ThreadUtil
 import cn.hutool.core.util.RuntimeUtil
 import cn.hutool.core.util.StrUtil
+import cn.hutool.core.util.ZipUtil
 import tooko.main.Env
-import tooko.td.TdApi
+import tooko.main.Fn
 import tooko.td.TdApi.*
+import tookox.core.finishEvent
 import tookox.core.fromPrivate
+import tookox.core.td.makeAnswer
 import java.io.File
 import java.util.*
 
 open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotAbsHandler {
 
-    override val client: TdBot get() = this
+    override val sudo: TdBot get() = this
 
     var persists = HashMap<Int, TdBotAbsHandler>()
     var payloads = HashMap<String, TdBotAbsHandler>()
     var functions = HashMap<String, TdBotAbsHandler>()
     var callbacks = HashMap<Int, TdBotAbsHandler>()
 
-    override fun onAuthorizationState(authorizationState: TdApi.AuthorizationState) {
+    override fun onAuthorizationState(authorizationState: AuthorizationState) {
 
         super.onAuthorizationState(authorizationState)
 
-        if (authorizationState is TdApi.AuthorizationStateWaitPhoneNumber) {
+        if (authorizationState is AuthorizationStateWaitPhoneNumber) {
 
             sendRaw(CheckAuthenticationBotToken(botToken)).onError(::onAuthorizationFailed)
 
@@ -117,9 +120,40 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
     }
 
+    override fun handleNewCallbackQuery(id: Long, senderUserId: Int, chatId: Long, messageId: Long, chatInstance: Long, payload: CallbackQueryPayload) {
+
+        if (payload is CallbackQueryPayloadGame) return
+
+        var data = (payload as CallbackQueryPayloadData).data
+
+        if (data[0].toInt() == 120 && data[1].toInt() == -38) {
+
+            data = ZipUtil.unZlib(data)
+
+        }
+
+        val dataId = data[0] + 129
+
+        val subId = data[1].toInt()
+
+        if (!callbacks.containsKey(dataId)) {
+
+            sudo makeAnswer "Invalid Data #$id" sendTo id
+
+            return
+
+        }
+
+        callbacks[dataId]!!.onNewCallbackQuery(senderUserId, chatId, messageId, id, subId, Fn.readData(data))
+
+        finishEvent()
+
+    }
+
     open fun onLaunch(userId: Int, chatId: Long, message: Message) = Unit
     override fun onFunction(userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>) = Unit
     override fun onUndefinedFunction(userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>) = Unit
+    override fun onNewCallbackQuery(userId: Int, chatId: Long, messageId: Long, queryId: Long, subId: Int, data: Array<ByteArray>) = Unit
 
     companion object {
 

@@ -5,9 +5,7 @@ import tooko.td.TdApi.*
 
 interface TdAbsHandler {
 
-    val sudo get() = this
-
-    val client: TdClient
+    val sudo: TdClient
 
     fun onLoad(client: TdClient)
 
@@ -159,11 +157,11 @@ interface TdAbsHandler {
 
     fun onPoll(poll: Poll)
 
-    fun <T : Object> send(function: TdApi.Function, stackIgnore: Int = 0, block: ((T) -> Unit)? = null): TdCallback<T> = client.send(function, stackIgnore, block)
+    fun <T : Object> send(function: TdApi.Function, stackIgnore: Int = 0, block: ((T) -> Unit)? = null): TdCallback<T> = sudo.send(function, stackIgnore, block)
 
     fun sendRaw(function: TdApi.Function, stackIgnore: Int = 0, block: ((Object) -> Unit)? = null): TdCallback<Object> = send(function, stackIgnore, block)
 
-    fun <T : Object> post(function: TdApi.Function): T = client.post(function)
+    fun <T : Object> post(function: TdApi.Function): T = sudo.post(function)
 
     val String.asHtml: FormattedText get() = post(ParseTextEntities(this, TextParseModeHTML()))
 

@@ -1,0 +1,66 @@
+####################################################
+# 配置文件 ~
+# 更新于 2020 01 02
+####################################################
+
+# MongoDB 地址
+db_address: "127.0.0.1"
+
+# MongoDB 端口
+db_port: 27017
+
+# MongoDB 数据库 名称
+db_name: "Tooko"
+
+# 是否使用 systemd 服务
+use_service: false
+
+# systemd 服务名称
+service: "tooko.service"
+
+# 机器人令牌
+bot_token: "1234:XXXX"
+
+# 默认语言
+def_lang: "zh_CN"
+
+# 是否允许非管理员创建机器人
+public_bot_create: false
+
+# 非管理员可创建的机器人最大数量 ( -1 即不限制 )
+bot_create_max: -1
+
+# 管理员ID列表
+admins:
+  - 896711046
+
+# 日志频道
+log_channel: -10012345678
+
+# Twitter 子机器人配置
+twitter:
+  # 启用
+  enable: true
+  # 子机器人令牌
+  bot_token: "1234:XXXX"
+  # 允许非管理员使用
+  public: false
+  # Twitter Api Key
+  api_tokens:
+    - :
+      # App Name
+      name: "Tooko for Twitter"
+      # Api Key
+      api_key: ""
+      # Api Srcret Key
+      api_secret_key: ""
+
+# 用于图片NSFW识别的服务地址
+nsfw_server: http://127.0.0.1:11221
+
+# 用于文本垃圾识别
+text_censor:
+  provider: baidu
+  app_id:
+  api_key:
+  secret_key:

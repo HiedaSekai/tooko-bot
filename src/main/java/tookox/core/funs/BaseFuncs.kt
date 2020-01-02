@@ -13,7 +13,7 @@ class BaseFuncs : TdBotHandler() {
 
     val functions = LinkedList<TdBotHandler>()
 
-    override fun onLoad() = functions.forEach(client::addHandler)
+    override fun onLoad() = functions.forEach(sudo::addHandler)
 
     fun function(name: String, function: (userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>) -> Unit) {
 

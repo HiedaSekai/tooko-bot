@@ -6,7 +6,7 @@ open class TdHandler : TdAbsHandler {
 
     private lateinit var _client: TdClient
 
-    override val client: TdClient get() = _client
+    override val sudo: TdClient get() = _client
 
     override fun onLoad(client: TdClient) {
 

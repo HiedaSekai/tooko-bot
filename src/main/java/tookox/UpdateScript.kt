@@ -16,6 +16,7 @@ object UpdateScript {
         if (!FileUtil.isFile(versionFile)) {
 
             FileUtil.writeBytes(Fn.num2byte(VERSION), versionFile)
+
             return
 
         }

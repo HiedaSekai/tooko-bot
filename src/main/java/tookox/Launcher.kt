@@ -14,6 +14,7 @@ import org.bson.codecs.pojo.ArrayPropertyCodecProvider
 import org.bson.codecs.pojo.PojoCodecProvider
 import org.bson.codecs.pojo.PropertyCodecProvider
 import org.bson.codecs.pojo.SubClassPropertyCodecProvider
+import org.yaml.snakeyaml.Yaml
 import tooko.main.Env
 import tooko.main.bots.BotData
 import tooko.main.bots.BotImage
@@ -25,9 +26,10 @@ import tooko.td.client.TdClient.EventTask
 import tooko.td.core.TookoLog
 import tooko.twitter.ApiToken
 import tooko.twitter.TwitterBot
+import tookox.core.*
 import tookox.core.client.TdBot
-import tookox.core.defaultLog
 import tookox.core.funs.BaseFuncs
+import tookox.core.funs.LICENCE
 import tookox.core.td.make
 import java.io.File
 import java.lang.Thread.UncaughtExceptionHandler
@@ -48,6 +50,8 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
     override fun onLoad() {
 
         addHandler(BaseFuncs())
+
+        addHandler(LICENCE())
 
     }
 
@@ -121,7 +125,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             Log.setVerbosityLevel(1)
 
-            val configFile = File(Env.ROOT_PATH, "config.json")
+            val configFile = File(Env.ROOT_PATH, "config.yml")
 
             if (!configFile.isFile) {
 
@@ -131,11 +135,9 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             }
 
-            val config: JSONObject
+            val config = try {
 
-            config = try {
-
-                JSONObject(FileUtil.readUtf8String(configFile))
+                TypedMap(Yaml().load(FileUtil.readUtf8String(configFile)))
 
             } catch (err: JSONException) {
 
@@ -196,9 +198,14 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
             Env.USE_SERVICE = config.getBool("use_service")
             Env.SERVICE = config.getStr("service")
             Env.BOT_TOKEN = config.getStr("bot_token")
-            Env.ADMINS = config.getJSONArray("admins").toArray(Int::class.javaPrimitiveType) as IntArray
 
-            val twitterObj = config.getJSONObject("twitter")
+            Env.DEF_LANG = config.getStr("def_lang")
+
+            loadLanguages()
+
+            Env.ADMINS = (config.get("admins") as List<*>).map { (it as Number).toInt() }.toIntArray()
+
+            val twitterObj = config.get("twitter")!!.toTypedMap()
 
             if (!twitterObj.isEmpty()) {
 
@@ -218,7 +225,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
                 Env.TWITTER_PUBLIC = twitterObj.getBool("public")
 
-                val apiTokenArray = twitterObj.getJSONArray("api_tokens")
+                @Suppress("UNCHECKED_CAST") val apiTokenArray = twitterObj.get("api_tokens") as List<Any>?
 
                 if (apiTokenArray == null || apiTokenArray.isEmpty()) {
 
@@ -232,9 +239,9 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
                 for (index in apiTokenArray.indices) {
 
-                    val apiObj = apiTokenArray.getJSONObject(index)
+                    val apiObj = index.toTypedMap()
 
-                    if (apiObj == null || apiObj.isEmpty()) {
+                    if (apiObj.isEmpty()) {
 
                         defaultLog.error("Twitter Api Token 第 {} 项格式非法.", index + 1)
 
@@ -282,9 +289,9 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             Env.NSFW_SERVER = config.getStr("nsfw_server")
 
-            val textCensor = config.getJSONObject("text_censor")
+            val textCensor = config.get("text_censor")?.toTypedMap()
 
-            if (textCensor.containsKey("provider")) {
+            if (textCensor?.containsKey("provider") == true) {
 
                 if ("baidu" == textCensor.getStr("provider")) {
 
@@ -355,12 +362,12 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
         }
 
-        fun checkConfig(config: JSONObject) {
+        fun checkConfig(config: TypedMap) {
 
             val fields = arrayOf(
                     "db_address", "db_port", "db_name",
                     "use_service", "service",
-                    "bot_token",
+                    "bot_token","def_lang",
                     "public_bot_create", "bot_create_max",
                     "admins", "log_channel",
                     "twitter",
@@ -375,7 +382,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
         }
 
-        fun checkTwitter(config: JSONObject) {
+        fun checkTwitter(config: TypedMap) {
 
             val fields = arrayOf(
                     "bot_token", "public", "api_tokens")

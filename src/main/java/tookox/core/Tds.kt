@@ -3,6 +3,7 @@ package tookox.core
 import tooko.td.TdApi
 import tookox.core.client.TdAbsHandler
 import tookox.core.client.TdClient
+import java.lang.RuntimeException
 
 fun async(block: () -> Unit) = TdClient.asyncPool.execute(block)
 
@@ -12,6 +13,14 @@ val TdApi.Message.fromPrivate get() = chatId > 0L
 val TdApi.Message.fromBasicGroup get() = chatId > -1000000000000L
 val TdApi.Message.fromSuperGroup get() = chatId < -1000000000000L && !isChannelPost
 val TdApi.Message.fromChannel get() = isChannelPost
+
+class Finish : RuntimeException("Finish Event")
+
+fun TdAbsHandler.finishEvent() {
+
+    throw Finish()
+
+}
 
 fun TdAbsHandler.onEvent(event: TdApi.Object) {
 
@@ -294,6 +303,7 @@ fun TdAbsHandler.onEvent(event: TdApi.Object) {
     } else if (event is TdApi.UpdatePoll) {
 
         onPoll(event.poll)
+
     }
 
 }

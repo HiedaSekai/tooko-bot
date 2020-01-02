@@ -3,6 +3,7 @@ package tookox.core.td
 import tooko.main.Fn
 import tooko.main.Lang
 import tooko.td.TdApi
+import tooko.td.client.TdException
 import tookox.core.client.TdAbsHandler
 import tookox.core.client.TdCallback
 import twitter4j.TwitterException
@@ -30,6 +31,10 @@ infix fun TdAbsHandler.make(ex: Throwable): MessageFactory {
     val text = if (ex is TwitterException) {
 
         Fn.parseTwitterException(Lang.DEFAULT, ex)
+
+    } else if (ex is TdException && ex.code == -1) {
+
+        Lang.DEFAULT.SERVER_CLOSING
 
     } else Fn.parseError(ex)
 

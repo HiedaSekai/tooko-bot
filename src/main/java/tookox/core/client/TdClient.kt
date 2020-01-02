@@ -6,6 +6,7 @@ import tooko.td.Client
 import tooko.td.TdApi
 import tooko.td.TdApi.*
 import tooko.td.client.TdException
+import tookox.core.Finish
 import tookox.core.defaultLog
 import tookox.core.displayName
 import tookox.core.onEvent
@@ -22,7 +23,7 @@ import kotlin.reflect.KClass
 
 open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
-    override val client get() = this
+    override val sudo get() = this
 
     override fun onLoad(client: TdClient) {
         onLoad()
@@ -350,10 +351,17 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                                 client.handlers.forEach {
 
-                                    it.onEvent(event.event)
+                                    try {
+
+                                        it.onEvent(event.event)
+
+                                    } catch (ex: Finish) {
+
+                                        return@execute
+
+                                    }
 
                                 }
-
 
                             }
 
