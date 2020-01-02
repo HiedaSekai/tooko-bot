@@ -39,20 +39,16 @@ log_channel: -10012345678
 
 # Twitter 子机器人配置
 twitter:
-  # 启用
   enable: true
-  # 子机器人令牌
   bot_token: "1234:XXXX"
+
   # 允许非管理员使用
   public: false
+
   # Twitter Api Key
   api_tokens:
-    - :
-      # App Name
-      name: "Tooko for Twitter"
-      # Api Key
+    - name: "Tooko for Twitter"
       api_key: ""
-      # Api Srcret Key
       api_secret_key: ""
 
 # 用于图片NSFW识别的服务地址

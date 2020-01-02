@@ -239,7 +239,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
                 for (index in apiTokenArray.indices) {
 
-                    val apiObj = index.toTypedMap()
+                    val apiObj = apiTokenArray[index].toTypedMap()
 
                     if (apiObj.isEmpty()) {
 
