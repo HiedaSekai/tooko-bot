@@ -60,7 +60,7 @@ nsfw_server: http://127.0.0.1:11221
 
 # 用于文本垃圾识别
 text_censor:
-  provider: baidu
-  app_id:
-  api_key:
-  secret_key:
+  provider: "baidu"
+  app_id: ""
+  api_key: ""
+  secret_key: ""
