@@ -127,7 +127,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             try {
 
-                LibsLoader.load("web-imageio")
+                LibsLoader.load("webp-imageio")
 
             } catch (ex: Exception) {
 
