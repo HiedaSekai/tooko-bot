@@ -309,7 +309,9 @@ class MessageFactory(val context: TdAbsHandler) : CaptionInterface {
 
     private lateinit var _captionInterface: CaptionInterface
 
-    override var caption by _captionInterface::caption
+    override var caption
+        get() = _captionInterface.caption
+        set(value) = _captionInterface::caption.set(value)
 
     var CaptionInterface.captionText by WriteOnlyField<String> {
 
