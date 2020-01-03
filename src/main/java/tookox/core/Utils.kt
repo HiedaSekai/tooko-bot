@@ -22,7 +22,7 @@ fun <T : Any> T.applyIfNot(boolean: Boolean, block: (T.() -> Unit)?): T {
 
 fun String.input(vararg params: Any): String {
 
-    return StrUtil.format(this, params)
+    return StrUtil.format(this, *params)
 
 }
 
