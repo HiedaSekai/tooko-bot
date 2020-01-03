@@ -333,7 +333,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                             GlobalScope.launch {
 
-                                try {
+                                runCatching {
 
                                     if (event.event is Error) {
 
@@ -345,9 +345,9 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                                     }
 
-                                } catch (e: Exception) {
+                                }.onFailure {
 
-                                    defaultLog.error(e, "TdError - Sync")
+                                    defaultLog.error(it, "TdError - Sync")
 
                                 }
 
@@ -360,13 +360,15 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                                 client.handlers.forEach {
 
-                                    try {
+                                    runCatching {
 
                                         it.onEvent(event.event)
 
-                                    } catch (ex: Finish) {
+                                    }.onFailure {
 
-                                        return@execute
+                                        if (it is Finish) return@execute
+
+                                        defaultLog.error(it, "TdError - Sync")
 
                                     }
 
