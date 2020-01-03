@@ -29,7 +29,7 @@ interface TdAbsHandler {
 
     fun onMessageContent(chatId: Long, messageId: Long, newContent: MessageContent)
 
-    fun onMessageEdited(chatId: Long, messageId: Long, editDate: Int, replyMarkup: ReplyMarkup)
+    fun onMessageEdited(chatId: Long, messageId: Long, editDate: Int, replyMarkup: ReplyMarkup?)
 
     fun onMessageViews(chatId: Long, messageId: Long, views: Int)
 

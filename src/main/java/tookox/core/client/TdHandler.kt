@@ -36,7 +36,7 @@ open class TdHandler : TdAbsHandler {
 
     override fun onMessageContent(chatId: Long, messageId: Long, newContent: TdApi.MessageContent) = Unit
 
-    override fun onMessageEdited(chatId: Long, messageId: Long, editDate: Int, replyMarkup: TdApi.ReplyMarkup) = Unit
+    override fun onMessageEdited(chatId: Long, messageId: Long, editDate: Int, replyMarkup: TdApi.ReplyMarkup?) = Unit
 
     override fun onMessageViews(chatId: Long, messageId: Long, views: Int) = Unit
 

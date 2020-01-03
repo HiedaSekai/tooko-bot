@@ -241,13 +241,13 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
             TdCallback<Message> {
 
-                messages[it.id] = block as TdCallback<Message>
+                messages[it.id] = TdCallback(2, block) as TdCallback<Message>
 
             } as TdCallback<T>
 
         } else {
 
-            TdCallback(stackIgnore.inc(), block)
+            TdCallback(stackIgnore + 1, block)
 
         }.apply {
 
@@ -400,7 +400,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     override fun onMessageContent(chatId: Long, messageId: Long, newContent: MessageContent) = Unit
 
-    override fun onMessageEdited(chatId: Long, messageId: Long, editDate: Int, replyMarkup: ReplyMarkup) = Unit
+    override fun onMessageEdited(chatId: Long, messageId: Long, editDate: Int, replyMarkup: ReplyMarkup?) = Unit
 
     override fun onMessageViews(chatId: Long, messageId: Long, views: Int) = Unit
 
