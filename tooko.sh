@@ -125,16 +125,6 @@ EOF
 
 elif [ $1 == "run" ]; then
 
-  LOCAL_LIBS_VER="$(cat libs/.version 2>/dev/null)"
-
-  if ! [[ $LOCAL_LIBS_VER == "$LIBS_UPDATE" ]]; then
-
-    rm -rf libs/jni
-
-    echo $$LIBS_UPDATE >libs/.version
-
-  fi
-
   [ -d libs/jni ] || mkdir -p libs/jni
 
   if [ ! -f "libs/jni/libtdjni.so" ]; then
@@ -183,11 +173,7 @@ elif [ $1 == "update" ]; then
 
   echo ">> 检出更新 $(git rev-parse FETCH_HEAD)"
 
-  git checkout -f FETCH_HEAD &>/dev/null
-
-  git branch -D master &>/dev/null
-
-  git checkout master &>/dev/null
+  git reset --hard FETCH_HEAD &>/dev/null
 
   mvn compile
 

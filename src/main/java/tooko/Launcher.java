@@ -22,7 +22,6 @@ import tooko.td.TdApi.*;
 import tooko.td.client.*;
 import tooko.td.core.*;
 import tooko.twitter.*;
-import tookox.*;
 
 import java.io.File;
 import java.util.*;
@@ -52,8 +51,6 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
         log = LogFactory.get("Tooko");
 
         log.debug("正在加载 (๑•̀ㅂ•́)√");
-
-        UpdateScript.INSTANCE.checkUpdate();
 
         UpdateTask.fetchHead();
 
@@ -302,8 +299,6 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
 
         }
 
-        UpdateScript.INSTANCE.beforeLaunch();
-
         INSTANCE = new Launcher(Env.BOT_TOKEN);
 
         INSTANCE.start();
@@ -500,9 +495,6 @@ public class Launcher extends TdBot implements Thread.UncaughtExceptionHandler {
             for (BotData data : allBots) BotImage.start(data);
 
         }
-
-        UpdateScript.INSTANCE.afterLaunch();
-
     }
 
     @Override

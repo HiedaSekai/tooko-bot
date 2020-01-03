@@ -115,7 +115,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             try {
 
-                System.load(Env.getPath("libs/jni/libtdjni.so"))
+                LibsLoader.load("tdjni")
 
             } catch (ex: Exception) {
 
@@ -127,7 +127,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             try {
 
-                System.load(Env.getPath("libs/jni/libwebp-imageio.so"))
+                LibsLoader.load("web-imageio")
 
             } catch (ex: Exception) {
 
@@ -326,8 +326,6 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
                 defaultLog.warn("没有设置管理员账号 (ﾟ⊿ﾟ)ﾂ 请使用 /id 命令获取用户ID并填入 ADMINS 配置中 ~")
 
             }
-
-            UpdateScript.beforeLaunch()
 
             INSTANCE = Launcher()
 
