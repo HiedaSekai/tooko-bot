@@ -33,7 +33,7 @@ class StickerExport : TdBotHandler() {
 
                 send<TdApi.File>(TdApi.DownloadFile(stickerFile.id, 1, 0, 0, true)) {
 
-                    sendImage(userId, chatId, message, sticker, stickerFile)
+                    sendImage(userId, chatId, message, sticker, it)
 
                 } onError {
 
