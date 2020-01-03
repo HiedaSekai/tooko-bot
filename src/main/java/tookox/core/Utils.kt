@@ -4,17 +4,17 @@ import cn.hutool.core.util.StrUtil
 import java.math.BigInteger
 import kotlin.reflect.KProperty
 
-fun <T : Any> T.applyIf(boolean: Boolean, block: T.() -> Unit): T {
+fun <T : Any> T.applyIf(boolean: Boolean, block: (T.() -> Unit)?): T {
 
-    if (boolean) block.invoke(this)
+    if (boolean) block?.invoke(this)
 
     return this
 
 }
 
-fun <T : Any> T.applyIfNot(boolean: Boolean, block: T.() -> Unit): T {
+fun <T : Any> T.applyIfNot(boolean: Boolean, block: (T.() -> Unit)?): T {
 
-    if (!boolean) block.invoke(this)
+    if (!boolean) block?.invoke(this)
 
     return this
 

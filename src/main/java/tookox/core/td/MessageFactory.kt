@@ -7,6 +7,7 @@ import tooko.td.TdApi.*
 import tooko.td.client.TdException
 import tookox.Launcher
 import tookox.core.WriteOnlyField
+import tookox.core.applyIfNot
 import tookox.core.client.TdAbsHandler
 import tookox.core.client.TdCallback
 import twitter4j.TwitterException
@@ -147,7 +148,7 @@ fun forceReply(isPersional: Boolean = true): ReplyMarkupForceReply {
 
 fun inputText(textFormatted: FormattedText? = null, block: (TextBuilder.() -> Unit)? = null): InputMessageText {
 
-    return TextBuilder(textFormatted).apply(block).build()
+    return TextBuilder(textFormatted).applyIfNot(block == null, block).build()
 
 }
 
