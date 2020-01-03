@@ -36,7 +36,7 @@ function installTDLib() {
 
   esac
 
-  download "libs/jni/libtdjni.so" "https://gitlab.com/tooko/tooko-tdlib/raw/$arch/libtdjni.so"
+  download "libs/libtdjni.so" "https://gitlab.com/tooko/tooko-tdlib/raw/$arch/libtdjni.so"
 
   return $?
 
@@ -58,7 +58,7 @@ function installWebP() {
 
   esac
 
-  download "libs/jni/libwebp-imageio.so" "https://gitlab.com/tooko/tooko-webp/raw/binary/$arch/libwebp-imageio.so"
+  download "libs/libwebp-imageio.so" "https://gitlab.com/tooko/tooko-webp/raw/binary/$arch/libwebp-imageio.so"
 
   return $?
 
@@ -123,9 +123,9 @@ EOF
 
 elif [ $1 == "run" ]; then
 
-  [ -d libs/jni ] || mkdir -p libs/jni
+  [ -d libs ] || mkdir -p libs
 
-  if [ ! -f "libs/jni/libtdjni.so" ]; then
+  if [ ! -f "libs/libtdjni.so" ]; then
 
     echo ">> 下载 TDLib 可执行文件"
 
@@ -133,7 +133,7 @@ elif [ $1 == "run" ]; then
 
   fi
 
-  if [ ! -f "libs/jni/libwebp-imageio.so" ]; then
+  if [ ! -f "libs/libwebp-imageio.so" ]; then
 
     echo ">> 下载 WebP 支持库"
 
