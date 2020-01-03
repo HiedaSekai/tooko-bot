@@ -1,5 +1,7 @@
 package tookox
 
+import tooko.main.Env
+
 object LibsLoader {
 
     fun load(vararg names: String) {
@@ -10,11 +12,17 @@ object LibsLoader {
 
                 val target = NativeTarget.current()
 
-                System.load("libs/${target.prefix}$name.${target.ext}")
+                System.load(Env.getPath("libs/${target.prefix}$name.${target.ext}"))
 
             }.recover {
 
-                runCatching { System.loadLibrary("tdjni") }
+                runCatching { System.loadLibrary("tdjni") }.onFailure {
+
+                    _ ->
+
+                    throw it
+
+                }
 
             }.onFailure {
 
