@@ -3,8 +3,7 @@ package tookox.core.funs
 import cn.hutool.core.img.ImgUtil
 import cn.hutool.core.io.FileUtil
 import cn.hutool.core.util.ZipUtil
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import tooko.main.Env
 import tooko.main.Img
 import tooko.main.Lang
@@ -14,6 +13,8 @@ import tookox.core.client.TdBotHandler
 import tookox.core.td.*
 import java.awt.Color
 import java.io.File
+import java.util.*
+import java.util.concurrent.atomic.AtomicInteger
 import tooko.td.TdApi.File as TdFile
 
 class StickerExport : TdBotHandler() {
@@ -42,7 +43,7 @@ class StickerExport : TdBotHandler() {
 
                     send<TdFile>(DownloadFile(stickerFile.id, 1, 0, 0, true)) {
 
-                        sendImage(userId, chatId, message, sticker, it)
+                        sendImage(userId, chatId, sticker, it)
 
                     } onError {
 
@@ -54,7 +55,7 @@ class StickerExport : TdBotHandler() {
 
             } else {
 
-                sendImage(userId, chatId, message, sticker, stickerFile)
+                sendImage(userId, chatId, sticker, stickerFile)
 
             }
 
@@ -63,7 +64,7 @@ class StickerExport : TdBotHandler() {
 
     }
 
-    private fun sendImage(userId: Int, chatId: Long, message: Message, sticker: Sticker, stickerFile: TdFile) {
+    private fun sendImage(userId: Int, chatId: Long, sticker: Sticker, stickerFile: TdFile) {
 
         val L = Lang.get(userId)
 
@@ -109,6 +110,12 @@ class StickerExport : TdBotHandler() {
 
                         if (!zip.isFile) {
 
+                            val count = AtomicInteger(0)
+
+                            val deferreds = LinkedList<Deferred<*>>()
+
+                            @Suppress("EXPERIMENTAL_API_USAGE") val ctx = newFixedThreadPoolContext(3, "Sticker Download Task")
+
                             for (index in it.stickers.indices) {
 
                                 val sticker: Sticker = it.stickers[index]
@@ -117,15 +124,26 @@ class StickerExport : TdBotHandler() {
 
                                 if (stickerFile.local.isDownloadingCompleted) continue
 
-                                sudo make {
+                                async(ctx) {
 
-                                    inputHtml = L.STICKER_EXPORT_DL.input(it.name, index + 1, it.stickers.size)
+                                    sticker.sticker = sync(DownloadFile(stickerFile.id, 1, 0, 0, true))
 
-                                } syncEditTo stat
+                                    count.incrementAndGet()
 
-                                sticker.sticker = sync(DownloadFile(stickerFile.id, 1, 0, 0, true))
+                                    sudo make {
 
+                                        inputHtml = L.STICKER_EXPORT_DL.input(it.title, count, it.stickers.size)
+
+                                    } syncEditTo stat
+
+                                }.also {
+
+                                    deferreds.add(it)
+
+                                }
                             }
+
+                            deferreds.awaitAll()
 
                             sudo make L.STICKER_EXPORT_PACK syncEditTo stat
 
