@@ -110,7 +110,7 @@ class BaseFuncs : TdBotHandler() {
 
                 if (it.type is ChatTypePrivate) {
 
-                    val targetUser = post<User>(GetUser((it.type as ChatTypePrivate).userId))
+                    val targetUser = sync<User>(GetUser((it.type as ChatTypePrivate).userId))
 
                     sudo make "${L.USER_NAME.blod} : ${targetUser.displayName.inlineMention(targetUser.id)}\n${L.USER_ID.blod} : ${targetUser.id.code}".asHtml sendTo chatId
 

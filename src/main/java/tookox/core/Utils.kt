@@ -2,22 +2,18 @@ package tookox.core
 
 import cn.hutool.core.util.StrUtil
 import java.math.BigInteger
+import kotlin.reflect.KMutableProperty0
 import kotlin.reflect.KProperty
+import kotlin.reflect.KProperty0
 
-fun <T : Any> T.applyIf(boolean: Boolean, block: (T.() -> Unit)?): T {
-
+fun <T> T.applyIf(boolean: Boolean, block: (T.() -> Unit)?): T {
     if (boolean) block?.invoke(this)
-
     return this
-
 }
 
-fun <T : Any> T.applyIfNot(boolean: Boolean, block: (T.() -> Unit)?): T {
-
+fun <T> T.applyIfNot(boolean: Boolean, block: (T.() -> Unit)?): T {
     if (!boolean) block?.invoke(this)
-
     return this
-
 }
 
 fun String.input(vararg params: Any): String {
@@ -42,3 +38,6 @@ class WriteOnlyField<T>(val setter: (T) -> Unit) {
     }
 
 }
+
+operator fun <F> KProperty0<F>.getValue(thisRef: Any?, property: KProperty<*>): F = get()
+operator fun <F> KMutableProperty0<F>.setValue(thisRef: Any?, property: KProperty<*>, value: F) = set(value)

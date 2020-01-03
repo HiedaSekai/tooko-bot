@@ -410,13 +410,13 @@ public class Fn {
 
     public static FormattedText parseHtml(String text, java.lang.Object... params) {
 
-        return Launcher.INSTANCE.post(new ParseTextEntities(StrUtil.format(text, params), new TextParseModeHTML()));
+        return Launcher.INSTANCE.sync(new ParseTextEntities(StrUtil.format(text, params), new TextParseModeHTML()));
 
     }
 
     public static FormattedText parseMarkdown(String text, java.lang.Object... params) {
 
-        return Launcher.INSTANCE.post(new ParseTextEntities(StrUtil.format(text, params), new TextParseModeMarkdown()));
+        return Launcher.INSTANCE.sync(new ParseTextEntities(StrUtil.format(text, params), new TextParseModeMarkdown()));
 
     }
 

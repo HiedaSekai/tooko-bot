@@ -183,8 +183,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     }
 
-    @Suppress("UNCHECKED_CAST")
-    override fun <T : Object> post(function: TdApi.Function): T {
+    override fun <T : Object> sync(function: TdApi.Function): T {
 
         check(!executionLock.isLocked) { "ClientActor is destroyed" }
 
@@ -220,6 +219,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
             }
 
+            @Suppress("UNCHECKED_CAST")
             responseAtomicReference.get().apply {
 
                 if (this is TdException) throw this

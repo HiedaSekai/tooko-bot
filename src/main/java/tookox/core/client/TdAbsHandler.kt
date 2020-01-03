@@ -161,10 +161,14 @@ interface TdAbsHandler {
 
     fun sendRaw(function: TdApi.Function, stackIgnore: Int = 0, block: ((Object) -> Unit)? = null): TdCallback<Object> = send(function, stackIgnore, block)
 
-    fun <T : Object> post(function: TdApi.Function): T = sudo.post(function)
+    fun <T : Object> sync(function: TdApi.Function): T = sudo.sync(function)
 
-    val String.asHtml: FormattedText get() = post(ParseTextEntities(this, TextParseModeHTML()))
+    fun post(function: TdApi.Function) {
+        sudo.sync<Object>(function)
+    }
 
-    val String.asMarkdown: FormattedText get() = post(ParseTextEntities(this, TextParseModeMarkdown()))
+    val String.asHtml: FormattedText get() = sync(ParseTextEntities(this, TextParseModeHTML()))
+
+    val String.asMarkdown: FormattedText get() = sync(ParseTextEntities(this, TextParseModeMarkdown()))
 
 }

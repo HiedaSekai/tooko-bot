@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package tookox.core.td
 
 import cn.hutool.core.builder.Builder
@@ -10,6 +12,8 @@ import tookox.core.WriteOnlyField
 import tookox.core.applyIfNot
 import tookox.core.client.TdAbsHandler
 import tookox.core.client.TdCallback
+import tookox.core.getValue
+import tookox.core.setValue
 import twitter4j.TwitterException
 import java.util.*
 
@@ -132,6 +136,15 @@ class InlineButtonBuilder : LinkedList<InlineButtonBuilder.Line>(), Builder<Repl
 
     }
 
+    override fun isEmpty(): Boolean {
+
+        if (super.isEmpty()) return true
+
+        forEach { if (!it.isEmpty()) return false }
+
+        return true
+
+    }
 }
 
 fun removeKeyboard(isPersional: Boolean = true): ReplyMarkupRemoveKeyboard {
@@ -149,6 +162,23 @@ fun forceReply(isPersional: Boolean = true): ReplyMarkupForceReply {
 fun inputText(textFormatted: FormattedText? = null, block: (TextBuilder.() -> Unit)? = null): InputMessageText {
 
     return TextBuilder(textFormatted).applyIfNot(block == null, block).build()
+
+}
+
+fun inputPlainText(text: String, block: (TextBuilder.() -> Unit)? = null): InputMessageText {
+
+    return inputText(text.asText, block)
+}
+
+fun inputHtmlText(text: String, block: (TextBuilder.() -> Unit)? = null): InputMessageText {
+
+    return inputText(text.asHtml, block)
+
+}
+
+fun inputMarkdownText(text: String, block: (TextBuilder.() -> Unit)? = null): InputMessageText {
+
+    return inputText(text.asMarkdown, block)
 
 }
 
@@ -184,9 +214,16 @@ class TextBuilder(var textFormatted: FormattedText? = null) : Builder<InputMessa
 
 }
 
-class MessageFactory(val context: TdAbsHandler) {
+interface CaptionInterface {
+
+    var caption: FormattedText?
+
+}
+
+class MessageFactory(val context: TdAbsHandler) : CaptionInterface {
 
     lateinit var chatId: Number
+    lateinit var messageId: Number
     lateinit var input: InputMessageContent
 
     var replyToMessageId = 0L
@@ -212,7 +249,7 @@ class MessageFactory(val context: TdAbsHandler) {
 
     }
 
-    infix fun to(chatId: Number): MessageFactory {
+    infix fun at(chatId: Number): MessageFactory {
 
         this.chatId = chatId
 
@@ -220,109 +257,93 @@ class MessageFactory(val context: TdAbsHandler) {
 
     }
 
+    infix fun to(messageId: Number): MessageFactory {
+
+        this.messageId = messageId
+
+        return this
+
+    }
+
     var inputText by WriteOnlyField<String> {
 
-        input = plainText(it)
+        input = inputPlainText(it)
 
     }
 
     var inputHtml by WriteOnlyField<String> {
 
-        input = htmlText(it)
+        input = inputHtmlText(it)
 
     }
 
-    var inputMarkdownby by WriteOnlyField<String> {
+    var inputMarkdown by WriteOnlyField<String> {
 
-        input = markdownText(it)
+        input = inputMarkdownText(it)
 
     }
 
     var inputPhoto by WriteOnlyField<String> {
 
-        input = photo(it) {
-
-            _captionInterface = this
-
-        }
+        input = photo(it) { _captionInterface = this }
 
     }
 
-    var inputPhotoId: String
-        set(value) {
-            input = photoId(value)
-        }
-        get() = throw IllegalAccessError()
+    var inputPhotoId by WriteOnlyField<String> {
 
-    private lateinit var _captionInterface: CaptionSetter
-
-    var caption by WriteOnlyField<FormattedText> {
-
-        _captionInterface.set(it)
+        input = photoId(it) { _captionInterface = this }
 
     }
 
-    var captionText by WriteOnlyField<String> {
+    var inputFile by WriteOnlyField<String> {
 
-        _captionInterface.set(it.asText)
-
-    }
-
-    var captionHtml by WriteOnlyField<String> {
-
-        with(context) {
-
-            _captionInterface.set(it.asHtml)
-
-        }
+        input = file(it) { _captionInterface = this }
 
     }
 
-    var captionMarkdown by WriteOnlyField<String> {
+    var inputFileId by WriteOnlyField<String> {
 
-        with(context) {
-
-            _captionInterface.set(it.asMarkdown)
-
-        }
+        input = fileId(it) { _captionInterface = this }
 
     }
 
-    fun plainText(text: String, block: TextBuilder.() -> Unit = {}): InputMessageText {
+    private lateinit var _captionInterface: CaptionInterface
 
-        return inputText(text.asText, block)
-    }
+    override var caption by _captionInterface::caption
 
-    fun htmlText(text: String, block: TextBuilder.() -> Unit = {}): InputMessageText {
+    var CaptionInterface.captionText by WriteOnlyField<String> {
 
-        return inputText(text.asHtml, block)
-
-    }
-
-    fun markdownText(text: String, block: TextBuilder.() -> Unit = {}): InputMessageText {
-
-        return inputText(text.asMarkdown, block)
+        caption = it.asText
 
     }
 
-    interface CaptionSetter {
+    var CaptionInterface.captionHtml by WriteOnlyField<String> {
 
-        fun set(caption: FormattedText)
-
-    }
-
-    class PhotoBuilder(val photo: InputMessagePhoto) : CaptionSetter {
-
-        var caption by WriteOnlyField(::set)
-
-        override fun set(caption: FormattedText) {
-
-            photo.caption = caption
-
-        }
+        caption = with(context) { it.asHtml }
 
     }
 
+    var CaptionInterface.captionMarkdown by WriteOnlyField<String> {
+
+        caption = with(context) { it.asMarkdown }
+
+    }
+
+    inner class PhotoBuilder(val photo: InputMessagePhoto) : CaptionInterface {
+
+        var thumbnail: InputThumbnail? by photo::thumbnail
+
+        var addedStickerFileIds: IntArray by photo::addedStickerFileIds
+
+        var width by photo::width
+
+        var height by photo::height
+
+        var ttl by photo::ttl
+
+        override var caption: FormattedText? by photo::caption
+
+    }
 
     fun photo(path: String, block: (PhotoBuilder.() -> Unit)? = null): InputMessagePhoto {
 
@@ -344,15 +365,45 @@ class MessageFactory(val context: TdAbsHandler) {
 
     }
 
+    inner class FileBuilder(val file: InputMessageDocument) : CaptionInterface {
+
+        var document: InputFile? by file::document
+
+        var thumbnail: InputThumbnail? by file::thumbnail
+
+        override var caption: FormattedText? by file::caption
+
+    }
+
+    fun file(file: String, block: (FileBuilder.() -> Unit)? = null): InputMessageDocument {
+
+        return InputMessageDocument(InputFileLocal(file), null, null).applyIfNot(block == null) {
+
+            block?.invoke(FileBuilder(this))
+
+        }
+
+    }
+
+    fun fileId(fileId: String, block: (FileBuilder.() -> Unit)? = null): InputMessageDocument {
+
+        return InputMessageDocument(InputFileRemote(fileId), null, null).applyIfNot(block == null) {
+
+            block?.invoke(FileBuilder(this))
+
+        }
+
+    }
+
     private fun mkOptions(): SendMessageOptions {
 
         return SendMessageOptions(disableNotification, fromBackground, schedulingState)
 
     }
 
-    infix fun postTo(chatId: Number): Message {
+    infix fun syncTo(chatId: Number): Message {
 
-        return context.post(SendMessage(chatId.toLong(), replyToMessageId, mkOptions(), replyMarkup, input))
+        return context.sync(SendMessage(chatId.toLong(), replyToMessageId, mkOptions(), replyMarkup, input))
 
     }
 
@@ -365,6 +416,44 @@ class MessageFactory(val context: TdAbsHandler) {
     infix fun send(handler: ((Message) -> Unit)): TdCallback<Message> {
 
         return context.send(SendMessage(chatId.toLong(), replyToMessageId, mkOptions(), replyMarkup, input), 1, handler)
+
+    }
+
+    fun syncEditTo(chatId: Number, messageId: Long): Message = context.sync(EditMessageText(chatId.toLong(), messageId, replyMarkup, input))
+
+    infix fun syncEditAt(chatId: Number): Message = context.sync(EditMessageText(chatId.toLong(), messageId.toLong(), replyMarkup, input))
+
+    infix fun syncEditTo(messageId: Long): Message = context.sync(EditMessageText(chatId.toLong(), messageId, replyMarkup, input))
+
+    infix fun syncEditTo(message: Message): Message = context.sync(EditMessageText(message.chatId, message.id, replyMarkup, input))
+
+    fun editTo(chatId: Number, messageId: Long): TdCallback<Message> {
+
+        return context.send(EditMessageText(chatId.toLong(), messageId, replyMarkup, input), 1)
+
+    }
+
+    infix fun editAt(chatId: Number): TdCallback<Message> {
+
+        return context.send(EditMessageText(chatId.toLong(), messageId.toLong(), replyMarkup, input), 1)
+
+    }
+
+    infix fun editTo(messageId: Long): TdCallback<Message> {
+
+        return context.send(EditMessageText(chatId.toLong(), messageId, replyMarkup, input), 1)
+
+    }
+
+    infix fun editTo(message: Message): TdCallback<Message> {
+
+        return context.send(EditMessageText(message.chatId, message.id, replyMarkup, input), 1)
+
+    }
+
+    infix fun edit(handler: ((Message) -> Unit)): TdCallback<Message> {
+
+        return context.send(EditMessageText(chatId.toLong(), messageId.toLong(), replyMarkup, input), 1, handler)
 
     }
 

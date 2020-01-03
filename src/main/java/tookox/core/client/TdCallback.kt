@@ -16,6 +16,14 @@ class TdCallback<T : TdApi.Object>(stackIgnore: Int = 0, private var handler: ((
 
     }
 
+    infix fun onFinish(handler: (T) -> Unit): TdCallback<T> {
+
+        this.handler = handler
+
+        return this
+
+    }
+
     infix fun onError(handler: (TdException) -> Unit): TdCallback<T> {
 
         this.errorHandler = handler

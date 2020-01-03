@@ -16,6 +16,13 @@ infix fun TdBotAbsHandler.makeAnswer(text: String): AnswerFactory {
 
 }
 
+infix fun TdBotAbsHandler.makeAlert(text: String): AnswerFactory {
+
+    return makeAnswer(text).also { it.showAlert = true }
+
+}
+
+
 infix fun TdBotAbsHandler.makeAnswerUrl(url: String): AnswerFactory {
 
     return AnswerFactory(this).also { it.url = url }
@@ -49,15 +56,15 @@ class AnswerFactory(val context: TdAbsHandler) {
 
     }
 
-    infix fun sendTo(queryId: Long) {
+    infix fun answerTo(queryId: Long) {
 
         context.sendRaw(TdApi.AnswerCallbackQuery(queryId, text, showAlert, url, cacheTime))
 
     }
 
-    infix fun postTo(queryId: Long) {
+    infix fun postAnswerTo(queryId: Long) {
 
-        context.post<TdApi.Ok>(TdApi.AnswerCallbackQuery(queryId, text, showAlert, url, cacheTime))
+        context.post(TdApi.AnswerCallbackQuery(queryId, text, showAlert, url, cacheTime))
 
     }
 

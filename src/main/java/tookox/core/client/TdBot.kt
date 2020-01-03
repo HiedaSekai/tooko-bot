@@ -138,7 +138,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
         if (!callbacks.containsKey(dataId)) {
 
-            sudo makeAnswer "Invalid Data #$id" sendTo id
+            sudo makeAnswer "Invalid Data #$id" answerTo id
 
             return
 
@@ -168,7 +168,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
         if (!callbacks.containsKey(dataId)) {
 
-            sudo makeAnswer "Invalid Data #$id" sendTo id
+            sudo makeAnswer "Invalid Data #$id" answerTo id
 
             return
 
