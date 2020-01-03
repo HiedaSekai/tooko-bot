@@ -3,7 +3,6 @@ package tookox.core.td
 import cn.hutool.core.builder.Builder
 import tooko.main.Fn
 import tooko.main.Lang
-import tooko.td.TdApi
 import tooko.td.TdApi.*
 import tooko.td.client.TdException
 import tookox.Launcher
@@ -36,7 +35,7 @@ infix fun TdAbsHandler.make(block: MessageFactory.() -> Unit): MessageFactory {
 
 infix fun TdAbsHandler.make(text: FormattedText): MessageFactory {
 
-    return make { input = inputText {} }
+    return make { input = inputText(text) }
 
 }
 
@@ -62,25 +61,25 @@ infix fun TdAbsHandler.make(ex: Throwable): MessageFactory {
 
 }
 
-fun inlineButton(block: InlineButtonBuilder.() -> Unit): TdApi.ReplyMarkupInlineKeyboard {
+fun inlineButton(block: InlineButtonBuilder.() -> Unit): ReplyMarkupInlineKeyboard {
 
     return InlineButtonBuilder().apply(block).build()
 
 }
 
-class InlineButtonBuilder : LinkedList<InlineButtonBuilder.Line>(), Builder<TdApi.ReplyMarkupInlineKeyboard> {
+class InlineButtonBuilder : LinkedList<InlineButtonBuilder.Line>(), Builder<ReplyMarkupInlineKeyboard> {
 
-    class Line : LinkedList<TdApi.InlineKeyboardButton>() {
+    class Line : LinkedList<InlineKeyboardButton>() {
 
         fun urlButton(text: String, url: String) {
 
-            add(TdApi.InlineKeyboardButton(text, InlineKeyboardButtonTypeUrl(url)))
+            add(InlineKeyboardButton(text, InlineKeyboardButtonTypeUrl(url)))
 
         }
 
         fun loginUrlButton(text: String, url: String, id: Int, forwardText: String) {
 
-            add(TdApi.InlineKeyboardButton(text, InlineKeyboardButtonTypeLoginUrl(url, id, forwardText)))
+            add(InlineKeyboardButton(text, InlineKeyboardButtonTypeLoginUrl(url, id, forwardText)))
 
         }
 
@@ -126,17 +125,17 @@ class InlineButtonBuilder : LinkedList<InlineButtonBuilder.Line>(), Builder<TdAp
 
     fun dataLine(text: String, id: Int, subId: Int, vararg dataArray: ByteArray) = newLine().dataButton(text, id, subId, *dataArray)
 
-    override fun build(): TdApi.ReplyMarkupInlineKeyboard {
+    override fun build(): ReplyMarkupInlineKeyboard {
 
-        return TdApi.ReplyMarkupInlineKeyboard(map { it.toTypedArray() }.toTypedArray())
+        return ReplyMarkupInlineKeyboard(map { it.toTypedArray() }.toTypedArray())
 
     }
 
 }
 
-fun removeKeyboard(isPersional: Boolean = true): TdApi.ReplyMarkupRemoveKeyboard {
+fun removeKeyboard(isPersional: Boolean = true): ReplyMarkupRemoveKeyboard {
 
-    return TdApi.ReplyMarkupRemoveKeyboard(isPersional)
+    return ReplyMarkupRemoveKeyboard(isPersional)
 
 }
 
@@ -146,15 +145,13 @@ fun forceReply(isPersional: Boolean = true): ReplyMarkupForceReply {
 
 }
 
-fun inputText(block: TextBuilder.() -> Unit): InputMessageText {
+fun inputText(textFormatted: FormattedText? = null, block: (TextBuilder.() -> Unit)? = null): InputMessageText {
 
-    return TextBuilder().apply(block).build()
+    return TextBuilder(textFormatted).apply(block).build()
 
 }
 
-class TextBuilder : Builder<InputMessageText> {
-
-    lateinit var textFormatted: FormattedText
+class TextBuilder(var textFormatted: FormattedText? = null) : Builder<InputMessageText> {
 
     var text by WriteOnlyField<String> {
 
@@ -189,20 +186,20 @@ class TextBuilder : Builder<InputMessageText> {
 class MessageFactory(val context: TdAbsHandler) {
 
     lateinit var chatId: Number
-    lateinit var input: TdApi.InputMessageContent
+    lateinit var input: InputMessageContent
 
     var replyToMessageId = 0L
     var disableNotification = false
     var fromBackground = false
-    var replyMarkup: TdApi.ReplyMarkup? = null
+    var replyMarkup: ReplyMarkup? = null
 
-    var schedulingState: TdApi.MessageSchedulingState? = null
+    var schedulingState: MessageSchedulingState? = null
 
     val WHEN_ONLINE = -1
 
     var sendAt by WriteOnlyField<Int> {
 
-        schedulingState = if (it > 0) TdApi.MessageSchedulingStateSendAtDate(it) else TdApi.MessageSchedulingStateSendWhenOnline()
+        schedulingState = if (it > 0) MessageSchedulingStateSendAtDate(it) else MessageSchedulingStateSendWhenOnline()
 
     }
 
@@ -292,13 +289,18 @@ class MessageFactory(val context: TdAbsHandler) {
 
     fun plainText(text: String, block: TextBuilder.() -> Unit = {}): InputMessageText {
 
-       rmattedText(text, arrayOfNulls<TdApi.TextEntity>(0))).apply(block).makeInput()
-
+        return inputText(text.asText, block)
     }
 
     fun htmlText(text: String, block: TextBuilder.() -> Unit = {}): InputMessageText {
 
-        return TextBuilder(context.post(TdApi.ParseTextEntities(text, TdApi.TextParseModeHTML()))).apply(block).makeInput()
+        return inputText(text.asHtml, block)
+
+    }
+
+    fun markdownText(text: String, block: TextBuilder.() -> Unit = {}): InputMessageText {
+
+        return inputText(text.asMarkdown, block)
 
     }
 
@@ -308,7 +310,7 @@ class MessageFactory(val context: TdAbsHandler) {
 
     }
 
-    class PhotoBuilder(val photo: TdApi.InputMessagePhoto) : CaptionSetter {
+    class PhotoBuilder(val photo: InputMessagePhoto) : CaptionSetter {
 
         var caption by WriteOnlyField(::set)
 
@@ -321,19 +323,9 @@ class MessageFactory(val context: TdAbsHandler) {
     }
 
 
-    fun photo(path: String, block: (PhotoBuilder.() -> Unit)? = null): TdApi.InputMessagePhoto {
+    fun photo(path: String, block: (PhotoBuilder.() -> Unit)? = null): InputMessagePhoto {
 
-        return TdApi.InputMessagePhoto(TdApi.InputFileLocal(path), null, null, 0, 0, null, 0).apply {
-
-            block?.invoke(PhotoBuilder((this)))
-
-        }
-
-    }
-
-    fun photoId(fileId: String, block: (PhotoBuilder.() -> Unit)? = null): TdApi.InputMessagePhoto {
-
-        return TdApi.InputMessagePhoto(TdApi.InputFileRemote(fileId), null, null, 0, 0, null, 0).apply {
+        return InputMessagePhoto(InputFileLocal(path), null, null, 0, 0, null, 0).apply {
 
             block?.invoke(PhotoBuilder((this)))
 
@@ -341,33 +333,37 @@ class MessageFactory(val context: TdAbsHandler) {
 
     }
 
-    fun markdownText(text: String, block: TextBuilder.() -> Unit = {}): InputMessageText {
+    fun photoId(fileId: String, block: (PhotoBuilder.() -> Unit)? = null): InputMessagePhoto {
 
-        return TextBuilder(context.post(TdApi.ParseTextEntities(text, TdApi.TextParseModeMarkdown()))).apply(block).makeInput()
+        return InputMessagePhoto(InputFileRemote(fileId), null, null, 0, 0, null, 0).apply {
 
-    }
+            block?.invoke(PhotoBuilder((this)))
 
-    private fun mkOptions(): TdApi.SendMessageOptions {
-
-        return TdApi.SendMessageOptions(disableNotification, fromBackground, schedulingState)
+        }
 
     }
 
-    infix fun postTo(chatId: Number): TdApi.Message {
+    private fun mkOptions(): SendMessageOptions {
 
-        return context.post(TdApi.SendMessage(chatId.toLong(), replyToMessageId, mkOptions(), replyMarkup, input))
-
-    }
-
-    infix fun sendTo(chatId: Number): TdCallback<TdApi.Message> {
-
-        return context.send(TdApi.SendMessage(chatId.toLong(), replyToMessageId, mkOptions(), replyMarkup, input), 1)
+        return SendMessageOptions(disableNotification, fromBackground, schedulingState)
 
     }
 
-    infix fun send(handler: ((TdApi.Message) -> Unit)): TdCallback<TdApi.Message> {
+    infix fun postTo(chatId: Number): Message {
 
-        return context.send(TdApi.SendMessage(chatId.toLong(), replyToMessageId, mkOptions(), replyMarkup, input), 1, handler)
+        return context.post(SendMessage(chatId.toLong(), replyToMessageId, mkOptions(), replyMarkup, input))
+
+    }
+
+    infix fun sendTo(chatId: Number): TdCallback<Message> {
+
+        return context.send(SendMessage(chatId.toLong(), replyToMessageId, mkOptions(), replyMarkup, input), 1)
+
+    }
+
+    infix fun send(handler: ((Message) -> Unit)): TdCallback<Message> {
+
+        return context.send(SendMessage(chatId.toLong(), replyToMessageId, mkOptions(), replyMarkup, input), 1, handler)
 
     }
 

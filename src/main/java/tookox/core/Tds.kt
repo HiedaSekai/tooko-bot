@@ -2,9 +2,6 @@ package tookox.core
 
 import tooko.td.TdApi
 import tookox.core.client.TdAbsHandler
-import tookox.core.client.TdClient
-
-fun async(block: () -> Unit) = TdClient.asyncPool.execute(block)
 
 val TdApi.User.displayName get() = "$firstName $lastName".trim()
 
@@ -281,7 +278,7 @@ fun TdAbsHandler.onEvent(event: TdApi.Object) {
 
     } else if (event is TdApi.UpdateNewInlineCallbackQuery) {
 
-        onNewInlineCallbackQuery(event.id, event.senderUserId, event.inlineMessageId, event.chatInstance, event.payload)
+        handleNewInlineCallbackQuery(event.id, event.senderUserId, event.inlineMessageId, event.chatInstance, event.payload)
 
     } else if (event is TdApi.UpdateNewShippingQuery) {
 

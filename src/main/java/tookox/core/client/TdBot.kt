@@ -120,6 +120,36 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
     }
 
+    override fun handleNewInlineCallbackQuery(id: Long, senderUserId: Int, inlineMessageId: String, chatInstance: Long, payload: CallbackQueryPayload) {
+
+        if (payload is CallbackQueryPayloadGame) return
+
+        var data = (payload as CallbackQueryPayloadData).data
+
+        if (data[0].toInt() == 120 && data[1].toInt() == -38) {
+
+            data = ZipUtil.unZlib(data)
+
+        }
+
+        val dataId = data[0] + 129
+
+        val subId = data[1].toInt()
+
+        if (!callbacks.containsKey(dataId)) {
+
+            sudo makeAnswer "Invalid Data #$id" sendTo id
+
+            return
+
+        }
+
+        callbacks[dataId]!!.onNewInlineCallbackQuery(senderUserId, inlineMessageId, id, subId, Fn.readData(data))
+
+        finishEvent()
+
+    }
+
     override fun handleNewCallbackQuery(id: Long, senderUserId: Int, chatId: Long, messageId: Long, chatInstance: Long, payload: CallbackQueryPayload) {
 
         if (payload is CallbackQueryPayloadGame) return
@@ -154,6 +184,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
     override fun onFunction(userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>) = Unit
     override fun onUndefinedFunction(userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>) = Unit
     override fun onNewCallbackQuery(userId: Int, chatId: Long, messageId: Long, queryId: Long, subId: Int, data: Array<ByteArray>) = Unit
+    override fun onNewInlineCallbackQuery(userId: Int, inlineMessageId: String, queryId: Long, subId: Int, data: Array<ByteArray>) = Unit
 
     companion object {
 

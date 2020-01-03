@@ -1,7 +1,6 @@
 package tookox.core
 
 import cn.hutool.core.util.StrUtil
-import tooko.main.Fn
 import java.math.BigInteger
 import kotlin.reflect.KProperty
 
