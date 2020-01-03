@@ -173,7 +173,7 @@ elif [ $1 == "update" ]; then
 
   echo ">> 检出更新 $(git rev-parse FETCH_HEAD)"
 
-  git reset --hard FETCH_HEAD &>/dev/null
+  git reset --hard FETCH_HEAD &> /dev/null
 
   mvn compile
 
