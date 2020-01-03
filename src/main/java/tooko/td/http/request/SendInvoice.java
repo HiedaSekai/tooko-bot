@@ -1,6 +1,6 @@
 package tooko.td.http.request;
 
-import tooko.td.http.model.request.LabeledPrice;
+import tooko.td.http.model.request.*;
 
 /**
  * Stas Parshin

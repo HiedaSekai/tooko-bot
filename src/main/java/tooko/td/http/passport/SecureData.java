@@ -1,7 +1,7 @@
 package tooko.td.http.passport;
 
-import java.io.Serializable;
-import java.lang.reflect.Field;
+import java.io.*;
+import java.lang.reflect.*;
 
 /**
  * Stas Parshin

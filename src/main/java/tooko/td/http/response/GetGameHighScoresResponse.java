@@ -1,8 +1,8 @@
 package tooko.td.http.response;
 
-import tooko.td.http.model.GameHighScore;
+import tooko.td.http.model.*;
 
-import java.util.Arrays;
+import java.util.*;
 
 /**
  * Stas Parshin

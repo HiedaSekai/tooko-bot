@@ -12,15 +12,12 @@
  */
 package com.baidu.aip.util;
 
-import cn.hutool.json.JSONObject;
+import cn.hutool.json.*;
 
 import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.BitSet;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.TimeZone;
-import java.util.regex.Pattern;
+import java.text.*;
+import java.util.*;
+import java.util.regex.*;
 
 public class Util {
 

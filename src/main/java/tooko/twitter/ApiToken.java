@@ -1,7 +1,7 @@
 package tooko.twitter;
 
-import tooko.main.Fn;
-import twitter4j.Twitter;
+import tooko.main.*;
+import twitter4j.*;
 
 public class ApiToken {
 

@@ -1,19 +1,13 @@
 package tooko.main.bots;
 
-import cn.hutool.core.util.NumberUtil;
-import tooko.main.Env;
-import tooko.main.Fn;
-import tooko.main.Lang;
-import tooko.td.TdApi.Message;
-import tooko.td.TdApi.ReplyMarkupRemoveKeyboard;
-import tooko.td.TdApi.User;
-import tooko.td.client.TdException;
-import tooko.td.client.TdFunction;
-import tooko.td.core.KeyboardArray;
+import cn.hutool.core.util.*;
+import tooko.main.*;
+import tooko.td.TdApi.*;
+import tooko.td.client.*;
+import tooko.td.core.*;
 import tooko.td.http.request.GetMe;
 
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.*;
 
 public class CreateBot extends TdFunction {
 

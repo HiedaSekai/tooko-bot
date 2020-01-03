@@ -1,24 +1,14 @@
 package tooko.twitter;
 
-import tooko.Launcher;
-import tooko.main.Env;
-import tooko.main.Fn;
-import tooko.main.Lang;
-import tooko.main.extras.LICENCE;
-import tooko.main.extras.SwitchLang;
-import tooko.td.TdApi.Message;
-import tooko.td.TdApi.User;
-import tooko.td.client.TdBot;
-import tooko.td.client.TdException;
-import tooko.twitter.account.AccountPanel;
-import tooko.twitter.account.TwitterLogin;
-import tooko.twitter.account.TwitterLogout;
+import tooko.*;
+import tooko.main.*;
+import tooko.main.extras.*;
+import tooko.td.TdApi.*;
+import tooko.td.client.*;
+import tooko.twitter.account.*;
 import tooko.twitter.actions.*;
-import tooko.twitter.follow.CheckTask;
-import tooko.twitter.follow.FollowConfig;
-import tooko.twitter.follow.FollowTask;
-import tooko.twitter.spam.ImageTest;
-import tooko.twitter.spam.UserTest;
+import tooko.twitter.follow.*;
+import tooko.twitter.spam.*;
 
 public class TwitterBot extends TdBot {
 

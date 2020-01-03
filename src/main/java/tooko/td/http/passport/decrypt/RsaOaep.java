@@ -1,13 +1,10 @@
 package tooko.td.http.passport.decrypt;
 
-import javax.crypto.Cipher;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.math.BigInteger;
-import java.security.KeyFactory;
-import java.security.PrivateKey;
-import java.security.spec.RSAPrivateCrtKeySpec;
+import javax.crypto.*;
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.security.spec.*;
 
 /**
  * Stas Parshin

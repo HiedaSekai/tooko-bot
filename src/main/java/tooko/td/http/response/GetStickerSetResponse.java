@@ -1,6 +1,6 @@
 package tooko.td.http.response;
 
-import tooko.td.http.model.StickerSet;
+import tooko.td.http.model.*;
 
 /**
  * Stas Parshin

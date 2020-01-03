@@ -1,9 +1,9 @@
 package tooko.td.core;
 
-import tooko.main.Fn;
-import tooko.td.TdApi.KeyboardButton;
+import tooko.main.*;
+import tooko.td.TdApi.*;
 
-import java.util.LinkedList;
+import java.util.*;
 
 public class KeyboardLine extends LinkedList<KeyboardButton> {
 

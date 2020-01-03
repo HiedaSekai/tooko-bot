@@ -1,7 +1,7 @@
 package tooko.td.http.passport;
 
-import tooko.td.http.request.BaseRequest;
-import tooko.td.http.response.BaseResponse;
+import tooko.td.http.request.*;
+import tooko.td.http.response.*;
 
 /**
  * Stas Parshin

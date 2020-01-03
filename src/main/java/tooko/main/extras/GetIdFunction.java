@@ -1,10 +1,9 @@
 package tooko.main.extras;
 
-import cn.hutool.core.util.NumberUtil;
-import tooko.main.Fn;
+import cn.hutool.core.util.*;
+import tooko.main.*;
 import tooko.td.TdApi.*;
-import tooko.td.client.TdException;
-import tooko.td.client.TdFunction;
+import tooko.td.client.*;
 
 public class GetIdFunction extends TdFunction {
 

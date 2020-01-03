@@ -1,7 +1,7 @@
 package tooko.td;
 
-import java.util.LinkedList;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.*;
+import java.util.concurrent.locks.*;
 
 public final class Client {
 

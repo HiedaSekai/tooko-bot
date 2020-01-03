@@ -1,19 +1,14 @@
 package tooko.pm.handlers;
 
-import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.util.NumberUtil;
-import cn.hutool.core.util.StrUtil;
-import tooko.main.Fn;
-import tooko.main.Lang;
-import tooko.main.bots.BotData;
-import tooko.pm.PmBot;
-import tooko.pm.PmData;
-import tooko.td.client.TdHandler;
-import tooko.td.core.LongLongArrayMap;
+import cn.hutool.core.collection.*;
+import cn.hutool.core.util.*;
+import tooko.main.*;
+import tooko.main.bots.*;
+import tooko.pm.*;
+import tooko.td.client.*;
+import tooko.td.core.*;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
 public class DeleteHandler extends TdHandler {
 

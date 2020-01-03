@@ -12,7 +12,7 @@
  */
 package com.baidu.aip.error;
 
-import cn.hutool.json.JSONObject;
+import cn.hutool.json.*;
 
 public enum AipError {
     SUCCESS("0", "Success"), IMAGE_SIZE_ERROR("SDK100", "image size error"), IMAGE_LENGTH_ERROR("SDK101", "image " + "length error"), IMAGE_READ_ERROR("SDK102", "read image file error"), USER_INFO_SIZE_ERROR("SDK103", "user_info size error"), GROUP_ID_FORMAT_ERROR("SDK104", "group_id format error"), GROUP_ID_SIZE_ERROR("SDK105", "group_id size error"), UID_FORMAT_ERROR("SDK106", "uid format error"), UID_SIZE_ERROR("SDK107", "uid size error"), NET_TIMEOUT_ERROR("SDK108", "connection or read data time " + "out"), UNSUPPORTED_IMAGE_FORMAT_ERROR("SDK109", "unsupported image format"), ILLEGAL_REQUEST_ID_ERROR("SDK110", "illegal request id found: "),     // 填充具体id

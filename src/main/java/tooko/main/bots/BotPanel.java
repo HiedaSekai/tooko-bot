@@ -1,15 +1,12 @@
 package tooko.main.bots;
 
-import tooko.main.Fn;
-import tooko.main.Lang;
-import tooko.td.TdApi.InlineKeyboardButton;
-import tooko.td.TdApi.Message;
-import tooko.td.TdApi.User;
-import tooko.td.client.TdHandler;
-import tooko.td.core.InlineArray;
+import tooko.main.*;
+import tooko.td.TdApi.*;
+import tooko.td.client.*;
+import tooko.td.core.*;
 
-import java.math.BigInteger;
-import java.util.List;
+import java.math.*;
+import java.util.*;
 
 public class BotPanel extends TdHandler {
 

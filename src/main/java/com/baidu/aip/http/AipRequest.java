@@ -12,15 +12,11 @@
  */
 package com.baidu.aip.http;
 
-import cn.hutool.json.JSONObject;
-import com.baidu.aip.util.AipClientConfiguration;
-import com.baidu.aip.util.Util;
+import cn.hutool.json.*;
+import com.baidu.aip.util.*;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.net.*;
+import java.util.*;
 
 public class AipRequest {
 

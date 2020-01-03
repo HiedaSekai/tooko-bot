@@ -1,8 +1,8 @@
 package tooko.td.http.response;
 
-import tooko.td.http.model.Update;
+import tooko.td.http.model.*;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * stas

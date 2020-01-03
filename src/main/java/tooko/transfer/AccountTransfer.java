@@ -1,12 +1,8 @@
 package tooko.transfer;
 
-import tooko.main.Fn;
-import tooko.main.Lang;
-import tooko.td.TdApi.Contact;
-import tooko.td.TdApi.Message;
-import tooko.td.TdApi.MessageContact;
-import tooko.td.TdApi.User;
-import tooko.td.client.TdHandler;
+import tooko.main.*;
+import tooko.td.TdApi.*;
+import tooko.td.client.*;
 
 public class AccountTransfer extends TdHandler {
 

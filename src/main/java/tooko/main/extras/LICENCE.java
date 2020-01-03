@@ -1,10 +1,8 @@
 package tooko.main.extras;
 
-import tooko.main.Fn;
-import tooko.main.Lang;
-import tooko.td.TdApi.Message;
-import tooko.td.TdApi.User;
-import tooko.td.client.TdHandler;
+import tooko.main.*;
+import tooko.td.TdApi.*;
+import tooko.td.client.*;
 
 public class LICENCE extends TdHandler {
 

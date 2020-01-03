@@ -3,7 +3,6 @@ package tookox.core
 import tooko.td.TdApi
 import tookox.core.client.TdAbsHandler
 import tookox.core.client.TdClient
-import java.lang.RuntimeException
 
 fun async(block: () -> Unit) = TdClient.asyncPool.execute(block)
 

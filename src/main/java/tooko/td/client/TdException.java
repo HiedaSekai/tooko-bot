@@ -1,6 +1,6 @@
 package tooko.td.client;
 
-import tooko.td.TdApi;
+import tooko.td.*;
 
 public class TdException extends RuntimeException {
 

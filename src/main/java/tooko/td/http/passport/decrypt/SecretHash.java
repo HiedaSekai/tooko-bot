@@ -1,8 +1,7 @@
 package tooko.td.http.passport.decrypt;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
+import java.security.*;
+import java.util.*;
 
 /**
  * Stas Parshin

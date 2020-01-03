@@ -1,13 +1,10 @@
 package tooko.pm.handlers;
 
-import tooko.main.Fn;
-import tooko.main.Lang;
-import tooko.main.bots.BotData;
-import tooko.pm.PmBot;
-import tooko.pm.PmData;
+import tooko.main.*;
+import tooko.main.bots.*;
+import tooko.pm.*;
 import tooko.td.TdApi.*;
-import tooko.td.client.TdException;
-import tooko.td.client.TdHandler;
+import tooko.td.client.*;
 
 public class EditHandler extends TdHandler {
 

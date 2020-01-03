@@ -12,10 +12,8 @@
  */
 package com.baidu.aip.http;
 
-import java.io.UnsupportedEncodingException;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.io.*;
+import java.util.*;
 
 public class AipResponse {
 

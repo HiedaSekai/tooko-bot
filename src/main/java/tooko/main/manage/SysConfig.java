@@ -1,7 +1,7 @@
 package tooko.main.manage;
 
-import tooko.main.update.UpdateTask;
-import tooko.td.core.CacheTable;
+import tooko.main.update.*;
+import tooko.td.core.*;
 
 public class SysConfig {
 

@@ -1,17 +1,12 @@
 package tooko.twitter;
 
-import tooko.main.Fn;
-import tooko.main.Lang;
-import tooko.td.TdApi.Message;
-import tooko.td.TdApi.User;
-import tooko.td.client.TdFunction;
-import tooko.td.client.TdHandler;
-import tooko.td.core.KeyboardArray;
-import tooko.td.core.KeyboardLine;
-import tooko.twitter.archives.UserA;
+import tooko.main.*;
+import tooko.td.TdApi.*;
+import tooko.td.client.*;
+import tooko.td.core.*;
+import tooko.twitter.archives.*;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public abstract class TwitterHandler extends TdFunction {
 

@@ -1,14 +1,10 @@
 package tooko.main.extras;
 
-import tooko.main.Fn;
-import tooko.main.Lang;
-import tooko.main.lang.ENG;
-import tooko.td.TdApi.FormattedText;
-import tooko.td.TdApi.Message;
-import tooko.td.TdApi.User;
-import tooko.td.client.TdException;
-import tooko.td.client.TdHandler;
-import tooko.td.core.InlineArray;
+import tooko.main.*;
+import tooko.main.lang.*;
+import tooko.td.TdApi.*;
+import tooko.td.client.*;
+import tooko.td.core.*;
 
 public class SwitchLang extends TdHandler {
 

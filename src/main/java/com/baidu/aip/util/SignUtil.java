@@ -12,13 +12,12 @@
  */
 package com.baidu.aip.util;
 
-import com.baidu.aip.exception.AipException;
+import com.baidu.aip.exception.*;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import javax.crypto.*;
+import javax.crypto.spec.*;
+import java.io.*;
+import java.security.*;
 
 public class SignUtil {
 

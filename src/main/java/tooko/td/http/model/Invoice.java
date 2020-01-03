@@ -1,6 +1,6 @@
 package tooko.td.http.model;
 
-import java.io.Serializable;
+import java.io.*;
 
 /**
  * Stas Parshin

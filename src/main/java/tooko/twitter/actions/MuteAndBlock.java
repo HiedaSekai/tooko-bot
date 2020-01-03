@@ -1,32 +1,21 @@
 package tooko.twitter.actions;
 
-import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.collection.*;
+import cn.hutool.core.io.*;
 import cn.hutool.core.lang.UUID;
-import cn.hutool.core.text.csv.CsvData;
-import cn.hutool.core.text.csv.CsvRow;
-import cn.hutool.core.text.csv.CsvUtil;
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.http.HtmlUtil;
-import cn.hutool.http.HttpUtil;
-import tooko.main.Env;
-import tooko.main.Fn;
-import tooko.main.Lang;
-import tooko.td.TdApi.Document;
-import tooko.td.TdApi.InputMessageDocument;
-import tooko.td.TdApi.Message;
+import cn.hutool.core.text.csv.*;
+import cn.hutool.core.util.*;
+import cn.hutool.http.*;
+import tooko.main.*;
 import tooko.td.TdApi.User;
-import tooko.td.client.TdException;
-import tooko.twitter.TwitterAccount;
-import tooko.twitter.TwitterCallback;
-import tooko.twitter.TwitterHandler;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
+import tooko.td.TdApi.*;
+import tooko.td.client.*;
+import tooko.twitter.*;
+import twitter4j.*;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.*;
+import java.util.concurrent.atomic.*;
 
 public class MuteAndBlock extends TwitterHandler {
 

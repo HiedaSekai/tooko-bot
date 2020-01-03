@@ -1,8 +1,8 @@
 package tooko.td.http.model;
 
-import com.google.gson.annotations.SerializedName;
+import com.google.gson.annotations.*;
 
-import java.io.Serializable;
+import java.io.*;
 
 /**
  * stas

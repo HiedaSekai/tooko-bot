@@ -1,20 +1,13 @@
 package tooko.twitter.spam;
 
-import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.core.util.StrUtil;
-import org.bson.codecs.pojo.annotations.BsonId;
-import tooko.main.utils.nsfw.NSFW;
-import tooko.main.utils.nsfw.NSRC;
-import tooko.main.utils.nsfw.TCRC;
-import tooko.main.utils.nsfw.TextCensor;
-import tooko.td.core.CacheTable;
-import tooko.td.core.Table;
-import twitter4j.MediaEntity;
-import twitter4j.Status;
-import twitter4j.URLEntity;
+import cn.hutool.core.util.*;
+import org.bson.codecs.pojo.annotations.*;
+import tooko.main.utils.nsfw.*;
+import tooko.td.core.*;
+import twitter4j.*;
 
-import java.io.IOException;
-import java.util.LinkedList;
+import java.io.*;
+import java.util.*;
 
 public class StatusR {
 

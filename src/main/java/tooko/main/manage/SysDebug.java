@@ -1,22 +1,16 @@
 package tooko.main.manage;
 
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.core.util.RuntimeUtil;
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONException;
-import cn.hutool.json.JSONObject;
-import tooko.Launcher;
-import tooko.main.Env;
-import tooko.main.Fn;
-import tooko.main.Lang;
-import tooko.td.TdApi;
+import cn.hutool.core.io.*;
+import cn.hutool.core.util.*;
+import cn.hutool.json.*;
+import tooko.*;
+import tooko.main.*;
+import tooko.td.*;
 import tooko.td.TdApi.*;
-import tooko.td.client.TdException;
-import tooko.td.client.TdFunction;
+import tooko.td.client.*;
 
 import java.io.File;
-import java.util.HashMap;
+import java.util.*;
 
 public class SysDebug extends TdFunction {
 

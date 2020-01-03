@@ -1,9 +1,9 @@
 package tooko.td.http.passport.decrypt;
 
-import com.google.gson.Gson;
-import tooko.td.http.passport.Credentials;
+import com.google.gson.*;
+import tooko.td.http.passport.*;
 
-import java.util.Arrays;
+import java.util.*;
 
 /**
  * Stas Parshin

@@ -12,21 +12,16 @@
  */
 package com.baidu.aip.client;
 
-import cn.hutool.json.JSONException;
-import cn.hutool.json.JSONObject;
-import com.baidu.aip.auth.CloudAuth;
-import com.baidu.aip.auth.DevAuth;
-import com.baidu.aip.error.AipError;
+import cn.hutool.json.*;
+import com.baidu.aip.auth.*;
+import com.baidu.aip.error.*;
 import com.baidu.aip.http.*;
-import com.baidu.aip.util.AipClientConfiguration;
-import com.baidu.aip.util.AipClientConst;
-import com.baidu.aip.util.SignUtil;
-import com.baidu.aip.util.Util;
+import com.baidu.aip.util.*;
 
-import java.io.UnsupportedEncodingException;
-import java.net.Proxy;
-import java.util.Calendar;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.io.*;
+import java.net.*;
+import java.util.*;
+import java.util.concurrent.atomic.*;
 
 public abstract class BaseClient {
 

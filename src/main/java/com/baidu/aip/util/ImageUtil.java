@@ -12,16 +12,11 @@
  */
 package com.baidu.aip.util;
 
-import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.stream.ImageInputStream;
-import javax.imageio.stream.MemoryCacheImageInputStream;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
+import javax.imageio.*;
+import javax.imageio.stream.*;
+import java.awt.image.*;
+import java.io.*;
+import java.util.*;
 
 public class ImageUtil {
 

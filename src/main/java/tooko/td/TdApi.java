@@ -1,6 +1,6 @@
 package tooko.td;
 
-import org.bson.codecs.pojo.annotations.BsonIgnore;
+import org.bson.codecs.pojo.annotations.*;
 
 /**
  * This class contains as static nested classes all other TDLib interface

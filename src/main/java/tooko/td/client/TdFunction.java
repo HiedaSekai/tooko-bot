@@ -1,7 +1,6 @@
 package tooko.td.client;
 
-import tooko.td.TdApi.Message;
-import tooko.td.TdApi.User;
+import tooko.td.TdApi.*;
 
 public abstract class TdFunction extends TdHandler {
 

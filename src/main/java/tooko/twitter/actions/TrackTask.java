@@ -1,21 +1,18 @@
 package tooko.twitter.actions;
 
-import org.bson.codecs.pojo.annotations.BsonId;
-import org.bson.conversions.Bson;
-import tooko.Launcher;
-import tooko.main.Fn;
-import tooko.main.Lang;
-import tooko.td.core.Table;
-import tooko.twitter.TwitterAccount;
-import tooko.twitter.archives.UserA;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
+import org.bson.codecs.pojo.annotations.*;
+import org.bson.conversions.*;
+import tooko.*;
+import tooko.main.*;
+import tooko.td.core.*;
+import tooko.twitter.*;
+import tooko.twitter.archives.*;
+import twitter4j.*;
 
 import java.util.*;
 
-import static com.mongodb.client.model.Filters.and;
-import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.Updates.set;
+import static com.mongodb.client.model.Filters.*;
+import static com.mongodb.client.model.Updates.*;
 
 
 public class TrackTask extends TimerTask {

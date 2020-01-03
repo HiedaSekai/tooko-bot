@@ -13,9 +13,7 @@
 package com.baidu.aip.util;
 
 
-import java.net.InetSocketAddress;
-import java.net.Proxy;
-import java.net.SocketAddress;
+import java.net.*;
 
 public class AipClientConfiguration {
 

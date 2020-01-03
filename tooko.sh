@@ -2,7 +2,11 @@
 
 LIBS_UPDATE="2020-01-01"
 
-info() { echo "I: $*"; }; error() { echo "E: $*";exit 1; }
+info() { echo "I: $*"; }
+error() {
+  echo "E: $*"
+  exit 1
+}
 
 if [ -x "$(command -v wget)" ]; then
 
@@ -121,13 +125,13 @@ EOF
 
 elif [ $1 == "run" ]; then
 
-  LOCAL_LIBS_VER="$(cat libs/.version 2> /dev/null)"
+  LOCAL_LIBS_VER="$(cat libs/.version 2>/dev/null)"
 
   if ! [[ $LOCAL_LIBS_VER == "$LIBS_UPDATE" ]]; then
 
     rm -rf libs/jni
 
-    echo $$LIBS_UPDATE > libs/.version
+    echo $$LIBS_UPDATE >libs/.version
 
   fi
 

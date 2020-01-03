@@ -1,23 +1,18 @@
 package tooko.main.extras;
 
-import cn.hutool.core.img.ImgUtil;
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.core.util.ZipUtil;
-import tooko.main.Env;
-import tooko.main.Fn;
+import cn.hutool.core.img.*;
+import cn.hutool.core.io.*;
+import cn.hutool.core.util.*;
 import tooko.main.Img;
-import tooko.main.Lang;
-import tooko.td.TdApi;
+import tooko.main.*;
+import tooko.td.*;
 import tooko.td.TdApi.*;
-import tooko.td.client.TdClient;
-import tooko.td.client.TdException;
-import tooko.td.client.TdHandler;
+import tooko.td.client.*;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
+import java.awt.image.*;
 import java.io.File;
-import java.util.HashMap;
+import java.util.*;
 
 public class StickerExport extends TdHandler {
 

@@ -1,20 +1,15 @@
 package tooko.twitter.spam;
 
-import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.core.util.StrUtil;
-import tooko.main.Fn;
-import tooko.main.Lang;
-import tooko.main.utils.nsfw.NSFW;
-import tooko.main.utils.nsfw.TCRC;
-import tooko.main.utils.nsfw.TextCensor;
-import tooko.td.TdApi;
-import tooko.twitter.TwitterAccount;
-import tooko.twitter.TwitterHandler;
-import tooko.twitter.archives.UserA;
+import cn.hutool.core.util.*;
+import tooko.main.*;
+import tooko.main.utils.nsfw.*;
+import tooko.td.*;
+import tooko.twitter.*;
+import tooko.twitter.archives.*;
 import twitter4j.*;
 
-import java.io.IOException;
-import java.util.LinkedList;
+import java.io.*;
+import java.util.*;
 
 public class UserTest extends TwitterHandler {
 

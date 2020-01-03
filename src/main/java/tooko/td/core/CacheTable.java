@@ -1,7 +1,6 @@
 package tooko.td.core;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class CacheTable<ID, T> extends Table<ID, T> {
 

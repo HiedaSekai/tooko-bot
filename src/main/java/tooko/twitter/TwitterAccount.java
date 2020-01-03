@@ -1,12 +1,12 @@
 package tooko.twitter;
 
-import org.bson.codecs.pojo.annotations.BsonId;
-import tooko.main.Fn;
-import tooko.td.core.Table;
-import tooko.twitter.archives.UserA;
-import twitter4j.Twitter;
+import org.bson.codecs.pojo.annotations.*;
+import tooko.main.*;
+import tooko.td.core.*;
+import tooko.twitter.archives.*;
+import twitter4j.*;
 
-import java.util.List;
+import java.util.*;
 
 public class TwitterAccount {
 

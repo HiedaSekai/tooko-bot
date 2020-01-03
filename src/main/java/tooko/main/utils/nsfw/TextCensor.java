@@ -1,9 +1,8 @@
 package tooko.main.utils.nsfw;
 
-import cn.hutool.json.JSONArray;
-import cn.hutool.json.JSONObject;
-import com.baidu.aip.contentcensor.AipContentCensor;
-import tooko.main.Env;
+import cn.hutool.json.*;
+import com.baidu.aip.contentcensor.*;
+import tooko.main.*;
 
 public abstract class TextCensor {
 

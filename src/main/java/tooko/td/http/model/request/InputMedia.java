@@ -1,10 +1,8 @@
 package tooko.td.http.model.request;
 
-import java.io.File;
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.io.*;
+import java.util.*;
+import java.util.concurrent.atomic.*;
 
 /**
  * Stas Parshin

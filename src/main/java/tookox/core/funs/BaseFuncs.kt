@@ -2,7 +2,6 @@ package tookox.core.funs
 
 import cn.hutool.core.util.NumberUtil
 import tooko.main.Lang
-import tooko.td.TdApi
 import tooko.td.TdApi.*
 import tookox.core.*
 import tookox.core.client.TdBotHandler

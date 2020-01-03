@@ -1,8 +1,6 @@
 package tooko.main.lang;
 
-import tooko.main.Env;
-import tooko.main.Fn;
-import tooko.main.Lang;
+import tooko.main.*;
 
 public class ENG extends Lang {
 

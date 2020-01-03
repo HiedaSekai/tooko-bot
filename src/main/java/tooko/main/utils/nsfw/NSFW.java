@@ -2,22 +2,17 @@ package tooko.main.utils.nsfw;
 
 
 import cn.hutool.core.codec.Base64;
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.thread.ThreadUtil;
-import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.crypto.digest.DigestUtil;
-import cn.hutool.http.Header;
-import cn.hutool.http.HttpResponse;
-import cn.hutool.http.HttpUtil;
-import cn.hutool.json.JSONArray;
-import cn.hutool.json.JSONObject;
-import cn.hutool.log.Log;
-import cn.hutool.log.LogFactory;
-import tooko.main.Env;
+import cn.hutool.core.io.*;
+import cn.hutool.core.thread.*;
+import cn.hutool.core.util.*;
+import cn.hutool.crypto.digest.*;
+import cn.hutool.http.*;
+import cn.hutool.json.*;
+import cn.hutool.log.*;
+import tooko.main.*;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.LinkedList;
+import java.io.*;
+import java.util.*;
 
 public class NSFW {
 

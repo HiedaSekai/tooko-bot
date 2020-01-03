@@ -1,23 +1,25 @@
 package tooko.td.client;
 
-import cn.hutool.core.thread.ThreadUtil;
-import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.core.thread.*;
+import cn.hutool.core.util.*;
 import cn.hutool.log.Log;
-import cn.hutool.log.StaticLog;
-import tooko.Launcher;
-import tooko.main.Fn;
-import tooko.main.Lang;
-import tooko.td.TdApi;
+import cn.hutool.log.*;
+import tooko.*;
+import tooko.main.*;
+import tooko.td.*;
+import tooko.td.TdApi.GetChat;
+import tooko.td.TdApi.Location;
+import tooko.td.TdApi.SendMessage;
+import tooko.td.TdApi.User;
 import tooko.td.TdApi.*;
-import tooko.td.core.LongLongArrayMap;
-import tooko.td.http.HttpApi;
-import tooko.td.http.request.BaseRequest;
-import tooko.td.http.response.BaseResponse;
-import twitter4j.TwitterException;
+import tooko.td.core.*;
+import tooko.td.http.*;
+import tooko.td.http.request.*;
+import tooko.td.http.response.*;
+import twitter4j.*;
 
 import java.lang.Object;
-import java.util.LinkedList;
-import java.util.TimerTask;
+import java.util.*;
 
 @SuppressWarnings("EmptyMethod")
 public class TdHandler {

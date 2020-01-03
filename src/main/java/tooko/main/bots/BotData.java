@@ -1,7 +1,7 @@
 package tooko.main.bots;
 
-import org.bson.codecs.pojo.annotations.BsonId;
-import tooko.td.core.CacheTable;
+import org.bson.codecs.pojo.annotations.*;
+import tooko.td.core.*;
 
 public class BotData {
 

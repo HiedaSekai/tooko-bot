@@ -12,16 +12,11 @@
  */
 package com.baidu.aip.auth;
 
-import cn.hutool.json.JSONObject;
-import com.baidu.aip.http.AipHttpClient;
-import com.baidu.aip.http.AipRequest;
-import com.baidu.aip.http.AipResponse;
-import com.baidu.aip.util.AipClientConfiguration;
-import com.baidu.aip.util.AipClientConst;
-import com.baidu.aip.util.Util;
+import cn.hutool.json.*;
+import com.baidu.aip.http.*;
+import com.baidu.aip.util.*;
 
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.net.*;
 
 public class DevAuth {
 

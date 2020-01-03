@@ -1,9 +1,8 @@
 package tooko.td.http.model.request;
 
-import tooko.td.http.request.ContentTypes;
+import tooko.td.http.request.*;
 
-import java.io.File;
-import java.io.Serializable;
+import java.io.*;
 
 /**
  * Stas Parshin

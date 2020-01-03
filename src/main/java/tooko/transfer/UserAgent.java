@@ -1,8 +1,7 @@
 package tooko.transfer;
 
 import tooko.td.TdApi.*;
-import tooko.td.client.TdClient;
-import tooko.td.client.TdOptions;
+import tooko.td.client.*;
 
 public abstract class UserAgent extends TdClient {
 

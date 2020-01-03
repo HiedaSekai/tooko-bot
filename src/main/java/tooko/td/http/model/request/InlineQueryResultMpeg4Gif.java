@@ -1,6 +1,6 @@
 package tooko.td.http.model.request;
 
-import java.io.Serializable;
+import java.io.*;
 
 /**
  * stas

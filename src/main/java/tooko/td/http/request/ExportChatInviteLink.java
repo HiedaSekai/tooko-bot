@@ -1,6 +1,6 @@
 package tooko.td.http.request;
 
-import tooko.td.http.response.StringResponse;
+import tooko.td.http.response.*;
 
 /**
  * Stas Parshin

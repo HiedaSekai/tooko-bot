@@ -1,18 +1,6 @@
 package tookox.core
 
-import cn.hutool.core.getter.OptNullBasicTypeFromObjectGetter
 import tooko.main.Env
-import java.util.*
-import kotlin.collections.HashMap
-
-@Suppress("UNCHECKED_CAST")
-class TypedMap(map: Any) : HashMap<String,Any>(map as Map<String,Any>), OptNullBasicTypeFromObjectGetter<String> {
-
-    override fun getObj(key: String, defaultValue: Any?): Any? = get(key) ?: defaultValue
-
-}
-
-fun Any.toTypedMap() = TypedMap(this)
 
 fun loadLanguages() {
 

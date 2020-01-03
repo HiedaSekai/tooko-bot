@@ -1,26 +1,19 @@
 package tooko.pm;
 
-import cn.hutool.core.io.FileUtil;
-import org.apache.commons.collections4.bidimap.DualHashBidiMap;
-import tooko.Launcher;
-import tooko.main.Fn;
-import tooko.main.Lang;
-import tooko.main.bots.BotData;
-import tooko.main.bots.BotImage;
-import tooko.main.extras.LICENCE;
-import tooko.pm.PmData.Payload;
-import tooko.pm.config.WelcomeConfig;
-import tooko.pm.handlers.ChatPanel;
-import tooko.pm.handlers.DeleteHandler;
-import tooko.pm.handlers.EditHandler;
-import tooko.td.TdApi.InputMessageContent;
-import tooko.td.TdApi.Message;
-import tooko.td.TdApi.User;
-import tooko.td.client.TdBot;
-import tooko.td.client.TdException;
+import cn.hutool.core.io.*;
+import org.apache.commons.collections4.bidimap.*;
+import tooko.*;
+import tooko.main.*;
+import tooko.main.bots.*;
+import tooko.main.extras.*;
+import tooko.pm.PmData.*;
+import tooko.pm.config.*;
+import tooko.pm.handlers.*;
+import tooko.td.TdApi.*;
+import tooko.td.client.*;
 
 import java.io.File;
-import java.util.HashSet;
+import java.util.*;
 
 public class PmBot extends TdBot {
 

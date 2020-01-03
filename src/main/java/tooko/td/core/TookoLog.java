@@ -1,17 +1,14 @@
 package tooko.td.core;
 
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.lang.Console;
-import cn.hutool.core.lang.Dict;
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.http.cookie.GlobalCookieManager;
-import cn.hutool.log.Log;
-import cn.hutool.log.LogFactory;
-import cn.hutool.log.dialect.console.ConsoleLog;
-import cn.hutool.log.level.Level;
-import tooko.Launcher;
-import tooko.main.Env;
-import tooko.main.Fn;
+import cn.hutool.core.date.*;
+import cn.hutool.core.lang.*;
+import cn.hutool.core.util.*;
+import cn.hutool.http.cookie.*;
+import cn.hutool.log.*;
+import cn.hutool.log.dialect.console.*;
+import cn.hutool.log.level.*;
+import tooko.*;
+import tooko.main.*;
 
 public class TookoLog extends ConsoleLog {
 

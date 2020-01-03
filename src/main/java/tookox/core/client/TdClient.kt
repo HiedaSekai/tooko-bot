@@ -1,6 +1,10 @@
 package tookox.core.client
 
 import cn.hutool.core.thread.ThreadUtil
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import tooko.main.Env
 import tooko.td.Client
 import tooko.td.TdApi
@@ -202,21 +206,27 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         }
 
-        while (!executedAtomicBoolean.get()) {
+        return runBlocking {
 
-            if (Env.STOP.get()) {
+            while (!executedAtomicBoolean.get()) {
 
-                throw TdException(Error(-1, "Server Stopped"))
+                if (Env.STOP.get()) {
+
+                    throw TdException(Error(-1, "Server Stopped"))
+
+                }
+
+                delay(100L)
 
             }
 
+            responseAtomicReference.get().apply {
+
+                if (this is TdException) throw this
+
+            } as T
+
         }
-
-        return responseAtomicReference.get().apply {
-
-            if (this is TdException) throw this
-
-        } as T
 
     }
 
@@ -264,7 +274,6 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
         val mainTimer = Timer("Mian Timer")
         val clients = LinkedList<TdClient>()
         val publicPool = ThreadPoolExecutor(1, 1, 30, TimeUnit.SECONDS, LinkedBlockingQueue())
-        val asyncPool = ThreadPoolExecutor(16, 16, 15, TimeUnit.SECONDS, LinkedBlockingQueue())
 
         val eventTask = Thread {
 
@@ -322,7 +331,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                             val callback = client.callbacks.remove(event.requestId)!!
 
-                            asyncPool.execute {
+                            GlobalScope.launch {
 
                                 try {
 
@@ -506,8 +515,6 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
     override fun onNewChosenInlineResult(senderUserId: Int, userLocation: Location, query: String, resultId: String, inlineMessageId: String) = Unit
 
     override fun handleNewCallbackQuery(id: Long, senderUserId: Int, chatId: Long, messageId: Long, chatInstance: Long, payload: CallbackQueryPayload) = Unit
-
-    override fun onNewInlineCallbackQuery(id: Long, senderUserId: Int, inlineMessageId: String, chatInstance: Long, payload: CallbackQueryPayload) = Unit
 
     override fun onNewShippingQuery(id: Long, senderUserId: Int, invoicePayload: String, shippingAddress: Address) = Unit
 

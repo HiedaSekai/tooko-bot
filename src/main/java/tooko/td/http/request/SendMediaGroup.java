@@ -1,9 +1,9 @@
 package tooko.td.http.request;
 
-import tooko.td.http.model.request.InputMedia;
-import tooko.td.http.response.MessagesResponse;
+import tooko.td.http.model.request.*;
+import tooko.td.http.response.*;
 
-import java.util.Map;
+import java.util.*;
 
 /**
  * Stas Parshin

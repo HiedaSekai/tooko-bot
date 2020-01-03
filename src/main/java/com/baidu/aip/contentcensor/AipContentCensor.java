@@ -12,23 +12,14 @@
  */
 package com.baidu.aip.contentcensor;
 
-import cn.hutool.json.JSONArray;
-import cn.hutool.json.JSONObject;
-import com.baidu.aip.client.BaseClient;
-import com.baidu.aip.error.AipError;
-import com.baidu.aip.http.AipRequest;
-import com.baidu.aip.http.EBodyFormat;
-import com.baidu.aip.http.Headers;
-import com.baidu.aip.http.HttpContentType;
-import com.baidu.aip.util.Base64Util;
-import com.baidu.aip.util.ImageUtil;
-import com.baidu.aip.util.Util;
+import cn.hutool.json.*;
+import com.baidu.aip.client.*;
+import com.baidu.aip.error.*;
+import com.baidu.aip.http.*;
+import com.baidu.aip.util.*;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 
 public class AipContentCensor extends BaseClient {
 

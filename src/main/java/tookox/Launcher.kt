@@ -1,9 +1,9 @@
 package tookox
 
+import cn.hutool.core.getter.OptNullBasicTypeFromObjectGetter
 import cn.hutool.core.io.FileUtil
 import cn.hutool.core.util.StrUtil
 import cn.hutool.json.JSONException
-import cn.hutool.json.JSONObject
 import cn.hutool.log.LogFactory
 import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings
@@ -26,10 +26,12 @@ import tooko.td.client.TdClient.EventTask
 import tooko.td.core.TookoLog
 import tooko.twitter.ApiToken
 import tooko.twitter.TwitterBot
-import tookox.core.*
 import tookox.core.client.TdBot
+import tookox.core.defaultLog
 import tookox.core.funs.BaseFuncs
 import tookox.core.funs.LICENCE
+import tookox.core.funs.StickerExport
+import tookox.core.loadLanguages
 import tookox.core.td.make
 import java.io.File
 import java.lang.Thread.UncaughtExceptionHandler
@@ -50,6 +52,8 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
     override fun onLoad() {
 
         addHandler(BaseFuncs())
+
+        addHandler(StickerExport())
 
         addHandler(LICENCE())
 
@@ -82,9 +86,19 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
     override fun onUndefinedFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
 
         sudo make "function $function not found :(" sendTo chatId
+
     }
 
     companion object {
+
+        @Suppress("UNCHECKED_CAST")
+        class TypedMap(map: Any) : HashMap<String, Any>(map as Map<String, Any>), OptNullBasicTypeFromObjectGetter<String> {
+
+            override fun getObj(key: String, defaultValue: Any?): Any? = get(key) ?: defaultValue
+
+        }
+
+        fun Any.toTypedMap() = TypedMap(this)
 
         lateinit var INSTANCE: Launcher
 
@@ -367,7 +381,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
             val fields = arrayOf(
                     "db_address", "db_port", "db_name",
                     "use_service", "service",
-                    "bot_token","def_lang",
+                    "bot_token", "def_lang",
                     "public_bot_create", "bot_create_max",
                     "admins", "log_channel",
                     "twitter",

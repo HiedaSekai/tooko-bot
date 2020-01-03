@@ -1,23 +1,16 @@
 package tooko.main.manage;
 
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.util.NumberUtil;
-import cn.hutool.core.util.RuntimeUtil;
-import tooko.Launcher;
-import tooko.main.Env;
-import tooko.main.Fn;
-import tooko.main.Lang;
-import tooko.main.update.UpdateTask;
-import tooko.td.TdApi.InlineKeyboardButton;
-import tooko.td.TdApi.Message;
-import tooko.td.TdApi.ReplyMarkupInlineKeyboard;
-import tooko.td.TdApi.User;
-import tooko.td.client.TdClient;
-import tooko.td.client.TdException;
-import tooko.td.client.TdFunction;
+import cn.hutool.core.io.*;
+import cn.hutool.core.util.*;
+import tooko.*;
+import tooko.main.*;
+import tooko.main.update.*;
+import tooko.td.TdApi.*;
+import tooko.td.client.*;
 
+import java.io.File;
 import java.io.*;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 public class SysManage extends TdFunction {
 

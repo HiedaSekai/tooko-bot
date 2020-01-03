@@ -152,8 +152,6 @@ open class TdHandler : TdAbsHandler {
 
     override fun handleNewCallbackQuery(id: Long, senderUserId: Int, chatId: Long, messageId: Long, chatInstance: Long, payload: TdApi.CallbackQueryPayload) = Unit
 
-    override fun onNewInlineCallbackQuery(id: Long, senderUserId: Int, inlineMessageId: String, chatInstance: Long, payload: TdApi.CallbackQueryPayload) = Unit
-
     override fun onNewShippingQuery(id: Long, senderUserId: Int, invoicePayload: String, shippingAddress: TdApi.Address) = Unit
 
     override fun onNewPreCheckoutQuery(id: Long, senderUserId: Int, currency: String, totalAmount: Long, invoicePayload: ByteArray, shippingOptionId: String, orderInfo: TdApi.OrderInfo) = Unit

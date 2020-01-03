@@ -1,8 +1,8 @@
 package tooko.main;
 
-import tooko.main.lang.ENG;
-import tooko.td.TdApi;
-import tooko.td.core.CacheTable;
+import tooko.main.lang.*;
+import tooko.td.*;
+import tooko.td.core.*;
 
 public class Lang {
 

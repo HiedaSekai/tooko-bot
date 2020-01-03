@@ -1,10 +1,9 @@
 package tooko.main.update;
 
-import tooko.main.Env;
-import tooko.main.Fn;
-import tooko.main.manage.SysConfig;
-import tooko.td.TdApi.Message;
-import tooko.td.client.TdHandler;
+import tooko.main.*;
+import tooko.main.manage.*;
+import tooko.td.TdApi.*;
+import tooko.td.client.*;
 
 public class UpdateHook extends TdHandler {
 

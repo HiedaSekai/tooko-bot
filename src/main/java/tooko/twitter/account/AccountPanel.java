@@ -1,13 +1,10 @@
 package tooko.twitter.account;
 
-import tooko.main.Fn;
-import tooko.main.Lang;
-import tooko.td.TdApi.Message;
-import tooko.td.TdApi.User;
-import tooko.td.core.InlineArray;
-import tooko.twitter.TwitterAccount;
-import tooko.twitter.TwitterHandler;
-import tooko.twitter.archives.UserA;
+import tooko.main.*;
+import tooko.td.TdApi.*;
+import tooko.td.core.*;
+import tooko.twitter.*;
+import tooko.twitter.archives.*;
 
 public class AccountPanel extends TwitterHandler {
 

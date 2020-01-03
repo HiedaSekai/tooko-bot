@@ -1,29 +1,20 @@
 package tooko.twitter.archives;
 
-import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.http.HtmlUtil;
-import com.mongodb.client.model.UpdateOptions;
-import org.bson.codecs.pojo.annotations.BsonId;
-import org.bson.conversions.Bson;
-import tooko.main.Fn;
-import tooko.main.Lang;
-import tooko.td.core.Table;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.URLEntity;
-import twitter4j.User;
+import cn.hutool.core.collection.*;
+import cn.hutool.core.date.*;
+import cn.hutool.core.util.*;
+import cn.hutool.http.*;
+import com.mongodb.client.model.*;
+import org.bson.codecs.pojo.annotations.*;
+import org.bson.conversions.*;
+import tooko.main.*;
+import tooko.td.core.*;
+import twitter4j.*;
 
-import java.util.Date;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
+import java.util.*;
 
-import static com.mongodb.client.model.Filters.and;
-import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.Updates.addToSet;
-import static com.mongodb.client.model.Updates.set;
+import static com.mongodb.client.model.Filters.*;
+import static com.mongodb.client.model.Updates.*;
 
 public class UserA {
 

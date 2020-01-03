@@ -1,17 +1,15 @@
 package tooko.td.http;
 
-import cn.hutool.core.net.URLEncoder;
-import cn.hutool.core.util.CharsetUtil;
-import cn.hutool.http.HttpRequest;
-import cn.hutool.http.HttpResponse;
-import cn.hutool.http.HttpUtil;
-import com.google.gson.Gson;
-import tooko.td.client.TdException;
-import tooko.td.http.request.BaseRequest;
-import tooko.td.http.response.BaseResponse;
+import cn.hutool.core.net.*;
+import cn.hutool.core.util.*;
+import cn.hutool.http.*;
+import com.google.gson.*;
+import tooko.td.client.*;
+import tooko.td.http.request.*;
+import tooko.td.http.response.*;
 
-import java.io.File;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 
 public class HttpApi {
 

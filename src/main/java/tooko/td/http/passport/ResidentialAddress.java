@@ -1,6 +1,6 @@
 package tooko.td.http.passport;
 
-import java.io.Serializable;
+import java.io.*;
 
 /**
  * Stas Parshin

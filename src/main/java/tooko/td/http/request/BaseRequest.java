@@ -1,11 +1,10 @@
 package tooko.td.http.request;
 
-import com.google.gson.Gson;
-import tooko.td.http.response.BaseResponse;
+import com.google.gson.*;
+import tooko.td.http.response.*;
 
-import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.Map;
+import java.lang.reflect.*;
+import java.util.*;
 
 /**
  * stas

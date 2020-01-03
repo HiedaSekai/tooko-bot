@@ -1,8 +1,8 @@
 package tooko.td.http.passport;
 
-import tooko.td.http.passport.decrypt.Decrypt;
+import tooko.td.http.passport.decrypt.*;
 
-import java.io.Serializable;
+import java.io.*;
 
 /**
  * Stas Parshin

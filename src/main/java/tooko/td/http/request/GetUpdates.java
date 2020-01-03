@@ -1,6 +1,6 @@
 package tooko.td.http.request;
 
-import tooko.td.http.response.GetUpdatesResponse;
+import tooko.td.http.response.*;
 
 /**
  * stas

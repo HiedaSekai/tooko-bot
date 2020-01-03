@@ -1,7 +1,6 @@
 package tookox.core.client
 
 import tooko.td.TdApi
-import java.lang.IllegalStateException
 
 interface TdBotAbsHandler : TdAbsHandler {
 

@@ -1,10 +1,9 @@
 package tooko.main.extras;
 
-import cn.hutool.core.util.StrUtil;
-import tooko.main.Fn;
-import tooko.main.Lang;
+import cn.hutool.core.util.*;
+import tooko.main.*;
 import tooko.td.TdApi.*;
-import tooko.td.client.TdHandler;
+import tooko.td.client.*;
 
 public class ForwardInfo extends TdHandler {
 

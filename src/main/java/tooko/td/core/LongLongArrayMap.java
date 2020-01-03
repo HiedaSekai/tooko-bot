@@ -1,7 +1,6 @@
 package tooko.td.core;
 
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.*;
 
 public class LongLongArrayMap extends HashMap<Long, LinkedList<Long>> {
 

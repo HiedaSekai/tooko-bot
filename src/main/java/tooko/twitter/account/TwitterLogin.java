@@ -1,23 +1,16 @@
 package tooko.twitter.account;
 
-import tooko.main.Env;
-import tooko.main.Fn;
-import tooko.main.Lang;
-import tooko.td.TdApi.Message;
-import tooko.td.TdApi.ReplyMarkupRemoveKeyboard;
+import tooko.main.*;
 import tooko.td.TdApi.User;
-import tooko.td.client.TdHandler;
-import tooko.td.core.KeyboardArray;
-import tooko.twitter.ApiToken;
-import tooko.twitter.TwitterAccount;
-import tooko.twitter.archives.UserA;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.auth.AccessToken;
-import twitter4j.auth.RequestToken;
+import tooko.td.TdApi.*;
+import tooko.td.client.*;
+import tooko.td.core.*;
+import tooko.twitter.*;
+import tooko.twitter.archives.*;
+import twitter4j.*;
+import twitter4j.auth.*;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.*;
 
 public class TwitterLogin extends TdHandler {
 

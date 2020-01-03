@@ -1,16 +1,12 @@
 package tooko.main.update;
 
-import cn.hutool.core.util.RuntimeUtil;
-import tooko.Launcher;
-import tooko.main.Env;
-import tooko.main.Fn;
-import tooko.main.Lang;
-import tooko.td.client.TdClient;
+import cn.hutool.core.util.*;
+import tooko.*;
+import tooko.main.*;
+import tooko.td.client.*;
 
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
+import java.util.*;
+import java.util.concurrent.*;
 
 public class UpdateTask extends TimerTask {
 

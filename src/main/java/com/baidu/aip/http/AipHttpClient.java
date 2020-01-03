@@ -13,12 +13,8 @@
 package com.baidu.aip.http;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.Proxy;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
+import java.net.*;
+import java.util.*;
 
 public class AipHttpClient {
 

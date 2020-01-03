@@ -1,14 +1,12 @@
 package tooko.twitter.spam;
 
-import cn.hutool.core.util.ArrayUtil;
-import org.bson.codecs.pojo.annotations.BsonId;
-import org.bson.codecs.pojo.annotations.BsonIgnore;
-import tooko.main.utils.nsfw.NSFW;
-import tooko.main.utils.nsfw.NSRC;
-import tooko.td.core.Table;
-import tooko.twitter.archives.UserA;
+import cn.hutool.core.util.*;
+import org.bson.codecs.pojo.annotations.*;
+import tooko.main.utils.nsfw.*;
+import tooko.td.core.*;
+import tooko.twitter.archives.*;
 
-import java.io.IOException;
+import java.io.*;
 
 import static com.mongodb.client.model.Filters.*;
 

@@ -12,15 +12,10 @@
  */
 package com.baidu.aip.auth;
 
-import com.baidu.aip.http.AipRequest;
-import com.baidu.aip.util.AipClientConst;
-import com.baidu.aip.util.SignUtil;
-import com.baidu.aip.util.Util;
+import com.baidu.aip.http.*;
+import com.baidu.aip.util.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeSet;
+import java.util.*;
 
 public class CloudAuth {
 

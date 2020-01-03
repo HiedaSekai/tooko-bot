@@ -1,15 +1,11 @@
 package tooko.td.http.login;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.math.BigInteger;
-import java.net.URI;
-import java.security.InvalidKeyException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.TreeSet;
+import javax.crypto.*;
+import javax.crypto.spec.*;
+import java.math.*;
+import java.net.*;
+import java.security.*;
+import java.util.*;
 
 /**
  * Stas Parshin

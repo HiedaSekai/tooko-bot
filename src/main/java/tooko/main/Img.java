@@ -1,15 +1,13 @@
 package tooko.main;
 
-import cn.hutool.core.img.ImgUtil;
-import cn.hutool.core.util.RandomUtil;
-import net.coobird.thumbnailator.Thumbnails;
+import cn.hutool.core.img.*;
+import cn.hutool.core.util.*;
+import net.coobird.thumbnailator.*;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.util.concurrent.ThreadLocalRandom;
+import java.awt.image.*;
+import java.io.*;
+import java.util.concurrent.*;
 
 /*
 import org.jfree.chart.ChartFactory;

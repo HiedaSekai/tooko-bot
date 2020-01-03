@@ -1,12 +1,9 @@
 package tooko.twitter.actions;
 
-import tooko.main.Fn;
-import tooko.main.Lang;
-import tooko.td.TdApi;
-import tooko.td.TdApi.SendMessage;
-import tooko.twitter.TwitterAccount;
-import tooko.twitter.TwitterCallback;
-import tooko.twitter.TwitterHandler;
+import tooko.main.*;
+import tooko.td.*;
+import tooko.td.TdApi.*;
+import tooko.twitter.*;
 
 public class TrackConfig extends TwitterHandler {
 

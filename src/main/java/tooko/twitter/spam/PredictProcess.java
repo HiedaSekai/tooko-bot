@@ -1,16 +1,13 @@
 package tooko.twitter.spam;
 
-import cn.hutool.core.thread.ThreadUtil;
-import cn.hutool.core.util.StrUtil;
-import tooko.main.Env;
-import tooko.main.utils.nsfw.NSRC;
-import tooko.main.utils.nsfw.TCRC;
+import cn.hutool.core.thread.*;
+import cn.hutool.core.util.*;
+import tooko.main.*;
+import tooko.main.utils.nsfw.*;
 import twitter4j.*;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.*;
+import java.util.concurrent.atomic.*;
 
 public class PredictProcess {
 

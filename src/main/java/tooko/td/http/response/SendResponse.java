@@ -1,6 +1,6 @@
 package tooko.td.http.response;
 
-import tooko.td.http.model.Message;
+import tooko.td.http.model.*;
 
 /**
  * stas

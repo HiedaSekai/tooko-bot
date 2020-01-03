@@ -1,19 +1,13 @@
 package tooko.pm.config;
 
-import cn.hutool.core.map.MapUtil;
-import cn.hutool.core.util.StrUtil;
-import tooko.main.Fn;
-import tooko.main.Lang;
-import tooko.pm.PmBot;
-import tooko.pm.PmData;
-import tooko.td.TdApi.InputMessageContent;
-import tooko.td.TdApi.Message;
-import tooko.td.TdApi.User;
-import tooko.td.client.TdHandler;
+import cn.hutool.core.map.*;
+import cn.hutool.core.util.*;
+import tooko.main.*;
+import tooko.pm.*;
+import tooko.td.TdApi.*;
+import tooko.td.client.*;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
 public class WelcomeConfig extends TdHandler {
 

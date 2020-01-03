@@ -1,30 +1,22 @@
 package tooko.main;
 
-import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.collection.*;
+import cn.hutool.core.io.*;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.*;
-import cn.hutool.http.HtmlUtil;
+import cn.hutool.http.*;
+import tooko.td.TdApi.User;
 import tooko.td.TdApi.*;
-import tooko.td.client.TdHandler;
-import tooko.td.core.InlineArray;
-import tooko.td.core.KeyboardArray;
-import tookox.Launcher;
-import twitter4j.IDs;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
-import twitter4j.conf.ConfigurationBuilder;
+import tooko.td.client.*;
+import tooko.td.core.*;
+import tookox.*;
+import twitter4j.*;
+import twitter4j.conf.*;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.math.BigInteger;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.io.*;
+import java.math.*;
+import java.util.*;
 
 public class Fn {
 
@@ -34,11 +26,11 @@ public class Fn {
     public static long d = 24 * h;
     public static long M = 30 * d;
 
-     public static byte[] num2byte(Number integer) {
+    public static byte[] num2byte(Number integer) {
 
-         return BigInteger.valueOf(integer.longValue()).toByteArray();
+        return BigInteger.valueOf(integer.longValue()).toByteArray();
 
-     }
+    }
 
     public static long byte2long(byte[] integer) {
 
@@ -821,7 +813,7 @@ public class Fn {
 
     public static SendMessage sendMessage(long chatId, long replyToMessageId, boolean enableNotification, boolean fromBackground, ReplyMarkup replyMarkup, InputMessageContent inputMessageContent) {
 
-        return new SendMessage(chatId, replyToMessageId, new SendMessageOptions(!enableNotification, fromBackground,null), replyMarkup, inputMessageContent);
+        return new SendMessage(chatId, replyToMessageId, new SendMessageOptions(!enableNotification, fromBackground, null), replyMarkup, inputMessageContent);
 
     }
 
@@ -1024,7 +1016,7 @@ public class Fn {
 
     public static ForwardMessages forwardMessages(long chatId, long fromChatId, long... messageIds) {
 
-        return new ForwardMessages(chatId, fromChatId, messageIds,null, false, false, false);
+        return new ForwardMessages(chatId, fromChatId, messageIds, null, false, false, false);
 
     }
 
@@ -1496,17 +1488,17 @@ public class Fn {
 
     }
 
-        public static String parseTwitterException(Lang L, TwitterException ex) {
+    public static String parseTwitterException(Lang L, TwitterException ex) {
 
-            String info = L.TWI_ERR;
+        String info = L.TWI_ERR;
 
-            errorCode:
-            {
+        errorCode:
+        {
 
-                switch (ex.getErrorCode()) {
+            switch (ex.getErrorCode()) {
 
-                    case 32:
-                        info += L.TWI_ERR_32;
+                case 32:
+                    info += L.TWI_ERR_32;
                     break errorCode;
                 case 50:
                     info += L.TWI_ERR_50;

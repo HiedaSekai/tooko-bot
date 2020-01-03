@@ -1,7 +1,7 @@
 package tooko.td.http.request;
 
-import tooko.td.http.model.MaskPosition;
-import tooko.td.http.response.BaseResponse;
+import tooko.td.http.model.*;
+import tooko.td.http.response.*;
 
 /**
  * Stas Parshin

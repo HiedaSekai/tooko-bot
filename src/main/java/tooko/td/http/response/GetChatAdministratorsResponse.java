@@ -1,8 +1,8 @@
 package tooko.td.http.response;
 
-import tooko.td.http.model.ChatMember;
+import tooko.td.http.model.*;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Stas Parshin

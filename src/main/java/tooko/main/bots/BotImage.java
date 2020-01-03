@@ -1,13 +1,11 @@
 package tooko.main.bots;
 
-import cn.hutool.core.util.RuntimeUtil;
-import tooko.main.Env;
-import tooko.pm.PmBot;
-import tooko.pm.PmData;
-import tooko.td.client.TdBot;
-import tooko.td.client.TdException;
+import cn.hutool.core.util.*;
+import tooko.main.*;
+import tooko.pm.*;
+import tooko.td.client.*;
 
-import java.util.HashMap;
+import java.util.*;
 
 public class BotImage {
 

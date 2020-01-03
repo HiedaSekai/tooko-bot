@@ -1,13 +1,13 @@
 package tooko.td.http.passport;
 
-import com.google.gson.Gson;
-import tooko.td.http.HttpApi;
+import com.google.gson.*;
+import tooko.td.http.*;
 import tooko.td.http.model.File;
-import tooko.td.http.passport.decrypt.Decrypt;
-import tooko.td.http.request.GetFile;
+import tooko.td.http.passport.decrypt.*;
+import tooko.td.http.request.*;
 
-import java.io.Serializable;
-import java.util.Arrays;
+import java.io.*;
+import java.util.*;
 
 /**
  * Stas Parshin

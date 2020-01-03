@@ -1,13 +1,9 @@
 package org.bson.codecs.pojo;
 
-import org.bson.BsonReader;
-import org.bson.BsonWriter;
-import org.bson.codecs.Codec;
-import org.bson.codecs.DecoderContext;
-import org.bson.codecs.EncoderContext;
+import org.bson.*;
+import org.bson.codecs.*;
 
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.*;
 
 public class SubClassPropertyCodecProvider<T> implements PropertyCodecProvider, Codec<T> {
 

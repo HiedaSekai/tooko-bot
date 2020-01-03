@@ -12,8 +12,7 @@
  */
 package com.baidu.aip.contentcensor;
 
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.*;
 
 public class ContentCensorConsts {
 

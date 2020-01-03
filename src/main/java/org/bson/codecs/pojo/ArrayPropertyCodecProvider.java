@@ -1,14 +1,10 @@
 package org.bson.codecs.pojo;
 
-import cn.hutool.core.util.ArrayUtil;
-import org.bson.BsonReader;
-import org.bson.BsonType;
-import org.bson.BsonWriter;
-import org.bson.codecs.Codec;
-import org.bson.codecs.DecoderContext;
-import org.bson.codecs.EncoderContext;
+import cn.hutool.core.util.*;
+import org.bson.*;
+import org.bson.codecs.*;
 
-import java.util.LinkedList;
+import java.util.*;
 
 public class ArrayPropertyCodecProvider<E> implements PropertyCodecProvider {
 

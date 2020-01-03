@@ -1,12 +1,9 @@
 package tooko.twitter.account;
 
-import tooko.main.Fn;
-import tooko.main.Lang;
-import tooko.td.TdApi.Message;
-import tooko.td.TdApi.User;
-import tooko.twitter.TwitterAccount;
-import tooko.twitter.TwitterHandler;
-import tooko.twitter.actions.TrackTask;
+import tooko.main.*;
+import tooko.td.TdApi.*;
+import tooko.twitter.*;
+import tooko.twitter.actions.*;
 
 public class TwitterLogout extends TwitterHandler {
 

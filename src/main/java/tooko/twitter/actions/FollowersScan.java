@@ -1,26 +1,19 @@
 package tooko.twitter.actions;
 
-import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.thread.ThreadUtil;
-import cn.hutool.core.util.StrUtil;
-import tooko.main.Env;
-import tooko.main.Fn;
-import tooko.main.Lang;
-import tooko.main.utils.nsfw.NSRC;
-import tooko.main.utils.nsfw.TCRC;
-import tooko.td.TdApi;
-import tooko.td.client.TdClient;
-import tooko.twitter.TwitterAccount;
-import tooko.twitter.TwitterHandler;
-import tooko.twitter.archives.UserA;
-import tooko.twitter.spam.StatusR;
-import tooko.twitter.spam.UserR;
+import cn.hutool.core.collection.*;
+import cn.hutool.core.thread.*;
+import cn.hutool.core.util.*;
+import tooko.main.*;
+import tooko.main.utils.nsfw.*;
+import tooko.td.*;
+import tooko.td.client.*;
+import tooko.twitter.*;
+import tooko.twitter.archives.*;
+import tooko.twitter.spam.*;
 import twitter4j.*;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.*;
+import java.util.concurrent.atomic.*;
 
 public class FollowersScan extends TwitterHandler {
 

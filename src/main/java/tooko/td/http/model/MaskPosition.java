@@ -1,8 +1,8 @@
 package tooko.td.http.model;
 
-import com.google.gson.Gson;
+import com.google.gson.*;
 
-import java.io.Serializable;
+import java.io.*;
 
 /**
  * Stas Parshin

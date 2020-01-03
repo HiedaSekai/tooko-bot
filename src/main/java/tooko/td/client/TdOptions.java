@@ -1,7 +1,7 @@
 package tooko.td.client;
 
-import tooko.main.Env;
-import tooko.td.TdApi;
+import tooko.main.*;
+import tooko.td.*;
 
 public class TdOptions {
 

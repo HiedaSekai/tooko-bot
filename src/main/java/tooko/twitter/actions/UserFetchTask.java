@@ -1,14 +1,11 @@
 package tooko.twitter.actions;
 
-import cn.hutool.core.collection.CollectionUtil;
-import com.mongodb.client.MongoCursor;
-import tooko.main.Fn;
-import tooko.twitter.TwitterAccount;
-import tooko.twitter.archives.UserA;
-import twitter4j.ResponseList;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.User;
+import cn.hutool.core.collection.*;
+import com.mongodb.client.*;
+import tooko.main.*;
+import tooko.twitter.*;
+import tooko.twitter.archives.*;
+import twitter4j.*;
 
 import java.util.*;
 

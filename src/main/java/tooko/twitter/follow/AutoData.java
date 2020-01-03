@@ -1,10 +1,10 @@
 package tooko.twitter.follow;
 
-import org.bson.codecs.pojo.annotations.BsonId;
-import org.jetbrains.annotations.Nullable;
-import tooko.td.core.Table;
+import org.bson.codecs.pojo.annotations.*;
+import org.jetbrains.annotations.*;
+import tooko.td.core.*;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class AutoData {
 

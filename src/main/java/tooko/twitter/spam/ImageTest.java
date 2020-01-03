@@ -1,17 +1,14 @@
 package tooko.twitter.spam;
 
-import cn.hutool.core.util.ArrayUtil;
-import tooko.main.Fn;
-import tooko.main.utils.nsfw.NSFW;
-import tooko.td.TdApi;
-import tooko.twitter.TwitterAccount;
-import tooko.twitter.TwitterHandler;
-import twitter4j.MediaEntity;
-import twitter4j.Status;
-import twitter4j.TwitterException;
+import cn.hutool.core.util.*;
+import tooko.main.*;
+import tooko.main.utils.nsfw.*;
+import tooko.td.*;
+import tooko.twitter.*;
+import twitter4j.*;
 
-import java.io.IOException;
-import java.util.LinkedList;
+import java.io.*;
+import java.util.*;
 
 public class ImageTest extends TwitterHandler {
 

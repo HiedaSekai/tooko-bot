@@ -1,10 +1,10 @@
 package tooko.td.http.model;
 
-import tooko.td.http.model.request.InlineKeyboardMarkup;
-import tooko.td.http.passport.PassportData;
+import tooko.td.http.model.request.*;
+import tooko.td.http.passport.*;
 
-import java.io.Serializable;
-import java.util.Arrays;
+import java.io.*;
+import java.util.*;
 
 /**
  * stas
