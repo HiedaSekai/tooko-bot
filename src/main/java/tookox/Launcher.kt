@@ -70,15 +70,11 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
         if (!allBots.isEmpty()) {
 
-            defaultLog.debug("加载 托管机器人 (๑•̀ㅂ•́)√")
-
             for (data in allBots) BotImage.start(data)
 
         }
 
         EventTask().start()
-
-        super.onLogin()
 
     }
 
@@ -366,6 +362,8 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             INSTANCE.start()
 
+            defaultLog.debug("加载语言文件")
+
             try {
 
                 LibsLoader.loadLanguages()
@@ -373,6 +371,8 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
             } catch (ex: Exception) {
 
                 defaultLog.error(ex)
+
+                INSTANCE.destroy()
 
                 exitProcess(100)
 

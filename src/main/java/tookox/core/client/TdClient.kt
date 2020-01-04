@@ -135,6 +135,8 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                 defaultLog.debug("认证完成 : ${me.displayName}")
 
+                authing = false
+
                 authed = true
 
                 for (handler in handlers) handler.onLogin()
@@ -409,11 +411,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     override fun onLoad() = Unit
 
-    override fun onLogin() {
-
-        authing = false
-
-    }
+    override fun onLogin() = Unit
 
     override fun onLogout() = Unit
 
