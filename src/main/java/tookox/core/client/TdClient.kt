@@ -276,6 +276,15 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     }
 
+    override fun <T : Object> syncRaw(function: TdApi.Function): T {
+
+        check(!executionLock.isLocked) { "ClientActor is destroyed" }
+
+        @Suppress("UNCHECKED_CAST")
+        return td.execute(function) as T
+
+    }
+
     private fun send(requestId: Long, function: TdApi.Function) {
 
         check(!executionLock.isLocked) { "Client is destroyed" }

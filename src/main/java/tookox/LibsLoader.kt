@@ -122,7 +122,7 @@ object LibsLoader {
 
                                 }
 
-                            }.also(results::addLast)
+                            }.also(results::addLast).await()
 
                         }
 

@@ -159,19 +159,20 @@ interface TdAbsHandler {
 
     fun onPoll(poll: Poll)
 
-    infix fun sendRaw(function: TdApi.Function) = sudo.sendRaw(function)
-
     fun <T : Object> send(function: TdApi.Function, stackIgnore: Int = 0, block: ((T) -> Unit)? = null): TdCallback<T> = sudo.send(function, stackIgnore, block)
 
     infix fun sendUnit(function: TdApi.Function) = sudo.send<Object>(function)
+
+    infix fun sendRaw(function: TdApi.Function) = sudo.sendRaw(function)
 
     infix fun <T : Object> sync(function: TdApi.Function): T = sudo.sync(function)
 
     infix fun syncUnit(function: TdApi.Function) = sudo.sync<Object>(function)
 
-    val String.asHtml: FormattedText get() = sync(ParseTextEntities(this, TextParseModeHTML()))
+    infix fun <T : Object> syncRaw(function: TdApi.Function) = sudo.syncRaw<T>(function)
 
-    val String.asMarkdown: FormattedText get() = sync(ParseTextEntities(this, TextParseModeMarkdown()))
+    val String.asHtml: FormattedText get() = syncRaw(ParseTextEntities(this, TextParseModeHTML()))
+    val String.asMarkdown: FormattedText get() = syncRaw(ParseTextEntities(this, TextParseModeMarkdown()))
 
     val Message.delete get() = DeleteMessages(chatId, longArrayOf(id), true)
     val Message.deleteForSelf get() = DeleteMessages(chatId, longArrayOf(id), false)
