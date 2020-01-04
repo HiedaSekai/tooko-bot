@@ -130,11 +130,11 @@ class StickerExport : TdBotHandler() {
 
                                     sticker.sticker = sync(DownloadFile(stickerFile.id, 1, 0, 0, true))
 
-                                    count.incrementAndGet()
+                                    val c = count.incrementAndGet()
 
                                     sudo make {
 
-                                        inputHtml = L.STICKER_EXPORT_DL.input(it.title, count, it.stickers.size)
+                                        inputHtml = L.STICKER_EXPORT_DL.input(it.title, c, it.stickers.size)
 
                                     } syncEditTo stat
 
@@ -143,6 +143,7 @@ class StickerExport : TdBotHandler() {
                                     deferreds.add(it)
 
                                 }
+
                             }
 
                             deferreds.awaitAll()

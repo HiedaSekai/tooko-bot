@@ -47,9 +47,13 @@ fun mkLog(name: String): Log {
 
                     with(Launcher.INSTANCE) {
 
-                        sudo make logMsg syncTo Env.LOG_CHANNEL
+                        sudo make logMsg sendTo Env.LOG_CHANNEL
 
                     }
+
+                }.onFailure {
+
+                    Console.error(it, "report log failed")
 
                 }
 
