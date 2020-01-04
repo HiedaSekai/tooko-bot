@@ -102,7 +102,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
         postAdd.add(this@Launcher)
 
-        while (!status) delay(10)
+        while (!status) delay(100)
 
     }
 
@@ -356,7 +356,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             INSTANCE.start()
 
-            // defaultLog.debug("加载语言文件")
+            defaultLog.debug("加载语言文件")
 
             try {
 
