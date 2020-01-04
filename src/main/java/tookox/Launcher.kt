@@ -388,7 +388,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
                 defaultLog.info("远子 基于 Apache License 2.0 协议发行")
 
-                val time = (System.currentTimeMillis() - startAt).toDouble() / 100
+                val time = (System.currentTimeMillis() - startAt).toDouble() / 1000
 
                 defaultLog.info("启动完成! 用时 ${time}s. 如需帮助, 请查看位于 GitLab Repository Wiki 的文档.")
 
