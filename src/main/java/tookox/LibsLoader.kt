@@ -95,7 +95,17 @@ object LibsLoader {
 
                     if (field.type == String::class.java) {
 
-                        field.set(language, (field.get(language) as String).asMarkdown.asHtml)
+                        val resStr = field.get(language) as String
+
+                        runCatching {
+
+                            field.set(language, resStr.asMarkdown.asHtml)
+
+                        }.onFailure { ex ->
+
+                            defaultLog.warn(ex, "语言文件 ${it.name} 中 ${field.name} 解析错误 : $resStr, 已跳过.")
+
+                        }
 
                     }
 
