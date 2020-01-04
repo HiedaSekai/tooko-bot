@@ -5,7 +5,7 @@ import chat.tamtam.botapi.model.*
 import cn.hutool.core.thread.ThreadUtil
 import tooko.main.Env
 import tookox.core.applyIf
-import tookox.core.createLog
+import tookox.core.mkLog
 import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -69,7 +69,7 @@ open class TtBot(val botToken: String) : TtHandler() {
 
         private val clients = LinkedList<TtBot>()
 
-        val log = createLog("TT")
+        val log = mkLog("TT")
 
         val postAdd = LinkedList<TtBot>()
         val postDestroy = LinkedList<TtBot>()

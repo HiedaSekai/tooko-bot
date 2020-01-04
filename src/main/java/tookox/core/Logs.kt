@@ -16,20 +16,20 @@ object TookoLog : LogFactory("Tooko Log") {
 
     override fun createLog(name: String?): Log {
 
-        return if (name != null) createLog(name) else defaultLog
+        return if (name != null) mkLog(name) else defaultLog
 
     }
 
     override fun createLog(clazz: Class<*>?): Log {
 
-        return if (clazz != null) createLog(clazz.simpleName) else defaultLog
+        return if (clazz != null) mkLog(clazz.simpleName) else defaultLog
 
     }
 }
 
-val defaultLog = createLog("Tooko")
+val defaultLog = mkLog("Tooko")
 
-fun createLog(name: String): Log {
+fun mkLog(name: String): Log {
 
     return object : ConsoleLog(name) {
 
