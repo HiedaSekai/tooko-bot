@@ -43,7 +43,7 @@ STICKER_CAPTION: |
   贴纸表情: `{}`
   贴纸集: `{}`
 STICKER_EXPORT: 下载贴纸集
-STICKER_EXPORT_DL: 正在下载贴纸集  **{} ** {} / {}
+STICKER_EXPORT_DL: 正在下载贴纸集  **{}** {} / {}
 STICKER_DL_FAILED: |
   &贴纸下载失败 _(:з」∠)_ ( {} )
 STICKER_EXPORT_PACK: |
@@ -102,8 +102,10 @@ BOT_CREATED: 机器人已创建. 请点 [此](https://t.me/{}?start=-init) 配�
 PM_WELCOME: 你好！
 
   你可以通过这个机器人联系我(们).
-PM_ON_START: {} 开启了私聊机器人 ({}).
-PM_ON_PAYLOAD: {} 使用 payload '{}'开启了机器人.
+PM_ON_START: |
+  {} 开启了私聊机器人 ({}).
+PM_ON_PAYLOAD: |
+  {} 使用 payload '{}'开启了机器人.
 PM_OK: 机器人正常运行. 请勿停用本机器人, 否则将无法收到消息.  [私聊机器人文档](https://gitlab.com/tooko/tooko-bot/wikis/Bots/PmBot)
 PM_NO_WELCOME_MESSAGE: 默认欢迎消息
 PM_WELCOME_MESSAGE: |
