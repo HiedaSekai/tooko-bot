@@ -1,5 +1,6 @@
 package tookox
 
+import cn.hutool.json.JSONObject
 import com.google.gson.Gson
 import org.yaml.snakeyaml.Yaml
 import tooko.main.Env
@@ -120,7 +121,7 @@ object LibsLoader {
 
                 }
 
-                defaultLog.trace(Gson().toJson(language))
+                defaultLog.trace(JSONObject(Gson().toJson(language)).toStringPretty())
 
                 Lang.ALL[language.LANG_ID] = language
 
