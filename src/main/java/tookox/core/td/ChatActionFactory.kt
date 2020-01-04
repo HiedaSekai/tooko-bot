@@ -35,9 +35,9 @@ class ChatActionFactory(val context: TdAbsHandler, val action: ChatAction) {
 
     }
 
-    infix fun postTo(chatId: Number) {
+    infix fun syncTo(chatId: Number) {
 
-        context.async(SendChatAction(chatId.toLong(), action))
+        context.syncUnit(SendChatAction(chatId.toLong(), action))
 
     }
 

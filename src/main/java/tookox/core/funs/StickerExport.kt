@@ -68,6 +68,8 @@ class StickerExport : TdBotHandler() {
 
         val L = Lang.get(userId)
 
+        sudo make UploadingPhoto syncTo chatId
+
         sudo make {
 
             inputPhoto = stickerFile.local.path
@@ -189,7 +191,7 @@ class StickerExport : TdBotHandler() {
 
                         sudo make L.STICKER_EXPORT_SEND syncEditTo stat
 
-                        sudo make UploadingPhoto postTo chatId
+                        sudo make UploadingPhoto syncTo chatId
 
                         sudo make {
 
