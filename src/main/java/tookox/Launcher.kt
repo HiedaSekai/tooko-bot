@@ -398,7 +398,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
                 val time = (System.currentTimeMillis() - startAt).toDouble() / 100
 
-                defaultLog.info("启动完成! 用时 $time s. 如需帮助, 请查看位于 GitLab Repository Wiki 的文档.")
+                defaultLog.info("启动完成! 用时 ${time}s. 如需帮助, 请查看位于 GitLab Repository Wiki 的文档.")
 
             }
 
