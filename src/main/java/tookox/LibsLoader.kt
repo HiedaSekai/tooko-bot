@@ -92,8 +92,6 @@ object LibsLoader {
 
         languages.forEach {
 
-            defaultLog.trace("加载 ${it.name}")
-
             runCatching {
 
                 val results = LinkedList<Deferred<*>>()
