@@ -30,7 +30,7 @@ import tooko.td.client.TdClient.EventTask
 import tooko.td.client.TdException
 import tooko.twitter.ApiToken
 import tooko.twitter.TwitterBot
-import tookox.core.TookoLog
+import tookox.core.TookoLogFactory
 import tookox.core.client.TdBot
 import tookox.core.defaultLog
 import tookox.core.funs.BaseFuncs
@@ -155,7 +155,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             }
 
-            LogFactory.setCurrentLogFactory(TookoLog)
+            LogFactory.setCurrentLogFactory(TookoLogFactory)
 
             defaultLog.info("正在加载 (๑•̀ㅂ•́)√")
 
