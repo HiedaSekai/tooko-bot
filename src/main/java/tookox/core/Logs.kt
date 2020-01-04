@@ -60,7 +60,7 @@ fun mkLog(name: String) = object : ConsoleLog(name) {
 
                 with(Launcher.INSTANCE) {
 
-                    sudo make logMsg sendTo Env.LOG_CHANNEL
+                    sudo make logMsg syncTo Env.LOG_CHANNEL
 
                 }
 

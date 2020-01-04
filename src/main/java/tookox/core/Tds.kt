@@ -63,7 +63,7 @@ val FormattedText.asHtml: String
 
             index = it.offset + it.length
 
-            val entityText = text.substring(it.offset, it.length)
+            val entityText = text.substring(it.offset, index)
 
             htmlText += when (it.type) {
 
