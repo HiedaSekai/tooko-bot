@@ -155,9 +155,11 @@ object LibsLoader {
 
             }.apply {
 
-                defaultLog.warn("找不到设定的默认语言 : ${Env.DEF_LANG} , 已重置为 $LANG_NAME")
+                defaultLog.warn("找不到设定的默认语言 : ${Env.DEF_LANG} , 已重置为 $LANG_NAME.\n\n" +
+                        "所有可用语言: ${Lang.BY_NAME.keys.joinToString()}")
 
             }
+
         }
 
     }
