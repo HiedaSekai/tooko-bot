@@ -118,7 +118,6 @@ public class Lang {
     public String RESTARTING;
     public String UPDATING;
     public String SERVER_CLOSING;
-    public String UPDATE_FAILED;
     public String ERR_PERSIONAL;
     public String ERR_LIMIT;
     public String ERR_LOGGING_OUT;
