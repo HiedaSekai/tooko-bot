@@ -27,7 +27,7 @@ object TookoLog : LogFactory("Tooko Log") {
     }
 }
 
-val defaultLog = mkLog("Tooko")
+val defaultLog = mkLog("")
 
 fun mkLog(name: String): Log {
 
@@ -37,7 +37,7 @@ fun mkLog(name: String): Log {
 
             val dict = Dict.create().set("date", DateUtil.now()).set("level", level.toString()).set("name", name).set("msg", StrUtil.format(format, *arguments))
 
-            val logFormat = "[{level}] {name}: {msg}"
+            val logFormat = if (name.isBlank()) "[{level}] {msg}" else "[{level}] {name}: {msg}"
 
             val logMsg = StrUtil.format(logFormat, dict)
 
