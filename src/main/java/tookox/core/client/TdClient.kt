@@ -131,7 +131,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                 me = it
 
-                defaultLog.debug("认证完成 : ${me.displayName}")
+                //defaultLog.debug("认证完成 : ${me.displayName}")
 
                 authing = false
 

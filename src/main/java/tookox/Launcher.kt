@@ -143,17 +143,21 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             mongoLogger.level = Level.WARNING
 
+            // disable mongo logs
+
             LoggerFactory::class.java.getDeclaredField("INITIALIZATION_STATE").apply {
 
                 isAccessible = true
 
                 set(null, 4)
 
+                // Disable slf4j warnning
+
             }
 
             LogFactory.setCurrentLogFactory(TookoLog)
 
-            defaultLog.debug("正在加载 (๑•̀ㅂ•́)√")
+            defaultLog.info("正在加载 (๑•̀ㅂ•́)√")
 
             try {
 
@@ -364,8 +368,6 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
             INSTANCE = Launcher()
 
             INSTANCE.start()
-
-            defaultLog.debug("加载语言文件")
 
             try {
 
