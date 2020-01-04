@@ -16,6 +16,7 @@ import org.bson.codecs.pojo.ArrayPropertyCodecProvider
 import org.bson.codecs.pojo.PojoCodecProvider
 import org.bson.codecs.pojo.PropertyCodecProvider
 import org.bson.codecs.pojo.SubClassPropertyCodecProvider
+import org.slf4j.LoggerFactory
 import org.yaml.snakeyaml.Yaml
 import tooko.main.Env
 import tooko.main.Lang
@@ -141,6 +142,14 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
             val mongoLogger = Logger.getLogger("org.mongodb.driver")
 
             mongoLogger.level = Level.WARNING
+
+            LoggerFactory::class.java.getField("INITIALIZATION_STATE").apply {
+
+                isAccessible = true
+
+                set(null, 4)
+
+            }
 
             LogFactory.setCurrentLogFactory(TookoLog)
 
