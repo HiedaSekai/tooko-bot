@@ -75,9 +75,9 @@ object LibsLoader {
 
     fun loadLanguages() {
 
-        val dir = Env.getFile("")
+        val dir = Env.getFile("i18n")
 
-        val languages = dir.listFiles()
+        val languages = dir.listFiles { _, name -> name.endsWith(".yml") }
 
         if (languages == null || languages.isEmpty()) error("找不到语言文件.")
 
