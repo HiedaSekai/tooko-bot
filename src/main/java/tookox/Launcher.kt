@@ -143,7 +143,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             mongoLogger.level = Level.WARNING
 
-            LoggerFactory::class.java.getField("INITIALIZATION_STATE").apply {
+            LoggerFactory::class.java.getDeclaredField("INITIALIZATION_STATE").apply {
 
                 isAccessible = true
 
