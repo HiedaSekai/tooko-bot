@@ -23,11 +23,13 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
     var functions = HashMap<String, TdBotAbsHandler>()
     var callbacks = HashMap<Int, TdBotAbsHandler>()
 
-    override fun onAuthorizationState(authorizationState: AuthorizationState) {
+    override fun onAuthorizationState(authorizationState: AuthorizationState) = runBlocking {
 
         super.onAuthorizationState(authorizationState)
 
         if (authorizationState is AuthorizationStateWaitPhoneNumber) {
+
+            while (!authing) delay(100)
 
             sendUnit(CheckAuthenticationBotToken(botToken)).onError(::onAuthorizationFailed)
 

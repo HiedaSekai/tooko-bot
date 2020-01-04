@@ -112,7 +112,7 @@ public class TdClient extends TdHandler {
 
             }
 
-            log.debug("认证完成 : {}", Fn.displayName(me));
+            //log.debug("认证完成 : {}", Fn.displayName(me));
 
             hasAuth.set(true);
 

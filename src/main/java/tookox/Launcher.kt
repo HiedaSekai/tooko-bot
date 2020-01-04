@@ -9,6 +9,8 @@ import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings
 import com.mongodb.MongoException
 import com.mongodb.client.MongoClients
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import org.bson.codecs.configuration.CodecRegistries
 import org.bson.codecs.pojo.ArrayPropertyCodecProvider
 import org.bson.codecs.pojo.PojoCodecProvider
@@ -24,6 +26,7 @@ import tooko.main.utils.nsfw.TCRC
 import tooko.td.Log
 import tooko.td.TdApi
 import tooko.td.client.TdClient.EventTask
+import tooko.td.client.TdException
 import tooko.twitter.ApiToken
 import tooko.twitter.TwitterBot
 import tookox.core.TookoLog
@@ -42,7 +45,6 @@ import java.util.logging.Logger
 import kotlin.system.exitProcess
 
 class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
-
 
     override fun uncaughtException(t: Thread, e: Throwable) {
 
@@ -76,6 +78,8 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
         EventTask().start()
 
+        super.onLogin()
+
     }
 
     override fun onLaunch(userId: Int, chatId: Long, message: TdApi.Message) {
@@ -87,6 +91,40 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
     override fun onUndefinedFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
 
         sudo make "function $function not found :(" sendTo chatId
+
+    }
+
+    override fun start() = runBlocking {
+
+        check(!status) { "已经启动." }
+
+        clearHandlers()
+
+        addHandler(this@Launcher)
+
+        postAdd.add(this@Launcher)
+
+        while (!status) delay(10)
+
+        eventTask.start()
+
+    }
+
+    override fun onDestroy() {
+
+        eventTask.interrupt()
+
+    }
+
+    override fun onAuthorizationFailed(ex: TdException) {
+
+        super.onAuthorizationFailed(ex)
+
+        defaultLog.error(ex, "本体认证失败.")
+
+        INSTANCE.destroy()
+
+        exitProcess(100)
 
     }
 
@@ -107,6 +145,8 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
         @JvmStatic
         fun main(args: Array<String>) {
+
+            val startAt = System.currentTimeMillis()
 
             val mongoLogger = Logger.getLogger("org.mongodb.driver")
 
@@ -217,18 +257,6 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
             Env.BOT_TOKEN = config.getStr("bot_token")
 
             Env.DEF_LANG = config.getStr("def_lang")
-
-            try {
-
-                LibsLoader.loadLanguages()
-
-            } catch (ex: Exception) {
-
-                defaultLog.error(ex)
-
-                exitProcess(100)
-
-            }
 
             Env.ADMINS = (config.get("admins") as List<*>).map { (it as Number).toInt() }.toIntArray()
 
@@ -344,7 +372,35 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             INSTANCE.start()
 
-            eventTask.start()
+            try {
+
+                LibsLoader.loadLanguages()
+
+            } catch (ex: Exception) {
+
+                defaultLog.error(ex)
+
+                exitProcess(100)
+
+            }
+
+            INSTANCE.authing = true
+
+            runBlocking {
+
+                while (INSTANCE.authing) delay(100)
+
+            }
+
+            if (INSTANCE.authed) {
+
+                defaultLog.info("远子 基于 Apache License 2.0 协议发行")
+
+                val time = (System.currentTimeMillis() - startAt).toDouble() / 100
+
+                defaultLog.info("启动完成! 用时 $time s. 如需帮助, 请查看位于 GitLab Repository Wiki 的文档.")
+
+            }
 
         }
 

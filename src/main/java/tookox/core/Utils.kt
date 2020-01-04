@@ -2,6 +2,8 @@ package tookox.core
 
 import cn.hutool.core.util.StrUtil
 import java.math.BigInteger
+import java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.atomic.AtomicInteger
 import kotlin.reflect.KMutableProperty0
 import kotlin.reflect.KProperty
 import kotlin.reflect.KProperty0
@@ -41,3 +43,9 @@ class WriteOnlyField<T>(val setter: (T) -> Unit) {
 
 operator fun <F> KProperty0<F>.getValue(thisRef: Any?, property: KProperty<*>): F = get()
 operator fun <F> KMutableProperty0<F>.setValue(thisRef: Any?, property: KProperty<*>, value: F) = set(value)
+
+operator fun AtomicBoolean.getValue(thisRef: Any?, property: KProperty<*>): Boolean = get()
+operator fun AtomicBoolean.setValue(thisRef: Any?, property: KProperty<*>, value: Boolean) = set(value)
+
+operator fun AtomicInteger.getValue(thisRef: Any?, property: KProperty<*>): Int = get()
+operator fun AtomicInteger.setValue(thisRef: Any?, property: KProperty<*>, value: Int) = set(value)

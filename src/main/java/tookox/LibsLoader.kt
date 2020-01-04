@@ -6,8 +6,6 @@ import tooko.main.Lang
 import tookox.core.asHtml
 import tookox.core.defaultLog
 import tookox.core.td.asMarkdown
-import kotlin.reflect.full.declaredMemberProperties
-import kotlin.reflect.jvm.javaField
 
 object LibsLoader {
 
@@ -91,15 +89,15 @@ object LibsLoader {
 
             runCatching {
 
-                val language = yaml.loadAs(it.inputStream(), Lang::class.java)
+                val language = yaml.loadAs(it.inputStream(), Lang::class.java).apply {
 
-                language::class.declaredMemberProperties.forEach {
+                    this::class.java.fields.forEach { field ->
 
-                    val field = it.javaField!!
+                        if (field.type == String::class.java) {
 
-                    if (field.type == String::class.java) {
+                            field.set(it, (field.get(it) as String).asMarkdown.asHtml)
 
-                        field.set(language, (field.get(language) as String).asMarkdown.asHtml)
+                        }
 
                     }
 
@@ -108,8 +106,6 @@ object LibsLoader {
                 Lang.ALL[language.LANG_ID] = language
 
                 Lang.BY_NAME[language.LANG_NAME] = language
-
-                defaultLog.info("加载语言 : ${language.LANG_NAME} 来自 ${it.name}")
 
             }.onFailure { ex ->
 
@@ -127,7 +123,7 @@ object LibsLoader {
 
         Lang.DEFAULT = if (Lang.BY_NAME.containsKey(Env.DEF_LANG)) {
 
-            defaultLog.info("默认语言已设为: ${Env.DEF_LANG}")
+            defaultLog.info("将 ${Env.DEF_LANG} 设置为基本语言")
 
             Lang.BY_NAME.get(Env.DEF_LANG)!!
 

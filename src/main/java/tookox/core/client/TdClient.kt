@@ -7,10 +7,7 @@ import tooko.td.Client
 import tooko.td.TdApi
 import tooko.td.TdApi.*
 import tooko.td.client.TdException
-import tookox.core.Finish
-import tookox.core.defaultLog
-import tookox.core.displayName
-import tookox.core.onEvent
+import tookox.core.*
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicBoolean
@@ -29,7 +26,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     private val td = Client()
 
-    private val status: AtomicBoolean = AtomicBoolean(false)
+    var status by AtomicBoolean(false)
 
     var handlers = LinkedList<TdAbsHandler>()
 
@@ -44,6 +41,12 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
     var authed
         get() = _auth.get()
         set(value) = _auth.set(value)
+
+    private val _authing = AtomicBoolean(false)
+
+    var authing
+        get() = _authing.get()
+        set(value) = _authing.set(value)
 
     lateinit var me: User
 
@@ -61,21 +64,27 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     }
 
-    fun start() {
+    open fun start() = runBlocking {
 
-        check(!status.get()) { "已经启动." }
+        check(!status) { "已经启动." }
+
+        authing = true
 
         clearHandlers()
 
-        addHandler(this)
+        addHandler(this@TdClient)
 
-        postAdd.add(this)
+        postAdd.add(this@TdClient)
+
+        while (!status) delay(10)
+
+        while (authing) delay(100)
 
     }
 
-    fun stop() {
+    open fun stop() {
 
-        check(status.get()) { "未启动." }
+        check(status) { "未启动." }
 
         handlers.forEach { it.onDestroy() }
 
@@ -85,7 +94,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     fun destroy() {
 
-        if (status.get()) stop()
+        if (status) stop()
 
         check(!executionLock.isLocked) { "Client is destroyed" }
 
@@ -140,7 +149,11 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     }
 
-    open fun onAuthorizationFailed(ex: TdException) {}
+    open fun onAuthorizationFailed(ex: TdException) {
+
+        authing = false
+
+    }
 
     override fun onMessageSendSucceeded(message: Message, oldMessageId: Long) {
 
@@ -311,7 +324,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                         clients.remove(toDestroy)
 
-                        toDestroy.status.set(true)
+                        toDestroy.status = true
 
                         iter.remove()
 
@@ -396,7 +409,11 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     override fun onLoad() = Unit
 
-    override fun onLogin() = Unit
+    override fun onLogin() {
+
+        authing = false
+
+    }
 
     override fun onLogout() = Unit
 
