@@ -1,7 +1,6 @@
 package tooko.twitter.follow
 
 import cn.hutool.log.LogFactory
-import tooko.Launcher
 import tooko.main.Fn
 import tooko.main.Lang
 import tooko.twitter.TwitterAccount
@@ -9,6 +8,7 @@ import tooko.twitter.actions.TrackTask
 import tooko.twitter.archives.UserA
 import tooko.twitter.spam.PredictProcess
 import tooko.twitter.spam.UserR
+import tookox.Launcher
 import twitter4j.Paging
 import twitter4j.Twitter
 import twitter4j.TwitterException

@@ -1,7 +1,6 @@
 package tooko.main.extras;
 
 import tooko.main.*;
-import tooko.main.lang.*;
 import tooko.td.TdApi.*;
 import tooko.td.client.*;
 import tooko.td.core.*;
@@ -9,15 +8,7 @@ import tooko.td.core.*;
 public class SwitchLang extends TdHandler {
 
     public static int DATA_ID = Fn.DataId._1;
-    public static InlineArray langs = new InlineArray();
-
-    static {
-
-        langs.dataLine(Lang.DEFAULT.LANG_NAME, DATA_ID, 0);
-
-        langs.dataLine(ENG.INSTANCE.LANG_NAME, DATA_ID, 1);
-
-    }
+    public static InlineArray langs;
 
     @Override
     public void onLoad() {
@@ -25,6 +16,18 @@ public class SwitchLang extends TdHandler {
         initFunction("lang");
 
         initData(DATA_ID);
+
+        if (langs == null) {
+
+            langs = new InlineArray();
+
+            for (Lang L : Lang.ALL.values()) {
+
+                langs.dataLine(L.LANG_NAME, 0, L.LANG_ID);
+
+            }
+
+        }
 
     }
 

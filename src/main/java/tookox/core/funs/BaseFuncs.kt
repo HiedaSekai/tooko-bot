@@ -36,7 +36,7 @@ class BaseFuncs : TdBotHandler() {
 
     val getId = function("id") {
 
-        userId, chatId, message, function, param, params, originParams ->
+        userId, chatId, message, _, param, params, _ ->
 
         val L = Lang.get(userId)
 

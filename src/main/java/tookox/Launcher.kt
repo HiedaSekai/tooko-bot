@@ -42,6 +42,7 @@ import kotlin.system.exitProcess
 
 class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
+
     override fun uncaughtException(t: Thread, e: Throwable) {
 
         defaultLog.error(e)
@@ -60,7 +61,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
     override fun onLogin() {
 
-        tooko.Launcher.twitter = TwitterBot().apply { start() }
+        twitter = TwitterBot().apply { start() }
 
         val allBots = BotData.DATA.all
 
@@ -89,6 +90,8 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
     }
 
     companion object {
+
+        lateinit var twitter: TwitterBot
 
         @Suppress("UNCHECKED_CAST")
         class TypedMap(map: Any) : HashMap<String, Any>(map as Map<String, Any>), OptNullBasicTypeFromObjectGetter<String> {
