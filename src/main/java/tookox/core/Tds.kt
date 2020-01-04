@@ -59,6 +59,8 @@ val FormattedText.asHtml: String
 
             }
 
+            index = it.offset + it.length
+
             val entityText = text.substring(it.offset, it.length)
 
             htmlText += when (it.type) {
@@ -75,6 +77,7 @@ val FormattedText.asHtml: String
                 is TdApi.TextEntityTypeMentionName -> entityText.toInlineMention((it.type as TdApi.TextEntityTypeMentionName).userId)
 
                 else -> entityText
+
             }
 
         }
