@@ -352,12 +352,6 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             }
 
-            if (Env.ADMINS.isEmpty()) {
-
-                defaultLog.warn("没有设置管理员账号 (ﾟ⊿ﾟ)ﾂ 请使用 /id 命令获取用户ID并填入 ADMINS 配置中 ~")
-
-            }
-
             INSTANCE = Launcher()
 
             INSTANCE.start()
@@ -378,11 +372,15 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             }
 
-            INSTANCE.authing = true
+            if (!INSTANCE.authed) {
 
-            runBlocking {
+                INSTANCE.authing = true
 
-                while (INSTANCE.authing) delay(100)
+                runBlocking {
+
+                    while (INSTANCE.authing) delay(100)
+
+                }
 
             }
 
