@@ -120,7 +120,7 @@ object LibsLoader {
 
                 }
 
-                defaultLog.trace("${Gson().to(language)}")
+                defaultLog.trace(Gson().toJson(language))
 
                 Lang.ALL[language.LANG_ID] = language
 
