@@ -326,7 +326,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                         clients.remove(toDestroy)
 
-                        toDestroy.status = true
+                        toDestroy.status = false
 
                         iter.remove()
 
