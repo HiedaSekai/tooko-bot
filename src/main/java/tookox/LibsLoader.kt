@@ -107,7 +107,7 @@ object LibsLoader {
 
             }.onFailure { ex ->
 
-                defaultLog.warn(ex, "语言文件 $it.name 解析错误, 已跳过.")
+                defaultLog.warn(ex, "语言文件 ${it.name} 解析错误, 已跳过.")
 
             }
 

@@ -3,12 +3,12 @@ package tookox.core
 import cn.hutool.core.date.DateUtil
 import cn.hutool.core.lang.Console
 import cn.hutool.core.lang.Dict
-import cn.hutool.core.util.StrUtil
 import cn.hutool.log.Log
 import cn.hutool.log.LogFactory
 import cn.hutool.log.dialect.console.ConsoleLog
 import cn.hutool.log.level.Level
 import tooko.main.Env
+import tooko.main.Fn
 import tookox.Launcher
 import tookox.core.td.make
 
@@ -29,41 +29,49 @@ object TookoLog : LogFactory("Tooko Log") {
 
 val defaultLog = mkLog("")
 
-fun mkLog(name: String): Log {
+fun mkLog(name: String) = object : ConsoleLog(name) {
 
-    return object : ConsoleLog(name) {
+    override fun log(fqcn: String, level: Level, t: Throwable?, format: String, vararg arguments: Any) {
 
-        override fun log(fqcn: String, level: Level, t: Throwable?, format: String, vararg arguments: Any) {
+        val logMsg = if (t != null) {
 
-            val dict = Dict.create().set("date", DateUtil.now()).set("level", level.toString()).set("name", name).set("msg", StrUtil.format(format, *arguments))
+            var logWithExc = if (t.message != format) format.input(arguments) + "\n" else ""
 
-            val logFormat = if (name.isBlank()) "[{level}] {msg}" else "[{level}] {name}: {msg}"
+            logWithExc += Fn.parseError(t)
 
-            val logMsg = StrUtil.format(logFormat, dict)
+            logWithExc
 
-            if (level.ordinal >= Level.WARN.ordinal) {
+        } else {
 
-                runCatching {
+            format.input(arguments)
 
-                    with(Launcher.INSTANCE) {
+        }
 
-                        sudo make logMsg sendTo Env.LOG_CHANNEL
+        val dict = Dict.create().set("date", DateUtil.now()).set("level", level.toString()).set("name", name).set("msg", logMsg)
 
-                    }
+        val logFormat = if (name.isBlank()) "[{level}] {msg}" else "[{level}] {name}: {msg}"
 
-                }.onFailure {
+        if (level.ordinal >= Level.WARN.ordinal) {
 
-                    Console.error(it, "report log failed")
+            runCatching {
+
+                with(Launcher.INSTANCE) {
+
+                    sudo make logMsg sendTo Env.LOG_CHANNEL
 
                 }
 
-                Console.error(t, logMsg)
+            }.onFailure {
 
-            } else {
-
-                Console.log(t, logMsg)
+                Console.error(it, "report log failed")
 
             }
+
+            Console.error(logMsg)
+
+        } else {
+
+            Console.log(logMsg)
 
         }
 
