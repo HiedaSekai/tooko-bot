@@ -3,6 +3,7 @@ package tookox.core
 import cn.hutool.core.date.DateUtil
 import cn.hutool.core.lang.Console
 import cn.hutool.core.lang.Dict
+import cn.hutool.core.util.StrUtil
 import cn.hutool.log.Log
 import cn.hutool.log.LogFactory
 import cn.hutool.log.dialect.console.ConsoleLog
@@ -50,6 +51,8 @@ fun mkLog(name: String) = object : ConsoleLog(name) {
         val dict = Dict.create().set("date", DateUtil.now()).set("level", level.toString()).set("name", name).set("msg", logMsg)
 
         val logFormat = if (name.isBlank()) "[{level}] {msg}" else "[{level}] {name}: {msg}"
+
+        logMsg = StrUtil.format(logFormat, dict)
 
         if (level.ordinal >= Level.WARN.ordinal) {
 
