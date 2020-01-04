@@ -95,7 +95,7 @@ object LibsLoader {
 
                     if (field.type == String::class.java) {
 
-                        field.set(it, (field.get(language) as String).asMarkdown.asHtml)
+                        field.set(language, (field.get(language) as String).asMarkdown.asHtml)
 
                     }
 
