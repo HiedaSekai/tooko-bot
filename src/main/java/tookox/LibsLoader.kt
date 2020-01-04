@@ -89,15 +89,13 @@ object LibsLoader {
 
             runCatching {
 
-                val language = yaml.loadAs(it.inputStream(), Lang::class.java).apply {
+                val language = yaml.loadAs(it.inputStream(), Lang::class.java)
 
-                    this::class.java.fields.forEach { field ->
+                language::class.java.fields.forEach { field ->
 
-                        if (field.type == String::class.java) {
+                    if (field.type == String::class.java) {
 
-                            field.set(it, (field.get(it) as String).asMarkdown.asHtml)
-
-                        }
+                        field.set(it, (field.get(language) as String).asMarkdown.asHtml)
 
                     }
 
