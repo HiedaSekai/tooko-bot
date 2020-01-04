@@ -9,7 +9,7 @@ db_name: "Tooko"
 use_service: false
 service: "tooko.service"
 bot_token: "1234:XXXX"
-def_lang: "zh_CN"
+def_lang: "简体中文"
 public_bot_create: false
 bot_create_max: -1
 admins:

@@ -147,6 +147,8 @@ class StickerExport : TdBotHandler() {
 
                             deferreds.awaitAll()
 
+                            ctx.close()
+
                             sudo make L.STICKER_EXPORT_PACK syncEditTo stat
 
                             val cacheDir = File(cachePath, it.title)

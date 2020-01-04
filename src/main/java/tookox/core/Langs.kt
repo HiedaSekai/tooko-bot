@@ -1,15 +1,5 @@
 package tookox.core
 
-import tooko.main.Env
-
-fun loadLanguages() {
-
-    val langs = Env.getFile("i18n").listFiles()
-
-    // if (langs == null || langs.isEmpty()) error("missing language files.")
-
-}
-
 fun String.containsChinese(): Boolean {
 
     var han = false

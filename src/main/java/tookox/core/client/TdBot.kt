@@ -1,9 +1,10 @@
 package tookox.core.client
 
-import cn.hutool.core.thread.ThreadUtil
 import cn.hutool.core.util.RuntimeUtil
 import cn.hutool.core.util.StrUtil
 import cn.hutool.core.util.ZipUtil
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import tooko.main.Env
 import tooko.main.Fn
 import tooko.td.TdApi.*
@@ -34,11 +35,11 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
     }
 
-    override fun onNewMessage(userId: Int, chatId: Long, message: Message) {
+    override fun onNewMessage(userId: Int, chatId: Long, message: Message) = runBlocking {
 
-        while (!authed) ThreadUtil.sleep(233)
+        while (!authed) delay(100)
 
-        if (userId == me.id) return
+        if (userId == me.id) return@runBlocking
 
         if (message.fromPrivate) {
 
@@ -48,13 +49,13 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
             }
 
-            if (message.content !is MessageText) return
+            if (message.content !is MessageText) return@runBlocking
 
             val content = (message.content as MessageText).text
 
             if (content.entities.size == 0 || content.entities[0].type !is TextEntityTypeBotCommand || content.entities[0].offset != 0) {
 
-                return
+                return@runBlocking
 
             }
 
@@ -98,7 +99,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
                 }
 
-                return
+                return@runBlocking
 
             }
 

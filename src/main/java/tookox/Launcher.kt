@@ -31,7 +31,6 @@ import tookox.core.defaultLog
 import tookox.core.funs.BaseFuncs
 import tookox.core.funs.LICENCE
 import tookox.core.funs.StickerExport
-import tookox.core.loadLanguages
 import tookox.core.td.make
 import java.io.File
 import java.lang.Thread.UncaughtExceptionHandler
@@ -215,7 +214,17 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             Env.DEF_LANG = config.getStr("def_lang")
 
-            loadLanguages()
+            try {
+
+                LibsLoader.loadLanguages()
+
+            } catch (ex: Exception) {
+
+                defaultLog.error(ex)
+
+                exitProcess(100)
+
+            }
 
             Env.ADMINS = (config.get("admins") as List<*>).map { (it as Number).toInt() }.toIntArray()
 

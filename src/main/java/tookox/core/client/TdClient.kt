@@ -1,10 +1,7 @@
 package tookox.core.client
 
 import cn.hutool.core.thread.ThreadUtil
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import tooko.main.Env
 import tooko.td.Client
 import tooko.td.TdApi
@@ -16,9 +13,6 @@ import tookox.core.displayName
 import tookox.core.onEvent
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.LinkedBlockingQueue
-import java.util.concurrent.ThreadPoolExecutor
-import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicLong
 import java.util.concurrent.atomic.AtomicReference
@@ -283,7 +277,9 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
         val postDestroy = LinkedList<TdClient>()
         val mainTimer = Timer("Mian Timer")
         val clients = LinkedList<TdClient>()
-        val publicPool = ThreadPoolExecutor(1, 1, 30, TimeUnit.SECONDS, LinkedBlockingQueue())
+
+        @Suppress("EXPERIMENTAL_API_USAGE")
+        val events = CoroutineScope(newSingleThreadContext("Tooko Events Task"))
 
         val eventTask = Thread {
 
@@ -366,7 +362,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                         } else {
 
-                            publicPool.execute {
+                            events.launch {
 
                                 client.handlers.forEach {
 
@@ -376,7 +372,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                                     }.onFailure {
 
-                                        if (it is Finish) return@execute
+                                        if (it is Finish) return@launch
 
                                         defaultLog.error(it, "TdError - Sync")
 
