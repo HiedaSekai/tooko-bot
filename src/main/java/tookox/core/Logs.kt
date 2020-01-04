@@ -4,6 +4,7 @@ import cn.hutool.core.date.DateUtil
 import cn.hutool.core.lang.Console
 import cn.hutool.core.lang.Dict
 import cn.hutool.core.util.StrUtil
+import cn.hutool.log.GlobalLogFactory
 import cn.hutool.log.Log
 import cn.hutool.log.LogFactory
 import cn.hutool.log.dialect.console.ConsoleLog
@@ -13,7 +14,7 @@ import tooko.main.Fn
 import tookox.Launcher
 import tookox.core.td.make
 
-object TookoLog : LogFactory("Tooko Log") {
+object TookoLogFactory : LogFactory("Tooko Log") {
 
     override fun createLog(name: String?): Log {
 
@@ -23,16 +24,30 @@ object TookoLog : LogFactory("Tooko Log") {
 
     override fun createLog(clazz: Class<*>?): Log {
 
-        return if (clazz != null) mkLog(clazz.simpleName) else defaultLog
+        return if (clazz != null) mkLog(clazz.simpleName).apply {
+
+            when (clazz) {
+
+                GlobalLogFactory::class.java -> logLevel = Level.INFO
+
+            }
+
+        } else defaultLog
 
     }
 }
 
 val defaultLog = mkLog("")
 
-fun mkLog(name: String) = object : ConsoleLog(name) {
+fun mkLog(name: String) = TookoLog(name)
+
+class TookoLog(name: String) : ConsoleLog(name) {
+
+    var logLevel = Level.ALL
 
     override fun log(fqcn: String, level: Level, t: Throwable?, format: String, vararg arguments: Any) {
+
+        if (logLevel.compareTo(level) > 0) return
 
         var logMsg = if (t != null) {
 
