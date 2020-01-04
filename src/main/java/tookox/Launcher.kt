@@ -98,6 +98,8 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
         check(!status) { "已经启动." }
 
+        eventTask.start()
+
         clearHandlers()
 
         addHandler(this@Launcher)
@@ -105,14 +107,6 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
         postAdd.add(this@Launcher)
 
         while (!status) delay(10)
-
-        eventTask.start()
-
-    }
-
-    override fun onDestroy() {
-
-        eventTask.interrupt()
 
     }
 
