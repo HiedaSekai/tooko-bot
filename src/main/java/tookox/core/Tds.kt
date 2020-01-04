@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package tookox.core
 
 import cn.hutool.core.util.ArrayUtil
@@ -88,285 +90,78 @@ val FormattedText.asHtml: String
 
 fun TdAbsHandler.onEvent(event: TdApi.Object) {
 
-    if (event is TdApi.UpdateAuthorizationState) {
-
-        onAuthorizationState(event.authorizationState)
-
-    } else if (event is TdApi.UpdateNewMessage) {
-
-        onNewMessage(event.message.senderUserId, event.message.chatId, event.message)
-
-    } else if (event is TdApi.UpdateMessageSendAcknowledged) {
-
-        onMessageSendAcknowledged(event.chatId, event.messageId)
-
-    } else if (event is TdApi.UpdateMessageSendSucceeded) {
-
-        onMessageSendSucceeded(event.message, event.oldMessageId)
-
-    } else if (event is TdApi.UpdateMessageSendFailed) {
-
-        onMessageSendFailed(event.message, event.oldMessageId, event.errorCode, event.errorMessage)
-
-    } else if (event is TdApi.UpdateMessageContent) {
-
-        onMessageContent(event.chatId, event.messageId, event.newContent)
-
-    } else if (event is TdApi.UpdateMessageEdited) {
-
-        onMessageEdited(event.chatId, event.messageId, event.editDate, event.replyMarkup)
-
-    } else if (event is TdApi.UpdateMessageViews) {
-
-        onMessageViews(event.chatId, event.messageId, event.views)
-
-    } else if (event is TdApi.UpdateMessageContentOpened) {
-
-        onMessageContentOpened(event.chatId, event.messageId)
-
-    } else if (event is TdApi.UpdateMessageMentionRead) {
-
-        onMessageMentionRead(event.chatId, event.messageId, event.unreadMentionCount)
-
-    } else if (event is TdApi.UpdateNewChat) {
-
-        onNewChat(event.chat)
-
-    } else if (event is TdApi.UpdateChatTitle) {
-
-        onChatTitle(event.chatId, event.title)
-
-    } else if (event is TdApi.UpdateChatPhoto) {
-
-        onChatPhoto(event.chatId, event.photo)
-
-    } else if (event is TdApi.UpdateChatPermissions) {
-
-        onChatPermissions(event.chatId, event.permissions)
-
-    } else if (event is TdApi.UpdateChatLastMessage) {
-
-        onChatLastMessage(event.chatId, event.lastMessage, event.order)
-
-    } else if (event is TdApi.UpdateChatOrder) {
-
-        onChatOrder(event.chatId, event.order)
-
-    } else if (event is TdApi.UpdateChatIsPinned) {
-
-        onChatIsPinned(event.chatId, event.isPinned, event.order)
-
-    } else if (event is TdApi.UpdateChatIsMarkedAsUnread) {
-
-        onChatIsMarkedAsUnread(event.chatId, event.isMarkedAsUnread)
-
-    } else if (event is TdApi.UpdateChatIsSponsored) {
-
-        onChatIsSponsored(event.chatId, event.isSponsored, event.order)
-
-    } else if (event is TdApi.UpdateChatDefaultDisableNotification) {
-
-        onChatDefaultDisableNotification(event.chatId, event.defaultDisableNotification)
-
-    } else if (event is TdApi.UpdateChatReadInbox) {
-
-        onChatReadInbox(event.chatId, event.lastReadInboxMessageId, event.unreadCount)
-
-    } else if (event is TdApi.UpdateChatReadOutbox) {
-
-        onChatReadOutbox(event.chatId, event.lastReadOutboxMessageId)
-
-    } else if (event is TdApi.UpdateChatUnreadMentionCount) {
-
-        onChatUnreadMentionCount(event.chatId, event.unreadMentionCount)
-
-    } else if (event is TdApi.UpdateChatNotificationSettings) {
-
-        onChatNotificationSettings(event.chatId, event.notificationSettings)
-
-    } else if (event is TdApi.UpdateScopeNotificationSettings) {
-
-        onScopeNotificationSettings(event.scope, event.notificationSettings)
-
-    } else if (event is TdApi.UpdateChatPinnedMessage) {
-
-        onChatPinnedMessage(event.chatId, event.pinnedMessageId)
-
-    } else if (event is TdApi.UpdateChatReplyMarkup) {
-
-        onChatReplyMarkup(event.chatId, event.replyMarkupMessageId)
-
-    } else if (event is TdApi.UpdateChatDraftMessage) {
-
-        onChatDraftMessage(event.chatId, event.draftMessage, event.order)
-
-    } else if (event is TdApi.UpdateChatOnlineMemberCount) {
-
-        onChatOnlineMemberCount(event.chatId, event.onlineMemberCount)
-
-    } else if (event is TdApi.UpdateNotification) {
-
-        onNotification(event.notificationGroupId, event.notification)
-
-    } else if (event is TdApi.UpdateNotificationGroup) {
-
-        onNotificationGroup(event.notificationGroupId, event.type, event.chatId, event.notificationSettingsChatId, event.isSilent, event.totalCount, event.addedNotifications, event.removedNotificationIds)
-
-    } else if (event is TdApi.UpdateActiveNotifications) {
-
-        onActiveNotifications(event.groups)
-
-    } else if (event is TdApi.UpdateHavePendingNotifications) {
-
-        onHavePendingNotifications(event.haveDelayedNotifications, event.haveUnreceivedNotifications)
-
-    } else if (event is TdApi.UpdateDeleteMessages) {
-
-        onDeleteMessages(event.chatId, event.messageIds, event.isPermanent, event.fromCache)
-
-    } else if (event is TdApi.UpdateUserChatAction) {
-
-        onUserChatAction(event.chatId, event.userId, event.action)
-
-    } else if (event is TdApi.UpdateUserStatus) {
-
-        onUserStatus(event.userId, event.status)
-
-    } else if (event is TdApi.UpdateUser) {
-
-        onUser(event.user)
-
-    } else if (event is TdApi.UpdateBasicGroup) {
-
-        onBasicGroup(event.basicGroup)
-
-    } else if (event is TdApi.UpdateSupergroup) {
-
-        onSupergroup(event.supergroup)
-
-    } else if (event is TdApi.UpdateSecretChat) {
-
-        onSecretChat(event.secretChat)
-
-    } else if (event is TdApi.UpdateUserFullInfo) {
-
-        onUserFullInfo(event.userId, event.userFullInfo)
-
-    } else if (event is TdApi.UpdateBasicGroupFullInfo) {
-
-        onBasicGroupFullInfo(event.basicGroupId, event.basicGroupFullInfo)
-
-    } else if (event is TdApi.UpdateSupergroupFullInfo) {
-
-        onSupergroupFullInfo(event.supergroupId, event.supergroupFullInfo)
-
-    } else if (event is TdApi.UpdateServiceNotification) {
-
-        onServiceNotification(event.type, event.content)
-
-    } else if (event is TdApi.UpdateFile) {
-
-        onFile(event.file)
-
-    } else if (event is TdApi.UpdateFileGenerationStart) {
-
-        onFileGenerationStart(event.generationId, event.originalPath, event.destinationPath, event.conversion)
-
-    } else if (event is TdApi.UpdateFileGenerationStop) {
-
-        onFileGenerationStop(event.generationId)
-
-    } else if (event is TdApi.UpdateCall) {
-
-        onCall(event.call)
-
-    } else if (event is TdApi.UpdateUserPrivacySettingRules) {
-
-        onUserPrivacySettingRules(event.setting, event.rules)
-
-    } else if (event is TdApi.UpdateUnreadMessageCount) {
-
-        onUnreadMessageCount(event.unreadCount, event.unreadUnmutedCount)
-
-    } else if (event is TdApi.UpdateUnreadChatCount) {
-
-        onUnreadChatCount(event.unreadCount, event.unreadUnmutedCount, event.markedAsUnreadCount, event.markedAsUnreadUnmutedCount)
-
-    } else if (event is TdApi.UpdateOption) {
-
-        onOption(event.name, event.value)
-
-    } else if (event is TdApi.UpdateInstalledStickerSets) {
-
-        onInstalledStickerSets(event.isMasks, event.stickerSetIds)
-
-    } else if (event is TdApi.UpdateTrendingStickerSets) {
-
-        onTrendingStickerSets(event.stickerSets)
-
-    } else if (event is TdApi.UpdateRecentStickers) {
-
-        onRecentStickers(event.isAttached, event.stickerIds)
-
-    } else if (event is TdApi.UpdateFavoriteStickers) {
-
-        onFavoriteStickers(event.stickerIds)
-
-    } else if (event is TdApi.UpdateSavedAnimations) {
-
-        onSavedAnimations(event.animationIds)
-
-    } else if (event is TdApi.UpdateSelectedBackground) {
-
-        onSelectedBackground(event.forDarkTheme, event.background)
-
-    } else if (event is TdApi.UpdateLanguagePackStrings) {
-
-        onLanguagePackStrings(event.localizationTarget, event.languagePackId, event.strings)
-
-    } else if (event is TdApi.UpdateConnectionState) {
-
-        onConnectionState(event.state)
-
-    } else if (event is TdApi.UpdateTermsOfService) {
-
-        onTermsOfService(event.termsOfServiceId, event.termsOfService)
-
-    } else if (event is TdApi.UpdateNewInlineQuery) {
-
-        onNewInlineQuery(event.id, event.senderUserId, event.userLocation, event.query, event.offset)
-
-    } else if (event is TdApi.UpdateNewChosenInlineResult) {
-
-        onNewChosenInlineResult(event.senderUserId, event.userLocation, event.query, event.resultId, event.inlineMessageId)
-
-    } else if (event is TdApi.UpdateNewCallbackQuery) {
-
-        handleNewCallbackQuery(event.id, event.senderUserId, event.chatId, event.messageId, event.chatInstance, event.payload)
-
-    } else if (event is TdApi.UpdateNewInlineCallbackQuery) {
-
-        handleNewInlineCallbackQuery(event.id, event.senderUserId, event.inlineMessageId, event.chatInstance, event.payload)
-
-    } else if (event is TdApi.UpdateNewShippingQuery) {
-
-        onNewShippingQuery(event.id, event.senderUserId, event.invoicePayload, event.shippingAddress)
-
-    } else if (event is TdApi.UpdateNewPreCheckoutQuery) {
-
-        onNewPreCheckoutQuery(event.id, event.senderUserId, event.currency, event.totalAmount, event.invoicePayload, event.shippingOptionId, event.orderInfo)
-
-    } else if (event is TdApi.UpdateNewCustomEvent) {
-
-        onNewCustomEvent(event.event)
-
-    } else if (event is TdApi.UpdateNewCustomQuery) {
-
-        onNewCustomQuery(event.id, event.data, event.timeout)
-
-    } else if (event is TdApi.UpdatePoll) {
-
-        onPoll(event.poll)
+    when (event) {
+
+        is TdApi.UpdateAuthorizationState -> onAuthorizationState(event.authorizationState)
+        is TdApi.UpdateNewMessage -> onNewMessage(event.message.senderUserId, event.message.chatId, event.message)
+        is TdApi.UpdateMessageSendAcknowledged -> onMessageSendAcknowledged(event.chatId, event.messageId)
+        is TdApi.UpdateMessageSendSucceeded -> onMessageSendSucceeded(event.message, event.oldMessageId)
+        is TdApi.UpdateMessageSendFailed -> onMessageSendFailed(event.message, event.oldMessageId, event.errorCode, event.errorMessage)
+        is TdApi.UpdateMessageContent -> onMessageContent(event.chatId, event.messageId, event.newContent)
+        is TdApi.UpdateMessageEdited -> onMessageEdited(event.chatId, event.messageId, event.editDate, event.replyMarkup)
+        is TdApi.UpdateMessageViews -> onMessageViews(event.chatId, event.messageId, event.views)
+        is TdApi.UpdateMessageContentOpened -> onMessageContentOpened(event.chatId, event.messageId)
+        is TdApi.UpdateMessageMentionRead -> onMessageMentionRead(event.chatId, event.messageId, event.unreadMentionCount)
+        is TdApi.UpdateNewChat -> onNewChat(event.chat)
+        is TdApi.UpdateChatTitle -> onChatTitle(event.chatId, event.title)
+        is TdApi.UpdateChatPhoto -> onChatPhoto(event.chatId, event.photo)
+        is TdApi.UpdateChatPermissions -> onChatPermissions(event.chatId, event.permissions)
+        is TdApi.UpdateChatLastMessage -> onChatLastMessage(event.chatId, event.lastMessage, event.order)
+        is TdApi.UpdateChatOrder -> onChatOrder(event.chatId, event.order)
+        is TdApi.UpdateChatIsPinned -> onChatIsPinned(event.chatId, event.isPinned, event.order)
+        is TdApi.UpdateChatIsMarkedAsUnread -> onChatIsMarkedAsUnread(event.chatId, event.isMarkedAsUnread)
+        is TdApi.UpdateChatIsSponsored -> onChatIsSponsored(event.chatId, event.isSponsored, event.order)
+        is TdApi.UpdateChatDefaultDisableNotification -> onChatDefaultDisableNotification(event.chatId, event.defaultDisableNotification)
+        is TdApi.UpdateChatReadInbox -> onChatReadInbox(event.chatId, event.lastReadInboxMessageId, event.unreadCount)
+        is TdApi.UpdateChatReadOutbox -> onChatReadOutbox(event.chatId, event.lastReadOutboxMessageId)
+        is TdApi.UpdateChatUnreadMentionCount -> onChatUnreadMentionCount(event.chatId, event.unreadMentionCount)
+        is TdApi.UpdateChatNotificationSettings -> onChatNotificationSettings(event.chatId, event.notificationSettings)
+        is TdApi.UpdateScopeNotificationSettings -> onScopeNotificationSettings(event.scope, event.notificationSettings)
+        is TdApi.UpdateChatPinnedMessage -> onChatPinnedMessage(event.chatId, event.pinnedMessageId)
+        is TdApi.UpdateChatReplyMarkup -> onChatReplyMarkup(event.chatId, event.replyMarkupMessageId)
+        is TdApi.UpdateChatDraftMessage -> onChatDraftMessage(event.chatId, event.draftMessage, event.order)
+        is TdApi.UpdateChatOnlineMemberCount -> onChatOnlineMemberCount(event.chatId, event.onlineMemberCount)
+        is TdApi.UpdateNotification -> onNotification(event.notificationGroupId, event.notification)
+        is TdApi.UpdateNotificationGroup -> onNotificationGroup(event.notificationGroupId, event.type, event.chatId, event.notificationSettingsChatId, event.isSilent, event.totalCount, event.addedNotifications, event.removedNotificationIds)
+        is TdApi.UpdateActiveNotifications -> onActiveNotifications(event.groups)
+        is TdApi.UpdateHavePendingNotifications -> onHavePendingNotifications(event.haveDelayedNotifications, event.haveUnreceivedNotifications)
+        is TdApi.UpdateDeleteMessages -> onDeleteMessages(event.chatId, event.messageIds, event.isPermanent, event.fromCache)
+        is TdApi.UpdateUserChatAction -> onUserChatAction(event.chatId, event.userId, event.action)
+        is TdApi.UpdateUserStatus -> onUserStatus(event.userId, event.status)
+        is TdApi.UpdateUser -> onUser(event.user)
+        is TdApi.UpdateBasicGroup -> onBasicGroup(event.basicGroup)
+        is TdApi.UpdateSupergroup -> onSupergroup(event.supergroup)
+        is TdApi.UpdateSecretChat -> onSecretChat(event.secretChat)
+        is TdApi.UpdateUserFullInfo -> onUserFullInfo(event.userId, event.userFullInfo)
+        is TdApi.UpdateBasicGroupFullInfo -> onBasicGroupFullInfo(event.basicGroupId, event.basicGroupFullInfo)
+        is TdApi.UpdateSupergroupFullInfo -> onSupergroupFullInfo(event.supergroupId, event.supergroupFullInfo)
+        is TdApi.UpdateServiceNotification -> onServiceNotification(event.type, event.content)
+        is TdApi.UpdateFile -> onFile(event.file)
+        is TdApi.UpdateFileGenerationStart -> onFileGenerationStart(event.generationId, event.originalPath, event.destinationPath, event.conversion)
+        is TdApi.UpdateFileGenerationStop -> onFileGenerationStop(event.generationId)
+        is TdApi.UpdateCall -> onCall(event.call)
+        is TdApi.UpdateUserPrivacySettingRules -> onUserPrivacySettingRules(event.setting, event.rules)
+        is TdApi.UpdateUnreadMessageCount -> onUnreadMessageCount(event.unreadCount, event.unreadUnmutedCount)
+        is TdApi.UpdateUnreadChatCount -> onUnreadChatCount(event.unreadCount, event.unreadUnmutedCount, event.markedAsUnreadCount, event.markedAsUnreadUnmutedCount)
+        is TdApi.UpdateOption -> onOption(event.name, event.value)
+        is TdApi.UpdateInstalledStickerSets -> onInstalledStickerSets(event.isMasks, event.stickerSetIds)
+        is TdApi.UpdateTrendingStickerSets -> onTrendingStickerSets(event.stickerSets)
+        is TdApi.UpdateRecentStickers -> onRecentStickers(event.isAttached, event.stickerIds)
+        is TdApi.UpdateFavoriteStickers -> onFavoriteStickers(event.stickerIds)
+        is TdApi.UpdateSavedAnimations -> onSavedAnimations(event.animationIds)
+        is TdApi.UpdateSelectedBackground -> onSelectedBackground(event.forDarkTheme, event.background)
+        is TdApi.UpdateLanguagePackStrings -> onLanguagePackStrings(event.localizationTarget, event.languagePackId, event.strings)
+        is TdApi.UpdateConnectionState -> onConnectionState(event.state)
+        is TdApi.UpdateTermsOfService -> onTermsOfService(event.termsOfServiceId, event.termsOfService)
+        is TdApi.UpdateNewInlineQuery -> onNewInlineQuery(event.id, event.senderUserId, event.userLocation, event.query, event.offset)
+        is TdApi.UpdateNewChosenInlineResult -> onNewChosenInlineResult(event.senderUserId, event.userLocation, event.query, event.resultId, event.inlineMessageId)
+        is TdApi.UpdateNewCallbackQuery -> handleNewCallbackQuery(event.id, event.senderUserId, event.chatId, event.messageId, event.chatInstance, event.payload)
+        is TdApi.UpdateNewInlineCallbackQuery -> handleNewInlineCallbackQuery(event.id, event.senderUserId, event.inlineMessageId, event.chatInstance, event.payload)
+        is TdApi.UpdateNewShippingQuery -> onNewShippingQuery(event.id, event.senderUserId, event.invoicePayload, event.shippingAddress)
+        is TdApi.UpdateNewPreCheckoutQuery -> onNewPreCheckoutQuery(event.id, event.senderUserId, event.currency, event.totalAmount, event.invoicePayload, event.shippingOptionId, event.orderInfo)
+        is TdApi.UpdateNewCustomEvent -> onNewCustomEvent(event.event)
+        is TdApi.UpdateNewCustomQuery -> onNewCustomQuery(event.id, event.data, event.timeout)
+        is TdApi.UpdatePoll -> onPoll(event.poll)
 
     }
 
