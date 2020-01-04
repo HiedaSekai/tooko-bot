@@ -1,5 +1,8 @@
 package tookox
 
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.runBlocking
 import org.yaml.snakeyaml.Yaml
 import tooko.main.Env
@@ -7,6 +10,7 @@ import tooko.main.Lang
 import tookox.core.asHtml
 import tookox.core.defaultLog
 import tookox.core.td.asMarkdown
+import java.util.*
 
 object LibsLoader {
 
@@ -90,6 +94,8 @@ object LibsLoader {
 
             runCatching {
 
+                val results = LinkedList<Deferred<*>>()
+
                 val language = yaml.loadAs(it.inputStream(), Lang::class.java)
 
                 language::class.java.fields.forEach { field ->
@@ -104,21 +110,27 @@ object LibsLoader {
 
                         } else {
 
-                            runCatching {
+                            async {
 
-                                field.set(language, resStr.asMarkdown.asHtml)
+                                runCatching {
 
-                            }.onFailure { ex ->
+                                    field.set(language, resStr.asMarkdown.asHtml)
 
-                                defaultLog.warn(ex, "语言文件 ${it.name} 中 ${field.name} 解析错误 : $resStr, 已跳过.")
+                                }.onFailure { ex ->
 
-                            }
+                                    defaultLog.warn(ex, "语言文件 ${it.name} 中 ${field.name} 解析错误 : $resStr, 已跳过.")
+
+                                }
+
+                            }.also(results::addLast)
 
                         }
 
                     }
 
                 }
+
+                results.awaitAll()
 
                 //  defaultLog.trace(JSONObject(Gson().toJson(language)).toStringPretty())
 
