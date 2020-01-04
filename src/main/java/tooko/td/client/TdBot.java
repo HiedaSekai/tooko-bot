@@ -330,7 +330,7 @@ public class TdBot extends TdClient {
 
             if (e.getCode() == -1) {
 
-                send(Fn.answerAlert(queryId, Lang.get(senderUserId).RESTARTING_WARN));
+                send(Fn.answerServerClosed(queryId, senderUserId));
 
             } else {
 

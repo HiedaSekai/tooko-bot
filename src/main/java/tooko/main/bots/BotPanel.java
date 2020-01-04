@@ -162,7 +162,7 @@ public class BotPanel extends TdHandler {
 
         } else if (subId == 3) {
 
-            send(Fn.answerAlert(queryId, L.RESTARTING));
+            send(Fn.answerServerClosed(queryId, userId));
 
             BotImage.images.remove(botId);
 

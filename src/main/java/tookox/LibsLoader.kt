@@ -97,13 +97,21 @@ object LibsLoader {
 
                         val resStr = field.get(language) as String
 
-                        runCatching {
+                        if (resStr.startsWith("&")) {
 
-                            field.set(language, resStr.asMarkdown.asHtml)
+                            field.set(language, resStr.substring(1))
 
-                        }.onFailure { ex ->
+                        } else {
 
-                            defaultLog.warn(ex, "语言文件 ${it.name} 中 ${field.name} 解析错误 : $resStr, 已跳过.")
+                            runCatching {
+
+                                field.set(language, resStr.asMarkdown.asHtml)
+
+                            }.onFailure { ex ->
+
+                                defaultLog.warn(ex, "语言文件 ${it.name} 中 ${field.name} 解析错误 : $resStr, 已跳过.")
+
+                            }
 
                         }
 

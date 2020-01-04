@@ -22,7 +22,7 @@ PUBLIC_WARN: |
   请尽量 [自行搭建实例](https://gitlab.com/tooko/tooko-bot/wikis/Install).
 
 LICENSE: |
-  远子 基于 [Apache License 2.0](https://gitlab.com/tooko/tooko-bot/blob/master/LICENSE) 发行,  欢迎来 [GitLab](https://gitlab.com/tooko/tooko-bot) 访问我们.
+  &远子 基于 [Apache License 2.0](https://gitlab.com/tooko/tooko-bot/blob/master/LICENSE) 发行,  欢迎来 [GitLab](https://gitlab.com/tooko/tooko-bot) 访问我们.
   [文档主页](https://gitlab.com/tooko/tooko-bot/wikis/Home) | [安装说明](https://gitlab.com/tooko/tooko-bot/wikis/Install)  | [命令与更新](https://gitlab.com/tooko/tooko-bot/wikis/Usage) | [语言与翻译](https://gitlab.com/tooko/tooko-bot/wikis/Trans
 
   子机器人文档 : [Twitter](https://gitlab.com/tooko/tooko-bot/wikis/Bots/TwitterBot
@@ -137,15 +137,6 @@ UNDEFINED: |
 UNKNOWN: |
   未知
 
-RESTARTING_WARN: |
-  机器人正重启, 请稍候再试.
-
-RESTARTING: |
-  正在重启 →_→
-
-UPDATING: |
-  正在更新 (≧ω≦)
-
 SERVER_CLOSING: |
   不知何时何故地, 出现了问题.
 
@@ -201,7 +192,7 @@ BOT_NEW: |
   创建新机器人
 
 BOT_INPUT_TOKEN: |
-  输入 [BotToken](https://core.telegram.org/bots#creating-a-new-bot) :
+  &输入 [BotToken](https://core.telegram.org/bots#creating-a-new-bot) :
 
 BOT_TOKEN_INVALID: |
   无效的BotToken, 创建已取消 ({}).
@@ -219,7 +210,7 @@ BOT_ERR: |
   机器人出错停止, 请检查: {}
 
 BOT_CREATED: |
-  机器人已创建. 请点 [此](https://t.me/{}?start=-init) 配置.
+  &机器人已创建. 请点 [此](https://t.me/{}?start=-init) 配置.
 
 
 

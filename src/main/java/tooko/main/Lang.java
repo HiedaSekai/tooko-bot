@@ -114,9 +114,6 @@ public class Lang {
     public String UNDEFINE;
     public String UNDEFINED;
     public String UNKNOWN;
-    public String RESTARTING_WARN;
-    public String RESTARTING;
-    public String UPDATING;
     public String SERVER_CLOSING;
     public String ERR_PERSIONAL;
     public String ERR_LIMIT;
