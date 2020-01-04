@@ -370,7 +370,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             } catch (ex: Exception) {
 
-                defaultLog.error(ex)
+                defaultLog.error(ex.message)
 
                 INSTANCE.destroy()
 
