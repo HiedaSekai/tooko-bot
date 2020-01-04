@@ -93,7 +93,7 @@ object LibsLoader {
 
                 Lang.BY_NAME[language.LANG_NAME] = language
 
-                defaultLog.info("已加载语言 : ${language.LANG_NAME}")
+                defaultLog.info("加载语言 : ${language.LANG_NAME} 来自 ${it.name}")
 
             }.onFailure { ex ->
 
@@ -111,7 +111,7 @@ object LibsLoader {
 
         Lang.DEFAULT = if (Lang.BY_NAME.containsKey(Env.DEF_LANG)) {
 
-            defaultLog.info("加载设定的默认语言: ${Env.DEF_LANG}")
+            defaultLog.info("默认语言已设为: ${Env.DEF_LANG}")
 
             Lang.BY_NAME.get(Env.DEF_LANG)!!
 
