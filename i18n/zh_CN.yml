@@ -3,15 +3,17 @@
 ################################################
 
 LANG_ID: 0
-LANG_NAME: "简体中文"
+LANG_NAME: 简体中文
 
 ################################################
 #                    本体                      #
 ################################################
 
-LAUNCH: 「 你知道怎样拿回失去的东西吗？」
+LAUNCH: |
+  「 你知道怎样拿回失去的东西吗？」
 
-HELP: 这里是远子. 使用前请阅读 [Wiki](https://gitlab.com/tooko/tooko-bot/wikis/Home) .
+HELP: |
+  这里是远子. 使用前请阅读 [Wiki](https://gitlab.com/tooko/tooko-bot/wikis/Home) .
 
 PUBLIC_WARN: |
   **注意, 这是一个公开实例 !**
@@ -27,73 +29,189 @@ LICENSE: |
 
   机器人文档 : [私聊机器人](https://gitlab.com/tooko/tooko-bot/wikis/Bots/PmBot)
 
-SPLIT: "&==========  (｡･∀･)ﾉﾞヾ(･ω･。)  =========="
-SPLIT_END: "====================================="
+SPLIT: |
+  &==========  (｡･∀･)ﾉﾞヾ(･ω･。)  ==========
+
+SPLIT_END: |
+  =====================================
+
 INVALID_TIME: |
   时间格式有误 ( {} )
   格式: 1d2h3s (一小时二分钟三秒）/ 10m （十分钟）/ 30s （三十秒）
 
-DELAY_TOO_SHORT: "延时时间过短 ( < {} )"
-CHOOSE_LANG: "请选择语言 _(:з」∠)_"
-LANG_SELECTED: "欢迎使用 ~"
-FN_PING_RESULT: "喵..."
-FORWARD_FROM_USER: "来自用户"
-FORWARD_FROM_HIDDEN_USER: "来自匿名用户"
-FORWARD_FROM_CHANNEL: "来自频道"
-CHANNEL_RESTRICTIONED: "频道被限制"
-AUTHOR_SIGNATURE: "作者签名"
-MESSAGE_ID: "消息ID"
-MESSAGE_LINK: "消息链接"
+DELAY_TOO_SHORT: |
+  延时时间过短 ( < {} )
+
+CHOOSE_LANG: |
+  请选择语言 _(:з」∠)_
+
+LANG_SELECTED: |
+  欢迎使用 ~
+
+FN_PING_RESULT: |
+  喵...
+
+FORWARD_FROM_USER: |
+  来自用户
+
+FORWARD_FROM_HIDDEN_USER: |
+  来自匿名用户
+
+FORWARD_FROM_CHANNEL: |
+  来自频道
+
+CHANNEL_RESTRICTIONED: |
+  频道被限制
+
+AUTHOR_SIGNATURE: |
+  作者签名
+
+MESSAGE_ID: |
+  消息ID
+
+MESSAGE_LINK: |
+  消息链接
+
 STICKER_CAPTION: |
   贴纸ID: `{}`
   贴纸表情: `{}`
   贴纸集: `{}`
 
-STICKER_EXPORT: "下载贴纸集"
-STICKER_EXPORT_DL: "正在下载贴纸集  **{} ** {} / {}"
-STICKER_DL_FAILED: "&贴纸下载失败 _(:з」∠)_ ( {} )"
-STICKER_EXPORT_PACK: "&正在转码 (≖‿≖)✧"
-STICKER_EXPORT_SEND: "&完成！正在发送 (๑•̀ㅂ•́)√"
-PERMISSION_DENIED: "啊！不行啦！"
-BACK: "🔙"
-CNF: "没有这个命令 :("
-ENABLE: "启用"
-DISABLE: "禁用"
-STATUS_ENABLE: "启用"
-STATUS_DISABLE: "禁用"
-DELETED: "已删除"
-REFRESH: "刷新"
-REFRESHED: "&已刷新  (‵▽′)/"
-ENABLED: "已启用"
-DISABLED: "已禁用"
-UNDEFINE: "暂未设定"
-UNDEFINED: "暂未设定"
-UNKNOWN: "未知"
-SERVER_CLOSING: "不知何时何故地, 出现了问题."
-ERR_PERSIONAL: "本实例未公开开放此功能."
-ERR_LIMIT: "到达机器人创建上限."
-ERR_LOGGING_OUT: "机器人被登出."
-BOT_NONE: "还没有创建过机器人."
-BOT_CH: "从以下列表选择机器人."
-BOT_INVALID: "机器人无效"
-BOT_MANAGE: "管理机器人"
-BOT_STATUS: "机器人状态"
-BOT_ID: "机器人ID"
-BOT_STATUS_UNSTARTED: "未启动"
-BOT_STATUS_RUNNING: "正常"
-BOT_STATUS_ERROR: "出错"
-BOT_ERROR_MESSAGE: "错误消息"
-BOT_DELETE: "删除"
-BOT_DELETE_WARN: "真的要删除吗？您会失去它，真的很久！"
-BOT_DELETE_CONFIRM: "是的，我确定！"
-BOT_NEW: "创建新机器人"
-BOT_INPUT_TOKEN: "输入 [BotToken](https://core.telegram.org/bots#creating-a-new-bot) :"
-BOT_TOKEN_INVALID: "无效的BotToken, 创建已取消 ({})."
-BOT_EXISTS: "该机器人已存在 (本实例中), 请删除后重新创建."
-BOT_N_TYPE: "下一步: 选择机器人类型."
-BOT_TYPE_PM: "私聊机器人"
-BOT_ERR: "机器人出错停止, 请检查: {}"
-BOT_CREATED: "机器人已创建. 请点 [此](https://t.me/{}?start=-init) 配置."
+STICKER_EXPORT: |
+  下载贴纸集
+
+STICKER_EXPORT_DL: |
+  正在下载贴纸集  **{} ** {} / {}
+
+STICKER_DL_FAILED: |
+  &贴纸下载失败 _(:з」∠)_ ( {} )
+
+STICKER_EXPORT_PACK: |
+  &正在转码 (≖‿≖)✧
+
+STICKER_EXPORT_SEND: |
+  &完成！正在发送 (๑•̀ㅂ•́)√
+
+PERMISSION_DENIED: |
+  啊！不行啦！
+
+BACK: |
+  🔙
+
+CNF: |
+  没有这个命令 :(
+
+ENABLE: |
+  启用
+
+DISABLE: |
+  禁用
+
+STATUS_ENABLE: |
+  启用
+
+STATUS_DISABLE: |
+  禁用
+
+DELETED: |
+  已删除
+
+REFRESH: |
+  刷新
+
+REFRESHED: |
+  &已刷新  (‵▽′)/
+
+ENABLED: |
+  已启用
+
+DISABLED: |
+  已禁用
+
+UNDEFINE: |
+  暂未设定
+
+UNDEFINED: |
+  暂未设定
+
+UNKNOWN: |
+  未知
+
+SERVER_CLOSING: |
+  不知何时何故地, 出现了问题.
+
+ERR_PERSIONAL: |
+  本实例未公开开放此功能.
+
+ERR_LIMIT: |
+  到达机器人创建上限.
+
+ERR_LOGGING_OUT: |
+  机器人被登出.
+
+BOT_NONE: |
+  还没有创建过机器人.
+
+BOT_CH: |
+  从以下列表选择机器人.
+
+BOT_INVALID: |
+  机器人无效
+
+BOT_MANAGE: |
+  管理机器人
+
+BOT_STATUS: |
+  机器人状态
+
+BOT_ID: |
+  机器人ID
+
+BOT_STATUS_UNSTARTED: |
+  未启动
+
+BOT_STATUS_RUNNING: |
+  正常
+
+BOT_STATUS_ERROR: |
+  出错
+
+BOT_ERROR_MESSAGE: |
+  错误消息
+
+BOT_DELETE: |
+  删除
+
+BOT_DELETE_WARN: |
+  真的要删除吗？您会失去它，真的很久！
+
+BOT_DELETE_CONFIRM: |
+  是的，我确定！
+
+BOT_NEW: |
+  创建新机器人
+
+BOT_INPUT_TOKEN: |
+  输入 [BotToken](https://core.telegram.org/bots#creating-a-new-bot) :
+
+BOT_TOKEN_INVALID: |
+  无效的BotToken, 创建已取消 ({}).
+
+BOT_EXISTS: |
+  该机器人已存在 (本实例中), 请删除后重新创建.
+
+BOT_N_TYPE: |
+  下一步: 选择机器人类型.
+
+BOT_TYPE_PM: |
+  私聊机器人
+
+BOT_ERR: |
+  机器人出错停止, 请检查: {}
+
+BOT_CREATED: |
+  机器人已创建. 请点 [此](https://t.me/{}?start=-init) 配置.
+
 
 
 ################################################
@@ -105,12 +223,24 @@ PM_WELCOME: |
 
   你可以通过这个机器人联系我(们).
 
-PM_ON_START: "{} 开启了私聊机器人 ({})."
-PM_ON_PAYLOAD: "{} 使用 payload '{}'开启了机器人."
-PM_OK: "机器人正常运行. 请勿停用本机器人, 否则将无法收到消息.  [私聊机器人文档](https://gitlab.com/tooko/tooko-bot/wikis/Bots/PmBot)"
-PM_NO_WELCOME_MESSAGE: "默认欢迎消息"
-PM_WELCOME_MESSAGE: "欢迎消息: 已设定 {} 条"
-PM_WELCOME_NOTICE: "打开通知"
+PM_ON_START: |
+  {} 开启了私聊机器人 ({}).
+
+PM_ON_PAYLOAD: |
+  {} 使用 payload '{}'开启了机器人.
+
+PM_OK: |
+  机器人正常运行. 请勿停用本机器人, 否则将无法收到消息.  [私聊机器人文档](https://gitlab.com/tooko/tooko-bot/wikis/Bots/PmBot)
+
+PM_NO_WELCOME_MESSAGE: |
+  默认欢迎消息
+
+PM_WELCOME_MESSAGE: |
+  欢迎消息: 已设定 {} 条
+
+PM_WELCOME_NOTICE: |
+  打开通知
+
 PM_WELCOME_INPUT: |
   输入任意消息 :
 
@@ -129,158 +259,436 @@ PM_WELCOME_FD_WARN: |
 
   提示: 如果需要发布对他人的匿名投票, 可以先在一个频道里发布投票, 然后转发给机器人作为消息, 这样就不会暴露身份了.
 
-PM_WELCOME_FINISH: "消息已设定."
-PM_PAYLOADS: "子欢迎消息列表"
-PM_PAYLOAD: "子欢迎消息"
-PM_PAYLOAD_INVALID: "无效的 Payload: 仅允许 [a-zA-Z_-] 且最多64字."
-USER_ID: "用户ID"
-USER_ID_NOT_FOUND: "找不到 ID {} 对应的用户."
-USER_NAME: "用户名称"
-PM_DELETE_MESSAGE: "删除这条消息"
-PM_DELETED_RECEIVED_FROM: "已删除来自 {} 的 {} 条消息"
-PM_DELETED_SENDED_FROM: "已删除发送至 {} 的 {} 条消息"
-PM_DELETED_RECEIVED: "已删除 {} 条收到的消息"
-PM_DELETED_SENDED: "已删除 {} 条发出的消息"
-PM_DELETED_BY: "这条消息已被对方删除."
-EDIT: "修改"
-SUCCEED: "成功"
-FAILED: "失败"
-EDIT_SUCCEED: "修改成功"
-EDIT_FAILED: "修改失败: {}"
-EDIT_MESSAGE_INVALID: "修改失败: 目标消息已不存在"
-EDIT_TYPE_INVALID: "修改失败: 消息类型未识别"
-EDITED_BY: "消息被对方修改, 新内容: {}"
-NO_ENTERED_CHAT: "当前没有进入会话"
-INVALID_REPLY: "在回复的消息中没有找到对应聊天."
-INVALID_CHAT_ID: "提供的会话ID/用户引用无效."
-REPLY_OR_ID: "用法: 对消息使用 / 使用会话ID作为参数"
-GET_CHAT_FAILED: "读取目标会话失败: {}"
-NO_PRIVATE_WARN: "失败: 这不是一个私聊会话."
-CHAT_ENTERED: "已进入会话: {}"
-CHAT_EXITED: "已退出会话."
-NO_CHAT_ENTERED: "当前没有进入任何会话."
-CHAT_NO_RECORD: "没有该对话的记录."
-CHAT_MANAGE: "会话设定"
-CHAT_MANAGE_HELP: "管理这个会话: 使用清除选项可批量删除聊天消息."
-CHAT_MSG_SENDED: "发出消息: {} 条"
-CHAT_MSG_RECEIVED: "收到消息: {} 条"
-CHAT_MSG_DEL_RECEIVED: "删除已收消息"
-CHAT_MSG_DEL_SENDED: "删除已发消息"
-CHAT_MSG_DEL_ALL: "删除所有消息"
-CHAT_IS_BLOCKED: "**「 已屏蔽 」 **"
-CHAT_BLOCK: "屏蔽该会话"
-CHAT_UNBLOCK: "取消屏蔽该会话"
-CHAT: "会话"
-CHAT_ID: "会话ID"
-CHAT_NOT_FOUND: "找不到这个会话."
-CHAT_BLOCKED: "已屏蔽"
-CHAT_UNBLOCKED: "已取消"
-CHAT_EMPTY: "没有消息以删除"
-FINISH_MANAGE: "完成会话设定"
-SEND_FAILED: "消息发送失败, 已退出会话: {}"
-SEND_SUCCEED: "发送成功"
-SETTED: "已设定."
+PM_WELCOME_FINISH: |
+  消息已设定.
+
+PM_PAYLOADS: |
+  子欢迎消息列表
+
+PM_PAYLOAD: |
+  子欢迎消息
+
+PM_PAYLOAD_INVALID: |
+  无效的 Payload: 仅允许 [a-zA-Z_-] 且最多64字.
+
+USER_ID: |
+  用户ID
+
+USER_ID_NOT_FOUND: |
+  找不到 ID {} 对应的用户.
+
+USER_NAME: |
+  用户名称
+
+PM_DELETE_MESSAGE: |
+  删除这条消息
+
+PM_DELETED_RECEIVED_FROM: |
+  已删除来自 {} 的 {} 条消息
+
+PM_DELETED_SENDED_FROM: |
+  已删除发送至 {} 的 {} 条消息
+
+PM_DELETED_RECEIVED: |
+  已删除 {} 条收到的消息
+
+PM_DELETED_SENDED: |
+  已删除 {} 条发出的消息
+
+PM_DELETED_BY: |
+  这条消息已被对方删除.
+
+EDIT: |
+  修改
+
+SUCCEED: |
+  成功
+
+FAILED: |
+  失败
+
+EDIT_SUCCEED: |
+  修改成功
+
+EDIT_FAILED: |
+  修改失败: {}
+
+EDIT_MESSAGE_INVALID: |
+  修改失败: 目标消息已不存在
+
+EDIT_TYPE_INVALID: |
+  修改失败: 消息类型未识别
+
+EDITED_BY: |
+  消息被对方修改, 新内容: {}
+
+NO_ENTERED_CHAT: |
+  当前没有进入会话
+
+INVALID_REPLY: |
+  在回复的消息中没有找到对应聊天.
+
+INVALID_CHAT_ID: |
+  提供的会话ID/用户引用无效.
+
+REPLY_OR_ID: |
+  用法: 对消息使用 / 使用会话ID作为参数
+
+GET_CHAT_FAILED: |
+  读取目标会话失败: {}
+
+NO_PRIVATE_WARN: |
+  失败: 这不是一个私聊会话.
+
+CHAT_ENTERED: |
+  已进入会话: {}
+
+CHAT_EXITED: |
+  已退出会话.
+
+NO_CHAT_ENTERED: |
+  当前没有进入任何会话.
+
+CHAT_NO_RECORD: |
+  没有该对话的记录.
+
+CHAT_MANAGE: |
+  会话设定
+
+CHAT_MANAGE_HELP: |
+  管理这个会话: 使用清除选项可批量删除聊天消息.
+
+CHAT_MSG_SENDED: |
+  发出消息: {} 条
+
+CHAT_MSG_RECEIVED: |
+  收到消息: {} 条
+
+CHAT_MSG_DEL_RECEIVED: |
+  删除已收消息
+
+CHAT_MSG_DEL_SENDED: |
+  删除已发消息
+
+CHAT_MSG_DEL_ALL: |
+  删除所有消息
+
+CHAT_IS_BLOCKED: |
+  **「 已屏蔽 」 **
+
+CHAT_BLOCK: |
+  屏蔽该会话
+
+CHAT_UNBLOCK: |
+  取消屏蔽该会话
+
+CHAT: |
+  会话
+
+CHAT_ID: |
+  会话ID
+
+CHAT_NOT_FOUND: |
+  找不到这个会话.
+
+CHAT_BLOCKED: |
+  已屏蔽
+
+CHAT_UNBLOCKED: |
+  已取消
+
+CHAT_EMPTY: |
+  没有消息以删除
+
+FINISH_MANAGE: |
+  完成会话设定
+
+SEND_FAILED: |
+  消息发送失败, 已退出会话: {}
+
+SEND_SUCCEED: |
+  发送成功
+
+SETTED: |
+  已设定.
+
 
 ################################################
 #                Twitter 子机器人               #
 ################################################
 
-TWI_HELP: "这里是流人. 使用前请阅读 [Wiki](https://gitlab.com/tooko/tooko-bot/wikis/Bots/TwitterBot) ."
-TWI_ACCOUNT: "账号"
-TWI_NEW_FOLLOWERS: "新增跟随者"
-TWI_LOST_FOLLOWERS: "失去跟随者"
-TWI_JOIN_AT: "于 {} 加入"
-TWI_JOIN_FORMAT: "yyyy年MM月"
-TWI_NAME_HISTORY: "历史名称"
-TWI_SN_HISTORY: "历史用户名"
-TWI_FRIENDS: "个跟随中"
-TWI_FOLLOWERS: "个跟随者"
-TWI_FOLLOWING: "正在跟随"
-TWI_ACC_DELETED: "账号已删除"
-TWI_ACC_SUSPENDED: "账号被冻结"
-TWI_TWUF: "双向取消关注"
-TWI_OWUF: "单向取消关注"
-TWI_CH_API: "选择接口"
-TWI_CUS_API: "自定义"
-TWI_CH_TOKEN: "选择认证类型"
-TWI_API_KEY: "Api Key"
-TWI_API_SECRET_KEY: "Api Secret Key"
-TWI_ACCESS_TOKEN: "Access Token"
-TWI_ACCESS_TOKEN_SECRET: "Access Token Secret"
-TWI_INPUT_API_KEY: "请输入 Api Key:"
-TWI_INPUT_API_SECRET_KEY: "请输入 Api Secret Key:"
-TWI_INPUT_ACCESS_TOKEN: "请输入 Access Token:"
-TWI_INPUT_ACCESS_TOKEN_SECRET: "请输入 Access Token Secret:"
-TWI_CH_LT: "请选择认证方式:"
-TWI_OAUTH: "OAuth"
+TWI_HELP: |
+  这里是流人. 使用前请阅读 [Wiki](https://gitlab.com/tooko/tooko-bot/wikis/Bots/TwitterBot) .
+
+TWI_ACCOUNT: |
+  账号
+
+TWI_NEW_FOLLOWERS: |
+  新增跟随者
+
+TWI_LOST_FOLLOWERS: |
+  失去跟随者
+
+TWI_JOIN_AT: |
+  于 {} 加入
+
+TWI_JOIN_FORMAT: |
+  yyyy年MM月
+
+TWI_NAME_HISTORY: |
+  历史名称
+
+TWI_SN_HISTORY: |
+  历史用户名
+
+TWI_FRIENDS: |
+  个跟随中
+
+TWI_FOLLOWERS: |
+  个跟随者
+
+TWI_FOLLOWING: |
+  正在跟随
+
+TWI_ACC_DELETED: |
+  账号已删除
+
+TWI_ACC_SUSPENDED: |
+  账号被冻结
+
+TWI_TWUF: |
+  双向取消关注
+
+TWI_OWUF: |
+  单向取消关注
+
+TWI_CH_API: |
+  选择接口
+
+TWI_CUS_API: |
+  自定义
+
+TWI_CH_TOKEN: |
+  选择认证类型
+
+TWI_API_KEY: |
+  Api Key
+
+TWI_API_SECRET_KEY: |
+  Api Secret Key
+
+TWI_ACCESS_TOKEN: |
+  Access Token
+
+TWI_ACCESS_TOKEN_SECRET: |
+  Access Token Secret
+
+TWI_INPUT_API_KEY: |
+  请输入 Api Key:
+
+TWI_INPUT_API_SECRET_KEY: |
+  请输入 Api Secret Key:
+
+TWI_INPUT_ACCESS_TOKEN: |
+  请输入 Access Token:
+
+TWI_INPUT_ACCESS_TOKEN_SECRET: |
+  请输入 Access Token Secret:
+
+TWI_CH_LT: |
+  请选择认证方式:
+
+TWI_OAUTH: |
+  OAuth
+
 TWI_AUTH_INPUT_CODE: |
   授权链接: {}
 
   请输入授权完成后取得的七位PIN码:
 
-TWI_AUTHED_BY: "你的账号 {} 已被 {} 认证, 该账号已从你的账号列表移除."
-TWI_WELCOME: "欢迎, {}."
-TWI_AUTH_REQUIRED: "这个命令需要 /login 授权账号才能使用."
-TWI_CH_ACCOUNT: "选择用于执行该操作的账号:"
-TWI_ANF: "找不到这个账号."
-TWI_CHOSED: "已选择 {}."
-TWI_LOGOUT: "账号已移除."
-TWI_ACC_MNG: "管理您的授权"
-TWI_TRACK_MNG: "修改关注者变化通知"
-TWI_TRACK_ENABLE: "关注者变化通知"
-TWI_ACC_EXPORT: "导出"
-TWI_ACC_TRACK: "关注者变化"
+TWI_AUTHED_BY: |
+  你的账号 {} 已被 {} 认证, 该账号已从你的账号列表移除.
+
+TWI_WELCOME: |
+  欢迎, {}.
+
+TWI_AUTH_REQUIRED: |
+  这个命令需要 /login 授权账号才能使用.
+
+TWI_CH_ACCOUNT: |
+  选择用于执行该操作的账号:
+
+TWI_ANF: |
+  找不到这个账号.
+
+TWI_CHOSED: |
+  已选择 {}.
+
+TWI_LOGOUT: |
+  账号已移除.
+
+TWI_ACC_MNG: |
+  管理您的授权
+
+TWI_TRACK_MNG: |
+  修改关注者变化通知
+
+TWI_TRACK_ENABLE: |
+  关注者变化通知
+
+TWI_ACC_EXPORT: |
+  导出
+
+TWI_ACC_TRACK: |
+  关注者变化
+
 TWI_INPUT_CSV: |
   请直接发送 .csv 文件
   或使用链接: /{} <URL>
 
-TWI_NOT_CSV_FILE: "请发送  **.csv 文件 ** 或  **文件链接 ** ."
-TWI_INVALID_CSV_FILE: "无效的 .csv 文件: {} ."
-TWI_INVALID_CSV_LINK: "无效的链接 ."
-DOWNLOAD_FIALD: "文件下载失败: {} ."
-WAITING_LAST_FUNCTION: "请等待上一条命令执行完成."
-TWI_REMOVING: "正在移除"
-TWI_ADDING: "正在添加"
-TWI_BL_FINISH: "&完成 屏蔽了 {} 人 (๑•̀ㅂ•́)√"
-TWI_UB_FINISH: "&完成 取消屏蔽了 {} 人 (๑•̀ㅂ•́)√"
-TWI_UM_FINISH: "&完成 取消静音了 {} 人 (๑•̀ㅂ•́)√"
-TWI_LIST_EMPTY: "错误: 列表为空"
-TWI_LIST_BUCKUP: "这是被执行列表的备份: 如果进行了误操作, 您可以恢复它."
-CANCELED: "操作已取消."
-TIMEOUTED: "操作超时, 已取消."
-TWI_ERR: "错误:"
-TWI_ERR_32: "Api Key 无效."
-TWI_ERR_50: "用户找不到."
-TWI_ERR_63: "用户被冻结."
-TWI_ERR_64: "账号被冻结."
-TWI_ERR_88_205: "请求频繁 稍后再试."
-TWI_ERR_89_99: "Access Token 无效."
-TWI_ERR_93: "Api 权限不够."
-TWI_ERR_130: "Twitter 服务器超载."
-TWI_ERR_131: "Twitter 炸了."
-TWI_ERR_135: "服务器时间出现了偏差."
-TWI_ERR_139: "已经喜欢过了."
-TWI_ERR_144: "推文找不到."
-TWI_ERR_150: "没有被对方关注."
-TWI_ERR_160: "已发送过关注请求."
-TWI_ERR_161: "关注过快."
-TWI_ERR_179: "无权查看."
-TWI_ERR_185: "到达每日发送上限."
-TWI_ERR_186_354: "文本太长."
-TWI_ERR_187: "推文重复."
-TWI_ERR_220: "Access Token 被限制."
-TWI_ERR_226_326: "被判定为自动操作."
-TWI_ERR_261: "Api 没有写权限."
-TWI_ERR_349: "无权私聊."
-TWI_ERR_385: "回复的推文已被删除或无权查看."
-TWI_HTTP_304: "内容未改变."
-TWI_HTTP_400: "非法请求."
-TWI_HTTP_401: "无效的认证信息."
-TWI_HTTP_403: "无权查看."
-TWI_HTTP_404: "内容不存在."
-TWI_HTTP_420: "全局请求频繁."
-TWI_HTTP_422: "内容无效."
-TWI_HTTP_429: "请求频繁."
-TWI_HTTP_500_502_504: "Twitter 炸了."
+TWI_NOT_CSV_FILE: |
+  请发送  **.csv 文件 ** 或  **文件链接 ** .
+
+TWI_INVALID_CSV_FILE: |
+  无效的 .csv 文件: {} .
+
+TWI_INVALID_CSV_LINK: |
+  无效的链接 .
+
+DOWNLOAD_FIALD: |
+  文件下载失败: {} .
+
+WAITING_LAST_FUNCTION: |
+  请等待上一条命令执行完成.
+
+TWI_REMOVING: |
+  正在移除
+
+TWI_ADDING: |
+  正在添加
+
+TWI_BL_FINISH: |
+  &完成 屏蔽了 {} 人 (๑•̀ㅂ•́)√
+
+TWI_UB_FINISH: |
+  &完成 取消屏蔽了 {} 人 (๑•̀ㅂ•́)√
+
+TWI_UM_FINISH: |
+  &完成 取消静音了 {} 人 (๑•̀ㅂ•́)√
+
+TWI_LIST_EMPTY: |
+  错误: 列表为空
+
+TWI_LIST_BUCKUP: |
+  这是被执行列表的备份: 如果进行了误操作, 您可以恢复它.
+
+CANCELED: |
+  操作已取消.
+
+TIMEOUTED: |
+  操作超时, 已取消.
+
+TWI_ERR: |
+  错误:
+
+TWI_ERR_32: |
+  Api Key 无效.
+
+TWI_ERR_50: |
+  用户找不到.
+
+TWI_ERR_63: |
+  用户被冻结.
+
+TWI_ERR_64: |
+  账号被冻结.
+
+TWI_ERR_88_205: |
+  请求频繁 稍后再试.
+
+TWI_ERR_89_99: |
+  Access Token 无效.
+
+TWI_ERR_93: |
+  Api 权限不够.
+
+TWI_ERR_130: |
+  Twitter 服务器超载.
+
+TWI_ERR_131: |
+  Twitter 炸了.
+
+TWI_ERR_135: |
+  服务器时间出现了偏差.
+
+TWI_ERR_139: |
+  已经喜欢过了.
+
+TWI_ERR_144: |
+  推文找不到.
+
+TWI_ERR_150: |
+  没有被对方关注.
+
+TWI_ERR_160: |
+  已发送过关注请求.
+
+TWI_ERR_161: |
+  关注过快.
+
+TWI_ERR_179: |
+  无权查看.
+
+TWI_ERR_185: |
+  到达每日发送上限.
+
+TWI_ERR_186_354: |
+  文本太长.
+
+TWI_ERR_187: |
+  推文重复.
+
+TWI_ERR_220: |
+  Access Token 被限制.
+
+TWI_ERR_226_326: |
+  被判定为自动操作.
+
+TWI_ERR_261: |
+  Api 没有写权限.
+
+TWI_ERR_349: |
+  无权私聊.
+
+TWI_ERR_385: |
+  回复的推文已被删除或无权查看.
+
+TWI_HTTP_304: |
+  内容未改变.
+
+TWI_HTTP_400: |
+  非法请求.
+
+TWI_HTTP_401: |
+  无效的认证信息.
+
+TWI_HTTP_403: |
+  无权查看.
+
+TWI_HTTP_404: |
+  内容不存在.
+
+TWI_HTTP_420: |
+  全局请求频繁.
+
+TWI_HTTP_422: |
+  内容无效.
+
+TWI_HTTP_429: |
+  请求频繁.
+
+TWI_HTTP_500_502_504: |
+  Twitter 炸了.
+
 TWI_HTTP_503: |
   Twitter 服务器超载.

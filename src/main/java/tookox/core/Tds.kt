@@ -84,6 +84,12 @@ val FormattedText.asHtml: String
 
         }
 
+        if (text.length > index) {
+
+            htmlText += text.substring(index, text.length)
+
+        }
+
         return htmlText
 
     }
