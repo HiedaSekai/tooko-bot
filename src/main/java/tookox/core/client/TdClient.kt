@@ -76,8 +76,6 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         postAdd.add(this@TdClient)
 
-        while (!status) delay(10)
-
         while (authing) delay(100)
 
     }
@@ -309,6 +307,8 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
                         val toAdd = iter.next()
 
                         clients.add(toAdd)
+
+                        toAdd.status = true
 
                         iter.remove()
 

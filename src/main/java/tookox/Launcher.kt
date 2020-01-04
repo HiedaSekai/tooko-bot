@@ -362,7 +362,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             INSTANCE.start()
 
-            defaultLog.debug("加载语言文件")
+            // defaultLog.debug("加载语言文件")
 
             try {
 
