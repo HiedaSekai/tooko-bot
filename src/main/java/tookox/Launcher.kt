@@ -23,9 +23,9 @@ import tooko.main.utils.nsfw.TCRC
 import tooko.td.Log
 import tooko.td.TdApi
 import tooko.td.client.TdClient.EventTask
-import tooko.td.core.TookoLog
 import tooko.twitter.ApiToken
 import tooko.twitter.TwitterBot
+import tookox.core.TookoLog
 import tookox.core.client.TdBot
 import tookox.core.defaultLog
 import tookox.core.funs.BaseFuncs
@@ -111,7 +111,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             mongoLogger.level = Level.WARNING
 
-            LogFactory.setCurrentLogFactory(TookoLog.Factory())
+            LogFactory.setCurrentLogFactory(TookoLog)
 
             defaultLog.debug("正在加载 (๑•̀ㅂ•́)√")
 

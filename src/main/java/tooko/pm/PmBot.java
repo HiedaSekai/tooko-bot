@@ -2,7 +2,6 @@ package tooko.pm;
 
 import cn.hutool.core.io.*;
 import org.apache.commons.collections4.bidimap.*;
-import tooko.*;
 import tooko.main.*;
 import tooko.main.bots.*;
 import tooko.main.extras.*;
@@ -11,6 +10,7 @@ import tooko.pm.config.*;
 import tooko.pm.handlers.*;
 import tooko.td.TdApi.*;
 import tooko.td.client.*;
+import tookox.*;
 
 import java.io.File;
 import java.util.*;
@@ -392,7 +392,7 @@ public class PmBot extends TdBot {
         image.error = ex;
         image.status = BotImage.STATUS_ERROR;
 
-        Launcher.INSTANCE.E(Fn.sendText(bot.owner, Fn.plainText(OL.BOT_ERR, ex)));
+        Launcher.INSTANCE.sendRaw(Fn.sendText(bot.owner, Fn.plainText(OL.BOT_ERR, ex)));
 
         destroy();
 

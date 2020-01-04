@@ -99,7 +99,7 @@ public class UserTest extends TwitterHandler {
 
             }
 
-            log.debug("{} / {} : {} photo", index + 1, timeline.size(), status.getMediaEntities().length);
+            //LogsKt.getDefaultLog().debug("{} / {} : {} photo", index + 1, timeline.size(), status.getMediaEntities().length);
 
             if (linkArray.isEmpty()) {
 
@@ -119,13 +119,13 @@ public class UserTest extends TwitterHandler {
 
                 float[][] results = NSFW.predictRaw(linkArray.toArray(new String[linkArray.size()]));
 
-                log.debug("result size " + results.length);
+                // log.debug("result size " + results.length);
 
                 for (int i = 0; i < results.length; i++) {
 
                     float[] result = results[i];
 
-                    log.debug(ArrayUtil.join(result, " "));
+                    //log.debug(ArrayUtil.join(result, " "));
 
                     if (result[3] > 0.8f || result[4] > 0.8f) {
 

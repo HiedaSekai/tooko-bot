@@ -130,11 +130,11 @@ class TelegramLinkScan : TwitterHandler() {
 
                         if (status.isRetweet && (exQueue.contains(status.retweetedStatus.user.id) || queue.contains(status.retweetedStatus.user.id))) return@forEach
 
-                        status.urlEntities.forEach {
+                        status.urlEntities.forEach STATUS@{
 
                             if (it.expandedURL.matches(matchUserOrGroup)) {
 
-                                if (!links.add(it.expandedURL)) return@forEach
+                                if (!links.add(it.expandedURL)) return@STATUS
 
                                 pool.execute {
 

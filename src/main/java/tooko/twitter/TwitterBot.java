@@ -1,6 +1,5 @@
 package tooko.twitter;
 
-import tooko.*;
 import tooko.main.*;
 import tooko.main.extras.*;
 import tooko.td.TdApi.*;
@@ -117,8 +116,6 @@ public class TwitterBot extends TdBot {
         FollowTask.Companion.stop();
 
         CheckTask.Companion.stop();
-
-        Launcher.twitter = null;
 
         super.destroy();
 

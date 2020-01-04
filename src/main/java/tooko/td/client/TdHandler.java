@@ -2,9 +2,7 @@ package tooko.td.client;
 
 import cn.hutool.core.thread.*;
 import cn.hutool.core.util.*;
-import cn.hutool.log.Log;
 import cn.hutool.log.*;
-import tooko.*;
 import tooko.main.*;
 import tooko.td.*;
 import tooko.td.TdApi.GetChat;
@@ -23,8 +21,6 @@ import java.util.*;
 
 @SuppressWarnings("EmptyMethod")
 public class TdHandler {
-
-    public Log log = Launcher.log;
 
     public TdClient client;
 

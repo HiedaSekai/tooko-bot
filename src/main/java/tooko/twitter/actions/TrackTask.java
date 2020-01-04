@@ -2,11 +2,12 @@ package tooko.twitter.actions;
 
 import org.bson.codecs.pojo.annotations.*;
 import org.bson.conversions.*;
-import tooko.*;
 import tooko.main.*;
 import tooko.td.core.*;
 import tooko.twitter.*;
 import tooko.twitter.archives.*;
+import tookox.*;
+import tookox.core.*;
 import twitter4j.*;
 
 import java.util.*;
@@ -107,7 +108,7 @@ public class TrackTask extends TimerTask {
 
         } catch (TwitterException e) {
 
-            Launcher.log.debug(e);
+            LogsKt.getDefaultLog().debug(e);
 
             return;
 
