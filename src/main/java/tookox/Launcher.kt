@@ -16,6 +16,7 @@ import org.bson.codecs.pojo.PropertyCodecProvider
 import org.bson.codecs.pojo.SubClassPropertyCodecProvider
 import org.yaml.snakeyaml.Yaml
 import tooko.main.Env
+import tooko.main.Lang
 import tooko.main.bots.BotData
 import tooko.main.bots.BotImage
 import tooko.main.utils.nsfw.NSRC
@@ -79,7 +80,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
     override fun onLaunch(userId: Int, chatId: Long, message: TdApi.Message) {
 
-        sudo make "你好! 这个机器人正在重写 (" sendTo chatId
+        sudo make Lang.get(userId).LAUNCH sendTo chatId
 
     }
 

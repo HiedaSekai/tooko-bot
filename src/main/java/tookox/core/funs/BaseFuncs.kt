@@ -44,15 +44,15 @@ class BaseFuncs : TdBotHandler() {
 
             if (message.fromPrivate) {
 
-                sudo make "${"UID".blod} : ${userId.code}".asHtml sendTo chatId
+                sudo make "${"UID".asBlod} : ${userId.asCode}".asHtml sendTo chatId
 
             } else if (message.fromChannel) {
 
-                sudo make "${"CID".blod} : ${chatId.code}".asHtml sendTo chatId
+                sudo make "${"CID".asBlod} : ${chatId.asCode}".asHtml sendTo chatId
 
             } else {
 
-                sudo make "${"CID".blod} : ${chatId.code}\n${"UID".blod} : ${userId.code}".asHtml sendTo chatId
+                sudo make "${"CID".asBlod} : ${chatId.asCode}\n${"UID".asBlod} : ${userId.asCode}".asHtml sendTo chatId
 
             }
 
@@ -66,9 +66,9 @@ class BaseFuncs : TdBotHandler() {
 
                 make {
 
-                    inputHtml = "${L.USER_NAME.blod} : " +
-                            "${it.displayName.inlineMention(it.id)}\n" +
-                            "${L.USER_ID.blod} : ${it.id.code}"
+                    inputHtml = "${L.USER_NAME.asBlod} : " +
+                            "${it.displayName.toInlineMention(it.id)}\n" +
+                            "${L.USER_ID.asBlod} : ${it.id.asCode}"
 
                 } sendTo chatId
 
@@ -89,7 +89,7 @@ class BaseFuncs : TdBotHandler() {
 
                     send<User>(GetUser(targetUserId)) {
 
-                        sudo make "${L.USER_NAME.blod} : ${it.displayName.inlineMention(it.id)}K\n${L.USER_ID.blod} : ${it.id.code}".asHtml sendTo chatId
+                        sudo make "${L.USER_NAME.asBlod} : ${it.displayName.toInlineMention(it.id)}K\n${L.USER_ID.asBlod} : ${it.id.asCode}".asHtml sendTo chatId
 
                     } onError {
 
@@ -112,11 +112,11 @@ class BaseFuncs : TdBotHandler() {
 
                     val targetUser = sync<User>(GetUser((it.type as ChatTypePrivate).userId))
 
-                    sudo make "${L.USER_NAME.blod} : ${targetUser.displayName.inlineMention(targetUser.id)}\n${L.USER_ID.blod} : ${targetUser.id.code}".asHtml sendTo chatId
+                    sudo make "${L.USER_NAME.asBlod} : ${targetUser.displayName.toInlineMention(targetUser.id)}\n${L.USER_ID.asBlod} : ${targetUser.id.asCode}".asHtml sendTo chatId
 
                 } else {
 
-                    sudo make "${"CID".blod} : ${it.id.code}".asHtml sendTo chatId
+                    sudo make "${"CID".asBlod} : ${it.id.asCode}".asHtml sendTo chatId
 
                 }
 

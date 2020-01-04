@@ -3,7 +3,11 @@ package tookox
 import org.yaml.snakeyaml.Yaml
 import tooko.main.Env
 import tooko.main.Lang
+import tookox.core.asHtml
 import tookox.core.defaultLog
+import tookox.core.td.asMarkdown
+import kotlin.reflect.full.declaredMemberProperties
+import kotlin.reflect.jvm.javaField
 
 object LibsLoader {
 
@@ -88,6 +92,18 @@ object LibsLoader {
             runCatching {
 
                 val language = yaml.loadAs(it.inputStream(), Lang::class.java)
+
+                language::class.declaredMemberProperties.forEach {
+
+                    val field = it.javaField!!
+
+                    if (field.declaringClass == String::class.java) {
+
+                        field.set(language, (field.get(language) as String).asMarkdown.asHtml)
+
+                    }
+
+                }
 
                 Lang.ALL[language.LANG_ID] = language
 

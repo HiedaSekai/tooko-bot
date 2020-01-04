@@ -9,7 +9,7 @@ import tooko.td.TdApi.User;
 import tooko.td.TdApi.*;
 import tooko.td.client.*;
 import tooko.td.core.*;
-import tookox.*;
+import tookox.core.td.*;
 import twitter4j.*;
 import twitter4j.conf.*;
 
@@ -408,17 +408,22 @@ public class Fn {
 
     }
 
+
     public static FormattedText parseHtml(String text, java.lang.Object... params) {
 
-        return Launcher.INSTANCE.sync(new ParseTextEntities(StrUtil.format(text, params), new TextParseModeHTML()));
+        return MessageFactoryKt.getAsHtml(StrUtil.format(text, params));
 
     }
+
+    /*
 
     public static FormattedText parseMarkdown(String text, java.lang.Object... params) {
 
         return Launcher.INSTANCE.sync(new ParseTextEntities(StrUtil.format(text, params), new TextParseModeMarkdown()));
 
     }
+
+    */
 
     public static SendMessage sendText(long chatId, FormattedText inputMessageContent) {
 

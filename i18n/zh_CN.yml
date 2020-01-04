@@ -73,7 +73,7 @@ MESSAGE_LINK: |
   消息链接
 
 STICKER_CAPTION: |
-  贴纸ID:    `{}`
+  贴纸ID: `{}`
   贴纸表情: `{}`
   贴纸集: `{}`
 
