@@ -1,5 +1,6 @@
 package tookox
 
+import com.google.gson.Gson
 import org.yaml.snakeyaml.Yaml
 import tooko.main.Env
 import tooko.main.Lang
@@ -118,6 +119,8 @@ object LibsLoader {
                     }
 
                 }
+
+                defaultLog.trace("${Gson().to(language)}")
 
                 Lang.ALL[language.LANG_ID] = language
 
