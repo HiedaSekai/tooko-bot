@@ -95,9 +95,9 @@ object LibsLoader {
 
                 defaultLog.info("已加载语言 : ${language.LANG_NAME}")
 
-            }.onFailure {
+            }.onFailure { ex ->
 
-                defaultLog.warn(it, "语言文件 $it.name 解析错误, 已跳过.")
+                defaultLog.warn(ex, "语言文件 $it.name 解析错误, 已跳过.")
 
             }
 

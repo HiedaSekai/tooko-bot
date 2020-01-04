@@ -18,6 +18,8 @@ public class Lang {
 
     static {
 
+        INVALID = new Lang();
+
         INVALID.LANG_ID = -1;
 
         for (Field field : Lang.class.getFields()) {
