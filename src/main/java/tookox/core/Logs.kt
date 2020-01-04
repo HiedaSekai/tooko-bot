@@ -34,7 +34,7 @@ fun mkLog(name: String) = object : ConsoleLog(name) {
 
     override fun log(fqcn: String, level: Level, t: Throwable?, format: String, vararg arguments: Any) {
 
-        val logMsg = if (t != null) {
+        var logMsg = if (t != null) {
 
             var logWithExc = if (t.message != format) format.input(arguments) + "\n" else ""
 
