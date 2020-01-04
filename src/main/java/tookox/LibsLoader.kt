@@ -1,11 +1,16 @@
 package tookox
 
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.runBlocking
 import org.yaml.snakeyaml.Yaml
 import tooko.main.Env
 import tooko.main.Lang
 import tookox.core.asHtml
 import tookox.core.defaultLog
 import tookox.core.td.asMarkdown
+import java.util.*
 
 object LibsLoader {
 
@@ -75,7 +80,7 @@ object LibsLoader {
 
     }
 
-    fun loadLanguages() {
+    fun loadLanguages() = runBlocking {
 
         val dir = Env.getFile("i18n")
 
@@ -87,7 +92,11 @@ object LibsLoader {
 
         languages.forEach {
 
+            defaultLog.trace("加载 ${it.name}")
+
             runCatching {
+
+                val results = LinkedList<Deferred<*>>()
 
                 val language = yaml.loadAs(it.inputStream(), Lang::class.java)
 
@@ -103,15 +112,19 @@ object LibsLoader {
 
                         } else {
 
-                            runCatching {
+                            async {
 
-                                field.set(language, resStr.asMarkdown.asHtml)
+                                runCatching {
 
-                            }.onFailure { ex ->
+                                    field.set(language, resStr.asMarkdown.asHtml)
 
-                                defaultLog.warn(ex, "语言文件 ${it.name} 中 ${field.name} 解析错误 : $resStr, 已跳过.")
+                                }.onFailure { ex ->
 
-                            }
+                                    defaultLog.warn(ex, "语言文件 ${it.name} 中 ${field.name} 解析错误 : $resStr, 已跳过.")
+
+                                }
+
+                            }.also(results::addLast)
 
                         }
 
@@ -119,7 +132,9 @@ object LibsLoader {
 
                 }
 
-              //  defaultLog.trace(JSONObject(Gson().toJson(language)).toStringPretty())
+                results.awaitAll()
+
+                //  defaultLog.trace(JSONObject(Gson().toJson(language)).toStringPretty())
 
                 Lang.ALL[language.LANG_ID] = language
 
