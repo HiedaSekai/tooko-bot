@@ -10,13 +10,13 @@ class TdCallback<T : TdApi.Object>(stackIgnore: Int = 0, private var handler: ((
 
     private val stackTrace: Array<StackTraceElement> = Fn.shift(ThreadUtil.getStackTrace(), 3 + stackIgnore)
 
-    private var errorHandler: (TdException) -> Unit = {
+    private var errorHandler: ((TdException) -> Unit)? = {
 
         defaultLog.warn(it)
 
     }
 
-    infix fun onFinish(handler: (T) -> Unit): TdCallback<T> {
+    infix fun onFinish(handler: ((T) -> Unit)?): TdCallback<T> {
 
         this.handler = handler
 
@@ -24,7 +24,7 @@ class TdCallback<T : TdApi.Object>(stackIgnore: Int = 0, private var handler: ((
 
     }
 
-    infix fun onError(handler: (TdException) -> Unit): TdCallback<T> {
+    infix fun onError(handler: ((TdException) -> Unit)?): TdCallback<T> {
 
         this.errorHandler = handler
 
@@ -35,6 +35,6 @@ class TdCallback<T : TdApi.Object>(stackIgnore: Int = 0, private var handler: ((
     @Suppress("UNCHECKED_CAST")
     fun postResult(result: TdApi.Object) = handler?.invoke(result as T)
 
-    fun postError(error: TdException) = errorHandler.invoke(error.also { it.stackTrace = stackTrace })
+    fun postError(error: TdException) = errorHandler?.invoke(error.also { it.stackTrace = stackTrace })
 
 }

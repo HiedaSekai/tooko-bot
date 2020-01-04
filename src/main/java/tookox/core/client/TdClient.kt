@@ -118,7 +118,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         if (authorizationState is AuthorizationStateWaitTdlibParameters) {
 
-            sendRaw(SetTdlibParameters(options.build())).onError(defaultLog::warn)
+            sendUnit(SetTdlibParameters(options.build())).onError(defaultLog::warn)
 
         } else if (authorizationState is AuthorizationStateWaitEncryptionKey) {
 
@@ -256,6 +256,16 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
             send(requestId, function)
 
         }
+
+    }
+
+    override fun sendRaw(function: TdApi.Function) {
+
+        check(!executionLock.isLocked) { "ClientActor is destroyed" }
+
+        val requestId = requestId.getAndIncrement()
+
+        send(requestId, function)
 
     }
 

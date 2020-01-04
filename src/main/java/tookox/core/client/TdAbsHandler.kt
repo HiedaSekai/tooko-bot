@@ -2,6 +2,8 @@ package tookox.core.client
 
 import tooko.td.TdApi
 import tooko.td.TdApi.*
+import java.util.*
+import kotlin.collections.HashMap
 
 interface TdAbsHandler {
 
@@ -157,18 +159,79 @@ interface TdAbsHandler {
 
     fun onPoll(poll: Poll)
 
+    infix fun sendRaw(function: TdApi.Function) = sudo.sendRaw(function)
+
     fun <T : Object> send(function: TdApi.Function, stackIgnore: Int = 0, block: ((T) -> Unit)? = null): TdCallback<T> = sudo.send(function, stackIgnore, block)
 
-    fun sendRaw(function: TdApi.Function, stackIgnore: Int = 0, block: ((Object) -> Unit)? = null): TdCallback<Object> = send(function, stackIgnore, block)
+    infix fun sendUnit(function: TdApi.Function) = sudo.send<Object>(function)
 
-    fun <T : Object> sync(function: TdApi.Function): T = sudo.sync(function)
+    infix fun <T : Object> sync(function: TdApi.Function): T = sudo.sync(function)
 
-    fun post(function: TdApi.Function) {
-        sudo.sync<Object>(function)
-    }
+    infix fun syncUnit(function: TdApi.Function) = sudo.sync<Object>(function)
 
     val String.asHtml: FormattedText get() = sync(ParseTextEntities(this, TextParseModeHTML()))
 
     val String.asMarkdown: FormattedText get() = sync(ParseTextEntities(this, TextParseModeMarkdown()))
+
+    val Message.delete get() = DeleteMessages(chatId, longArrayOf(id), true)
+    val Message.deleteForSelf get() = DeleteMessages(chatId, longArrayOf(id), false)
+
+    val Collection<Message>.deleteAll: List<DeleteMessages>
+        get() {
+
+            val messages = HashMap<Long, LinkedList<Message>>()
+
+            forEach {
+
+                var list = messages[it.chatId]
+
+                if (list == null) {
+
+                    list = LinkedList()
+
+                    messages[it.chatId] = list
+
+                }
+
+                list.add(it)
+
+            }
+
+            return messages.map { (chatId, chatMessages) ->
+
+                DeleteMessages(chatId, chatMessages.map { it.id }.toLongArray(), true)
+
+            }
+
+        }
+
+    val Collection<Message>.deleteAllForSelf: List<DeleteMessages>
+        get() {
+
+            val messages = HashMap<Long, LinkedList<Message>>()
+
+            forEach {
+
+                var list = messages[it.chatId]
+
+                if (list == null) {
+
+                    list = LinkedList()
+
+                    messages[it.chatId] = list
+
+                }
+
+                list.add(it)
+
+            }
+
+            return messages.map { (chatId, chatMessages) ->
+
+                DeleteMessages(chatId, chatMessages.map { it.id }.toLongArray(), false)
+
+            }
+
+        }
 
 }

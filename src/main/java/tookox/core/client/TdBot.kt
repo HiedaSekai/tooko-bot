@@ -28,7 +28,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
         if (authorizationState is AuthorizationStateWaitPhoneNumber) {
 
-            sendRaw(CheckAuthenticationBotToken(botToken)).onError(::onAuthorizationFailed)
+            sendUnit(CheckAuthenticationBotToken(botToken)).onError(::onAuthorizationFailed)
 
         }
 

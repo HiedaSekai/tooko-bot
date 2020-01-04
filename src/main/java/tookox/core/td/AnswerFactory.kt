@@ -58,13 +58,13 @@ class AnswerFactory(val context: TdAbsHandler) {
 
     infix fun answerTo(queryId: Long) {
 
-        context.sendRaw(TdApi.AnswerCallbackQuery(queryId, text, showAlert, url, cacheTime))
+        context.async(TdApi.AnswerCallbackQuery(queryId, text, showAlert, url, cacheTime))
 
     }
 
-    infix fun postAnswerTo(queryId: Long) {
+    infix fun syncAnswerTo(queryId: Long) {
 
-        context.post(TdApi.AnswerCallbackQuery(queryId, text, showAlert, url, cacheTime))
+        context.await(TdApi.AnswerCallbackQuery(queryId, text, showAlert, url, cacheTime))
 
     }
 

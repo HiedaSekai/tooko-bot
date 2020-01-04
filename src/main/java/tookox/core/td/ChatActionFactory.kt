@@ -37,7 +37,7 @@ class ChatActionFactory(val context: TdAbsHandler, val action: ChatAction) {
 
     infix fun postTo(chatId: Number) {
 
-        context.post(SendChatAction(chatId.toLong(), action))
+        context.async(SendChatAction(chatId.toLong(), action))
 
     }
 

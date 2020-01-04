@@ -197,7 +197,9 @@ class StickerExport : TdBotHandler() {
 
                             captionText = "https://t.me/addstickers/${it.name}"
 
-                        } sendTo chatId
+                        } syncTo chatId
+
+                        sudo delete stat
 
                     }
 
