@@ -47,8 +47,6 @@ operator fun FormattedText.plus(text: FormattedText): FormattedText {
 val FormattedText.asHtml: String
     get() {
 
-        val plinText = text
-
         var htmlText = ""
 
         var index = 0
@@ -57,11 +55,11 @@ val FormattedText.asHtml: String
 
             if (it.offset > index) {
 
-                htmlText += plinText.substring(index, it.offset)
+                htmlText += text.substring(index, it.offset)
 
             }
 
-            val entityText = plinText.substring(it.offset, it.length)
+            val entityText = text.substring(it.offset, it.length)
 
             htmlText += when (it.type) {
 

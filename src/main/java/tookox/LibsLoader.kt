@@ -97,7 +97,7 @@ object LibsLoader {
 
                     val field = it.javaField!!
 
-                    if (field.declaringClass == String::class.java) {
+                    if (field.type == String::class.java) {
 
                         field.set(language, (field.get(language) as String).asMarkdown.asHtml)
 
