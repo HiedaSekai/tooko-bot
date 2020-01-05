@@ -62,7 +62,13 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         launch { receiveQueries() }
 
-        while (authing) delay(100)
+        while (authing) {
+
+            delay(1000)
+
+            defaultLog.trace("AUTHING")
+
+        }
 
         authed
 
@@ -135,7 +141,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                 authed = true
 
-                defaultLog.info("认证正常 : ${me.displayName}")
+                defaultLog.info("认证正常 : ${me.displayName} (@${me.username}")
 
                 for (handler in handlers) handler.onLogin()
 
