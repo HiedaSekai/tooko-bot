@@ -37,6 +37,7 @@ import tookox.core.funs.BaseFuncs
 import tookox.core.funs.LICENCE
 import tookox.core.funs.StickerExport
 import tookox.core.td.make
+import tookox.test.TestForIssue859
 import java.io.File
 import java.lang.Thread.UncaughtExceptionHandler
 import java.util.*
@@ -54,6 +55,8 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
     }
 
     override fun onLoad() {
+
+        addHandler(TestForIssue859())
 
         addHandler(BaseFuncs())
 
@@ -139,11 +142,13 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             val startAt = System.currentTimeMillis()
 
-            val mongoLogger = Logger.getLogger("org.mongodb.driver")
+            Logger.getLogger("org.mongodb.driver").apply {
 
-            mongoLogger.level = Level.WARNING
+                level = Level.WARNING
 
-            // disable mongo logs
+                // disable mongo logs
+
+            }
 
             LoggerFactory::class.java.getDeclaredField("INITIALIZATION_STATE").apply {
 
@@ -183,7 +188,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             }
 
-            Log.setVerbosityLevel(1)
+            Log.setVerbosityLevel(4)
 
             val configFile = File(Env.ROOT_PATH, "config.yml")
 
