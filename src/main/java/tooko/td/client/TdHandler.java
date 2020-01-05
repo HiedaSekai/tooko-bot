@@ -5,15 +5,10 @@ import cn.hutool.core.util.*;
 import cn.hutool.log.*;
 import tooko.main.*;
 import tooko.td.*;
-import tooko.td.TdApi.GetChat;
 import tooko.td.TdApi.Location;
-import tooko.td.TdApi.SendMessage;
 import tooko.td.TdApi.User;
 import tooko.td.TdApi.*;
 import tooko.td.core.*;
-import tooko.td.http.*;
-import tooko.td.http.request.*;
-import tooko.td.http.response.*;
 import twitter4j.*;
 
 import java.lang.Object;
@@ -23,28 +18,6 @@ import java.util.*;
 public class TdHandler {
 
     public TdClient client;
-
-    public static <T extends BaseRequest, R extends BaseResponse> R E(String botToken, final BaseRequest<T, R> request) {
-
-        try {
-
-            return execute(botToken, request);
-
-        } catch (TdException e) {
-
-            StaticLog.warn(Fn.parseError(e));
-
-            return null;
-
-        }
-
-    }
-
-    public static <T extends BaseRequest, R extends BaseResponse> R execute(String botToken, final BaseRequest<T, R> request) throws TdException {
-
-        return HttpApi.execute(botToken, request);
-
-    }
 
     public java.io.File getFile(File file) throws TdException {
 
@@ -156,22 +129,6 @@ public class TdHandler {
 
     }
 
-    public <T extends BaseRequest, R extends BaseResponse> R E(final BaseRequest<T, R> request) {
-
-        try {
-
-            return execute(request);
-
-        } catch (TdException e) {
-
-            StaticLog.warn(Fn.parseError(e));
-
-            return null;
-
-        }
-
-    }
-
     public Message syncE(SendMessage function) {
 
         try {
@@ -213,52 +170,6 @@ public class TdHandler {
             return null;
 
         }
-
-    }
-
-    public <T extends BaseRequest, R extends BaseResponse> R I(final BaseRequest<T, R> request) {
-
-        try {
-
-            return execute(request);
-
-        } catch (TdException e) {
-
-            return null;
-
-        }
-
-    }
-
-    public <T extends BaseRequest, R extends BaseResponse> R I(String botToken, final BaseRequest<T, R> request) {
-
-        try {
-
-            return execute(botToken, request);
-
-        } catch (TdException e) {
-
-            return null;
-
-        }
-
-    }
-
-    public <T extends BaseRequest, R extends BaseResponse> void send(BaseRequest<T, R> request) {
-
-        execute(request);
-
-    }
-
-    public <T extends BaseRequest, R extends BaseResponse> void send(String botToken, BaseRequest<T, R> request) {
-
-        execute(botToken, request);
-
-    }
-
-    public <T extends BaseRequest, R extends BaseResponse> R execute(final BaseRequest<T, R> request) throws TdException {
-
-        return execute(((TdBot) client).botToken, request);
 
     }
 
