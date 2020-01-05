@@ -54,21 +54,22 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         check(!start) { "已经启动过." }
 
-        defaultLog.debug("START CLIENT")
-
         start = true
 
         authing = true
 
         addHandler(this@TdClient)
 
-        defaultLog.debug("STARTING TASK")
-
         launch { receiveQueries() }
 
-        defaultLog.debug("WAIT FOR AUTHING")
+        while (authing) {
 
-        while (authing) delay(100)
+            defaultLog.debug("waiting for auth")
+
+            delay(100L)
+
+
+        }
 
         authed
 
