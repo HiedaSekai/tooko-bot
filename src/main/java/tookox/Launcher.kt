@@ -162,6 +162,15 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             LogFactory.setCurrentLogFactory(TookoLogFactory)
 
+
+            runBlocking {
+
+                defaultLog.debug("WAIT 10S FOR START")
+
+                delay(10000)
+
+            }
+
             defaultLog.info("正在加载 (๑•̀ㅂ•́)√")
 
             try {
