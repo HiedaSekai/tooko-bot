@@ -282,9 +282,12 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             Env.DEF_LANG = config.getStr("def_lang")
 
-            Env.ADMINS = (config.get("admins") as List<*>).map { (it as Number).toInt() }.toIntArray()
+            @Suppress("UNCHECKED_CAST")
+            Env.FUN_PREFIX = (config["fun_prefix"] as List<String>).toTypedArray()
 
-            val twitterObj = config.get("twitter")!!.toTypedMap()
+            Env.ADMINS = (config["admins"] as List<*>).map { (it as Number).toInt() }.toIntArray()
+
+            val twitterObj = config["twitter"]!!.toTypedMap()
 
             if (!twitterObj.isEmpty()) {
 

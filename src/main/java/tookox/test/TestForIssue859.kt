@@ -1,7 +1,7 @@
 package tookox.test
 
-import tooko.td.TdApi
-import tookox.core.DATA_2
+import tooko.td.TdApi.Message
+import tookox.core.DATA_20
 import tookox.core.client.TdBotHandler
 import tookox.core.td.delete
 import tookox.core.td.inlineButton
@@ -13,11 +13,11 @@ class TestForIssue859 : TdBotHandler() {
 
         initFunction("test_0")
 
-        initData(DATA_2)
+        initData(DATA_20)
 
     }
 
-    override fun onFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
+    override fun onFunction(userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
 
         sudo make {
 
@@ -27,9 +27,9 @@ class TestForIssue859 : TdBotHandler() {
 
                 newLine {
 
-                    dataButton("EDIT", DATA_2, 0)
+                    dataButton("EDIT", DATA_20, 0)
 
-                    dataButton("DELETE", DATA_2, 1)
+                    dataButton("DELETE", DATA_20, 1)
 
                 }
 

@@ -16,6 +16,7 @@ public class Env {
     public static int BOT_CREATE_MAX;
     public static String BOT_TOKEN;
     public static String DEF_LANG;
+    public static String[] FUN_PREFIX;
     public static MongoClient DB_CLIENT;
     public static MongoDatabase DB;
     public static int[] ADMINS;

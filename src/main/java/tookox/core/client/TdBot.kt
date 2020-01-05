@@ -55,23 +55,49 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
             val content = (message.content as MessageText).text
 
-            if (content.entities.size == 0 || content.entities[0].type !is TextEntityTypeBotCommand || content.entities[0].offset != 0) {
+            var param = content.text
+
+            run {
+
+                Env.FUN_PREFIX.forEach {
+
+                    if (param.startsWith(it)) return@forEach
+
+                    param = param.substring(it.length)
+
+                    return@run
+
+                }
 
                 return@runBlocking
 
             }
 
-            val command = content.entities[0]
+            var function = if (!param.contains(' ')) {
 
-            var function = content.text.substring(1, command.length)
+                param.also {
 
-            if (function.endsWith("@" + me.username)) {
+                    param = ""
 
-                function = function.substring(0, function.length - me.username.length - 1)
+                }
+
+            } else {
+
+                param.substringBefore(' ').also {
+
+                    param = param.substringAfter(' ')
+
+                }
 
             }
 
-            val param = if (content.text.length > command.length) content.text.substring(command.length + 1) else ""
+            val validSuffix = "@${me.username}"
+
+            if (function.endsWith(validSuffix)) {
+
+                function = function.substring(0, function.length - validSuffix.length)
+
+            }
 
             val params: Array<String>
 
@@ -84,8 +110,8 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
             } else {
 
-                originParams = param.split(" ".toRegex()).toTypedArray()
-                params = param.replace("  ", " ").split(" ".toRegex()).toTypedArray()
+                originParams = param.split(' ').toTypedArray()
+                params = param.replace("  ", " ").split(' ').toTypedArray()
 
             }
 
@@ -115,7 +141,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
             } else {
 
-                functions.get(function)!!.onFunction(userId, chatId, message, function, param, params, originParams)
+                functions[function]!!.onFunction(userId, chatId, message, function, param, params, originParams)
 
             }
 
