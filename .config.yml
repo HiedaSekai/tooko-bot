@@ -10,6 +10,9 @@ use_service: false
 service: "tooko.service"
 bot_token: "1234:XXXX"
 def_lang: "简体中文"
+fun_prefix:
+  - /
+  - !
 public_bot_create: false
 bot_create_max: -1
 admins:

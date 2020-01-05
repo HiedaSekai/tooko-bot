@@ -204,7 +204,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             }
 
-            Log.setVerbosityLevel(1)
+            Log.setVerbosityLevel(2)
 
             val configFile = File(Env.ROOT_PATH, "config.yml")
 
@@ -472,7 +472,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
             val fields = arrayOf(
                     "db_address", "db_port", "db_name",
                     "use_service", "service",
-                    "bot_token", "def_lang",
+                    "bot_token", "def_lang", "fun_prefix",
                     "public_bot_create", "bot_create_max",
                     "admins", "log_channel",
                     "twitter",
