@@ -386,13 +386,15 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             INSTANCE = Launcher()
 
-            INSTANCE.start()
+            if (INSTANCE.start()) {
 
-            defaultLog.info("远子 基于 Apache License 2.0 协议发行")
+                defaultLog.info("远子 基于 Apache License 2.0 协议发行")
 
-            val time = (System.currentTimeMillis() - startAt).toDouble() / 1000
+                val time = (System.currentTimeMillis() - startAt).toDouble() / 1000
 
-            defaultLog.info("启动完成! 用时 ${time}s.")
+                defaultLog.info("启动完成! 用时 ${time}s.")
+
+            }
 
         }
 
