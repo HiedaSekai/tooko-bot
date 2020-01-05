@@ -83,7 +83,21 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
     override fun onLaunch(userId: Int, chatId: Long, message: TdApi.Message) {
 
-        sudo make Lang.get(userId).LAUNCH sendTo chatId
+        val L = Lang.get(userId)
+
+        sudo make {
+
+            inputHtml = if (Env.isAdmin(userId)) {
+
+                L.HELP
+
+            } else {
+
+                "${L.HELP}\n\n${L.PUBLIC_WARN}"
+
+            }
+
+        } sendTo chatId
 
     }
 
