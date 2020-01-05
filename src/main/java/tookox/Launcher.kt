@@ -9,6 +9,8 @@ import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings
 import com.mongodb.MongoException
 import com.mongodb.client.MongoClients
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import org.bson.codecs.configuration.CodecRegistries
 import org.bson.codecs.pojo.ArrayPropertyCodecProvider
 import org.bson.codecs.pojo.PojoCodecProvider
@@ -42,6 +44,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.logging.Level
 import java.util.logging.Logger
+import kotlin.concurrent.thread
 import kotlin.system.exitProcess
 
 class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
@@ -393,6 +396,16 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
                 val time = (System.currentTimeMillis() - startAt).toDouble() / 1000
 
                 defaultLog.info("启动完成! 用时 ${time}s.")
+
+            }
+
+            thread {
+
+                while (true) {
+
+                    runBlocking { delay(1000L) }
+
+                }
 
             }
 
