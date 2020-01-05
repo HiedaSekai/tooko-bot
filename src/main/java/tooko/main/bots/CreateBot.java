@@ -4,8 +4,6 @@ import cn.hutool.core.util.*;
 import tooko.main.*;
 import tooko.td.TdApi.*;
 import tooko.td.client.*;
-import tooko.td.core.*;
-import tooko.td.http.request.GetMe;
 
 import java.util.*;
 
@@ -119,6 +117,8 @@ public class CreateBot extends TdFunction {
     @Override
     public void onPersistMessage(User user, long chatId, Message message, int subId) {
 
+        /*
+
         Lang L = Lang.get(user);
 
         removePersist(user);
@@ -194,6 +194,8 @@ public class CreateBot extends TdFunction {
             send(Fn.sendText(chatId, new ReplyMarkupRemoveKeyboard(), Fn.parseHtml(L.BOT_CREATED, data.userName)));
 
         }
+
+         */
 
     }
 
