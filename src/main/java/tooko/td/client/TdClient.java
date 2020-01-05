@@ -600,7 +600,7 @@ public class TdClient extends TdHandler {
 
                 for (TdClient client : clients) {
 
-                    LinkedList<Client.Event> responseList = client.client.receive(0, 4);
+                    LinkedList<Client.Event> responseList = client.client.receive(8.0, 4);
 
                     for (Client.Event event : responseList)
                         client.processEvent(event);
