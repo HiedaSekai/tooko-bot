@@ -72,7 +72,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
         val allBots = BotData.DATA.all
 
-        if (!allBots.isEmpty()) {
+        if (allBots.isNotEmpty()) {
 
             for (data in allBots) BotImage.start(data)
 

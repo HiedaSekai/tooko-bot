@@ -304,7 +304,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                             if (eventObj is Error) {
 
-                                callback.postError(TdException(eventObj as Error))
+                                callback.postError(TdException(eventObj))
 
                             } else {
 
