@@ -1,6 +1,5 @@
 package tookox.core.client
 
-import cn.hutool.core.thread.ThreadUtil
 import kotlinx.coroutines.*
 import tooko.main.Env
 import tooko.td.Client
@@ -13,40 +12,27 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicLong
 import java.util.concurrent.atomic.AtomicReference
-import java.util.concurrent.locks.ReentrantLock
 import kotlin.reflect.KClass
 
 open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     override val sudo get() = this
 
-    override fun onLoad(client: TdClient) {
-        onLoad()
-    }
-
-    private val td = Client()
-
-    var status by AtomicBoolean(false)
+    override fun onLoad(client: TdClient) = onLoad()
 
     var handlers = LinkedList<TdAbsHandler>()
 
+    var start by AtomicBoolean(false)
+    var authing by AtomicBoolean(false)
+    var authed by AtomicBoolean(false)
+    var stop by AtomicBoolean(false)
+    var closed by AtomicBoolean(false)
+
+    private val clientId = Client.createNativeClient()
     private val requestId = AtomicLong(1)
-    private val executionLock = ReentrantLock()
 
     private val callbacks = ConcurrentHashMap<Long, TdCallback<*>>()
     private val messages = ConcurrentHashMap<Long, TdCallback<Message>>()
-
-    private val _auth = AtomicBoolean(false)
-
-    var authed
-        get() = _auth.get()
-        set(value) = _auth.set(value)
-
-    private val _authing = AtomicBoolean(false)
-
-    var authing
-        get() = _authing.get()
-        set(value) = _authing.set(value)
 
     lateinit var me: User
 
@@ -64,41 +50,47 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     }
 
-    open fun start() = runBlocking {
+    open fun start(): Boolean = runBlocking {
 
-        check(!status) { "已经启动." }
+        check(!start) { "已经启动过." }
+
+        start = true
 
         authing = true
 
-        clearHandlers()
-
         addHandler(this@TdClient)
 
-        postAdd.add(this@TdClient)
+        launch { receiveQueries() }
 
         while (authing) delay(100)
 
+        authed
+
     }
 
-    open fun stop() {
+    open fun stop() = runBlocking {
 
-        check(status) { "未启动." }
+        check(start) { "未启动." }
+
+        check(!closed) { "已销毁." }
 
         handlers.forEach { it.onDestroy() }
 
-        postDestroy.add(this)
+        sendRaw(Close())
+
+        while (!closed) delay(100)
 
     }
 
     fun destroy() {
 
-        if (status) stop()
+        if (!stop) stop()
 
-        check(!executionLock.isLocked) { "Client is destroyed" }
+        check(!closed) { "重复销毁." }
 
-        executionLock.lock()
+        closed = true
 
-        td.destroyClient()
+        Client.destroyNativeClient(clientId)
 
     }
 
@@ -123,15 +115,21 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         } else if (authorizationState is AuthorizationStateWaitEncryptionKey) {
 
-            sendRaw(CheckDatabaseEncryptionKey())
+            sendRaw(if (Env.PASSWORD.isBlank()) {
+
+                CheckDatabaseEncryptionKey()
+
+            } else {
+
+                CheckDatabaseEncryptionKey(Env.PASSWORD.toByteArray())
+
+            })
 
         } else if (authorizationState is AuthorizationStateReady) {
 
             send<User>(GetMe()) {
 
                 me = it
-
-                //defaultLog.debug("认证完成 : ${me.displayName}")
 
                 authing = false
 
@@ -144,6 +142,10 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
         } else if (authorizationState is AuthorizationStateLoggingOut) {
 
             for (handler in handlers) handler.onLogout()
+
+        } else if (authorizationState is AuthorizationStateClosed) {
+
+            closed = true
 
         }
 
@@ -159,9 +161,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         try {
 
-            val callback = messages.remove(oldMessageId)
-
-            if (callback == null) return
+            val callback = messages.remove(oldMessageId) ?: return
 
             callback.postResult(message)
 
@@ -174,9 +174,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     override fun onMessageSendFailed(message: Message, oldMessageId: Long, errorCode: Int, errorMessage: String) {
 
-        val callback = messages.remove(oldMessageId)
-
-        if (callback == null) return
+        val callback = messages.remove(oldMessageId) ?: return
 
         try {
 
@@ -191,8 +189,6 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
     }
 
     override fun <T : Object> sync(function: TdApi.Function): T {
-
-        check(!executionLock.isLocked) { "ClientActor is destroyed" }
 
         val responseAtomicReference = AtomicReference<Any>()
 
@@ -240,8 +236,6 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
     @Suppress("UNCHECKED_CAST")
     override fun <T : Object> send(function: TdApi.Function, stackIgnore: Int, block: ((T) -> Unit)?): TdCallback<T> {
 
-        check(!executionLock.isLocked) { "ClientActor is destroyed" }
-
         val requestId = requestId.getAndIncrement()
 
         return if (function is SendMessage && block != null) {
@@ -260,7 +254,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
             callbacks[requestId] = this
 
-            send(requestId, function)
+            sendRaw(requestId, function)
 
         }
 
@@ -268,44 +262,109 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     override fun sendRaw(function: TdApi.Function) {
 
-        check(!executionLock.isLocked) { "ClientActor is destroyed" }
-
         val requestId = requestId.getAndIncrement()
 
-        send(requestId, function)
+        sendRaw(requestId, function)
 
     }
 
-    override fun <T : Object> syncRaw(function: TdApi.Function): T {
+    fun sendRaw(requestId: Long, function: TdApi.Function) {
 
-        check(!executionLock.isLocked) { "ClientActor is destroyed" }
-
-        @Suppress("UNCHECKED_CAST")
-        return td.execute(function) as T
+        Client.nativeClientSend(clientId, requestId, function)
 
     }
 
-    private fun send(requestId: Long, function: TdApi.Function) {
+    fun receiveQueries() {
 
-        check(!executionLock.isLocked) { "Client is destroyed" }
+        while (!stop) {
 
-        td.send(requestId, function)
+            val MAX_EVENTS = 1000
+
+            val eventIds = LongArray(MAX_EVENTS)
+            val eventObjs = arrayOfNulls<Object>(MAX_EVENTS)
+
+            val resultCount = Client.nativeClientReceive(clientId, eventIds, eventObjs, 314.15)
+
+            if (resultCount == 0) continue
+
+            (0 until resultCount).forEach { index ->
+
+                val requestId = eventIds[index]
+                val eventObj = eventObjs[index]!!
+
+                if (requestId != 0L) {
+
+                    if (!callbacks.containsKey(requestId)) return@forEach
+
+                    val callback = callbacks.remove(requestId)!!
+
+                    GlobalScope.launch {
+
+                        runCatching {
+
+                            if (eventObj is Error) {
+
+                                callback.postError(TdException(eventObj as Error))
+
+                            } else {
+
+                                callback.postResult(eventObj)
+
+                            }
+
+                        }.onFailure {
+
+                            defaultLog.error(it, "TdError - Sync")
+
+                        }
+
+                    }
+
+
+                } else {
+
+                    events.launch {
+
+                        handlers.forEach {
+
+                            runCatching {
+
+                                it.onEvent(eventObj)
+
+                            }.onFailure {
+
+                                if (it is Finish) return@launch
+
+                                defaultLog.error(it, "TdError - Sync")
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+        }
 
     }
 
     companion object {
+
+        @Suppress("EXPERIMENTAL_API_USAGE")
+        val events = CoroutineScope(newSingleThreadContext("Tooko Events Task"))
+
+        /*
 
         val postAdd = LinkedList<TdClient>()
         val postDestroy = LinkedList<TdClient>()
         val mainTimer = Timer("Mian Timer")
         val clients = LinkedList<TdClient>()
 
-        @Suppress("EXPERIMENTAL_API_USAGE")
-        val events = CoroutineScope(newSingleThreadContext("Tooko Events Task"))
-
         val eventTask = Thread {
 
-            while (true) {
+            while (!Env.STOP.get()) {
 
                 synchronized(postAdd) {
 
@@ -353,9 +412,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                 for (client in clients) {
 
-                    val responseList = client.td.receive(0.0, 16)
-
-                    responseList.forEach { event: Client.Event ->
+                    val responseList = client.td.receive(0.0).forEach { event: Client.Event ->
 
                         if (event.requestId != 0L && client.callbacks.containsKey(event.requestId)) {
 
@@ -412,9 +469,14 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                 }
 
+
+
             }
 
         }
+
+
+         */
 
     }
 

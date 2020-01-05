@@ -1,11 +1,34 @@
 package tookox.core.client
 
+import tooko.td.Client
 import tooko.td.TdApi
 import tooko.td.TdApi.*
+import tooko.td.client.TdException
 import java.util.*
 import kotlin.collections.HashMap
 
 interface TdAbsHandler {
+
+    companion object {
+
+        infix fun <T : Object> syncRaw(function: TdApi.Function): T {
+
+            val result = Client.nativeClientExecute(function)
+
+            if (result is Error) {
+
+                throw TdException(result)
+
+            } else {
+
+                @Suppress("UNCHECKED_CAST")
+                return result as T
+
+            }
+
+        }
+
+    }
 
     val sudo: TdClient
 
@@ -168,11 +191,6 @@ interface TdAbsHandler {
     infix fun <T : Object> sync(function: TdApi.Function): T = sudo.sync(function)
 
     infix fun syncUnit(function: TdApi.Function) = sudo.sync<Object>(function)
-
-    infix fun <T : Object> syncRaw(function: TdApi.Function) = sudo.syncRaw<T>(function)
-
-    val String.asHtml: FormattedText get() = syncRaw(ParseTextEntities(this, TextParseModeHTML()))
-    val String.asMarkdown: FormattedText get() = syncRaw(ParseTextEntities(this, TextParseModeMarkdown()))
 
     val Message.delete get() = DeleteMessages(chatId, longArrayOf(id), true)
     val Message.deleteForSelf get() = DeleteMessages(chatId, longArrayOf(id), false)

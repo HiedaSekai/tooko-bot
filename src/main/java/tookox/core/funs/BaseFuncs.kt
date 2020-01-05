@@ -5,6 +5,7 @@ import tooko.main.Lang
 import tooko.td.TdApi.*
 import tookox.core.*
 import tookox.core.client.TdBotHandler
+import tookox.core.td.asHtml
 import tookox.core.td.make
 import java.util.*
 

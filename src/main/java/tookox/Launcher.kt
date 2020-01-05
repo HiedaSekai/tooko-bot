@@ -9,8 +9,6 @@ import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings
 import com.mongodb.MongoException
 import com.mongodb.client.MongoClients
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 import org.bson.codecs.configuration.CodecRegistries
 import org.bson.codecs.pojo.ArrayPropertyCodecProvider
 import org.bson.codecs.pojo.PojoCodecProvider
@@ -107,22 +105,6 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
     override fun onUndefinedFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
 
         sudo make "function $function not found :(" sendTo chatId
-
-    }
-
-    override fun start() = runBlocking {
-
-        check(!status) { "已经启动." }
-
-        eventTask.start()
-
-        clearHandlers()
-
-        addHandler(this@Launcher)
-
-        postAdd.add(this@Launcher)
-
-        while (!status) delay(100)
 
     }
 
@@ -278,9 +260,22 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
             Env.LOG_CHANNEL = config.getLong("log_channel")
             Env.USE_SERVICE = config.getBool("use_service")
             Env.SERVICE = config.getStr("service")
-            Env.BOT_TOKEN = config.getStr("bot_token")
 
+            Env.PASSWORD = config.getStr("password")
+            Env.BOT_TOKEN = config.getStr("bot_token")
             Env.DEF_LANG = config.getStr("def_lang")
+
+            try {
+
+                LibsLoader.loadLanguages()
+
+            } catch (ex: Exception) {
+
+                defaultLog.error(ex.message)
+
+                exitProcess(100)
+
+            }
 
             @Suppress("UNCHECKED_CAST")
             Env.FUN_PREFIX = (config["fun_prefix"] as List<String>).toTypedArray()
@@ -393,41 +388,11 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             INSTANCE.start()
 
-            try {
+            defaultLog.info("远子 基于 Apache License 2.0 协议发行")
 
-                LibsLoader.loadLanguages()
+            val time = (System.currentTimeMillis() - startAt).toDouble() / 1000
 
-            } catch (ex: Exception) {
-
-                defaultLog.error(ex.message)
-
-                INSTANCE.destroy()
-
-                exitProcess(100)
-
-            }
-
-            if (!INSTANCE.authed) {
-
-                INSTANCE.authing = true
-
-                runBlocking {
-
-                    while (INSTANCE.authing) delay(100)
-
-                }
-
-            }
-
-            if (INSTANCE.authed) {
-
-                defaultLog.info("远子 基于 Apache License 2.0 协议发行")
-
-                val time = (System.currentTimeMillis() - startAt).toDouble() / 1000
-
-                defaultLog.info("启动完成! 用时 ${time}s.")
-
-            }
+            defaultLog.info("启动完成! 用时 ${time}s.")
 
         }
 
@@ -474,7 +439,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             val fields = arrayOf(
                     "db_address", "db_port", "db_name",
-                    "use_service", "service",
+                    "use_service", "service", "password",
                     "bot_token", "def_lang", "fun_prefix",
                     "public_bot_create", "bot_create_max",
                     "admins", "log_channel",

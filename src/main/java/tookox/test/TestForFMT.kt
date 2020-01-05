@@ -3,6 +3,8 @@ package tookox.test
 import tooko.td.TdApi
 import tookox.core.client.TdBotHandler
 import tookox.core.shift
+import tookox.core.td.asHtml
+import tookox.core.td.asMarkdown
 import tookox.core.td.make
 
 class TestForFMT : TdBotHandler() {

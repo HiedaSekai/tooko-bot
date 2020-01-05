@@ -7,7 +7,6 @@ import tooko.main.Fn
 import tooko.main.Lang
 import tooko.td.TdApi.*
 import tooko.td.client.TdException
-import tookox.Launcher
 import tookox.core.WriteOnlyField
 import tookox.core.applyIfNot
 import tookox.core.client.TdAbsHandler
@@ -18,19 +17,9 @@ import twitter4j.TwitterException
 import java.util.*
 
 
-val String.asText: FormattedText get() = FormattedText(this, null)
-val String.asHtml: FormattedText
-    get() = with(Launcher.INSTANCE) {
-
-        return this@asHtml.asHtml
-
-    }
-val String.asMarkdown: FormattedText
-    get() = with(Launcher.INSTANCE) {
-
-        return this@asMarkdown.asMarkdown
-
-    }
+val String.asText: FormattedText get() = TdAbsHandler.syncRaw(GetTextEntities(this))
+val String.asHtml: FormattedText get() = TdAbsHandler.syncRaw(ParseTextEntities(this, TextParseModeHTML()))
+val String.asMarkdown: FormattedText get() = TdAbsHandler.syncRaw(ParseTextEntities(this, TextParseModeMarkdown()))
 
 infix fun TdAbsHandler.make(block: MessageFactory.() -> Unit): MessageFactory {
 

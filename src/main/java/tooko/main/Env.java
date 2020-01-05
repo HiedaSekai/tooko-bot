@@ -14,6 +14,7 @@ public class Env {
     public static File ROOT_PATH = new File(".");
     public static boolean PUBLIC_BOT_CREATE;
     public static int BOT_CREATE_MAX;
+    public static String PASSWORD;
     public static String BOT_TOKEN;
     public static String DEF_LANG;
     public static String[] FUN_PREFIX;
