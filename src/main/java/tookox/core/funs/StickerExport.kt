@@ -15,7 +15,6 @@ import java.awt.Color
 import java.io.File
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
-import tooko.td.TdApi.File as TdFile
 
 class StickerExport : TdBotHandler() {
 
@@ -23,66 +22,51 @@ class StickerExport : TdBotHandler() {
 
     override fun onNewMessage(userId: Int, chatId: Long, message: Message) {
 
-        if (message.fromPrivate && message.content is MessageSticker) {
+        if (!message.fromPrivate || message.content !is MessageSticker) return
 
-            val sticker = (message.content as MessageSticker).sticker
+        val sticker = (message.content as MessageSticker).sticker
 
-            if (sticker.isAnimated) {
+        if (sticker.isAnimated) {
 
-                sudo make "animated sticker not supported." to chatId
+            sudo make "animated sticker not supported." to chatId
 
-                return
+            return
 
-            }
+        }
+
+        runCatching {
+
+            sudo make UploadingPhoto syncTo chatId
 
             val stickerFile = sticker.sticker
 
             if (!stickerFile.local.isDownloadingCompleted) {
 
-                sudo make Typing to chatId send {
+                syncUnit(DownloadFile(stickerFile.id, 1, 0, 0, true))
 
-                    send<TdFile>(DownloadFile(stickerFile.id, 1, 0, 0, true)) {
+            }
 
-                        sendImage(userId, chatId, sticker, it)
+            val L = Lang.get(userId)
 
-                    } onError {
+            sudo make {
 
-                        sudo make it sendTo chatId
+                inputPhoto = stickerFile.local.path
 
-                    }
+                captionHtml = L.STICKER_CAPTION.input(stickerFile.remote.id, sticker.emoji, sticker.setId)
+
+                replyMarkup = inlineButton {
+
+                    dataLine(L.STICKER_EXPORT, DATA_1, 0, sticker.setId.asByteArray)
 
                 }
 
-            } else {
+            } syncTo chatId
 
-                sendImage(userId, chatId, sticker, stickerFile)
+        }.onFailure {
 
-            }
-
+            sudo make it sendTo chatId
 
         }
-
-    }
-
-    private fun sendImage(userId: Int, chatId: Long, sticker: Sticker, stickerFile: TdFile) {
-
-        val L = Lang.get(userId)
-
-        sudo make UploadingPhoto syncTo chatId
-
-        sudo make {
-
-            inputPhoto = stickerFile.local.path
-
-            captionHtml = L.STICKER_CAPTION.input(stickerFile.remote.id, sticker.emoji, sticker.setId)
-
-            replyMarkup = inlineButton {
-
-                dataLine(L.STICKER_EXPORT, DATA_1, 0, sticker.setId.asByteArray)
-
-            }
-
-        } sendTo chatId
 
     }
 
