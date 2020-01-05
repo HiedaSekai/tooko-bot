@@ -60,21 +60,15 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         addHandler(this@TdClient)
 
-        launch { receiveQueries() }
+        GlobalScope.launch { receiveQueries() }
 
-        while (authing) {
-
-            defaultLog.debug("waiting for auth")
-
-            delay(100L)
-
-        }
+        while (authing) delay(100L)
 
         authed
 
     }
 
-    open fun stop() = runBlocking {
+    open fun stop() {
 
         check(start) { "未启动." }
 
@@ -84,7 +78,11 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         sendRaw(Close())
 
-        while (!closed) delay(100)
+        runBlocking {
+
+            while (!closed) delay(100)
+
+        }
 
     }
 
@@ -141,7 +139,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                 authed = true
 
-                defaultLog.info("认证正常 : [ ${me.displayName} @${me.username}]")
+                defaultLog.info("认证正常 : [ ${me.displayName} @${me.username} ]")
 
                 for (handler in handlers) handler.onLogin()
 
