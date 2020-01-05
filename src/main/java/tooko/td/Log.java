@@ -55,16 +55,7 @@ public class Log {
 
     private static void onFatalError(final String errorMessage) {
 
-        new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-
-                System.out.println(errorMessage);
-
-            }
-
-        }).start();
+        new Thread(() -> System.out.println(errorMessage)).start();
 
 
     }
