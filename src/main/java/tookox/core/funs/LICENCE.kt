@@ -11,7 +11,7 @@ class LICENCE : TdBotHandler() {
 
     override fun onFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
 
-        sudo make Lang.get(userId).LICENSE sendTo chatId
+        sudo make Lang.get(userId).LICENSE.asHtml sendTo chatId
 
     }
 
