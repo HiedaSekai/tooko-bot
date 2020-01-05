@@ -68,7 +68,6 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
             delay(100L)
 
-
         }
 
         authed
@@ -142,7 +141,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                 authed = true
 
-                defaultLog.info("认证正常 : [ ${me.displayName} ] @${me.username}")
+                defaultLog.info("认证正常 : [ ${me.displayName} @${me.username}]")
 
                 for (handler in handlers) handler.onLogin()
 
