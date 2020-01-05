@@ -9,7 +9,7 @@ class TestForFMT : TdBotHandler() {
 
     override fun onLoad() {
 
-        initFunction("/test_1")
+        initFunction("test_1")
 
     }
 
