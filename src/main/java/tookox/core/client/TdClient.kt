@@ -135,6 +135,8 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                 authed = true
 
+                defaultLog.info("认证正常 : ${me.displayName}")
+
                 for (handler in handlers) handler.onLogin()
 
             }.onError(::onAuthorizationFailed)
