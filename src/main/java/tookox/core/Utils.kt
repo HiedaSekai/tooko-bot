@@ -38,7 +38,7 @@ fun <T> Array<T>.shift(): Array<T> {
 
 fun <T> Array<T>.shift(size: Int): Array<T> {
 
-    return ArrayUtil.sub(this, size, size)
+    return ArrayUtil.sub(this, size, this.size)
 
 }
 
