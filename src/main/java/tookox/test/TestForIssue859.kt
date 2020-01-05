@@ -43,7 +43,7 @@ class TestForIssue859 : TdBotHandler() {
 
         if (subId == 0) {
 
-            sudo make "EDITED" editTo chatId onError {
+            sudo make "EDITED" at chatId editTo messageId onError {
 
                 sudo make it sendTo chatId
 
