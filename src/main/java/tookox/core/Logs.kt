@@ -47,7 +47,7 @@ class TookoLog(name: String) : ConsoleLog(name) {
 
     override fun log(fqcn: String, level: Level, t: Throwable?, format: String, vararg arguments: Any) {
 
-        if (logLevel.compareTo(level) > 0) return
+        if (logLevel > level) return
 
         var logMsg = if (t != null) {
 
@@ -78,10 +78,6 @@ class TookoLog(name: String) : ConsoleLog(name) {
                     sudo make logMsg syncTo Env.LOG_CHANNEL
 
                 }
-
-            }.onFailure {
-
-                Console.error(it, "report log failed")
 
             }
 
