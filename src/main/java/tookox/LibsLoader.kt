@@ -26,7 +26,7 @@ object LibsLoader {
 
             }.recover {
 
-                runCatching { System.loadLibrary("tdjni") }.onFailure {
+                runCatching { System.loadLibrary(name) }.onFailure {
 
                     _ ->
 

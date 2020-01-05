@@ -353,7 +353,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                 for (client in clients) {
 
-                    val responseList = client.td.receive(8.0, 16)
+                    val responseList = client.td.receive(0.0, 16)
 
                     responseList.forEach { event: Client.Event ->
 

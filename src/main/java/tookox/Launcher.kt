@@ -37,7 +37,6 @@ import tookox.core.funs.BaseFuncs
 import tookox.core.funs.LICENCE
 import tookox.core.funs.StickerExport
 import tookox.core.td.make
-import tookox.test.TestForIssue859
 import java.io.File
 import java.lang.Thread.UncaughtExceptionHandler
 import java.util.*
@@ -56,7 +55,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
     override fun onLoad() {
 
-        addHandler(TestForIssue859())
+       // addHandler(TestForIssue859())
 
         addHandler(BaseFuncs())
 
@@ -162,15 +161,6 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             LogFactory.setCurrentLogFactory(TookoLogFactory)
 
-
-            runBlocking {
-
-                defaultLog.debug("WAIT 10S FOR START")
-
-                delay(10000)
-
-            }
-
             defaultLog.info("正在加载 (๑•̀ㅂ•́)√")
 
             try {
@@ -197,7 +187,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             }
 
-            Log.setVerbosityLevel(4)
+            Log.setVerbosityLevel(1)
 
             val configFile = File(Env.ROOT_PATH, "config.yml")
 
