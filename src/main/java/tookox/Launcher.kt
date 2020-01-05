@@ -37,6 +37,7 @@ import tookox.core.funs.BaseFuncs
 import tookox.core.funs.LICENCE
 import tookox.core.funs.StickerExport
 import tookox.core.td.make
+import tookox.test.TestForFMT
 import java.io.File
 import java.lang.Thread.UncaughtExceptionHandler
 import java.util.*
@@ -55,7 +56,9 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
     override fun onLoad() {
 
-       // addHandler(TestForIssue859())
+        // addHandler(TestForIssue859())
+
+        addHandler(TestForFMT())
 
         addHandler(BaseFuncs())
 

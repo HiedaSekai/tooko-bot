@@ -1,5 +1,6 @@
 package tookox.core
 
+import cn.hutool.core.util.ArrayUtil
 import cn.hutool.core.util.StrUtil
 import java.math.BigInteger
 import java.util.concurrent.atomic.AtomicBoolean
@@ -28,6 +29,18 @@ val Number.asByteArray get() = BigInteger.valueOf(toLong()).toByteArray()
 
 val ByteArray.asLong get() = BigInteger(this).toLong()
 val ByteArray.asInt get() = BigInteger(this).toInt()
+
+fun <T> Array<T>.shift(): Array<T> {
+
+    return shift(1)
+
+}
+
+fun <T> Array<T>.shift(size: Int): Array<T> {
+
+    return ArrayUtil.sub(this, size, size)
+
+}
 
 class WriteOnlyField<T>(val setter: (T) -> Unit) {
 
