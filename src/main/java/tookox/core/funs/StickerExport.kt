@@ -60,7 +60,7 @@ class StickerExport : TdBotHandler() {
 
                 }
 
-            } syncTo chatId
+            } sendTo chatId
 
         }.onFailure {
 
