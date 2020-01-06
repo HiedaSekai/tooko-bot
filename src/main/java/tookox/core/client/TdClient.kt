@@ -74,20 +74,15 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         return if (waitForAuth) {
 
-            while (authing) {
+            while (auth || authing) {
 
-                defaultLog.debug("WAITING")
-
-                delay(1000L)
+                delay(100L)
 
             }
 
             auth
 
         } else {
-
-
-            defaultLog.debug("WAITING START")
 
             while (!started) delay(1000L)
 
