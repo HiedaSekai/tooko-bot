@@ -250,7 +250,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
         @Suppress("UNCHECKED_CAST")
         responseAtomicReference.get().apply {
 
-            if (this is TdException) throw this
+            if (this is TdException) throw TdException(error)
 
         } as T
 
