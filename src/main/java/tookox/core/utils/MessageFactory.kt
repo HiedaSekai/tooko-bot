@@ -18,7 +18,7 @@ import twitter4j.TwitterException
 import java.util.*
 
 
-val String.asText: FormattedText get() = TdAbsHandler.syncRaw(GetTextEntities(this))
+val String.asText: FormattedText get() = FormattedText(this, null)
 val String.asHtml: FormattedText get() = TdAbsHandler.syncRaw(ParseTextEntities(this, TextParseModeHTML()))
 val String.asMarkdown: FormattedText get() = TdAbsHandler.syncRaw(ParseTextEntities(this, TextParseModeMarkdown()))
 
