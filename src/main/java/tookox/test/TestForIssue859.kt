@@ -1,6 +1,6 @@
 package tookox.test
 
-import tooko.td.TdApi.GetMessage
+import tooko.td.TdApi
 import tooko.td.TdApi.Message
 import tookox.core.DATA_20
 import tookox.core.client.TdBotHandler
@@ -44,9 +44,9 @@ class TestForIssue859 : TdBotHandler() {
 
         runCatching<Unit> {
 
-            if (subId == 0) {
+            syncUnit(TdApi.GetMessage(chatId, messageId))
 
-                syncUnit(GetMessage(chatId, messageId))
+            if (subId == 0) {
 
                 sudo make "EDITED" at chatId syncEditTo messageId
 
