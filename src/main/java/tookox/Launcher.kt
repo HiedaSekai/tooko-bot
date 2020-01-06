@@ -38,7 +38,6 @@ import tookox.core.funs.LICENCE
 import tookox.core.funs.StickerExport
 import tookox.core.utils.make
 import tookox.test.TestForFMT
-import tookox.test.TestForIssue859
 import java.io.File
 import java.lang.Thread.UncaughtExceptionHandler
 import java.util.*

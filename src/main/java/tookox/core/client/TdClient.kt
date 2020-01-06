@@ -264,7 +264,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         return if (function is SendMessage && block != null) {
 
-            TdCallback<Message> {
+            TdCallback<Message>(1) {
 
                 messages[it.id] = TdCallback(2, block) as TdCallback<Message>
 
