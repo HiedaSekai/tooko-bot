@@ -10,6 +10,8 @@ open class TdHandler : TdAbsHandler {
 
     override fun onLoad(client: TdClient) {
 
+        super.onLoad(client)
+
         _client = client
 
         onLoad()

@@ -3,14 +3,16 @@ package tookox.core.client
 import cn.hutool.core.util.RuntimeUtil
 import cn.hutool.core.util.StrUtil
 import cn.hutool.core.util.ZipUtil
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.coroutineScope
 import tooko.main.Env
 import tooko.main.Fn
 import tooko.td.TdApi.*
 import tookox.core.finishEvent
 import tookox.core.fromPrivate
+import tookox.core.shift
 import tookox.core.utils.makeAnswer
+import tookox.core.utils.readDataFrom
+import tookox.core.utils.writeDataTo
 import java.io.File
 import java.util.*
 
@@ -18,12 +20,94 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
     override val sudo: TdBot get() = this
 
-    var persists = HashMap<Int, TdBotAbsHandler>()
-    var payloads = HashMap<String, TdBotAbsHandler>()
-    var functions = HashMap<String, TdBotAbsHandler>()
-    var callbacks = HashMap<Int, TdBotAbsHandler>()
+    val payloads = HashMap<String, TdBotAbsHandler>()
+    val functions = HashMap<String, TdBotAbsHandler>()
+    val callbacks = HashMap<Int, TdBotAbsHandler>()
 
-    override suspend fun onAuthorizationState(authorizationState: AuthorizationState) = runBlocking {
+    val persistHandlers = HashMap<Int, TdBotAbsHandler>()
+    val persists = HashMap<Int, TdPerstst>()
+
+    override fun onLoad(client: TdClient) {
+
+        super<TdClient>.onLoad(client)
+
+        readDataFrom("user_persists")?.forEach {
+
+            val userId = it[0].toInt()
+
+            val persistId = it[1].toInt()
+
+            val subId = it[2].toInt()
+
+            val allowFuction = it[3].toInt() == 1
+
+            val allowCancel = it[4].toInt() == 1
+
+            val createAt = it[5].toInt()
+
+            val data = it.shift(5).toList()
+
+            val handler = (persistHandlers[persistId] ?: error("Invalid Persist ID #${persistId}"))
+
+            runCatching {
+
+                handler.onPersistReStore(userId, subId, data)
+
+            }.onFailure {
+
+                return@forEach
+
+            }
+
+            sudo.persists[userId] = TdPerstst(userId, persistId, subId, allowFuction, allowCancel, createAt)
+
+        }
+
+    }
+
+    override suspend fun onDestroy() {
+
+        super<TdBotAbsHandler>.onDestroy()
+
+        val dataList = LinkedList<List<String>>()
+
+        persists.forEach { (userId, persist) ->
+
+            val data = LinkedList<String>()
+
+            data.add("$userId")
+
+            data.add("${persist.persistId}")
+
+            data.add("${persist.subId}")
+
+            data.add("${persist.allowFuction}")
+
+            data.add("${persist.allowCancel}")
+
+            data.add("${persist.createAt}")
+
+            data.add("${persist.persistId}")
+
+            runCatching {
+
+                onPersistStore(userId, persist.subId, data)
+
+            }.onFailure {
+
+                return@forEach
+
+            }
+
+            dataList.add(data)
+
+        }
+
+        writeDataTo("user_persists", dataList)
+
+    }
+
+    override suspend fun onAuthorizationState(authorizationState: AuthorizationState) = coroutineScope {
 
         super.onAuthorizationState(authorizationState)
 
@@ -39,27 +123,25 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
     }
 
-    override suspend fun onNewMessage(userId: Int, chatId: Long, message: Message) = runBlocking {
+    override suspend fun onNewMessage(userId: Int, chatId: Long, message: Message) = coroutineScope {
 
-        while (!auth) delay(100L)
+        if (auth && userId == me.id) return@coroutineScope
 
-        if (userId == me.id) return@runBlocking
+        val persist = if (message.fromPrivate && persists.containsKey(userId)) {
 
-        if (message.fromPrivate) {
+            persists[userId]
 
-            synchronized(persists) {
+        } else null
 
-                // TODO: handle persist message
+        run predict@{
 
-            }
-
-            if (message.content !is MessageText) return@runBlocking
+            if (message.content !is MessageText) return@predict
 
             val content = (message.content as MessageText).text
 
             var param = content.text
 
-            run {
+            run fn@{
 
                 Env.FUN_PREFIX.forEach {
 
@@ -67,11 +149,11 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
                     param = param.substring(it.length)
 
-                    return@run
+                    return@fn
 
                 }
 
-                return@runBlocking
+                return@predict
 
             }
 
@@ -117,6 +199,40 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
             }
 
+            if (persist != null) run persist@{
+
+                val handler = persistHandlers[persist.persistId] ?: error("Invalid Persist ID #${persist.persistId}")
+
+                if (function == "cancel" && persist.allowCancel) {
+
+                    sudo removePersist userId
+
+                    handler.onPersistCancel(userId, chatId, message, persist.subId)
+
+                    handler.onPersistRemoveOrCancel(userId, persist.subId)
+
+                    return@coroutineScope
+
+                }
+
+                if (persist.allowFuction) {
+
+                    sudo removePersist userId
+
+                    handler.onPersistCancel(userId, chatId, message, persist.subId)
+
+                    handler.onPersistRemoveOrCancel(userId, persist.subId)
+
+                    return@persist
+
+                }
+
+                handler.onPersistFunction(userId, chatId, message, persist.subId, function, param, params, originParams)
+
+                return@coroutineScope
+
+            }
+
             if ("start" == function) {
 
                 if (params.isEmpty()) {
@@ -129,11 +245,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
                 }
 
-                return@runBlocking
-
-            }
-
-            if (!functions.containsKey(function)) {
+            } else if (!functions.containsKey(function)) {
 
                 handlers.filterIsInstance<TdBotAbsHandler>().forEach {
 
@@ -147,7 +259,17 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
             }
 
+            return@coroutineScope
+
         }
+
+        if (persist == null) return@coroutineScope
+
+        val handler = (persistHandlers[persist.persistId] ?: error("Invalid Persist ID #${persist.persistId}"))
+
+        handler.onPersistMessage(userId, chatId, message, persist.subId)
+
+        finishEvent()
 
     }
 
@@ -212,10 +334,18 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
     }
 
     open fun onLaunch(userId: Int, chatId: Long, message: Message) = Unit
+
     override suspend fun onFunction(userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>) = Unit
     override suspend fun onUndefinedFunction(userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>) = Unit
     override suspend fun onNewCallbackQuery(userId: Int, chatId: Long, messageId: Long, queryId: Long, subId: Int, data: Array<ByteArray>) = Unit
     override suspend fun onNewInlineCallbackQuery(userId: Int, inlineMessageId: String, queryId: Long, subId: Int, data: Array<ByteArray>) = Unit
+
+    override suspend fun onPersistMessage(userId: Int, chatId: Long, message: Message, subId: Int) = Unit
+    override suspend fun onPersistRemove(userId: Int, subId: Int) = Unit
+    override suspend fun onPersistTimeout(userId: Int, subId: Int) = Unit
+    override suspend fun onPersistRemoveOrCancel(userId: Int, subId: Int) = Unit
+    override fun onPersistStore(userId: Int, subId: Int, data: LinkedList<String>) = Unit
+    override fun onPersistReStore(userId: Int, subId: Int, data: List<String>) = Unit
 
     companion object {
 

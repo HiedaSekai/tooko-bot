@@ -943,6 +943,7 @@ public class TdHandler {
 
     public void onDestroy() {
 
+
     }
 
     public void onPersistCancel(User user, long chatId, Message message, int subId) {

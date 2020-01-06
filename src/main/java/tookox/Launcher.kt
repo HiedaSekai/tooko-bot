@@ -30,6 +30,7 @@ import tooko.td.client.TdException
 import tooko.twitter.ApiToken
 import tooko.twitter.TwitterBot
 import tookox.core.TookoLogFactory
+import tookox.core.bots.CreateBot
 import tookox.core.client.TdBot
 import tookox.core.defaultLog
 import tookox.core.funs.BaseFuncs
@@ -55,15 +56,20 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
     override fun onLoad() {
 
-        // addHandler(TestForIssue859())
-
-        addHandler(TestForFMT())
-
         addHandler(BaseFuncs())
 
         addHandler(StickerExport())
 
+        addHandler(CreateBot())
+
         addHandler(LICENCE())
+
+        // TESTS
+
+        // addHandler(TestForIssue859())
+
+        addHandler(TestForFMT())
+
 
     }
 

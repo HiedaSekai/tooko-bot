@@ -1,8 +1,10 @@
 package tookox.core
 
+import cn.hutool.core.collection.CollUtil
 import cn.hutool.core.util.ArrayUtil
 import cn.hutool.core.util.StrUtil
 import java.math.BigInteger
+import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.reflect.KMutableProperty0
@@ -39,6 +41,14 @@ fun <T> Array<T>.shift(): Array<T> {
 fun <T> Array<T>.shift(size: Int): Array<T> {
 
     return ArrayUtil.sub(this, size, this.size)
+
+}
+
+fun <T> Collection<T>.shift() = shift(1)
+
+fun <T> Collection<T>.shift(size: Int): Collection<T> {
+
+    return LinkedList(CollUtil.sub(this, size, this.size))
 
 }
 

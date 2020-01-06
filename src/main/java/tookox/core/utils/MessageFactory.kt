@@ -135,6 +135,81 @@ class InlineButtonBuilder : LinkedList<InlineButtonBuilder.Line>(), Builder<Repl
         return true
 
     }
+
+}
+
+
+fun keyboadButton(block: KeyboadButtonBuilder.() -> Unit): ReplyMarkupShowKeyboard {
+
+    return KeyboadButtonBuilder().apply(block).build()
+
+}
+
+class KeyboadButtonBuilder : LinkedList<KeyboadButtonBuilder.Line>(), Builder<ReplyMarkupShowKeyboard> {
+
+    class Line : LinkedList<KeyboardButton>() {
+
+        fun textButton(text: String) {
+
+            add(KeyboardButton(text, KeyboardButtonTypeText()))
+
+        }
+
+        fun locationRequestButton(text: String) {
+
+            add(KeyboardButton(text, KeyboardButtonTypeRequestLocation()))
+
+        }
+
+        fun phoneNumberRequestButton(text: String) {
+
+            add(KeyboardButton(text, KeyboardButtonTypeRequestPhoneNumber()))
+
+        }
+
+    }
+
+    fun newLine(block: (Line.() -> Unit)? = null): Line {
+
+        return Line().apply {
+
+            block?.invoke(this)
+
+            add(this)
+
+        }
+
+    }
+
+    fun textLine(text: String) = newLine().textButton(text)
+    fun locationRequestLine(text: String) = newLine().locationRequestButton(text)
+    fun phoneNumberRequestLine(text: String) = newLine().phoneNumberRequestButton(text)
+
+    var resizeKeyboard = true
+
+    var oneTime = true
+
+    var isPersonal = true
+
+    override fun build(): ReplyMarkupShowKeyboard {
+
+        return ReplyMarkupShowKeyboard(
+                map { it.toTypedArray() }.toTypedArray(),
+                resizeKeyboard, oneTime, isPersonal
+        )
+
+    }
+
+    override fun isEmpty(): Boolean {
+
+        if (super.isEmpty()) return true
+
+        forEach { if (!it.isEmpty()) return false }
+
+        return true
+
+    }
+
 }
 
 fun removeKeyboard(isPersional: Boolean = true): ReplyMarkupRemoveKeyboard {

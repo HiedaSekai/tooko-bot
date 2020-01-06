@@ -5,6 +5,8 @@ import tooko.td.Client
 import tooko.td.TdApi
 import tooko.td.TdApi.*
 import tooko.td.client.TdException
+import tookox.core.utils.readDataMapFrom
+import tookox.core.utils.writeDataMapTo
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -33,16 +35,37 @@ interface TdAbsHandler {
 
     val sudo: TdClient
 
+    fun onLoad(client: TdClient) {
 
-    fun onLoad(client: TdClient)
+        if (dataName == null) return
+
+        onDataRestore(readDataMapFrom(dataName!!) ?: return)
+
+    }
 
     fun onLoad()
+
+    val dataName: String? get() = null
+
+    fun onDataRestore(data: Map<String, List<String>>) {}
+
+    fun onDataSave(data: HashMap<String, List<String>>) {}
 
     suspend fun onLogin()
 
     suspend fun onLogout()
 
-    suspend fun onDestroy()
+    suspend fun onDestroy() {
+
+        if (dataName == null) return
+
+        val data = HashMap<String, List<String>>()
+
+        onDataSave(data)
+
+        writeDataMapTo(dataName!!, data.takeIf { it.isNotEmpty() } ?: return)
+
+    }
 
     suspend fun onAuthorizationState(authorizationState: AuthorizationState)
 
