@@ -83,14 +83,7 @@ suspend fun <T : BaseRequest<T, R>, R : BaseResponse> httpSync(botToken: String,
 
     val body = try {
 
-        val httpResponse = httpRequest.execute()
-
-        if (!httpResponse.isOk) {
-
-            throw TdException(httpResponse.status, httpResponse.body())
-        }
-
-        httpResponse.body()
+        httpRequest.execute().body()
 
     } catch (ex: Exception) {
 
