@@ -71,13 +71,9 @@ class TookoLog(name: String) : ConsoleLog(name) {
 
         if (level.ordinal >= Level.WARN.ordinal) {
 
-            runCatching {
+            with(Launcher.INSTANCE) {
 
-                with(Launcher.INSTANCE) {
-
-                    sudo make logMsg sendTo Env.LOG_CHANNEL
-
-                }
+                sudo make logMsg sendTo Env.LOG_CHANNEL onError null
 
             }
 
