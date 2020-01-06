@@ -35,13 +35,7 @@ interface TdAbsHandler {
 
     val sudo: TdClient
 
-    fun onLoad(client: TdClient) {
-
-        if (dataName == null) return
-
-        onDataRestore(readDataMapFrom(dataName!!) ?: return)
-
-    }
+    fun onLoad(client: TdClient)
 
     fun onLoad()
 
@@ -51,7 +45,13 @@ interface TdAbsHandler {
 
     fun onDataSave(data: HashMap<String, List<String>>) {}
 
-    suspend fun onLogin()
+    suspend fun onLogin() {
+
+        if (dataName == null) return
+
+        onDataRestore(readDataMapFrom(dataName!!) ?: return)
+
+    }
 
     suspend fun onLogout()
 

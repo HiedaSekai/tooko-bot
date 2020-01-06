@@ -18,6 +18,8 @@ import java.util.*
 
 open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotAbsHandler {
 
+    val botUserId = botToken.substringBefore(':').toInt()
+
     override val sudo: TdBot get() = this
 
     val payloads = HashMap<String, TdBotAbsHandler>()
@@ -27,9 +29,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
     val persistHandlers = HashMap<Int, TdBotAbsHandler>()
     val persists = HashMap<Int, TdPerstst>()
 
-    override fun onLoad(client: TdClient) {
-
-        super<TdClient>.onLoad(client)
+    override suspend fun onLogin() {
 
         readDataFrom("user_persists")?.forEach {
 

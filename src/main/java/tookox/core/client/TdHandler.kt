@@ -10,8 +10,6 @@ open class TdHandler : TdAbsHandler {
 
     override fun onLoad(client: TdClient) {
 
-        super.onLoad(client)
-
         _client = client
 
         onLoad()
@@ -20,7 +18,7 @@ open class TdHandler : TdAbsHandler {
 
     override fun onLoad() = Unit
 
-    override suspend fun onLogin() = Unit
+    override suspend fun onLogin() = super.onLogin()
 
     override suspend fun onLogout() = Unit
 
