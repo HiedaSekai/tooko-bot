@@ -9,10 +9,7 @@ import tooko.td.TdApi
 import tookox.core.PERSIST_1
 import tookox.core.client.TdBotHandler
 import tookox.core.input
-import tookox.core.utils.httpSend
-import tookox.core.utils.keyboadButton
-import tookox.core.utils.make
-import tookox.core.utils.removeKeyboard
+import tookox.core.utils.*
 import com.pengrad.telegrambot.request.GetMe as HttpGetMe
 
 class CreateBot : TdBotHandler() {
@@ -57,7 +54,7 @@ class CreateBot : TdBotHandler() {
 
             writePersist(userId, PERSIST_1)
 
-            sudo make L.BOT_INPUT_TOKEN sendTo chatId
+            sudo make L.BOT_INPUT_TOKEN.asHtml sendTo chatId
 
         }
 

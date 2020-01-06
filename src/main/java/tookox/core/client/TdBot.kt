@@ -145,7 +145,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
                 Env.FUN_PREFIX.forEach {
 
-                    if (param.startsWith(it)) return@forEach
+                    if (!param.startsWith(it)) return@forEach
 
                     param = param.substring(it.length)
 
