@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package tookox.core
 
 fun String.containsChinese(): Boolean {

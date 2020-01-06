@@ -9,7 +9,6 @@ import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings
 import com.mongodb.MongoException
 import com.mongodb.client.MongoClients
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.bson.codecs.configuration.CodecRegistries
 import org.bson.codecs.pojo.ArrayPropertyCodecProvider
@@ -36,7 +35,7 @@ import tookox.core.defaultLog
 import tookox.core.funs.BaseFuncs
 import tookox.core.funs.LICENCE
 import tookox.core.funs.StickerExport
-import tookox.core.td.make
+import tookox.core.utils.make
 import tookox.test.TestForFMT
 import java.io.File
 import java.lang.Thread.UncaughtExceptionHandler
@@ -44,7 +43,6 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.logging.Level
 import java.util.logging.Logger
-import kotlin.concurrent.thread
 import kotlin.system.exitProcess
 
 class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
@@ -69,7 +67,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
     }
 
-    override fun onLogin() {
+    override suspend fun onLogin() {
 
         twitter = TwitterBot().apply { start() }
 
@@ -105,19 +103,19 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
     }
 
-    override fun onUndefinedFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
+    override suspend fun onUndefinedFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
 
         sudo make "function $function not found :(" sendTo chatId
 
     }
 
-    override fun onAuthorizationFailed(ex: TdException) {
+    override suspend fun onAuthorizationFailed(ex: TdException) {
 
         super.onAuthorizationFailed(ex)
 
         defaultLog.error(ex, "本体认证失败.")
 
-        INSTANCE.destroy()
+        INSTANCE.stop()
 
         exitProcess(100)
 
@@ -139,7 +137,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
         lateinit var INSTANCE: Launcher
 
         @JvmStatic
-        fun main(args: Array<String>) {
+        fun main(args: Array<String>) = runBlocking {
 
             val startAt = System.currentTimeMillis()
 
@@ -399,16 +397,6 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             }
 
-            thread {
-
-                while (true) {
-
-                    runBlocking { delay(1000L) }
-
-                }
-
-            }
-
         }
 
         private fun registerSubClasses(apiClazz: Class<*>): Array<PropertyCodecProvider> {
@@ -450,7 +438,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
         }
 
-        fun checkConfig(config: TypedMap) {
+        private fun checkConfig(config: TypedMap) {
 
             val fields = arrayOf(
                     "db_address", "db_port", "db_name",
@@ -470,7 +458,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
         }
 
-        fun checkTwitter(config: TypedMap) {
+        private fun checkTwitter(config: TypedMap) {
 
             val fields = arrayOf(
                     "bot_token", "public", "api_tokens")

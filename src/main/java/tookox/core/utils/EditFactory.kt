@@ -1,5 +1,8 @@
-package tookox.core.td
+@file:Suppress("unused")
 
+package tookox.core.utils
+
+import kotlinx.coroutines.CoroutineScope
 import tooko.td.TdApi.*
 import tookox.core.client.TdAbsHandler
 import tookox.core.client.TdCallback
@@ -27,13 +30,13 @@ class EditButtonFactory(val context: TdAbsHandler) {
 
     }
 
-    fun syncEditTo(chatId: Number, messageId: Long): Message = context.sync(EditMessageReplyMarkup(chatId.toLong(), messageId, replyMarkupInlineKeyboard))
+    suspend fun syncEditTo(chatId: Number, messageId: Long): Message = context.sync(EditMessageReplyMarkup(chatId.toLong(), messageId, replyMarkupInlineKeyboard))
 
-    infix fun syncEditAt(chatId: Number): Message = context.sync(EditMessageReplyMarkup(chatId.toLong(), messageId.toLong(), replyMarkupInlineKeyboard))
+    suspend infix fun syncEditAt(chatId: Number): Message = context.sync(EditMessageReplyMarkup(chatId.toLong(), messageId.toLong(), replyMarkupInlineKeyboard))
 
-    infix fun syncEditTo(messageId: Long): Message = context.sync(EditMessageReplyMarkup(chatId.toLong(), messageId, replyMarkupInlineKeyboard))
+    suspend infix fun syncEditTo(messageId: Long): Message = context.sync(EditMessageReplyMarkup(chatId.toLong(), messageId, replyMarkupInlineKeyboard))
 
-    infix fun syncEditTo(message: Message): Message = context.sync(EditMessageReplyMarkup(message.chatId, message.id, replyMarkupInlineKeyboard))
+    suspend infix fun syncEditTo(message: Message): Message = context.sync(EditMessageReplyMarkup(message.chatId, message.id, replyMarkupInlineKeyboard))
 
     fun editTo(chatId: Number, messageId: Long): TdCallback<Message> {
 
@@ -59,7 +62,7 @@ class EditButtonFactory(val context: TdAbsHandler) {
 
     }
 
-    infix fun edit(handler: ((Message) -> Unit)): TdCallback<Message> {
+    infix fun edit(handler: (suspend CoroutineScope.(Message) -> Unit)): TdCallback<Message> {
 
         return context.send(EditMessageReplyMarkup(chatId.toLong(), messageId.toLong(), replyMarkupInlineKeyboard), 1, handler)
 

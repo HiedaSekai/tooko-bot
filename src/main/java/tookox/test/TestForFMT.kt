@@ -3,9 +3,9 @@ package tookox.test
 import tooko.td.TdApi
 import tookox.core.client.TdBotHandler
 import tookox.core.shift
-import tookox.core.td.asHtml
-import tookox.core.td.asMarkdown
-import tookox.core.td.make
+import tookox.core.utils.asHtml
+import tookox.core.utils.asMarkdown
+import tookox.core.utils.make
 
 class TestForFMT : TdBotHandler() {
 
@@ -15,7 +15,7 @@ class TestForFMT : TdBotHandler() {
 
     }
 
-    override fun onFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
+    override suspend fun onFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
 
         if ("html" == params[0]) {
 

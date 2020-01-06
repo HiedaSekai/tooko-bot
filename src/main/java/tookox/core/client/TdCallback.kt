@@ -1,22 +1,24 @@
 package tookox.core.client
 
 import cn.hutool.core.thread.ThreadUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.coroutineScope
 import tooko.main.Fn
 import tooko.td.TdApi
 import tooko.td.client.TdException
 import tookox.core.defaultLog
 
-class TdCallback<T : TdApi.Object>(stackIgnore: Int = 0, private var handler: ((T) -> Unit)?) {
+class TdCallback<T : TdApi.Object>(stackIgnore: Int = 0, private var handler: (suspend CoroutineScope.(T) -> Unit)?) {
 
     private val stackTrace: Array<StackTraceElement> = Fn.shift(ThreadUtil.getStackTrace(), 3 + stackIgnore)
 
-    private var errorHandler: ((TdException) -> Unit)? = {
+    private var errorHandler: (suspend CoroutineScope.(TdException) -> Unit)? = {
 
         defaultLog.warn(it)
 
     }
 
-    infix fun onFinish(handler: ((T) -> Unit)?): TdCallback<T> {
+    infix fun onFinish(handler: (suspend CoroutineScope.(T) -> Unit)?): TdCallback<T> {
 
         this.handler = handler
 
@@ -24,7 +26,7 @@ class TdCallback<T : TdApi.Object>(stackIgnore: Int = 0, private var handler: ((
 
     }
 
-    infix fun onError(handler: ((TdException) -> Unit)?): TdCallback<T> {
+    infix fun onError(handler: (suspend CoroutineScope.(TdException) -> Unit)?): TdCallback<T> {
 
         this.errorHandler = handler
 
@@ -33,8 +35,16 @@ class TdCallback<T : TdApi.Object>(stackIgnore: Int = 0, private var handler: ((
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun postResult(result: TdApi.Object) = handler?.invoke(result as T)
+    suspend fun postResult(result: TdApi.Object) = coroutineScope {
 
-    fun postError(error: TdException) = errorHandler?.invoke(error.also { it.stackTrace = stackTrace })
+        handler?.invoke(this, result as T)
+
+    }
+
+    suspend fun postError(error: TdException) = coroutineScope {
+
+        errorHandler?.invoke(this, error.also { it.stackTrace = stackTrace })
+
+    }
 
 }

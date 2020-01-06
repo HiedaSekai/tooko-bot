@@ -9,7 +9,7 @@ import tooko.td.TdApi.User;
 import tooko.td.TdApi.*;
 import tooko.td.client.*;
 import tooko.td.core.*;
-import tookox.core.td.*;
+import tookox.core.utils.*;
 import twitter4j.*;
 import twitter4j.conf.*;
 

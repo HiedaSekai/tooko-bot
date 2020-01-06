@@ -1,5 +1,8 @@
-package tookox.core.td
+@file:Suppress("unused")
 
+package tookox.core.utils
+
+import kotlinx.coroutines.CoroutineScope
 import tooko.td.TdApi.*
 import tookox.core.client.TdAbsHandler
 import tookox.core.client.TdCallback
@@ -35,7 +38,7 @@ class ChatActionFactory(val context: TdAbsHandler, val action: ChatAction) {
 
     }
 
-    infix fun syncTo(chatId: Number) {
+    suspend infix fun syncTo(chatId: Number) {
 
         context.syncUnit(SendChatAction(chatId.toLong(), action))
 
@@ -47,7 +50,7 @@ class ChatActionFactory(val context: TdAbsHandler, val action: ChatAction) {
 
     }
 
-    infix fun send(block: (Ok) -> Unit): TdCallback<Ok> {
+    infix fun send(block: suspend CoroutineScope.(Ok) -> Unit): TdCallback<Ok> {
 
         return context.send(SendChatAction(chatId.toLong(), action), 1, block)
 

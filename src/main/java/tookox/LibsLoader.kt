@@ -9,7 +9,7 @@ import tooko.main.Env
 import tooko.main.Lang
 import tookox.core.asHtml
 import tookox.core.defaultLog
-import tookox.core.td.asMarkdown
+import tookox.core.utils.asMarkdown
 import java.util.*
 
 object LibsLoader {

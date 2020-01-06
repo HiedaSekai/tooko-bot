@@ -1,11 +1,12 @@
 package tookox.test
 
+import tooko.td.TdApi
 import tooko.td.TdApi.Message
 import tookox.core.DATA_20
 import tookox.core.client.TdBotHandler
-import tookox.core.td.delete
-import tookox.core.td.inlineButton
-import tookox.core.td.make
+import tookox.core.utils.inlineButton
+import tookox.core.utils.make
+import tookox.core.utils.syncDelete
 
 class TestForIssue859 : TdBotHandler() {
 
@@ -17,7 +18,7 @@ class TestForIssue859 : TdBotHandler() {
 
     }
 
-    override fun onFunction(userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
+    override suspend fun onFunction(userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
 
         sudo make {
 
@@ -39,23 +40,25 @@ class TestForIssue859 : TdBotHandler() {
 
     }
 
-    override fun onNewCallbackQuery(userId: Int, chatId: Long, messageId: Long, queryId: Long, subId: Int, data: Array<ByteArray>) {
+    override suspend fun onNewCallbackQuery(userId: Int, chatId: Long, messageId: Long, queryId: Long, subId: Int, data: Array<ByteArray>) {
 
-        if (subId == 0) {
+        runCatching<Unit> {
 
-            sudo make "EDITED" at chatId editTo messageId onError {
+            if (subId == 0) {
 
-                sudo make it sendTo chatId
+                syncUnit(TdApi.GetMessage(chatId, messageId))
 
-            }
+                sudo make "EDITED" at chatId syncEditTo messageId
 
-        } else {
+            } else {
 
-            delete(chatId, messageId) onError {
-
-                sudo make it sendTo chatId
+                syncDelete(chatId, messageId)
 
             }
+
+        }.onFailure {
+
+            sudo make it sendTo chatId
 
         }
 

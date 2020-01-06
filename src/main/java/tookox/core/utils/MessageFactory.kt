@@ -1,8 +1,9 @@
 @file:Suppress("unused")
 
-package tookox.core.td
+package tookox.core.utils
 
 import cn.hutool.core.builder.Builder
+import kotlinx.coroutines.CoroutineScope
 import tooko.main.Fn
 import tooko.main.Lang
 import tooko.td.TdApi.*
@@ -392,7 +393,7 @@ class MessageFactory(val context: TdAbsHandler) : CaptionInterface {
 
     }
 
-    infix fun syncTo(chatId: Number): Message {
+    suspend infix fun syncTo(chatId: Number): Message {
 
         return context.sync(SendMessage(chatId.toLong(), replyToMessageId, mkOptions(), replyMarkup, input))
 
@@ -404,19 +405,19 @@ class MessageFactory(val context: TdAbsHandler) : CaptionInterface {
 
     }
 
-    infix fun send(handler: ((Message) -> Unit)): TdCallback<Message> {
+    infix fun send(handler: (suspend CoroutineScope.(Message) -> Unit)): TdCallback<Message> {
 
         return context.send(SendMessage(chatId.toLong(), replyToMessageId, mkOptions(), replyMarkup, input), 1, handler)
 
     }
 
-    fun syncEditTo(chatId: Number, messageId: Long): Message = context.sync(EditMessageText(chatId.toLong(), messageId, replyMarkup, input))
+    suspend fun syncEditTo(chatId: Number, messageId: Long): Message = context.sync(EditMessageText(chatId.toLong(), messageId, replyMarkup, input))
 
-    infix fun syncEditAt(chatId: Number): Message = context.sync(EditMessageText(chatId.toLong(), messageId.toLong(), replyMarkup, input))
+    suspend infix fun syncEditAt(chatId: Number): Message = context.sync(EditMessageText(chatId.toLong(), messageId.toLong(), replyMarkup, input))
 
-    infix fun syncEditTo(messageId: Long): Message = context.sync(EditMessageText(chatId.toLong(), messageId, replyMarkup, input))
+    suspend infix fun syncEditTo(messageId: Long): Message = context.sync(EditMessageText(chatId.toLong(), messageId, replyMarkup, input))
 
-    infix fun syncEditTo(message: Message): Message = context.sync(EditMessageText(message.chatId, message.id, replyMarkup, input))
+    suspend infix fun syncEditTo(message: Message): Message = context.sync(EditMessageText(message.chatId, message.id, replyMarkup, input))
 
     fun editTo(chatId: Number, messageId: Long): TdCallback<Message> {
 
@@ -442,7 +443,7 @@ class MessageFactory(val context: TdAbsHandler) : CaptionInterface {
 
     }
 
-    infix fun edit(handler: ((Message) -> Unit)): TdCallback<Message> {
+    infix fun edit(handler: (suspend CoroutineScope.(Message) -> Unit)): TdCallback<Message> {
 
         return context.send(EditMessageText(chatId.toLong(), messageId.toLong(), replyMarkup, input), 1, handler)
 

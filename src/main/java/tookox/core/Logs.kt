@@ -12,7 +12,7 @@ import cn.hutool.log.level.Level
 import tooko.main.Env
 import tooko.main.Fn
 import tookox.Launcher
-import tookox.core.td.make
+import tookox.core.utils.make
 
 object TookoLogFactory : LogFactory("Tooko Log") {
 
@@ -75,7 +75,7 @@ class TookoLog(name: String) : ConsoleLog(name) {
 
                 with(Launcher.INSTANCE) {
 
-                    sudo make logMsg syncTo Env.LOG_CHANNEL
+                    sudo make logMsg sendTo Env.LOG_CHANNEL
 
                 }
 

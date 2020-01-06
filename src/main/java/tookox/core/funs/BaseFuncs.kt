@@ -1,12 +1,14 @@
 package tookox.core.funs
 
 import cn.hutool.core.util.NumberUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.coroutineScope
 import tooko.main.Lang
 import tooko.td.TdApi.*
 import tookox.core.*
 import tookox.core.client.TdBotHandler
-import tookox.core.td.asHtml
-import tookox.core.td.make
+import tookox.core.utils.asHtml
+import tookox.core.utils.make
 import java.util.*
 
 class BaseFuncs : TdBotHandler() {
@@ -15,13 +17,17 @@ class BaseFuncs : TdBotHandler() {
 
     override fun onLoad() = functions.forEach(sudo::addHandler)
 
-    fun function(name: String, function: (userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>) -> Unit) {
+    fun function(name: String, function: suspend CoroutineScope.(userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>) -> Unit) {
 
         functions.add(object : TdBotHandler() {
 
             override fun onLoad() = initFunction(name)
 
-            override fun onFunction(userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>) = function(userId, chatId, message, function, param, params, originParams)
+            override suspend fun onFunction(userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>) = coroutineScope {
+
+                function(userId, chatId, message, function, param, params, originParams)
+
+            }
 
         })
 

@@ -23,9 +23,11 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
     var handlers = LinkedList<TdAbsHandler>()
 
     var start by AtomicBoolean(false)
+    var started by AtomicBoolean(false)
     var authing by AtomicBoolean(false)
     var authed by AtomicBoolean(false)
     var stop by AtomicBoolean(false)
+    var stopped by AtomicBoolean(false)
     var closed by AtomicBoolean(false)
 
     private val clientId = Client.createNativeClient()
@@ -50,7 +52,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     }
 
-    open fun start(): Boolean = runBlocking {
+    open suspend fun start(waitForAuth: Boolean = false): Boolean {
 
         check(!start) { "已经启动过." }
 
@@ -58,41 +60,43 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         authing = true
 
-        addHandler(this@TdClient)
+        addHandler(this)
 
-        GlobalScope.launch { receiveQueries() }
+        if (!loopThreadInited) {
 
-        while (authing) delay(100L)
+            loopThread = Thread(::loopEvents, "Tooko Event Loop")
 
-        authed
+            loopThread.start()
 
-    }
+        }
 
-    open fun stop() {
+        return if (waitForAuth) {
 
-        check(start) { "未启动." }
+            while (authing) delay(100L)
 
-        check(!closed) { "已销毁." }
+            authed
 
-        handlers.forEach { it.onDestroy() }
+        } else {
 
-        sendRaw(Close())
+            while (!started) delay(100L)
 
-        runBlocking {
-
-            while (!closed) delay(100)
+            true
 
         }
 
     }
 
-    fun destroy() {
+    open suspend fun stop() {
 
-        if (!stop) stop()
+        check(started) { "未启动." }
 
-        check(!closed) { "重复销毁." }
+        check(!stop) { "已静止过." }
 
-        closed = true
+        handlers.forEach { it.onDestroy() }
+
+        sendRaw(Close())
+
+        while (!closed) delay(100)
 
         Client.destroyNativeClient(clientId)
 
@@ -111,11 +115,15 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     }
 
-    override fun onAuthorizationState(authorizationState: AuthorizationState) {
+    override suspend fun onAuthorizationState(authorizationState: AuthorizationState) = coroutineScope<Unit> {
 
         if (authorizationState is AuthorizationStateWaitTdlibParameters) {
 
-            sendUnit(SetTdlibParameters(options.build())).onError(defaultLog::warn)
+            sendUnit(SetTdlibParameters(options.build())) onError {
+
+                defaultLog.warn(it)
+
+            }
 
         } else if (authorizationState is AuthorizationStateWaitEncryptionKey) {
 
@@ -131,9 +139,9 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         } else if (authorizationState is AuthorizationStateReady) {
 
-            send<User>(GetMe()) {
+            send<User>(GetMe()) { user ->
 
-                me = it
+                me = user
 
                 authing = false
 
@@ -143,7 +151,11 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                 for (handler in handlers) handler.onLogin()
 
-            }.onError(::onAuthorizationFailed)
+            } onError {
+
+                onAuthorizationFailed(it)
+
+            }
 
         } else if (authorizationState is AuthorizationStateLoggingOut) {
 
@@ -157,13 +169,13 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     }
 
-    open fun onAuthorizationFailed(ex: TdException) {
+    open suspend fun onAuthorizationFailed(ex: TdException) {
 
         authing = false
 
     }
 
-    override fun onMessageSendSucceeded(message: Message, oldMessageId: Long) {
+    override suspend fun onMessageSendSucceeded(message: Message, oldMessageId: Long) {
 
         try {
 
@@ -176,9 +188,10 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
             defaultLog.error(e, "TdError - Sync")
 
         }
+
     }
 
-    override fun onMessageSendFailed(message: Message, oldMessageId: Long, errorCode: Int, errorMessage: String) {
+    override suspend fun onMessageSendFailed(message: Message, oldMessageId: Long, errorCode: Int, errorMessage: String) {
 
         val callback = messages.remove(oldMessageId) ?: return
 
@@ -194,7 +207,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     }
 
-    override fun <T : Object> sync(function: TdApi.Function): T {
+    override suspend fun <T : Object> sync(function: TdApi.Function): T = withContext(Dispatchers.IO) {
 
         val responseAtomicReference = AtomicReference<Any>()
 
@@ -214,33 +227,30 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         }
 
-        return runBlocking {
+        while (!executedAtomicBoolean.get()) {
 
-            while (!executedAtomicBoolean.get()) {
+            if (Env.STOP.get()) {
 
-                if (Env.STOP.get()) {
-
-                    throw TdException(Error(-1, "Server Stopped"))
-
-                }
-
-                delay(100L)
+                throw TdException(Error(-1, "Server Stopped"))
 
             }
 
-            @Suppress("UNCHECKED_CAST")
-            responseAtomicReference.get().apply {
-
-                if (this is TdException) throw this
-
-            } as T
+            delay(100L)
 
         }
+
+        @Suppress("UNCHECKED_CAST")
+        responseAtomicReference.get().apply {
+
+            if (this is TdException) throw this
+
+        } as T
+
 
     }
 
     @Suppress("UNCHECKED_CAST")
-    override fun <T : Object> send(function: TdApi.Function, stackIgnore: Int, block: ((T) -> Unit)?): TdCallback<T> {
+    override fun <T : Object> send(function: TdApi.Function, stackIgnore: Int, block: (suspend CoroutineScope.(T) -> Unit)?): TdCallback<T> {
 
         val requestId = requestId.getAndIncrement()
 
@@ -274,85 +284,9 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     }
 
-    fun sendRaw(requestId: Long, function: TdApi.Function) {
+    private fun sendRaw(requestId: Long, function: TdApi.Function) {
 
         Client.nativeClientSend(clientId, requestId, function)
-
-    }
-
-    fun receiveQueries() {
-
-        while (!stop) {
-
-            val MAX_EVENTS = 1000
-
-            val eventIds = LongArray(MAX_EVENTS)
-            val eventObjs = arrayOfNulls<Object>(MAX_EVENTS)
-
-            val resultCount = Client.nativeClientReceive(clientId, eventIds, eventObjs, 314.15)
-
-            if (resultCount == 0) continue
-
-            (0 until resultCount).forEach { index ->
-
-                val requestId = eventIds[index]
-                val eventObj = eventObjs[index]!!
-
-                if (requestId != 0L) {
-
-                    if (!callbacks.containsKey(requestId)) return@forEach
-
-                    val callback = callbacks.remove(requestId)!!
-
-                    GlobalScope.launch {
-
-                        runCatching {
-
-                            if (eventObj is Error) {
-
-                                callback.postError(TdException(eventObj))
-
-                            } else {
-
-                                callback.postResult(eventObj)
-
-                            }
-
-                        }.onFailure {
-
-                            defaultLog.error(it, "TdError - Sync")
-
-                        }
-
-                    }
-
-
-                } else {
-
-                    events.launch {
-
-                        handlers.forEach {
-
-                            runCatching {
-
-                                it.onEvent(eventObj)
-
-                            }.onFailure {
-
-                                if (it is Finish) return@launch
-
-                                defaultLog.error(it, "TdError - Sync")
-
-                            }
-
-                        }
-
-                    }
-
-                }
-
-            }
-        }
 
     }
 
@@ -361,16 +295,19 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
         @Suppress("EXPERIMENTAL_API_USAGE")
         val events = CoroutineScope(newSingleThreadContext("Tooko Events Task"))
 
-        /*
-
-        val postAdd = LinkedList<TdClient>()
-        val postDestroy = LinkedList<TdClient>()
-        val mainTimer = Timer("Mian Timer")
+        private val postAdd = LinkedList<TdClient>()
+        private val postDestroy = LinkedList<TdClient>()
         val clients = LinkedList<TdClient>()
 
-        val eventTask = Thread {
+        private const val MAX_EVENTS = 1000
 
-            while (!Env.STOP.get()) {
+        lateinit var loopThread: Thread
+
+        val loopThreadInited get() = ::loopThread.isInitialized
+
+        fun loopEvents() = runBlocking(Dispatchers.IO) {
+
+            while (true) {
 
                 synchronized(postAdd) {
 
@@ -381,8 +318,6 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
                         val toAdd = iter.next()
 
                         clients.add(toAdd)
-
-                        toAdd.status = true
 
                         iter.remove()
 
@@ -400,7 +335,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                         clients.remove(toDestroy)
 
-                        toDestroy.status = false
+                        toDestroy.stop = true
 
                         iter.remove()
 
@@ -410,7 +345,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                 if (clients.isEmpty()) {
 
-                    ThreadUtil.safeSleep(1000)
+                    delay(1000L)
 
                     continue
 
@@ -418,23 +353,35 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                 for (client in clients) {
 
-                    val responseList = client.td.receive(0.0).forEach { event: Client.Event ->
+                    val eventIds = LongArray(MAX_EVENTS)
+                    val eventObjs = arrayOfNulls<Object>(MAX_EVENTS)
 
-                        if (event.requestId != 0L && client.callbacks.containsKey(event.requestId)) {
+                    val resultCount = Client.nativeClientReceive(client.clientId, eventIds, eventObjs, 0.0)
 
-                            val callback = client.callbacks.remove(event.requestId)!!
+                    if (resultCount == 0) continue
 
-                            GlobalScope.launch {
+                    for (index in 0 until resultCount) {
+
+                        val requestId = eventIds[index]
+                        val eventObj = eventObjs[index]!!
+
+                        if (requestId != 0L) {
+
+                            if (!client.callbacks.containsKey(requestId)) continue
+
+                            val callback = client.callbacks.remove(requestId)!!
+
+                            launch(Dispatchers.IO) {
 
                                 runCatching {
 
-                                    if (event.event is Error) {
+                                    if (eventObj is Error) {
 
-                                        callback.postError(TdException(event.event as Error))
+                                        callback.postError(TdException(eventObj))
 
                                     } else {
 
-                                        callback.postResult(event.event)
+                                        callback.postResult(eventObj)
 
                                     }
 
@@ -446,7 +393,6 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                             }
 
-
                         } else {
 
                             events.launch {
@@ -455,7 +401,84 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                                     runCatching {
 
-                                        it.onEvent(event.event)
+                                        with(it) {
+
+                                            when (eventObj) {
+
+                                                is UpdateAuthorizationState -> onAuthorizationState(eventObj.authorizationState)
+                                                is UpdateNewMessage -> onNewMessage(eventObj.message.senderUserId, eventObj.message.chatId, eventObj.message)
+                                                is UpdateMessageSendAcknowledged -> onMessageSendAcknowledged(eventObj.chatId, eventObj.messageId)
+                                                is UpdateMessageSendSucceeded -> onMessageSendSucceeded(eventObj.message, eventObj.oldMessageId)
+                                                is UpdateMessageSendFailed -> onMessageSendFailed(eventObj.message, eventObj.oldMessageId, eventObj.errorCode, eventObj.errorMessage)
+                                                is UpdateMessageContent -> onMessageContent(eventObj.chatId, eventObj.messageId, eventObj.newContent)
+                                                is UpdateMessageEdited -> onMessageEdited(eventObj.chatId, eventObj.messageId, eventObj.editDate, eventObj.replyMarkup)
+                                                is UpdateMessageViews -> onMessageViews(eventObj.chatId, eventObj.messageId, eventObj.views)
+                                                is UpdateMessageContentOpened -> onMessageContentOpened(eventObj.chatId, eventObj.messageId)
+                                                is UpdateMessageMentionRead -> onMessageMentionRead(eventObj.chatId, eventObj.messageId, eventObj.unreadMentionCount)
+                                                is UpdateNewChat -> onNewChat(eventObj.chat)
+                                                is UpdateChatTitle -> onChatTitle(eventObj.chatId, eventObj.title)
+                                                is UpdateChatPhoto -> onChatPhoto(eventObj.chatId, eventObj.photo)
+                                                is UpdateChatPermissions -> onChatPermissions(eventObj.chatId, eventObj.permissions)
+                                                is UpdateChatLastMessage -> onChatLastMessage(eventObj.chatId, eventObj.lastMessage, eventObj.order)
+                                                is UpdateChatOrder -> onChatOrder(eventObj.chatId, eventObj.order)
+                                                is UpdateChatIsPinned -> onChatIsPinned(eventObj.chatId, eventObj.isPinned, eventObj.order)
+                                                is UpdateChatIsMarkedAsUnread -> onChatIsMarkedAsUnread(eventObj.chatId, eventObj.isMarkedAsUnread)
+                                                is UpdateChatIsSponsored -> onChatIsSponsored(eventObj.chatId, eventObj.isSponsored, eventObj.order)
+                                                is UpdateChatDefaultDisableNotification -> onChatDefaultDisableNotification(eventObj.chatId, eventObj.defaultDisableNotification)
+                                                is UpdateChatReadInbox -> onChatReadInbox(eventObj.chatId, eventObj.lastReadInboxMessageId, eventObj.unreadCount)
+                                                is UpdateChatReadOutbox -> onChatReadOutbox(eventObj.chatId, eventObj.lastReadOutboxMessageId)
+                                                is UpdateChatUnreadMentionCount -> onChatUnreadMentionCount(eventObj.chatId, eventObj.unreadMentionCount)
+                                                is UpdateChatNotificationSettings -> onChatNotificationSettings(eventObj.chatId, eventObj.notificationSettings)
+                                                is UpdateScopeNotificationSettings -> onScopeNotificationSettings(eventObj.scope, eventObj.notificationSettings)
+                                                is UpdateChatPinnedMessage -> onChatPinnedMessage(eventObj.chatId, eventObj.pinnedMessageId)
+                                                is UpdateChatReplyMarkup -> onChatReplyMarkup(eventObj.chatId, eventObj.replyMarkupMessageId)
+                                                is UpdateChatDraftMessage -> onChatDraftMessage(eventObj.chatId, eventObj.draftMessage, eventObj.order)
+                                                is UpdateChatOnlineMemberCount -> onChatOnlineMemberCount(eventObj.chatId, eventObj.onlineMemberCount)
+                                                is UpdateNotification -> onNotification(eventObj.notificationGroupId, eventObj.notification)
+                                                is UpdateNotificationGroup -> onNotificationGroup(eventObj.notificationGroupId, eventObj.type, eventObj.chatId, eventObj.notificationSettingsChatId, eventObj.isSilent, eventObj.totalCount, eventObj.addedNotifications, eventObj.removedNotificationIds)
+                                                is UpdateActiveNotifications -> onActiveNotifications(eventObj.groups)
+                                                is UpdateHavePendingNotifications -> onHavePendingNotifications(eventObj.haveDelayedNotifications, eventObj.haveUnreceivedNotifications)
+                                                is UpdateDeleteMessages -> onDeleteMessages(eventObj.chatId, eventObj.messageIds, eventObj.isPermanent, eventObj.fromCache)
+                                                is UpdateUserChatAction -> onUserChatAction(eventObj.chatId, eventObj.userId, eventObj.action)
+                                                is UpdateUserStatus -> onUserStatus(eventObj.userId, eventObj.status)
+                                                is UpdateUser -> onUser(eventObj.user)
+                                                is UpdateBasicGroup -> onBasicGroup(eventObj.basicGroup)
+                                                is UpdateSupergroup -> onSupergroup(eventObj.supergroup)
+                                                is UpdateSecretChat -> onSecretChat(eventObj.secretChat)
+                                                is UpdateUserFullInfo -> onUserFullInfo(eventObj.userId, eventObj.userFullInfo)
+                                                is UpdateBasicGroupFullInfo -> onBasicGroupFullInfo(eventObj.basicGroupId, eventObj.basicGroupFullInfo)
+                                                is UpdateSupergroupFullInfo -> onSupergroupFullInfo(eventObj.supergroupId, eventObj.supergroupFullInfo)
+                                                is UpdateServiceNotification -> onServiceNotification(eventObj.type, eventObj.content)
+                                                is UpdateFile -> onFile(eventObj.file)
+                                                is UpdateFileGenerationStart -> onFileGenerationStart(eventObj.generationId, eventObj.originalPath, eventObj.destinationPath, eventObj.conversion)
+                                                is UpdateFileGenerationStop -> onFileGenerationStop(eventObj.generationId)
+                                                is UpdateCall -> onCall(eventObj.call)
+                                                is UpdateUserPrivacySettingRules -> onUserPrivacySettingRules(eventObj.setting, eventObj.rules)
+                                                is UpdateUnreadMessageCount -> onUnreadMessageCount(eventObj.unreadCount, eventObj.unreadUnmutedCount)
+                                                is UpdateUnreadChatCount -> onUnreadChatCount(eventObj.unreadCount, eventObj.unreadUnmutedCount, eventObj.markedAsUnreadCount, eventObj.markedAsUnreadUnmutedCount)
+                                                is UpdateOption -> onOption(eventObj.name, eventObj.value)
+                                                is UpdateInstalledStickerSets -> onInstalledStickerSets(eventObj.isMasks, eventObj.stickerSetIds)
+                                                is UpdateTrendingStickerSets -> onTrendingStickerSets(eventObj.stickerSets)
+                                                is UpdateRecentStickers -> onRecentStickers(eventObj.isAttached, eventObj.stickerIds)
+                                                is UpdateFavoriteStickers -> onFavoriteStickers(eventObj.stickerIds)
+                                                is UpdateSavedAnimations -> onSavedAnimations(eventObj.animationIds)
+                                                is UpdateSelectedBackground -> onSelectedBackground(eventObj.forDarkTheme, eventObj.background)
+                                                is UpdateLanguagePackStrings -> onLanguagePackStrings(eventObj.localizationTarget, eventObj.languagePackId, eventObj.strings)
+                                                is UpdateConnectionState -> onConnectionState(eventObj.state)
+                                                is UpdateTermsOfService -> onTermsOfService(eventObj.termsOfServiceId, eventObj.termsOfService)
+                                                is UpdateNewInlineQuery -> onNewInlineQuery(eventObj.id, eventObj.senderUserId, eventObj.userLocation, eventObj.query, eventObj.offset)
+                                                is UpdateNewChosenInlineResult -> onNewChosenInlineResult(eventObj.senderUserId, eventObj.userLocation, eventObj.query, eventObj.resultId, eventObj.inlineMessageId)
+                                                is UpdateNewCallbackQuery -> handleNewCallbackQuery(eventObj.id, eventObj.senderUserId, eventObj.chatId, eventObj.messageId, eventObj.chatInstance, eventObj.payload)
+                                                is UpdateNewInlineCallbackQuery -> handleNewInlineCallbackQuery(eventObj.id, eventObj.senderUserId, eventObj.inlineMessageId, eventObj.chatInstance, eventObj.payload)
+                                                is UpdateNewShippingQuery -> onNewShippingQuery(eventObj.id, eventObj.senderUserId, eventObj.invoicePayload, eventObj.shippingAddress)
+                                                is UpdateNewPreCheckoutQuery -> onNewPreCheckoutQuery(eventObj.id, eventObj.senderUserId, eventObj.currency, eventObj.totalAmount, eventObj.invoicePayload, eventObj.shippingOptionId, eventObj.orderInfo)
+                                                is UpdateNewCustomEvent -> onNewCustomEvent(eventObj.event)
+                                                is UpdateNewCustomQuery -> onNewCustomQuery(eventObj.id, eventObj.data, eventObj.timeout)
+                                                is UpdatePoll -> onPoll(eventObj.poll)
+
+                                            }
+
+                                        }
 
                                     }.onFailure {
 
@@ -470,160 +493,153 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
                             }
 
                         }
-
                     }
-
                 }
-
-
 
             }
 
         }
 
-
-         */
-
     }
 
     override fun onLoad() = Unit
 
-    override fun onLogin() = Unit
+    override suspend fun onLogin() = Unit
 
-    override fun onLogout() = Unit
+    override suspend fun onLogout() = Unit
 
-    override fun onDestroy() = Unit
+    override suspend fun onDestroy() = Unit
 
-    override fun onNewMessage(userId: Int, chatId: Long, message: Message) = Unit
+    override suspend fun onNewMessage(userId: Int, chatId: Long, message: Message) = Unit
 
-    override fun onMessageSendAcknowledged(chatId: Long, messageId: Long) = Unit
+    override suspend fun onMessageSendAcknowledged(chatId: Long, messageId: Long) = Unit
 
-    override fun onMessageContent(chatId: Long, messageId: Long, newContent: MessageContent) = Unit
+    override suspend fun onMessageContent(chatId: Long, messageId: Long, newContent: MessageContent) = Unit
 
-    override fun onMessageEdited(chatId: Long, messageId: Long, editDate: Int, replyMarkup: ReplyMarkup?) = Unit
+    override suspend fun onMessageEdited(chatId: Long, messageId: Long, editDate: Int, replyMarkup: ReplyMarkup?) = Unit
 
-    override fun onMessageViews(chatId: Long, messageId: Long, views: Int) = Unit
+    override suspend fun onMessageViews(chatId: Long, messageId: Long, views: Int) = Unit
 
-    override fun onMessageContentOpened(chatId: Long, messageId: Long) = Unit
+    override suspend fun onMessageContentOpened(chatId: Long, messageId: Long) = Unit
 
-    override fun onMessageMentionRead(chatId: Long, messageId: Long, unreadMentionCount: Int) = Unit
+    override suspend fun onMessageMentionRead(chatId: Long, messageId: Long, unreadMentionCount: Int) = Unit
 
-    override fun onNewChat(chat: Chat) = Unit
+    override suspend fun onNewChat(chat: Chat) = Unit
 
-    override fun onChatTitle(chatId: Long, title: String) = Unit
+    override suspend fun onChatTitle(chatId: Long, title: String) = Unit
 
-    override fun onChatPhoto(chatId: Long, photo: ChatPhoto) = Unit
+    override suspend fun onChatPhoto(chatId: Long, photo: ChatPhoto) = Unit
 
-    override fun onChatPermissions(chatId: Long, permissions: ChatPermissions) = Unit
+    override suspend fun onChatPermissions(chatId: Long, permissions: ChatPermissions) = Unit
 
-    override fun onChatLastMessage(chatId: Long, lastMessage: Message, order: Long) = Unit
+    override suspend fun onChatLastMessage(chatId: Long, lastMessage: Message, order: Long) = Unit
 
-    override fun onChatOrder(chatId: Long, order: Long) = Unit
+    override suspend fun onChatOrder(chatId: Long, order: Long) = Unit
 
-    override fun onChatIsPinned(chatId: Long, isPinned: Boolean, order: Long) = Unit
+    override suspend fun onChatIsPinned(chatId: Long, isPinned: Boolean, order: Long) = Unit
 
-    override fun onChatIsMarkedAsUnread(chatId: Long, isMarkedAsUnread: Boolean) = Unit
+    override suspend fun onChatIsMarkedAsUnread(chatId: Long, isMarkedAsUnread: Boolean) = Unit
 
-    override fun onChatIsSponsored(chatId: Long, isSponsored: Boolean, order: Long) = Unit
+    override suspend fun onChatIsSponsored(chatId: Long, isSponsored: Boolean, order: Long) = Unit
 
-    override fun onChatDefaultDisableNotification(chatId: Long, defaultDisableNotification: Boolean) = Unit
+    override suspend fun onChatDefaultDisableNotification(chatId: Long, defaultDisableNotification: Boolean) = Unit
 
-    override fun onChatReadInbox(chatId: Long, lastReadInboxMessageId: Long, unreadCount: Int) = Unit
+    override suspend fun onChatReadInbox(chatId: Long, lastReadInboxMessageId: Long, unreadCount: Int) = Unit
 
-    override fun onChatReadOutbox(chatId: Long, lastReadOutboxMessageId: Long) = Unit
+    override suspend fun onChatReadOutbox(chatId: Long, lastReadOutboxMessageId: Long) = Unit
 
-    override fun onChatUnreadMentionCount(chatId: Long, unreadMentionCount: Int) = Unit
+    override suspend fun onChatUnreadMentionCount(chatId: Long, unreadMentionCount: Int) = Unit
 
-    override fun onChatNotificationSettings(chatId: Long, notificationSettings: ChatNotificationSettings) = Unit
+    override suspend fun onChatNotificationSettings(chatId: Long, notificationSettings: ChatNotificationSettings) = Unit
 
-    override fun onScopeNotificationSettings(scope: NotificationSettingsScope, notificationSettings: ScopeNotificationSettings) = Unit
+    override suspend fun onScopeNotificationSettings(scope: NotificationSettingsScope, notificationSettings: ScopeNotificationSettings) = Unit
 
-    override fun onChatPinnedMessage(chatId: Long, pinnedMessageId: Long) = Unit
+    override suspend fun onChatPinnedMessage(chatId: Long, pinnedMessageId: Long) = Unit
 
-    override fun onChatReplyMarkup(chatId: Long, replyMarkupMessageId: Long) = Unit
+    override suspend fun onChatReplyMarkup(chatId: Long, replyMarkupMessageId: Long) = Unit
 
-    override fun onChatDraftMessage(chatId: Long, draftMessage: DraftMessage, order: Long) = Unit
+    override suspend fun onChatDraftMessage(chatId: Long, draftMessage: DraftMessage, order: Long) = Unit
 
-    override fun onChatOnlineMemberCount(chatId: Long, onlineMemberCount: Int) = Unit
+    override suspend fun onChatOnlineMemberCount(chatId: Long, onlineMemberCount: Int) = Unit
 
-    override fun onNotification(notificationGroupId: Int, notification: Notification) = Unit
+    override suspend fun onNotification(notificationGroupId: Int, notification: Notification) = Unit
 
-    override fun onNotificationGroup(notificationGroupId: Int, type: NotificationGroupType, chatId: Long, notificationSettingsChatId: Long, isSilent: Boolean, totalCount: Int, addedNotifications: Array<Notification>, removedNotificationIds: IntArray) = Unit
+    override suspend fun onNotificationGroup(notificationGroupId: Int, type: NotificationGroupType, chatId: Long, notificationSettingsChatId: Long, isSilent: Boolean, totalCount: Int, addedNotifications: Array<Notification>, removedNotificationIds: IntArray) = Unit
 
-    override fun onActiveNotifications(groups: Array<NotificationGroup>) = Unit
+    override suspend fun onActiveNotifications(groups: Array<NotificationGroup>) = Unit
 
-    override fun onHavePendingNotifications(haveDelayedNotifications: Boolean, haveUnreceivedNotifications: Boolean) = Unit
+    override suspend fun onHavePendingNotifications(haveDelayedNotifications: Boolean, haveUnreceivedNotifications: Boolean) = Unit
 
-    override fun onDeleteMessages(chatId: Long, messageIds: LongArray, isPermanent: Boolean, fromCache: Boolean) = Unit
+    override suspend fun onDeleteMessages(chatId: Long, messageIds: LongArray, isPermanent: Boolean, fromCache: Boolean) = Unit
 
-    override fun onUserChatAction(chatId: Long, userId: Int, action: ChatAction) = Unit
+    override suspend fun onUserChatAction(chatId: Long, userId: Int, action: ChatAction) = Unit
 
-    override fun onUserStatus(userId: Int, status: UserStatus) = Unit
+    override suspend fun onUserStatus(userId: Int, status: UserStatus) = Unit
 
-    override fun onUser(user: User) = Unit
+    override suspend fun onUser(user: User) = Unit
 
-    override fun onBasicGroup(basicGroup: BasicGroup) = Unit
+    override suspend fun onBasicGroup(basicGroup: BasicGroup) = Unit
 
-    override fun onSupergroup(supergroup: Supergroup) = Unit
+    override suspend fun onSupergroup(supergroup: Supergroup) = Unit
 
-    override fun onSecretChat(secretChat: SecretChat) = Unit
+    override suspend fun onSecretChat(secretChat: SecretChat) = Unit
 
-    override fun onUserFullInfo(userId: Int, userFullInfo: UserFullInfo) = Unit
+    override suspend fun onUserFullInfo(userId: Int, userFullInfo: UserFullInfo) = Unit
 
-    override fun onBasicGroupFullInfo(basicGroupId: Int, basicGroupFullInfo: BasicGroupFullInfo) = Unit
+    override suspend fun onBasicGroupFullInfo(basicGroupId: Int, basicGroupFullInfo: BasicGroupFullInfo) = Unit
 
-    override fun onSupergroupFullInfo(supergroupId: Int, supergroupFullInfo: SupergroupFullInfo) = Unit
+    override suspend fun onSupergroupFullInfo(supergroupId: Int, supergroupFullInfo: SupergroupFullInfo) = Unit
 
-    override fun onServiceNotification(type: String, content: MessageContent) = Unit
+    override suspend fun onServiceNotification(type: String, content: MessageContent) = Unit
 
-    override fun onFile(file: File) = Unit
+    override suspend fun onFile(file: File) = Unit
 
-    override fun onFileGenerationStart(generationId: Long, originalPath: String, destinationPath: String, conversion: String) = Unit
+    override suspend fun onFileGenerationStart(generationId: Long, originalPath: String, destinationPath: String, conversion: String) = Unit
 
-    override fun onFileGenerationStop(generationId: Long) = Unit
+    override suspend fun onFileGenerationStop(generationId: Long) = Unit
 
-    override fun onCall(call: Call) = Unit
+    override suspend fun onCall(call: Call) = Unit
 
-    override fun onUserPrivacySettingRules(setting: UserPrivacySetting, rules: UserPrivacySettingRules) = Unit
+    override suspend fun onUserPrivacySettingRules(setting: UserPrivacySetting, rules: UserPrivacySettingRules) = Unit
 
-    override fun onUnreadMessageCount(unreadCount: Int, unreadUnmutedCount: Int) = Unit
+    override suspend fun onUnreadMessageCount(unreadCount: Int, unreadUnmutedCount: Int) = Unit
 
-    override fun onUnreadChatCount(unreadCount: Int, unreadUnmutedCount: Int, markedAsUnreadCount: Int, markedAsUnreadUnmutedCount: Int) = Unit
+    override suspend fun onUnreadChatCount(unreadCount: Int, unreadUnmutedCount: Int, markedAsUnreadCount: Int, markedAsUnreadUnmutedCount: Int) = Unit
 
-    override fun onOption(name: String, value: OptionValue) = Unit
+    override suspend fun onOption(name: String, value: OptionValue) = Unit
 
-    override fun onInstalledStickerSets(isMasks: Boolean, stickerSetIds: LongArray) = Unit
+    override suspend fun onInstalledStickerSets(isMasks: Boolean, stickerSetIds: LongArray) = Unit
 
-    override fun onTrendingStickerSets(stickerSets: StickerSets) = Unit
+    override suspend fun onTrendingStickerSets(stickerSets: StickerSets) = Unit
 
-    override fun onRecentStickers(isAttached: Boolean, stickerIds: IntArray) = Unit
+    override suspend fun onRecentStickers(isAttached: Boolean, stickerIds: IntArray) = Unit
 
-    override fun onFavoriteStickers(stickerIds: IntArray) = Unit
+    override suspend fun onFavoriteStickers(stickerIds: IntArray) = Unit
 
-    override fun onSavedAnimations(animationIds: IntArray) = Unit
+    override suspend fun onSavedAnimations(animationIds: IntArray) = Unit
 
-    override fun onSelectedBackground(forDarkTheme: Boolean, background: Background?) = Unit
+    override suspend fun onSelectedBackground(forDarkTheme: Boolean, background: Background?) = Unit
 
-    override fun onLanguagePackStrings(localizationTarget: String, languagePackId: String, strings: Array<LanguagePackString>) = Unit
+    override suspend fun onLanguagePackStrings(localizationTarget: String, languagePackId: String, strings: Array<LanguagePackString>) = Unit
 
-    override fun onConnectionState(state: ConnectionState) = Unit
+    override suspend fun onConnectionState(state: ConnectionState) = Unit
 
-    override fun onTermsOfService(termsOfServiceId: String, termsOfService: TermsOfService) = Unit
+    override suspend fun onTermsOfService(termsOfServiceId: String, termsOfService: TermsOfService) = Unit
 
-    override fun onNewInlineQuery(id: Long, senderUserId: Int, userLocation: Location, query: String, offset: String) = Unit
+    override suspend fun onNewInlineQuery(id: Long, senderUserId: Int, userLocation: Location, query: String, offset: String) = Unit
 
-    override fun onNewChosenInlineResult(senderUserId: Int, userLocation: Location, query: String, resultId: String, inlineMessageId: String) = Unit
+    override suspend fun onNewChosenInlineResult(senderUserId: Int, userLocation: Location, query: String, resultId: String, inlineMessageId: String) = Unit
 
-    override fun handleNewCallbackQuery(id: Long, senderUserId: Int, chatId: Long, messageId: Long, chatInstance: Long, payload: CallbackQueryPayload) = Unit
+    override suspend fun handleNewCallbackQuery(id: Long, senderUserId: Int, chatId: Long, messageId: Long, chatInstance: Long, payload: CallbackQueryPayload) = Unit
 
-    override fun onNewShippingQuery(id: Long, senderUserId: Int, invoicePayload: String, shippingAddress: Address) = Unit
+    override suspend fun onNewShippingQuery(id: Long, senderUserId: Int, invoicePayload: String, shippingAddress: Address) = Unit
 
-    override fun onNewPreCheckoutQuery(id: Long, senderUserId: Int, currency: String, totalAmount: Long, invoicePayload: ByteArray, shippingOptionId: String, orderInfo: OrderInfo) = Unit
+    override suspend fun onNewPreCheckoutQuery(id: Long, senderUserId: Int, currency: String, totalAmount: Long, invoicePayload: ByteArray, shippingOptionId: String, orderInfo: OrderInfo) = Unit
 
-    override fun onNewCustomEvent(event: String) = Unit
+    override suspend fun onNewCustomEvent(event: String) = Unit
 
-    override fun onNewCustomQuery(id: Long, data: String, timeout: Int) = Unit
+    override suspend fun onNewCustomQuery(id: Long, data: String, timeout: Int) = Unit
 
-    override fun onPoll(poll: Poll) = Unit
+    override suspend fun onPoll(poll: Poll) = Unit
 
 }

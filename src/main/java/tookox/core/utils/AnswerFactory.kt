@@ -1,4 +1,6 @@
-package tookox.core.td
+@file:Suppress("unused")
+
+package tookox.core.utils
 
 import tooko.td.TdApi
 import tookox.core.client.TdAbsHandler
@@ -62,7 +64,7 @@ class AnswerFactory(val context: TdAbsHandler) {
 
     }
 
-    infix fun syncAnswerTo(queryId: Long) {
+    suspend infix fun syncAnswerTo(queryId: Long) {
 
         context.syncUnit(TdApi.AnswerCallbackQuery(queryId, text, showAlert, url, cacheTime))
 

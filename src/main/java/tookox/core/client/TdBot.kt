@@ -10,7 +10,7 @@ import tooko.main.Fn
 import tooko.td.TdApi.*
 import tookox.core.finishEvent
 import tookox.core.fromPrivate
-import tookox.core.td.makeAnswer
+import tookox.core.utils.makeAnswer
 import java.io.File
 import java.util.*
 
@@ -23,7 +23,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
     var functions = HashMap<String, TdBotAbsHandler>()
     var callbacks = HashMap<Int, TdBotAbsHandler>()
 
-    override fun onAuthorizationState(authorizationState: AuthorizationState) = runBlocking {
+    override suspend fun onAuthorizationState(authorizationState: AuthorizationState) = runBlocking {
 
         super.onAuthorizationState(authorizationState)
 
@@ -31,13 +31,17 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
             while (!authing) delay(100)
 
-            sendUnit(CheckAuthenticationBotToken(botToken)).onError(::onAuthorizationFailed)
+            sendUnit(CheckAuthenticationBotToken(botToken)) onError {
+
+                onAuthorizationFailed(it)
+
+            }
 
         }
 
     }
 
-    override fun onNewMessage(userId: Int, chatId: Long, message: Message) = runBlocking {
+    override suspend fun onNewMessage(userId: Int, chatId: Long, message: Message) = runBlocking {
 
         while (!authed) delay(100)
 
@@ -149,7 +153,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
     }
 
-    override fun handleNewInlineCallbackQuery(id: Long, senderUserId: Int, inlineMessageId: String, chatInstance: Long, payload: CallbackQueryPayload) {
+    override suspend fun handleNewInlineCallbackQuery(id: Long, senderUserId: Int, inlineMessageId: String, chatInstance: Long, payload: CallbackQueryPayload) {
 
         if (payload is CallbackQueryPayloadGame) return
 
@@ -179,7 +183,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
     }
 
-    override fun handleNewCallbackQuery(id: Long, senderUserId: Int, chatId: Long, messageId: Long, chatInstance: Long, payload: CallbackQueryPayload) {
+    override suspend fun handleNewCallbackQuery(id: Long, senderUserId: Int, chatId: Long, messageId: Long, chatInstance: Long, payload: CallbackQueryPayload) {
 
         if (payload is CallbackQueryPayloadGame) return
 
@@ -210,10 +214,10 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
     }
 
     open fun onLaunch(userId: Int, chatId: Long, message: Message) = Unit
-    override fun onFunction(userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>) = Unit
-    override fun onUndefinedFunction(userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>) = Unit
-    override fun onNewCallbackQuery(userId: Int, chatId: Long, messageId: Long, queryId: Long, subId: Int, data: Array<ByteArray>) = Unit
-    override fun onNewInlineCallbackQuery(userId: Int, inlineMessageId: String, queryId: Long, subId: Int, data: Array<ByteArray>) = Unit
+    override suspend fun onFunction(userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>) = Unit
+    override suspend fun onUndefinedFunction(userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>) = Unit
+    override suspend fun onNewCallbackQuery(userId: Int, chatId: Long, messageId: Long, queryId: Long, subId: Int, data: Array<ByteArray>) = Unit
+    override suspend fun onNewInlineCallbackQuery(userId: Int, inlineMessageId: String, queryId: Long, subId: Int, data: Array<ByteArray>) = Unit
 
     companion object {
 
