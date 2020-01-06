@@ -3,16 +3,22 @@
 package tookox.core
 
 import cn.hutool.core.util.ArrayUtil
-import tooko.td.TdApi
-import tooko.td.TdApi.FormattedText
+import tooko.td.TdApi.*
 import tookox.core.client.TdAbsHandler
 
-val TdApi.User.displayName get() = "$firstName $lastName".trim()
+val User.displayName get() = "$firstName $lastName".trim()
 
-val TdApi.Message.fromPrivate get() = chatId > 0L
-val TdApi.Message.fromBasicGroup get() = chatId > -1000000000000L
-val TdApi.Message.fromSuperGroup get() = chatId < -1000000000000L && !isChannelPost
-val TdApi.Message.fromChannel get() = isChannelPost
+val Message.fromPrivate get() = chatId > 0L
+val Message.fromBasicGroup get() = chatId > -1000000000000L
+val Message.fromSuperGroup get() = chatId < -1000000000000L && !isChannelPost
+val Message.fromChannel get() = isChannelPost
+
+val Message.text
+    get() = if (content is MessageText) {
+
+        (content as MessageText).text.text
+
+    } else null
 
 class Finish : RuntimeException("Finish Event")
 
@@ -67,16 +73,16 @@ val FormattedText.asHtml: String
 
             htmlText += when (it.type) {
 
-                is TdApi.TextEntityTypeBold -> entityText.asBlod
-                is TdApi.TextEntityTypeItalic -> entityText.asItalic
-                is TdApi.TextEntityTypeCode -> entityText.asCode
-                is TdApi.TextEntityTypePre -> entityText.asCode
-                is TdApi.TextEntityTypePreCode -> entityText.asCode
-                is TdApi.TextEntityTypeUnderline -> entityText.asUnderline
-                is TdApi.TextEntityTypeStrikethrough -> entityText.asDelete
+                is TextEntityTypeBold -> entityText.asBlod
+                is TextEntityTypeItalic -> entityText.asItalic
+                is TextEntityTypeCode -> entityText.asCode
+                is TextEntityTypePre -> entityText.asCode
+                is TextEntityTypePreCode -> entityText.asCode
+                is TextEntityTypeUnderline -> entityText.asUnderline
+                is TextEntityTypeStrikethrough -> entityText.asDelete
 
-                is TdApi.TextEntityTypeTextUrl -> entityText.toLink((it.type as TdApi.TextEntityTypeTextUrl).url)
-                is TdApi.TextEntityTypeMentionName -> entityText.toInlineMention((it.type as TdApi.TextEntityTypeMentionName).userId)
+                is TextEntityTypeTextUrl -> entityText.toLink((it.type as TextEntityTypeTextUrl).url)
+                is TextEntityTypeMentionName -> entityText.toInlineMention((it.type as TextEntityTypeMentionName).userId)
 
                 else -> entityText
 

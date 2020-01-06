@@ -9,6 +9,7 @@ import tooko.td.TdApi
 import tookox.core.PERSIST_1
 import tookox.core.client.TdBotHandler
 import tookox.core.input
+import tookox.core.text
 import tookox.core.utils.*
 import com.pengrad.telegrambot.request.GetMe as HttpGetMe
 
@@ -68,7 +69,15 @@ class CreateBot : TdBotHandler() {
 
         if (subId == 0) {
 
-            val botToken = Fn.getText(message)
+            val botToken = message.text
+
+            if (botToken == null) {
+
+                onSendCanceledMessage(userId)
+
+                return
+
+            }
 
             httpSend(botToken, HttpGetMe()) {
 
@@ -108,7 +117,7 @@ class CreateBot : TdBotHandler() {
 
             } onError {
 
-                sudo make L.BOT_TOKEN_INVALID sendTo chatId
+                sudo make L.BOT_TOKEN_INVALID.input(it.message) sendTo chatId
 
             }
 

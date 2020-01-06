@@ -1,5 +1,6 @@
 package tooko.td.client;
 
+import org.jetbrains.annotations.*;
 import tooko.td.*;
 
 public class TdException extends RuntimeException {
@@ -38,6 +39,7 @@ public class TdException extends RuntimeException {
     }
 
     @Override
+    @NotNull
     public String getMessage() {
 
         return error.message;
