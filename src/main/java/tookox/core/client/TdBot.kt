@@ -211,6 +211,8 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
                     handler.onPersistRemoveOrCancel(userId, persist.subId)
 
+                    handler.onSendCanceledMessage(userId)
+
                     return@coroutineScope
 
                 }
@@ -222,6 +224,8 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
                     handler.onPersistCancel(userId, chatId, message, persist.subId)
 
                     handler.onPersistRemoveOrCancel(userId, persist.subId)
+
+                    handler.onSendCanceledMessage(userId)
 
                     return@persist
 
