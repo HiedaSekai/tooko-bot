@@ -123,6 +123,8 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     override suspend fun onAuthorizationState(authorizationState: AuthorizationState) = coroutineScope<Unit> {
 
+        defaultLog.debug(authorizationState.javaClass.simpleName)
+
         if (authorizationState is AuthorizationStateWaitTdlibParameters) {
 
             sendUnit(SetTdlibParameters(options.build())) onError {
