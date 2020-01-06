@@ -74,7 +74,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         return if (waitForAuth) {
 
-            while (auth || authing) {
+            while (authing && !auth) {
 
                 delay(100L)
 
