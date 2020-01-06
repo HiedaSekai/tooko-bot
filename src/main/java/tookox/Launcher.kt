@@ -67,8 +67,6 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
         // TESTS
 
-        addHandler(TestForIssue859())
-
         addHandler(TestForFMT())
 
 
