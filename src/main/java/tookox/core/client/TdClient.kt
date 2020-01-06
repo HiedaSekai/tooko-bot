@@ -542,7 +542,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     override suspend fun onChatPermissions(chatId: Long, permissions: ChatPermissions) = Unit
 
-    override suspend fun onChatLastMessage(chatId: Long, lastMessage: Message, order: Long) = Unit
+    override suspend fun onChatLastMessage(chatId: Long, lastMessage: Message?, order: Long) = Unit
 
     override suspend fun onChatOrder(chatId: Long, order: Long) = Unit
 
