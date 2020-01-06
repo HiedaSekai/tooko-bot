@@ -62,7 +62,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         addHandler(this)
 
-        defaultLog.debug("START")
+        postAdd.add(this)
 
         if (!loopThreadInited) {
 
@@ -313,7 +313,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         val loopThreadInited get() = ::loopThread.isInitialized
 
-        fun loopEvents() = runBlocking(Dispatchers.IO) {
+        fun loopEvents() = runBlocking {
 
             while (true) {
 
