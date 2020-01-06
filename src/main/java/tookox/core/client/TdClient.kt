@@ -52,7 +52,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     }
 
-    open suspend fun start(waitForAuth: Boolean = false): Boolean {
+    open suspend fun start(waitForAuth: Boolean = true): Boolean {
 
         check(!start) { "已经启动过." }
 
@@ -320,6 +320,8 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
                         clients.add(toAdd)
 
                         iter.remove()
+
+                        toAdd.started = true
 
                     }
 
