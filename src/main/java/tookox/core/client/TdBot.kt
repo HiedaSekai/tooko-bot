@@ -43,7 +43,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
     override suspend fun onNewMessage(userId: Int, chatId: Long, message: Message) = runBlocking {
 
-        while (!authed) delay(100)
+        while (!auth) delay(100L)
 
         if (userId == me.id) return@runBlocking
 
