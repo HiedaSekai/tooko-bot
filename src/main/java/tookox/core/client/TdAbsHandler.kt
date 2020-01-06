@@ -95,7 +95,7 @@ interface TdAbsHandler {
 
     suspend fun onChatPermissions(chatId: Long, permissions: ChatPermissions)
 
-    suspend fun onChatLastMessage(chatId: Long, lastMessage: Message, order: Long)
+    suspend fun onChatLastMessage(chatId: Long, lastMessage: Message?, order: Long)
 
     suspend fun onChatOrder(chatId: Long, order: Long)
 
