@@ -40,11 +40,11 @@ class StickerExport : TdBotHandler() {
 
             sudo make UploadingPhoto syncTo chatId
 
-            val stickerFile = sticker.sticker
+            var stickerFile = sticker.sticker
 
             if (!stickerFile.local.isDownloadingCompleted) {
 
-                syncUnit(DownloadFile(stickerFile.id, 1, 0, 0, true))
+                stickerFile = sync(DownloadFile(stickerFile.id, 1, 0, 0, true))
 
             }
 
