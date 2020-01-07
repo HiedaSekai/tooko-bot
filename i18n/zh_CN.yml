@@ -17,9 +17,9 @@ PUBLIC_WARN: |
 LICENSE: |
   远子 基于 [Apache License 2.0](https://gitlab.com/tooko/tooko-bot/blob/master/LICENSE) 发行,  欢迎来 [GitLab](https://gitlab.com/tooko/tooko-bot) 访问我们.
   [文档主页](https://gitlab.com/tooko/tooko-bot/wikis/Home) | [安装说明](https://gitlab.com/tooko/tooko-bot/wikis/Install)  | [命令与更新](https://gitlab.com/tooko/tooko-bot/wikis/Usage) | [语言与翻译](https://gitlab.com/tooko/tooko-bot/wikis/Trans
-
+  
   子机器人文档 : [Twitter](https://gitlab.com/tooko/tooko-bot/wikis/Bots/TwitterBot
-
+  
   机器人文档 : [私聊机器人](https://gitlab.com/tooko/tooko-bot/wikis/Bots/PmBot)
 SPLIT: |
   &==========  (｡･∀･)ﾉﾞヾ(･ω･。)  ==========
@@ -99,7 +99,7 @@ BOT_CREATED: 机器人已创建. 请点 [此](https://t.me/{}?start=-init) 配�
 # PM
 
 PM_WELCOME: 你好！
-
+  
   你可以通过这个机器人联系我(们).
 PM_ON_START: |
   {} 开启了私聊机器人 ({}).
@@ -112,18 +112,18 @@ PM_WELCOME_MESSAGE: |
 PM_WELCOME_NOTICE: 打开通知
 PM_WELCOME_INPUT: |
   输入任意消息 :
-
+  
   使用 /submit 完成设定
   使用 /cancel 取消设定
 PM_WELCOME_ADDED: |
   消息已添加.
-
+  
   使用 /submit 完成设定
   使用 /cancel 取消设定
 PM_WELCOME_FD_WARN: |
   无法存储的消息类型, 或消息为投票 / 转发!
   (请确保机器人可以访问这条消息, 否则这条消息无法转发给接受者 : 不要删除)
-
+  
   提示: 如果需要发布对他人的匿名投票, 可以先在一个频道里发布投票, 然后转发给机器人作为消息, 这样就不会暴露身份了.
 PM_WELCOME_FINISH: 消息已设定.
 PM_PAYLOADS: 子欢迎消息列表
@@ -236,7 +236,7 @@ TWI_OAUTH: |
   OAuth
 TWI_AUTH_INPUT_CODE: |
   授权链接: {}
-
+  
   请输入授权完成后取得的七位PIN码:
 TWI_AUTHED_BY: 你的账号 {} 已被 {} 认证, 该账号已从你的账号列表移除.
 TWI_WELCOME: 欢迎, {}.
