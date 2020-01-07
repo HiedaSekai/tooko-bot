@@ -133,6 +133,8 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
         lateinit var INSTANCE: Launcher
 
+        val isInitialized get() = ::INSTANCE.isInitialized
+
         @JvmStatic
         fun main(args: Array<String>) = runBlocking {
 

@@ -12,7 +12,7 @@ import cn.hutool.log.level.Level
 import tooko.main.Env
 import tooko.main.Fn
 import tookox.Launcher
-import tookox.core.utils.make
+import tookox.core.utils.*
 
 object TookoLogFactory : LogFactory("Tooko Log") {
 
@@ -71,9 +71,13 @@ class TookoLog(name: String) : ConsoleLog(name) {
 
         if (level.ordinal >= Level.WARN.ordinal) {
 
-            with(Launcher.INSTANCE) {
+            if (Launcher.isInitialized) {
 
-                sudo make logMsg sendTo Env.LOG_CHANNEL onError null
+                with(Launcher.INSTANCE) {
+
+                    sudo make logMsg sendTo Env.LOG_CHANNEL onError null
+
+                }
 
             }
 
