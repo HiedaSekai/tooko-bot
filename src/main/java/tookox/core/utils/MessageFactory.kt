@@ -3,17 +3,14 @@
 package tookox.core.utils
 
 import cn.hutool.core.builder.Builder
+import cn.hutool.core.util.ArrayUtil
 import kotlinx.coroutines.CoroutineScope
 import tooko.main.Fn
 import tooko.main.Lang
 import tooko.td.TdApi.*
 import tooko.td.client.TdException
-import tookox.core.WriteOnlyField
-import tookox.core.applyIfNot
-import tookox.core.client.TdAbsHandler
-import tookox.core.client.TdCallback
-import tookox.core.getValue
-import tookox.core.setValue
+import tookox.core.*
+import tookox.core.client.*
 import twitter4j.TwitterException
 import java.util.*
 
@@ -524,4 +521,93 @@ class MessageFactory(val context: TdAbsHandler) : CaptionInterface {
 
     }
 
+    fun sendOrEditTo(send: Boolean, chatId: Long, messageId: Long) {
+
+        if (send) sendTo(chatId) else {
+
+            context.getMessage(chatId, messageId) {
+
+                // TDLib Issue #859
+
+                editTo(chatId, messageId)
+
+            }
+
+        }
+
+    }
+
 }
+
+
+operator fun FormattedText.plus(text: FormattedText): FormattedText {
+
+    val result = FormattedText()
+
+    result.text = this.text + text.text
+
+    result.entities = entities?.takeIf { it.isNotEmpty() } ?: arrayOfNulls(0)
+
+    if (text.entities != null && text.entities.isEmpty()) {
+
+        text.entities.forEach {
+
+            it.offset += this.text.length
+
+        }
+
+        ArrayUtil.append(result.entities, text, entities)
+
+    }
+
+    return result
+
+}
+
+val FormattedText.asHtml: String
+    get() {
+
+        var htmlText = ""
+
+        var index = 0
+
+        entities.forEach {
+
+            if (it.offset > index) {
+
+                htmlText += text.substring(index, it.offset)
+
+            }
+
+            index = it.offset + it.length
+
+            val entityText = text.substring(it.offset, index)
+
+            htmlText += when (it.type) {
+
+                is TextEntityTypeBold -> entityText.asBlod
+                is TextEntityTypeItalic -> entityText.asItalic
+                is TextEntityTypeCode -> entityText.asCode
+                is TextEntityTypePre -> entityText.asCode
+                is TextEntityTypePreCode -> entityText.asCode
+                is TextEntityTypeUnderline -> entityText.asUnderline
+                is TextEntityTypeStrikethrough -> entityText.asDelete
+
+                is TextEntityTypeTextUrl -> entityText.toLink((it.type as TextEntityTypeTextUrl).url)
+                is TextEntityTypeMentionName -> entityText.toInlineMention((it.type as TextEntityTypeMentionName).userId)
+
+                else -> entityText
+
+            }
+
+        }
+
+        if (text.length > index) {
+
+            htmlText += text.substring(index, text.length)
+
+        }
+
+        return htmlText
+
+    }

@@ -9,23 +9,23 @@ LANG_NAME: 简体中文
 
 LAUNCH: 「 你知道怎样拿回失去的东西吗？」
 HELP: 这里是远子. 使用前请阅读 [Wiki](https://gitlab.com/tooko/tooko-bot/wikis/Home) .
-PUBLIC_WARN: |
+PUBLIC_WARN: |-
   *注意, 这是一个公开实例 !*
   虽然这是一个开源项目,
   但您应该了解: 实例所有者可以任意修改源代码, 查看数据库 等,
   请尽量 [自行搭建实例](https://gitlab.com/tooko/tooko-bot/wikis/Install).
-LICENSE: |
+LICENSE: |-
   远子 基于 [Apache License 2.0](https://gitlab.com/tooko/tooko-bot/blob/master/LICENSE) 发行,  欢迎来 [GitLab](https://gitlab.com/tooko/tooko-bot) 访问我们.
   [文档主页](https://gitlab.com/tooko/tooko-bot/wikis/Home) | [安装说明](https://gitlab.com/tooko/tooko-bot/wikis/Install)  | [命令与更新](https://gitlab.com/tooko/tooko-bot/wikis/Usage) | [语言与翻译](https://gitlab.com/tooko/tooko-bot/wikis/Trans)
   
   子机器人文档 : [Twitter](https://gitlab.com/tooko/tooko-bot/wikis/Bots/TwitterBot)
   
   机器人文档 : [私聊机器人](https://gitlab.com/tooko/tooko-bot/wikis/Bots/PmBot)
-SPLIT: |
+SPLIT: |-
   &==========  (｡･∀･)ﾉﾞヾ(･ω･。)  ==========
-SPLIT_END: |
+SPLIT_END: |-
   =====================================
-INVALID_TIME: |
+INVALID_TIME: |-
   时间格式有误 ( {} )
   格式: 1d2h3s (一小时二分钟三秒）/ 10m （十分钟）/ 30s （三十秒）
 DELAY_TOO_SHORT: 延时时间过短 ( < {} )
@@ -39,17 +39,17 @@ CHANNEL_RESTRICTIONED: 频道被限制
 AUTHOR_SIGNATURE: 作者签名
 MESSAGE_ID: 消息ID
 MESSAGE_LINK: 消息链接
-STICKER_CAPTION: |
+STICKER_CAPTION: |-
   贴纸ID: `{}`
   贴纸表情: `{}`
   贴纸集: `{}`
 STICKER_EXPORT: 下载贴纸集
 STICKER_EXPORT_DL: 正在下载贴纸集  *{}* {} / {}
-STICKER_DL_FAILED: |
+STICKER_DL_FAILED: |-
   &贴纸下载失败 _(:з」∠)_ ( {} )
-STICKER_EXPORT_PACK: |
+STICKER_EXPORT_PACK: |-
   &正在转码 (≖‿≖)✧
-STICKER_EXPORT_SEND: |
+STICKER_EXPORT_SEND: |-
   &完成！正在发送 (๑•̀ㅂ•́)√
 PERMISSION_DENIED: 啊！不行啦！
 BACK: 🔙
@@ -60,7 +60,7 @@ STATUS_ENABLE: 启用
 STATUS_DISABLE: 禁用
 DELETED: 已删除
 REFRESH: 刷新
-REFRESHED: |
+REFRESHED: |-
   &已刷新  (‵▽′)/
 ENABLED: 已启用
 DISABLED: 已禁用
@@ -85,14 +85,14 @@ BOT_DELETE: 删除
 BOT_DELETE_WARN: 真的要删除吗？您会失去它，真的很久！
 BOT_DELETE_CONFIRM: 是的，我确定！
 BOT_NEW: 创建新机器人
-BOT_INPUT_TOKEN: |
+BOT_INPUT_TOKEN: |-
   输入 [BotToken](https://core.telegram.org/bots#creating-a-new-bot) :
 BOT_TOKEN_INVALID: 无效的BotToken, 创建已取消 ({}).
 BOT_EXISTS: 该机器人已存在 (本实例中), 请删除后重新创建.
-BOT_N_TYPE: |
+BOT_N_TYPE: |-
   下一步: 选择机器人类型.
 BOT_TYPE_PM: 私聊机器人
-BOT_ERR: |
+BOT_ERR: |-
   机器人出错停止, 请检查: {}
 BOT_CREATED: 机器人已创建. 请点 [此](https://t.me/{}?start=-init) 配置.
 
@@ -101,26 +101,26 @@ BOT_CREATED: 机器人已创建. 请点 [此](https://t.me/{}?start=-init) 配�
 PM_WELCOME: 你好！
   
   你可以通过这个机器人联系我(们).
-PM_ON_START: |
+PM_ON_START: |-
   {} 开启了私聊机器人 ({}).
-PM_ON_PAYLOAD: |
+PM_ON_PAYLOAD: |-
   {} 使用 payload '{}'开启了机器人.
 PM_OK: 机器人正常运行. 请勿停用本机器人, 否则将无法收到消息.  [私聊机器人文档](https://gitlab.com/tooko/tooko-bot/wikis/Bots/PmBot)
 PM_NO_WELCOME_MESSAGE: 默认欢迎消息
-PM_WELCOME_MESSAGE: |
+PM_WELCOME_MESSAGE: |-
   欢迎消息: 已设定 {} 条
 PM_WELCOME_NOTICE: 打开通知
-PM_WELCOME_INPUT: |
+PM_WELCOME_INPUT: |-
   输入任意消息 :
   
   使用 /submit 完成设定
   使用 /cancel 取消设定
-PM_WELCOME_ADDED: |
+PM_WELCOME_ADDED: |-
   消息已添加.
   
   使用 /submit 完成设定
   使用 /cancel 取消设定
-PM_WELCOME_FD_WARN: |
+PM_WELCOME_FD_WARN: |-
   无法存储的消息类型, 或消息为投票 / 转发!
   (请确保机器人可以访问这条消息, 否则这条消息无法转发给接受者 : 不要删除)
   
@@ -128,7 +128,7 @@ PM_WELCOME_FD_WARN: |
 PM_WELCOME_FINISH: 消息已设定.
 PM_PAYLOADS: 子欢迎消息列表
 PM_PAYLOAD: 子欢迎消息
-PM_PAYLOAD_INVALID: |
+PM_PAYLOAD_INVALID: |-
   无效的 Payload: 仅允许 [a-zA-Z_-] 且最多64字.
 USER_ID: 用户ID
 USER_ID_NOT_FOUND: 找不到 ID {} 对应的用户.
@@ -143,46 +143,46 @@ EDIT: 修改
 SUCCEED: 成功
 FAILED: 失败
 EDIT_SUCCEED: 修改成功
-EDIT_FAILED: |
+EDIT_FAILED: |-
   修改失败: {}
-EDIT_MESSAGE_INVALID: |
+EDIT_MESSAGE_INVALID: |-
   修改失败: 目标消息已不存在
-EDIT_TYPE_INVALID: |
+EDIT_TYPE_INVALID: |-
   修改失败: 消息类型未识别
-EDITED_BY: |
+EDITED_BY: |-
   消息被对方修改, 新内容: {}
 NO_ENTERED_CHAT: 当前没有进入会话
 INVALID_REPLY: 在回复的消息中没有找到对应聊天.
 INVALID_CHAT_ID: 提供的会话ID/用户引用无效.
-REPLY_OR_ID: |
+REPLY_OR_ID: |-
   用法: 对消息使用 / 使用会话ID作为参数
-GET_CHAT_FAILED: |
+GET_CHAT_FAILED: |-
   读取目标会话失败: {}
-NO_PRIVATE_WARN: |
+NO_PRIVATE_WARN: |-
   失败: 这不是一个私聊会话.
-CHAT_ENTERED: |
+CHAT_ENTERED: |-
   已进入会话: {}
-CHAT_EXITED: |
+CHAT_EXITED: |-
   已退出会话.
-NO_CHAT_ENTERED: |
+NO_CHAT_ENTERED: |-
   当前没有进入任何会话.
-CHAT_NO_RECORD: |
+CHAT_NO_RECORD: |-
   没有该对话的记录.
-CHAT_MANAGE: |
+CHAT_MANAGE: |-
   会话设定
-CHAT_MANAGE_HELP: |
+CHAT_MANAGE_HELP: |-
   管理这个会话: 使用清除选项可批量删除聊天消息.
-CHAT_MSG_SENDED: |
+CHAT_MSG_SENDED: |-
   发出消息: {} 条
-CHAT_MSG_RECEIVED: |
+CHAT_MSG_RECEIVED: |-
   收到消息: {} 条
-CHAT_MSG_DEL_RECEIVED: |
+CHAT_MSG_DEL_RECEIVED: |-
   删除已收消息
-CHAT_MSG_DEL_SENDED: |
+CHAT_MSG_DEL_SENDED: |-
   删除已发消息
-CHAT_MSG_DEL_ALL: |
+CHAT_MSG_DEL_ALL: |-
   删除所有消息
-CHAT_IS_BLOCKED: |
+CHAT_IS_BLOCKED: |-
   *「 已屏蔽 」 *
 CHAT_BLOCK: 屏蔽该会话
 CHAT_UNBLOCK: 取消屏蔽该会话
@@ -193,7 +193,7 @@ CHAT_BLOCKED: 已屏蔽
 CHAT_UNBLOCKED: 已取消
 CHAT_EMPTY: 没有消息以删除
 FINISH_MANAGE: 完成会话设定
-SEND_FAILED: |
+SEND_FAILED: |-
   消息发送失败, 已退出会话: {}
 SEND_SUCCEED: 发送成功
 SETTED: 已设定.
@@ -222,26 +222,26 @@ TWI_API_KEY: Api Key
 TWI_API_SECRET_KEY: Api Secret Key
 TWI_ACCESS_TOKEN: Access Token
 TWI_ACCESS_TOKEN_SECRET: Access Token Secret
-TWI_INPUT_API_KEY: |
+TWI_INPUT_API_KEY: |-
   请输入 Api Key:
-TWI_INPUT_API_SECRET_KEY: |
+TWI_INPUT_API_SECRET_KEY: |-
   请输入 Api Secret Key:
-TWI_INPUT_ACCESS_TOKEN: |
+TWI_INPUT_ACCESS_TOKEN: |-
   请输入 Access Token:
-TWI_INPUT_ACCESS_TOKEN_SECRET: |
+TWI_INPUT_ACCESS_TOKEN_SECRET: |-
   请输入 Access Token Secret:
-TWI_CH_LT: |
+TWI_CH_LT: |-
   请选择认证方式:
-TWI_OAUTH: |
+TWI_OAUTH: |-
   OAuth
-TWI_AUTH_INPUT_CODE: |
+TWI_AUTH_INPUT_CODE: |-
   授权链接: {}
   
   请输入授权完成后取得的七位PIN码:
 TWI_AUTHED_BY: 你的账号 {} 已被 {} 认证, 该账号已从你的账号列表移除.
 TWI_WELCOME: 欢迎, {}.
 TWI_AUTH_REQUIRED: 这个命令需要 /login 授权账号才能使用.
-TWI_CH_ACCOUNT: |
+TWI_CH_ACCOUNT: |-
   选择用于执行该操作的账号:
 TWI_ANF: 找不到这个账号.
 TWI_CHOSED: 已选择 {}.
@@ -251,31 +251,31 @@ TWI_TRACK_MNG: 修改关注者变化通知
 TWI_TRACK_ENABLE: 关注者变化通知
 TWI_ACC_EXPORT: 导出
 TWI_ACC_TRACK: 关注者变化
-TWI_INPUT_CSV: |
+TWI_INPUT_CSV: |-
   请直接发送 .csv 文件
   或使用链接: /{} <URL>
 TWI_NOT_CSV_FILE: 请发送  *.csv 文件 * 或  *文件链接 * .
-TWI_INVALID_CSV_FILE: |
+TWI_INVALID_CSV_FILE: |-
   无效的 .csv 文件: {} .
 TWI_INVALID_CSV_LINK: 无效的链接 .
-DOWNLOAD_FIALD: |
+DOWNLOAD_FIALD: |-
   文件下载失败: {} .
 WAITING_LAST_FUNCTION: 请等待上一条命令执行完成.
 TWI_REMOVING: 正在移除
 TWI_ADDING: 正在添加
-TWI_BL_FINISH: |
+TWI_BL_FINISH: |-
   &完成 屏蔽了 {} 人 (๑•̀ㅂ•́)√
-TWI_UB_FINISH: |
+TWI_UB_FINISH: |-
   &完成 取消屏蔽了 {} 人 (๑•̀ㅂ•́)√
-TWI_UM_FINISH: |
+TWI_UM_FINISH: |-
   &完成 取消静音了 {} 人 (๑•̀ㅂ•́)√
-TWI_LIST_EMPTY: |
+TWI_LIST_EMPTY: |-
   错误: 列表为空
-TWI_LIST_BUCKUP: |
+TWI_LIST_BUCKUP: |-
   这是被执行列表的备份: 如果进行了误操作, 您可以恢复它.
 CANCELED: 操作已取消.
 TIMEOUTED: 操作超时, 已取消.
-TWI_ERR: |
+TWI_ERR: |-
   错误:
 TWI_ERR_32: Api Key 无效.
 TWI_ERR_50: 用户找不到.

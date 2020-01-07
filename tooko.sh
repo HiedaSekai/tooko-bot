@@ -1,9 +1,12 @@
 #!/bin/bash
 
 info() { echo "I: $*"; }
+
 error() {
+
   echo "E: $*"
   exit 1
+
 }
 
 if [ -x "$(command -v wget)" ]; then
@@ -27,6 +30,8 @@ function installTDLib() {
   aarch64 | arm64) arch="aarch64" ;;
   x86_64 | amd64) arch="x86_64" ;;
   i[3-6]86 | x86) arch="x86" ;;
+  #arm*) arch="armv7" ;;
+  #arm*) arch="armv5" ;;
 
   *)
 
@@ -64,7 +69,7 @@ function installWebP() {
 
 }
 
-if [ ! $1 ]; then
+if [ ! "$1" ]; then
 
   echo "./tooko [ init | update | run | log | start | stop | ... ]"
 
@@ -72,7 +77,7 @@ if [ ! $1 ]; then
 
 fi
 
-if [ $1 == "init" ]; then
+if [ "$1" == "init" ]; then
 
   echo ">> 写入服务"
 
@@ -121,7 +126,7 @@ EOF
 
   exit
 
-elif [ $1 == "run" ]; then
+elif [ "$1" == "run" ]; then
 
   [ -d libs ] || mkdir -p libs
 
@@ -145,19 +150,19 @@ elif [ $1 == "run" ]; then
 
   mvn exec:java -Dexec.mainClass="tookox.Launcher"
 
-elif [ $1 == "start" ]; then
+elif [ "$1" == "start" ]; then
 
   systemctl start tooko
 
   ./tooko.sh log
 
-elif [ $1 == "restart" ]; then
+elif [ "$1" == "restart" ]; then
 
   systemctl restart tooko
 
   ./tooko.sh log
 
-elif [ $1 == "update" ]; then
+elif [ "$1" == "update" ]; then
 
   git fetch &>/dev/null
 
@@ -177,12 +182,18 @@ elif [ $1 == "update" ]; then
 
   exit $?
 
-elif [ $1 == "log" ]; then
+elif [ "$1" == "log" ]; then
 
-  journalctl -u tooko.service -f
+  journalctl -u tooko -f
+
+elif [ "$1" == "logs" ]; then
+
+  shift 1
+
+  journalctl -u tooko --no-tail $@
 
 else
 
-  systemctl $1 tooko
+  systemctl "$1" tooko
 
 fi

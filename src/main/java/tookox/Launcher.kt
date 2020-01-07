@@ -29,15 +29,11 @@ import tooko.td.client.TdClient.EventTask
 import tooko.td.client.TdException
 import tooko.twitter.ApiToken
 import tooko.twitter.TwitterBot
-import tookox.core.TookoLogFactory
-import tookox.core.bots.CreateBot
-import tookox.core.client.TdBot
-import tookox.core.defaultLog
-import tookox.core.funs.BaseFuncs
-import tookox.core.funs.LICENCE
-import tookox.core.funs.StickerExport
-import tookox.core.utils.make
-import tookox.test.TestForFMT
+import tookox.core.*
+import tookox.core.bots.*
+import tookox.core.client.*
+import tookox.core.funs.*
+import tookox.core.utils.*
 import java.io.File
 import java.lang.Thread.UncaughtExceptionHandler
 import java.util.*
@@ -62,12 +58,9 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
         addHandler(CreateBot())
 
+        addHandler(BotPanel())
+
         addHandler(LICENCE())
-
-        // TESTS
-
-        addHandler(TestForFMT())
-
 
     }
 

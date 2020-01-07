@@ -3,8 +3,7 @@
 package tookox.core.utils
 
 import tooko.td.TdApi
-import tookox.core.client.TdAbsHandler
-import tookox.core.client.TdBotAbsHandler
+import tookox.core.client.*
 
 infix fun TdBotAbsHandler.makeAnswer(block: AnswerFactory.() -> Unit): AnswerFactory {
 
@@ -31,6 +30,17 @@ infix fun TdBotAbsHandler.makeAnswerUrl(url: String): AnswerFactory {
 
 }
 
+infix fun TdBotAbsHandler.confirmTo(queryId: Long) {
+
+    AnswerFactory(this).answerTo(queryId)
+
+}
+
+suspend infix fun TdBotAbsHandler.syncConfirmTo(queryId: Long) {
+
+    AnswerFactory(this).syncAnswerTo(queryId)
+
+}
 
 class AnswerFactory(val context: TdAbsHandler) {
 

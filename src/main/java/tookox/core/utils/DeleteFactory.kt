@@ -3,7 +3,7 @@
 package tookox.core.utils
 
 import tooko.td.TdApi
-import tookox.core.client.TdAbsHandler
+import tookox.core.client.*
 
 infix fun TdAbsHandler.delete(message: TdApi.Message) = delete(message.chatId, message.id)
 
@@ -20,3 +20,13 @@ fun TdAbsHandler.deleteForSelf(chatId: Number, vararg messageIds: Long) = sendUn
 suspend infix fun TdAbsHandler.syncDeleteForSelf(message: TdApi.Message) = syncDeleteForSelf(message.chatId, message.id)
 
 suspend fun TdAbsHandler.syncDeleteForSelf(chatId: Number, vararg messageIds: Long) = syncUnit(TdApi.DeleteMessages(chatId.toLong(), messageIds, false))
+
+fun TdAbsHandler.fetchAndDelete(chatId: Number, messageId: Long) {
+
+    getMessage(chatId, messageId) {
+
+        delete(chatId, messageId)
+
+    }
+
+}

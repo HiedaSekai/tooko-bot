@@ -2,7 +2,7 @@ package tookox.core
 
 // ids for callback metadata
 
-val DATA_1 = 1
-val DATA_20 = 20
+const val DATA_1 = 1
+const val DATA_2 = 2
 
-val PERSIST_1 = 1
+const val PERSIST_1 = 1
