@@ -7,9 +7,8 @@ import kotlinx.coroutines.runBlocking
 import org.yaml.snakeyaml.Yaml
 import tooko.main.Env
 import tooko.main.Lang
-import tookox.core.asHtml
-import tookox.core.defaultLog
-import tookox.core.utils.asMarkdown
+import tookox.core.*
+import tookox.core.utils.*
 import java.util.*
 
 object LibsLoader {
