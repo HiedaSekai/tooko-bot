@@ -36,7 +36,7 @@ function installTDLib() {
 
   esac
 
-  download "libs/libtdjni.so" "https://gitlab.com/tooko/tooko-tdlib/raw/$arch/libtdjni.so"
+  download "libs/libtdjni.so" "https://gitlab.com/tooko/td/raw/$arch/libtdjni.so"
 
   return $?
 
