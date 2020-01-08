@@ -1,10 +1,9 @@
 package tookox.core.client
 
 import tooko.main.Lang
-import tooko.td.TdApi.Message
-import tookox.core.fromPrivate
-import tookox.core.utils.delete
-import tookox.core.utils.make
+import tooko.td.TdApi.*
+import tookox.core.*
+import tookox.core.utils.*
 import java.util.*
 
 interface TdBotAbsHandler : TdAbsHandler {
@@ -24,11 +23,15 @@ interface TdBotAbsHandler : TdAbsHandler {
 
         }
 
-    fun initFunction(function: String) {
+    fun initFunction(vararg functions: String) {
 
-        sudo.functions.put(function, this)?.apply {
+        functions.forEach { function ->
 
-            error("function name alredy used.")
+            sudo.functions.put(function, this)?.apply {
+
+                error("function name alredy used.")
+
+            }
 
         }
 
@@ -49,6 +52,16 @@ interface TdBotAbsHandler : TdAbsHandler {
         sudo.persistHandlers.put(persistId, this)?.apply {
 
             error("perisst id alredy used.")
+
+        }
+
+    }
+
+    fun initStartPayload(payload: String) {
+
+        sudo.payloads.put(payload, this)?.apply {
+
+            error("payload prefix alredy used.")
 
         }
 
@@ -79,6 +92,9 @@ interface TdBotAbsHandler : TdAbsHandler {
 
     suspend fun onFunction(userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>)
     suspend fun onUndefinedFunction(userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>)
+
+    suspend fun onStartPayload(userId: Int, chatId: Long, message: Message, payload: String, params: Array<String>)
+
     suspend fun onNewCallbackQuery(userId: Int, chatId: Long, messageId: Long, queryId: Long, subId: Int, data: Array<ByteArray>)
     suspend fun onNewInlineCallbackQuery(userId: Int, inlineMessageId: String, queryId: Long, subId: Int, data: Array<ByteArray>)
 
@@ -112,5 +128,9 @@ interface TdBotAbsHandler : TdAbsHandler {
 
     fun onPersistStore(userId: Int, subId: Int, data: LinkedList<String>)
     fun onPersistReStore(userId: Int, subId: Int, data: List<String>)
+
+    class Reject : RuntimeException("Reject Function")
+
+    fun rejectFunction(): Unit = throw Reject()
 
 }

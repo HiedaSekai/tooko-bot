@@ -1,15 +1,22 @@
 package tooko.pm.config;
 
-import cn.hutool.core.map.*;
-import cn.hutool.core.util.*;
-import tooko.main.*;
-import tooko.pm.*;
-import tooko.td.TdApi.*;
-import tooko.td.client.*;
+/*
 
+import kotlin.*;
+import kotlin.coroutines.*;
+import org.jetbrains.annotations.*;
+import tooko.main.*;
+import tooko.main.old.*;
+import tooko.td.*;
+import tooko.td.TdApi.*;
+import tookox.core.client.*;
+import tookox.pm.*;
+
+import java.lang.*;
+import java.lang.Object;
 import java.util.*;
 
-public class WelcomeConfig extends TdHandler {
+public class WelcomeConfig extends TdBotHandler {
 
     public int PERSISTD_ID = Fn.PerststId._3;
 
@@ -19,7 +26,7 @@ public class WelcomeConfig extends TdHandler {
     @Override
     public void onLoad() {
 
-        bot = (PmBot) client;
+        bot = (PmBot) getSudo();
 
         initFunction("msg");
 
@@ -27,8 +34,9 @@ public class WelcomeConfig extends TdHandler {
 
     }
 
+    @Nullable
     @Override
-    public void onFunction(User user, long chatId, Message message, String function, String param, String[] params, String[] originParams) {
+    public Object onFunction(int userId, long chatId, @NotNull Message message, @NotNull String function, @NotNull String param, @NotNull String[] params, @NotNull String[] originParams, @NotNull Continuation<? super Unit> $completion) {
 
         Lang L = Lang.get(user);
 
@@ -83,7 +91,7 @@ public class WelcomeConfig extends TdHandler {
 
         writePersist(user, PERSISTD_ID);
 
-        send(Fn.sendText(chatId, Fn.plainText(L.PM_WELCOME_INPUT)));
+        sendUnit(Fn.sendText(chatId, Fn.plainText(L.PM_WELCOME_INPUT)));
 
     }
 
@@ -375,3 +383,6 @@ public class WelcomeConfig extends TdHandler {
 
 
 }
+
+
+ */

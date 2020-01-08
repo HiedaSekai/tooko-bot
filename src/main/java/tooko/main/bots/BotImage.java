@@ -2,8 +2,8 @@ package tooko.main.bots;
 
 import cn.hutool.core.util.*;
 import tooko.main.*;
-import tooko.pm.*;
 import tooko.td.client.*;
+import tookox.pm.*;
 
 import java.util.*;
 
@@ -39,9 +39,13 @@ public class BotImage {
 
         if (data.type == 1) {
 
+            /*
+
             image.bot = new PmBot(image);
 
             image.bot.start();
+
+             */
 
         }
 

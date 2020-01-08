@@ -108,6 +108,11 @@
                     <groupId>com.squareup.okhttp3</groupId>
                     <artifactId>logging-interceptor</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>com.google.code.gson</groupId>
+                    <artifactId>gson</artifactId>
+                </exclusion>
+
             </exclusions>
         </dependency>
 
@@ -121,6 +126,12 @@
             <groupId>moe.tooko</groupId>
             <artifactId>webp-imageio</artifactId>
             <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.baidu.aip</groupId>
+            <artifactId>java-sdk</artifactId>
+            <version>4.8.0</version>
         </dependency>
 
         <dependency>

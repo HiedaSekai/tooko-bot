@@ -3,15 +3,13 @@ package tookox.core.funs
 import cn.hutool.core.img.ImgUtil
 import cn.hutool.core.io.FileUtil
 import cn.hutool.core.util.ZipUtil
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.*
 import tooko.main.Env
 import tooko.main.Img
 import tooko.main.Lang
 import tooko.td.TdApi.*
 import tookox.core.*
-import tookox.core.client.TdBotHandler
+import tookox.core.client.*
 import tookox.core.utils.*
 import java.awt.Color
 import java.io.File
@@ -30,7 +28,7 @@ class StickerExport : TdBotHandler() {
 
         if (sticker.isAnimated) {
 
-            sudo make "animated sticker not supported." to chatId
+            sudo make "animated sticker not supported." at chatId
 
             return
 
@@ -72,27 +70,29 @@ class StickerExport : TdBotHandler() {
 
     }
 
-    override suspend fun onNewCallbackQuery(userId: Int, chatId: Long, messageId: Long, queryId: Long, subId: Int, data: Array<ByteArray>) {
+    override suspend fun onNewCallbackQuery(userId: Int, chatId: Long, messageId: Long, queryId: Long, subId: Int, data: Array<ByteArray>) = coroutineScope {
 
         val L = Lang.get(userId)
 
         if (subId == 0) {
 
-            send<StickerSet>(GetStickerSet(data[0].asLong)) {
+            launch(Dispatchers.Unconfined) {
 
                 runCatching {
+
+                    val set = sync<StickerSet>(GetStickerSet(data[0].asLong))
 
                     sudo makeInlineButton null at chatId editTo messageId
 
                     val stat = sudo make {
 
-                        inputHtml = L.STICKER_EXPORT_DL.input(it.title, 0, it.stickers.size)
+                        inputHtml = L.STICKER_EXPORT_DL.input(set.title, 0, set.stickers.size)
 
                     } syncTo chatId
 
-                    val cachePath = File(Env.getPath("cache/stickers_pack_export/" + it.id))
+                    val cachePath = File(Env.getPath("cache/stickers_pack_export/" + set.id))
 
-                    val zip = File(cachePath, it.title + ".zip")
+                    val zip = File(cachePath, set.title + ".zip")
 
                     if (!zip.isFile) {
 
@@ -100,9 +100,9 @@ class StickerExport : TdBotHandler() {
 
                         val deferreds = LinkedList<Deferred<*>>()
 
-                        for (index in it.stickers.indices) {
+                        for (index in set.stickers.indices) {
 
-                            val sticker: Sticker = it.stickers[index]
+                            val sticker: Sticker = set.stickers[index]
 
                             val stickerFile = sticker.sticker
 
@@ -116,7 +116,7 @@ class StickerExport : TdBotHandler() {
 
                                 sudo make {
 
-                                    inputHtml = L.STICKER_EXPORT_DL.input(it.title, c, it.stickers.size)
+                                    inputHtml = L.STICKER_EXPORT_DL.input(set.title, c, set.stickers.size)
 
                                 } syncEditTo stat
 
@@ -132,13 +132,13 @@ class StickerExport : TdBotHandler() {
 
                         sudo make L.STICKER_EXPORT_PACK syncEditTo stat
 
-                        val cacheDir = File(cachePath, it.title)
+                        val cacheDir = File(cachePath, set.title)
 
                         File(cacheDir, "src").mkdirs()
 
-                        for (index in it.stickers.indices) {
+                        for (index in set.stickers.indices) {
 
-                            val stickerFile = it.stickers[index].sticker
+                            val stickerFile = set.stickers[index].sticker
 
                             val localFile = FileUtil.file(stickerFile.local.path)
 
@@ -180,17 +180,17 @@ class StickerExport : TdBotHandler() {
 
                         inputFile = zip.absolutePath
 
-                        captionText = "https://t.me/addstickers/${it.name}"
+                        captionText = "https://t.me/addstickers/${set.name}"
 
                     } syncTo chatId
 
                     sudo delete stat
 
+                }.onFailure {
+
+                    sudo makeAlert L.STICKER_DL_FAILED.input(it) answerTo queryId
+
                 }
-
-            } onError {
-
-                sudo makeAlert L.STICKER_DL_FAILED.input(it) answerTo queryId
 
             }
 

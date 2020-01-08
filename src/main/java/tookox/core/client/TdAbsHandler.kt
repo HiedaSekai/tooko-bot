@@ -5,8 +5,7 @@ import tooko.td.Client
 import tooko.td.TdApi
 import tooko.td.TdApi.*
 import tooko.td.client.TdException
-import tookox.core.utils.readDataMapFrom
-import tookox.core.utils.writeDataMapTo
+import tookox.core.utils.*
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -215,6 +214,19 @@ interface TdAbsHandler {
 
     suspend infix fun <T : Object> sync(function: TdApi.Function): T = sudo.sync(function)
 
+    suspend infix fun <T : Object> syncOrNull(function: TdApi.Function): T? {
+
+        return try {
+
+            sudo.sync(function)
+
+        } catch (ex: TdException) {
+
+            null
+        }
+
+    }
+
     suspend infix fun syncUnit(function: TdApi.Function) = sudo.sync<Object>(function)
 
     val Message.delete get() = DeleteMessages(chatId, longArrayOf(id), true)
@@ -277,5 +289,9 @@ interface TdAbsHandler {
             }
 
         }
+
+    class Finish : RuntimeException("Finish Event")
+
+    fun finishEvent(): Unit = throw Finish()
 
 }

@@ -2,6 +2,12 @@
 
 package tookox.core
 
+import tooko.main.Lang
+import tooko.td.TdApi.*
+
+val Number.langForUserId get() = Lang.get(this)
+val User.langForUser get() = Lang.get(this)
+
 fun String.containsChinese(): Boolean {
 
     var han = false

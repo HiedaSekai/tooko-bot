@@ -43,7 +43,7 @@ class BotPanel : TdBotHandler() {
 
                 getMessage(chatId, messageId) {
 
-                    sudo make L.BOT_NONE at chatId editTo messageId
+                    sudo make L.BOT_NONE to chatId editAt messageId
 
                 }
 
@@ -67,13 +67,16 @@ class BotPanel : TdBotHandler() {
 
                     index++
 
-                    if (index + 1 % 4 == 0) {
+                    if (index == 4) {
+
+                        index = 1
 
                         line = newLine()
 
                     }
 
                     line.dataButton("@${it.userName}", DATA_2, 1, it.botId.asByteArray)
+
 
                 }
 
@@ -131,7 +134,7 @@ class BotPanel : TdBotHandler() {
 
             }
 
-        } at chatId editTo messageId
+        } to chatId editAt messageId onError null
 
     }
 
@@ -187,7 +190,7 @@ class BotPanel : TdBotHandler() {
 
                 }
 
-            } at chatId editTo messageId
+            } to chatId editAt messageId
 
         } else if (subId == 4) {
 

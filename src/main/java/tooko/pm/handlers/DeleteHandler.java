@@ -1,12 +1,14 @@
 package tooko.pm.handlers;
 
+/*
+
 import cn.hutool.core.collection.*;
 import cn.hutool.core.util.*;
 import tooko.main.*;
 import tooko.main.bots.*;
-import tooko.pm.*;
 import tooko.td.client.*;
 import tooko.td.core.*;
+import tookox.pm.*;
 
 import java.util.*;
 
@@ -214,3 +216,6 @@ public class DeleteHandler extends TdHandler {
     }
 
 }
+
+
+ */

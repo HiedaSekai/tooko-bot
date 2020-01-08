@@ -3,7 +3,6 @@
 package tookox.core
 
 import tooko.td.TdApi.*
-import tookox.core.client.*
 
 val User.displayName get() = "$firstName $lastName".trim()
 
@@ -18,11 +17,3 @@ val Message.text
         (content as MessageText).text.text
 
     } else null
-
-class Finish : RuntimeException("Finish Event")
-
-fun TdAbsHandler.finishEvent() {
-
-    throw Finish()
-
-}

@@ -5,12 +5,11 @@ import org.apache.commons.collections4.bidimap.*;
 import tooko.main.*;
 import tooko.main.bots.*;
 import tooko.main.extras.*;
-import tooko.pm.PmData.*;
-import tooko.pm.config.*;
-import tooko.pm.handlers.*;
 import tooko.td.TdApi.*;
 import tooko.td.client.*;
 import tookox.*;
+import tookox.pm.*;
+import tookox.pm.PmData.*;
 
 import java.io.File;
 import java.util.*;
@@ -66,6 +65,8 @@ public class PmBot extends TdBot {
 
         // addHandler(new PingFunction());
 
+        /*
+
         addHandler(new WelcomeConfig());
 
         addHandler(new EditHandler());
@@ -73,6 +74,8 @@ public class PmBot extends TdBot {
         addHandler(new DeleteHandler());
 
         addHandler(new ChatPanel());
+
+         */
 
         addHandler(new LICENCE());
 

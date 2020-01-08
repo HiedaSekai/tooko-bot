@@ -18,7 +18,6 @@ import org.bson.codecs.pojo.SubClassPropertyCodecProvider
 import org.slf4j.LoggerFactory
 import org.yaml.snakeyaml.Yaml
 import tooko.main.Env
-import tooko.main.Lang
 import tooko.main.bots.BotData
 import tooko.main.bots.BotImage
 import tooko.main.utils.nsfw.NSRC
@@ -27,6 +26,7 @@ import tooko.td.Log
 import tooko.td.TdApi
 import tooko.td.client.TdClient.EventTask
 import tooko.td.client.TdException
+import tooko.td.core.CacheTable
 import tooko.twitter.ApiToken
 import tooko.twitter.TwitterBot
 import tookox.core.*
@@ -80,23 +80,19 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
     }
 
-    override fun onLaunch(userId: Int, chatId: Long, message: TdApi.Message) {
+    override suspend fun onDestroy() {
 
-        val L = Lang.get(userId)
+        super.onDestroy()
 
-        sudo make {
+        cachedTables.forEach { it.saveAll() }
 
-            inputHtml = if (Env.isAdmin(userId)) {
+    }
 
-                L.HELP
+    override suspend fun onLaunch(userId: Int, chatId: Long, message: TdApi.Message) {
 
-            } else {
+        val L = userId.langForUserId
 
-                "${L.HELP}\n\n${L.PUBLIC_WARN}"
-
-            }
-
-        } sendTo chatId
+        sudo makeHtml (if (Env.isAdmin(userId)) L.HELP else "${L.HELP}\n\n${L.PUBLIC_WARN}") sendTo chatId
 
     }
 
@@ -119,6 +115,8 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
     }
 
     companion object {
+
+        val cachedTables = LinkedList<CacheTable<*, *>>()
 
         lateinit var twitter: TwitterBot
 

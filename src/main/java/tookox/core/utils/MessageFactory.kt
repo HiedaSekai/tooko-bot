@@ -13,6 +13,7 @@ import tookox.core.*
 import tookox.core.client.*
 import twitter4j.TwitterException
 import java.util.*
+import kotlin.properties.Delegates
 
 
 val String.asText: FormattedText get() = FormattedText(this, null)
@@ -25,6 +26,13 @@ infix fun TdAbsHandler.make(block: MessageFactory.() -> Unit): MessageFactory {
 
 }
 
+infix fun TdAbsHandler.make(inputContent: InputMessageContent): MessageFactory {
+
+    return make { input = inputContent }
+
+}
+
+
 infix fun TdAbsHandler.make(text: FormattedText): MessageFactory {
 
     return make { input = inputText(text) }
@@ -34,6 +42,42 @@ infix fun TdAbsHandler.make(text: FormattedText): MessageFactory {
 infix fun TdAbsHandler.make(text: String): MessageFactory {
 
     return make { inputText = text }
+
+}
+
+infix fun TdAbsHandler.makeHtml(text: String): MessageFactory {
+
+    return make { inputHtml = text }
+
+}
+
+infix fun TdAbsHandler.makeMd(text: String): MessageFactory {
+
+    return make { inputMarkdown = text }
+
+}
+
+infix fun TdAbsHandler.makeFile(text: String): MessageFactory {
+
+    return make { inputFile = text }
+
+}
+
+infix fun TdAbsHandler.makeFileId(text: String): MessageFactory {
+
+    return make { inputFileId = text }
+
+}
+
+infix fun TdAbsHandler.makePhoto(text: String): MessageFactory {
+
+    return make { inputPhoto = text }
+
+}
+
+infix fun TdAbsHandler.makePhotoId(text: String): MessageFactory {
+
+    return make { inputPhotoId = text }
 
 }
 
@@ -276,26 +320,80 @@ class TextBuilder(var textFormatted: FormattedText? = null) : Builder<InputMessa
 
 }
 
+
+fun inputForward(chatId: Number, messageId: Long, block: (ForwardBuilder.() -> Unit)? = null): InputMessageForwarded {
+
+    val input = InputMessageForwarded(chatId.toLong(), messageId, false, false, false)
+
+    return ForwardBuilder(input).applyIfNot(block == null, block).build()
+
+}
+
+class ForwardBuilder(val input: InputMessageForwarded) : Builder<InputMessageForwarded> {
+
+    var chatId by input::fromChatId
+    var messageId by input::messageId
+    var inGameShare by input::inGameShare
+    var removeCaption by input::removeCaption
+
+    override fun build() = input
+}
+
 interface CaptionInterface {
 
     var caption: FormattedText?
 
 }
 
+const val WHEN_ONLINE = -1
+
 class MessageFactory(val context: TdAbsHandler) : CaptionInterface {
 
     lateinit var chatId: Number
-    lateinit var messageId: Number
+    var messageId by Delegates.notNull<Long>()
     lateinit var input: InputMessageContent
 
     var replyToMessageId = 0L
+
+    infix fun replyTo(replyToMessageId: Long): MessageFactory {
+
+        this.replyToMessageId = replyToMessageId
+
+        return this
+
+    }
+
     var disableNotification = false
+
+    infix fun disNtf(disableNotification: Boolean): MessageFactory {
+
+        this.disableNotification = disableNotification
+
+        return this
+
+    }
+
     var fromBackground = false
+
+    infix fun fromBack(fromBackground: Boolean): MessageFactory {
+
+        this.fromBackground = fromBackground
+
+        return this
+
+    }
+
     var replyMarkup: ReplyMarkup? = null
 
-    var schedulingState: MessageSchedulingState? = null
+    infix fun withMarkup(replyMarkup: ReplyMarkup): MessageFactory {
 
-    val WHEN_ONLINE = -1
+        this.replyMarkup = replyMarkup
+
+        return this
+
+    }
+
+    var schedulingState: MessageSchedulingState? = null
 
     var sendAt by WriteOnlyField<Int> {
 
@@ -311,7 +409,16 @@ class MessageFactory(val context: TdAbsHandler) : CaptionInterface {
 
     }
 
-    infix fun at(chatId: Number): MessageFactory {
+    infix fun at(messageId: Long): MessageFactory {
+
+        this.messageId = messageId
+
+        return this
+
+    }
+
+
+    infix fun to(chatId: Number): MessageFactory {
 
         this.chatId = chatId
 
@@ -319,13 +426,6 @@ class MessageFactory(val context: TdAbsHandler) : CaptionInterface {
 
     }
 
-    infix fun to(messageId: Number): MessageFactory {
-
-        this.messageId = messageId
-
-        return this
-
-    }
 
     var inputText by WriteOnlyField<String> {
 
@@ -383,13 +483,47 @@ class MessageFactory(val context: TdAbsHandler) : CaptionInterface {
 
     var CaptionInterface.captionHtml by WriteOnlyField<String> {
 
-        caption = with(context) { it.asHtml }
+        caption = it.asHtml
 
     }
 
     var CaptionInterface.captionMarkdown by WriteOnlyField<String> {
 
-        caption = with(context) { it.asMarkdown }
+        caption = it.asMarkdown
+
+    }
+
+
+    infix fun caption(caption: FormattedText): MessageFactory {
+
+        this.caption = caption
+
+        return this
+
+    }
+
+    infix fun captionText(caption: String): MessageFactory {
+
+        this.captionText = caption
+
+        return this
+
+    }
+
+
+    infix fun captionHtml(caption: String): MessageFactory {
+
+        this.captionHtml = caption
+
+        return this
+
+    }
+
+    infix fun captionMd(caption: String): MessageFactory {
+
+        this.captionMarkdown = caption
+
+        return this
 
     }
 
@@ -465,9 +599,16 @@ class MessageFactory(val context: TdAbsHandler) : CaptionInterface {
 
     }
 
+    infix fun mkSend(chatId: Number) = SendMessage(chatId.toLong(), replyToMessageId, mkOptions(), replyMarkup, input)
+    fun mkSend() = SendMessage(chatId.toLong(), replyToMessageId, mkOptions(), replyMarkup, input)
+    fun mkEdit(chatId: Number, messageId: Long) = EditMessageText(chatId.toLong(), messageId, replyMarkup, input)
+    infix fun mkEditTo(chatId: Number) = EditMessageText(chatId.toLong(), messageId, replyMarkup, input)
+    infix fun mkEditAt(messageId: Long) = EditMessageText(chatId.toLong(), messageId, replyMarkup, input)
+    fun mkEdit() = EditMessageText(chatId.toLong(), messageId, replyMarkup, input)
+
     suspend infix fun syncTo(chatId: Number): Message {
 
-        return context.sync(SendMessage(chatId.toLong(), replyToMessageId, mkOptions(), replyMarkup, input))
+        return context.sync(mkSend(chatId))
 
     }
 
@@ -485,7 +626,7 @@ class MessageFactory(val context: TdAbsHandler) : CaptionInterface {
 
     suspend fun syncEditTo(chatId: Number, messageId: Long): Message = context.sync(EditMessageText(chatId.toLong(), messageId, replyMarkup, input))
 
-    suspend infix fun syncEditAt(chatId: Number): Message = context.sync(EditMessageText(chatId.toLong(), messageId.toLong(), replyMarkup, input))
+    suspend infix fun syncEditTo(chatId: Number): Message = context.sync(EditMessageText(chatId.toLong(), messageId.toLong(), replyMarkup, input))
 
     suspend infix fun syncEditTo(messageId: Long): Message = context.sync(EditMessageText(chatId.toLong(), messageId, replyMarkup, input))
 
@@ -497,27 +638,27 @@ class MessageFactory(val context: TdAbsHandler) : CaptionInterface {
 
     }
 
-    infix fun editAt(chatId: Number): TdCallback<Message> {
+    infix fun editTo(chatId: Number): TdCallback<Message> {
 
         return context.send(EditMessageText(chatId.toLong(), messageId.toLong(), replyMarkup, input), 1)
 
     }
 
-    infix fun editTo(messageId: Long): TdCallback<Message> {
+    infix fun editAt(messageId: Long): TdCallback<Message> {
 
-        return context.send(EditMessageText(chatId.toLong(), messageId, replyMarkup, input), 1)
+        return context.send(mkEditAt(messageId), 1)
 
     }
 
     infix fun editTo(message: Message): TdCallback<Message> {
 
-        return context.send(EditMessageText(message.chatId, message.id, replyMarkup, input), 1)
+        return context.send(mkEdit(message.chatId, message.id), 1)
 
     }
 
     infix fun edit(handler: (suspend CoroutineScope.(Message) -> Unit)): TdCallback<Message> {
 
-        return context.send(EditMessageText(chatId.toLong(), messageId.toLong(), replyMarkup, input), 1, handler)
+        return context.send(mkEdit(), 1, handler)
 
     }
 

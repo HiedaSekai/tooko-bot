@@ -1,10 +1,19 @@
 package tooko.td.core;
 
+import tookox.*;
+
 import java.util.*;
 
 public class CacheTable<ID, T> extends Table<ID, T> {
 
+    {
+
+        Launcher.Companion.getCachedTables().add(this);
+
+    }
+
     public final HashMap<ID, T> idIndex = new HashMap<>();
+
 
     public CacheTable(Class<T> clazz) {
 

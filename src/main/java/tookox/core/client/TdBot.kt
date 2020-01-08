@@ -7,12 +7,9 @@ import kotlinx.coroutines.coroutineScope
 import tooko.main.Env
 import tooko.main.Fn
 import tooko.td.TdApi.*
-import tookox.core.finishEvent
-import tookox.core.fromPrivate
-import tookox.core.shift
-import tookox.core.utils.makeAnswer
-import tookox.core.utils.readDataFrom
-import tookox.core.utils.writeDataTo
+import tookox.core.*
+import tookox.core.client.TdBotAbsHandler.*
+import tookox.core.utils.*
 import java.io.File
 import java.util.*
 
@@ -123,9 +120,9 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
     }
 
-    override suspend fun onNewMessage(userId: Int, chatId: Long, message: Message) = coroutineScope {
+    override suspend fun onNewMessage(userId: Int, chatId: Long, message: Message) = coroutineScope function@{
 
-        if (auth && userId == me.id) return@coroutineScope
+        if (auth && userId == me.id) return@function
 
         val persist = if (message.fromPrivate && persists.containsKey(userId)) {
 
@@ -199,75 +196,94 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
             }
 
-            if (persist != null) run persist@{
+            try {
 
-                val handler = persistHandlers[persist.persistId] ?: error("Invalid Persist ID #${persist.persistId}")
+                if (persist != null) run persist@{
 
-                if (function == "cancel" && persist.allowCancel) {
+                    val handler = persistHandlers[persist.persistId]
+                            ?: error("Invalid Persist ID #${persist.persistId}")
 
-                    sudo removePersist userId
+                    if (function == "cancel" && persist.allowCancel) {
 
-                    handler.onPersistCancel(userId, chatId, message, persist.subId)
+                        sudo removePersist userId
 
-                    handler.onPersistRemoveOrCancel(userId, persist.subId)
+                        handler.onPersistCancel(userId, chatId, message, persist.subId)
 
-                    handler.onSendCanceledMessage(userId)
+                        handler.onPersistRemoveOrCancel(userId, persist.subId)
 
-                    return@coroutineScope
+                        handler.onSendCanceledMessage(userId)
+
+                        return@function
+
+                    }
+
+                    if (persist.allowFuction) {
+
+                        sudo removePersist userId
+
+                        handler.onPersistCancel(userId, chatId, message, persist.subId)
+
+                        handler.onPersistRemoveOrCancel(userId, persist.subId)
+
+                        handler.onSendCanceledMessage(userId)
+
+                        return@persist
+
+                    }
+
+                    handler.onPersistFunction(userId, chatId, message, persist.subId, function, param, params, originParams)
+
+                    return@function
 
                 }
 
-                if (persist.allowFuction) {
+                if ("start" == function) {
 
-                    sudo removePersist userId
+                    if (param.isNotBlank()) {
 
-                    handler.onPersistCancel(userId, chatId, message, persist.subId)
+                        val data = param.split('_').toTypedArray()
 
-                    handler.onPersistRemoveOrCancel(userId, persist.subId)
+                        if (data.isNotEmpty() && payloads.containsKey(data[0])) {
 
-                    handler.onSendCanceledMessage(userId)
+                            payloads[data[0]]!!.onStartPayload(userId, chatId, message, data[0], data.shift())
 
-                    return@persist
+                            return@function
 
-                }
+                        }
 
-                handler.onPersistFunction(userId, chatId, message, persist.subId, function, param, params, originParams)
-
-                return@coroutineScope
-
-            }
-
-            if ("start" == function) {
-
-                if (params.isEmpty()) {
+                    }
 
                     onLaunch(userId, chatId, message)
 
+                    return@function
+
+                } else if (!functions.containsKey(function)) {
+
+                    handlers.filterIsInstance<TdBotAbsHandler>().forEach {
+
+                        it.onUndefinedFunction(userId, chatId, message, function, param, params, originParams)
+
+                    }
+
                 } else {
 
-                    // TODO: handle start payload
+                    functions[function]!!.onFunction(userId, chatId, message, function, param, params, originParams)
 
                 }
 
-            } else if (!functions.containsKey(function)) {
 
-                handlers.filterIsInstance<TdBotAbsHandler>().forEach {
+            } catch (ex: Reject) {
 
-                    it.onUndefinedFunction(userId, chatId, message, function, param, params, originParams)
-
-                }
-
-            } else {
-
-                functions[function]!!.onFunction(userId, chatId, message, function, param, params, originParams)
+                return@predict
 
             }
 
-            return@coroutineScope
+            return@function
+
 
         }
 
-        if (persist == null) return@coroutineScope
+        if (persist == null) return@function
 
         val handler = (persistHandlers[persist.persistId] ?: error("Invalid Persist ID #${persist.persistId}"))
 
@@ -337,7 +353,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
     }
 
-    open fun onLaunch(userId: Int, chatId: Long, message: Message) = Unit
+    open suspend fun onLaunch(userId: Int, chatId: Long, message: Message) = Unit
 
     override suspend fun onFunction(userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>) = Unit
     override suspend fun onUndefinedFunction(userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>) = Unit
@@ -350,6 +366,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
     override suspend fun onPersistRemoveOrCancel(userId: Int, subId: Int) = Unit
     override fun onPersistStore(userId: Int, subId: Int, data: LinkedList<String>) = Unit
     override fun onPersistReStore(userId: Int, subId: Int, data: List<String>) = Unit
+    override suspend fun onStartPayload(userId: Int, chatId: Long, message: Message, payload: String, params: Array<String>) = Unit
 
     companion object {
 

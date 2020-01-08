@@ -6,9 +6,8 @@ import kotlinx.coroutines.coroutineScope
 import tooko.main.Lang
 import tooko.td.TdApi.*
 import tookox.core.*
-import tookox.core.client.TdBotHandler
-import tookox.core.utils.asHtml
-import tookox.core.utils.make
+import tookox.core.client.*
+import tookox.core.utils.*
 import java.util.*
 
 class BaseFuncs : TdBotHandler() {
@@ -51,15 +50,15 @@ class BaseFuncs : TdBotHandler() {
 
             if (message.fromPrivate) {
 
-                sudo make "${"UID".asBlod} : ${userId.asCode}".asHtml sendTo chatId
+                sudo makeHtml "${"UID".asBlod} : ${userId.asCode}" sendTo chatId
 
             } else if (message.fromChannel) {
 
-                sudo make "${"CID".asBlod} : ${chatId.asCode}".asHtml sendTo chatId
+                sudo makeHtml "${"CID".asBlod} : ${chatId.asCode}" sendTo chatId
 
             } else {
 
-                sudo make "${"CID".asBlod} : ${chatId.asCode}\n${"UID".asBlod} : ${userId.asCode}".asHtml sendTo chatId
+                sudo makeHtml "${"CID".asBlod} : ${chatId.asCode}\n${"UID".asBlod} : ${userId.asCode}" sendTo chatId
 
             }
 
@@ -71,13 +70,9 @@ class BaseFuncs : TdBotHandler() {
 
             send<User>(GetUser(param.toInt())) {
 
-                make {
-
-                    inputHtml = "${L.USER_NAME.asBlod} : " +
-                            "${it.displayName.toInlineMention(it.id)}\n" +
-                            "${L.USER_ID.asBlod} : ${it.id.asCode}"
-
-                } sendTo chatId
+                sudo makeHtml "${L.USER_NAME.asBlod} : " +
+                        "${it.displayName.toInlineMention(it.id)}\n" +
+                        "${L.USER_ID.asBlod} : ${it.id.asCode}" sendTo chatId
 
 
             } onError {
@@ -96,7 +91,9 @@ class BaseFuncs : TdBotHandler() {
 
                     send<User>(GetUser(targetUserId)) {
 
-                        sudo make "${L.USER_NAME.asBlod} : ${it.displayName.toInlineMention(it.id)}K\n${L.USER_ID.asBlod} : ${it.id.asCode}".asHtml sendTo chatId
+                        sudo makeHtml "${L.USER_NAME.asBlod} : " +
+                                "${it.displayName.toInlineMention(it.id)}\n" +
+                                "${L.USER_ID.asBlod} : ${it.id.asCode}" sendTo chatId
 
                     } onError {
 
@@ -119,11 +116,11 @@ class BaseFuncs : TdBotHandler() {
 
                     val targetUser = sync<User>(GetUser((it.type as ChatTypePrivate).userId))
 
-                    sudo make "${L.USER_NAME.asBlod} : ${targetUser.displayName.toInlineMention(targetUser.id)}\n${L.USER_ID.asBlod} : ${targetUser.id.asCode}".asHtml sendTo chatId
+                    sudo makeHtml "${L.USER_NAME.asBlod} : ${targetUser.displayName.toInlineMention(targetUser.id)}\n${L.USER_ID.asBlod} : ${targetUser.id.asCode}" sendTo chatId
 
                 } else {
 
-                    sudo make "${"CID".asBlod} : ${it.id.asCode}".asHtml sendTo chatId
+                    sudo makeHtml "${"CID".asBlod} : ${it.id.asCode}" sendTo chatId
 
                 }
 

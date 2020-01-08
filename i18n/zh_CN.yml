@@ -98,7 +98,8 @@ BOT_CREATED: 机器人已创建. 请点 [此](https://t.me/{}?start=-init) 配�
 
 # PM
 
-PM_WELCOME: 你好！
+PM_WELCOME: |-
+  你好！
   
   你可以通过这个机器人联系我(们).
 PM_ON_START: |-

@@ -1,15 +1,14 @@
 package tooko.pm.handlers;
 
-import cn.hutool.core.collection.*;
+/*
+
 import cn.hutool.core.util.*;
 import tooko.main.*;
-import tooko.pm.*;
-import tooko.td.TdApi.*;
+import tooko.td.*;
 import tooko.td.client.*;
-import tooko.td.core.*;
+import tookox.pm.*;
 
-import java.math.*;
-import java.util.*;
+import static tooko.td.TdApi.*;
 
 public class ChatPanel extends TdHandler {
 
@@ -204,44 +203,6 @@ public class ChatPanel extends TdHandler {
 
     }
 
-    String sessionStat(PmData.Session session) {
-
-        String stat = bot.OL.CHAT_MANAGE_HELP;
-
-        stat += "\n\n" + bot.OL.USER_NAME + " : " + Fn.mention(user((int) session.chatId));
-
-        if (data.blocked.contains(session.chatId)) {
-
-            stat += " " + bot.OL.CHAT_IS_BLOCKED;
-
-        }
-
-        stat += "\n" + bot.OL.USER_ID + " : " + Fn.code(session.chatId);
-
-        stat += "\n" + bot.OL.CHAT_MSG_RECEIVED;
-        stat += "\n" + bot.OL.CHAT_MSG_SENDED;
-
-        return StrUtil.format(stat, session.received.size(), session.sended.size());
-
-    }
-
-    InlineArray sessionActions(PmData.Session session) {
-
-        byte[] sessionId = BigInteger.valueOf(session.chatId).toByteArray();
-
-        InlineArray buttons = new InlineArray();
-
-        buttons.dataLine(bot.OL.CHAT_MSG_DEL_RECEIVED, DATA_ID, 0, sessionId);
-        buttons.dataLine(bot.OL.CHAT_MSG_DEL_SENDED, DATA_ID, 1, sessionId);
-        buttons.dataLine(bot.OL.CHAT_MSG_DEL_ALL, DATA_ID, 2, sessionId);
-
-        buttons.dataLine(data.blocked.contains(session.chatId) ? bot.OL.CHAT_UNBLOCK : bot.OL.CHAT_BLOCK, DATA_ID, 3, sessionId);
-
-        buttons.dataLine(bot.OL.FINISH_MANAGE, DATA_ID, 4);
-
-        return buttons;
-
-    }
 
     @Override
     public void onNewCallbackQuery(int userId, long chatId, long messageId, long queryId, int subId, byte[][] data) {
@@ -411,83 +372,9 @@ public class ChatPanel extends TdHandler {
 
     }
 
-    User findUser(Message message, String param, String[] params) {
 
-        if (NumberUtil.isInteger(param)) {
-
-            return user(NumberUtil.parseInt(param));
-
-        }
-
-        for (TextEntity entity : ((MessageText) message.content).text.entities) {
-
-            if (entity.type instanceof TextEntityTypeMentionName) {
-
-                int userId = ((TextEntityTypeMentionName) entity.type).userId;
-
-                return user(userId);
-
-            }
-
-        }
-
-        String userName = params[0];
-
-        try {
-
-            if (userName.startsWith("@")) userName = userName.substring(1);
-
-            Chat chat = execute(new SearchPublicChat(userName));
-
-            if (chat.type instanceof ChatTypePrivate) {
-
-                return user(((ChatTypePrivate) chat.type).userId);
-
-            }
-
-        } catch (TdException ignored) {
-        }
-
-        return null;
-
-    }
-
-    long findChat(Message message) {
-
-        long actionMessage = message.replyToMessageId;
-
-        String actionMessageStr = actionMessage + "";
-
-        if (data.received.containsKey(actionMessageStr)) {
-
-            return data.getSessionByElement("received", data.received.get(actionMessageStr)).chatId;
-
-        } else if (data.sended.containsKey(actionMessageStr)) {
-
-            return data.getSessionByElement("sended", data.sended.get(actionMessageStr)).chatId;
-
-        } else {
-
-            PmData.Session session = data.getSessionByElement("reports", actionMessage);
-
-            if (session != null) {
-
-                return session.chatId;
-
-            }
-
-            session = data.getSessionByElement("extras", actionMessage);
-
-            if (session != null) {
-
-                return session.chatId;
-
-            }
-
-        }
-
-        return -1;
-
-    }
 
 }
+
+
+ */

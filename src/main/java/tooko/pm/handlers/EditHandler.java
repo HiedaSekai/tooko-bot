@@ -1,10 +1,16 @@
 package tooko.pm.handlers;
 
+/*
+
+import kotlin.*;
+import kotlin.coroutines.*;
+import org.jetbrains.annotations.*;
 import tooko.main.*;
 import tooko.main.bots.*;
-import tooko.pm.*;
+import tooko.td.*;
 import tooko.td.TdApi.*;
-import tooko.td.client.*;
+import tookox.core.client.*;
+import tookox.pm.*;
 
 public class EditHandler extends TdHandler {
 
@@ -27,8 +33,9 @@ public class EditHandler extends TdHandler {
 
     }
 
+    @Nullable
     @Override
-    public void onMessageContent(long chatId, long messageId, MessageContent newContent) {
+    public TdApi.Object onMessageContent(long chatId, long messageId, @NotNull MessageContent newContent, @NotNull Continuation<? super Unit> $completion) {
 
         if (chatId == bot.owner) {
 
@@ -42,7 +49,7 @@ public class EditHandler extends TdHandler {
 
                 long targetChat = session.chatId;
 
-                Message oldMessage = message(targetChat, targetMessage);
+                TdApi.Message oldMessage = message(targetChat, targetMessage);
 
                 if (oldMessage == null) {
 
@@ -58,9 +65,9 @@ public class EditHandler extends TdHandler {
 
                 if (newContent instanceof MessageText) {
 
-                    edit = Fn.editText(targetChat, targetMessage, ((MessageText) newContent).text);
+                    edit = Fn.editText(targetChat, targetMessage, ((TdApi.MessageText) newContent).text);
 
-                } else if (newContent instanceof MessageAnimation || newContent instanceof MessageAudio || newContent instanceof MessageDocument || newContent instanceof MessagePhoto || newContent instanceof MessageVideo) {
+                } else if (newContent instanceof TdApi.MessageAnimation || newContent instanceof MessageAudio || newContent instanceof MessageDocument || newContent instanceof MessagePhoto || newContent instanceof MessageVideo) {
 
                     edit = new EditMessageMedia(targetChat, targetMessage, null, Fn.convertToInput(newContent));
 
@@ -165,6 +172,9 @@ public class EditHandler extends TdHandler {
 
 	 }
 
-	 */
 
 }
+
+
+
+ */
