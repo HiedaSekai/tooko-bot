@@ -1,6 +1,5 @@
 package tookox.pm.handlers
 
-/*
 import tooko.main.Fn
 import tooko.main.Lang
 import tooko.td.TdApi
@@ -116,5 +115,3 @@ class EditHandler : TdBotHandler() {
     }
 
 }
-
- */

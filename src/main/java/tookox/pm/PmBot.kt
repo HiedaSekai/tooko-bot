@@ -1,6 +1,5 @@
 package tookox.pm
 
-/*
 import kotlinx.coroutines.coroutineScope
 import org.apache.commons.collections4.bidimap.DualHashBidiMap
 import tooko.main.Lang
@@ -12,6 +11,7 @@ import tookox.core.*
 import tookox.core.client.*
 import tookox.core.funs.*
 import tookox.core.utils.*
+import tookox.pm.handlers.ChatPanel
 import tookox.pm.handlers.DeleteHandler
 import tookox.pm.handlers.EditHandler
 import java.util.*
@@ -57,6 +57,8 @@ class PmBot(val image: BotImage) : TdBot(image.data.botToken) {
         addHandler(EditHandler())
 
         addHandler(DeleteHandler())
+
+        addHandler(ChatPanel())
 
         addHandler(LICENCE())
 
@@ -132,5 +134,3 @@ class PmBot(val image: BotImage) : TdBot(image.data.botToken) {
     }
 
 }
-
- */

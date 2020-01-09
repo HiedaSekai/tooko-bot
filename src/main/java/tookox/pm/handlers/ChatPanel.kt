@@ -1,6 +1,16 @@
 package tookox.pm.handlers
 
-/*
+import cn.hutool.core.util.NumberUtil
+import cn.hutool.core.util.StrUtil
+import tooko.main.Fn
+import tooko.td.TdApi.*
+import tooko.td.client.TdException
+import tookox.core.*
+import tookox.core.client.*
+import tookox.core.utils.*
+import tookox.pm.PmBot
+import tookox.pm.PmData
+import kotlin.properties.Delegates
 
 class ChatPanel : TdBotHandler() {
 
@@ -19,7 +29,7 @@ class ChatPanel : TdBotHandler() {
         
     }
 
-    override suspend fun onFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
+    override suspend fun onFunction(userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
 
         if (userId != bot.owner) rejectFunction()
 
@@ -64,52 +74,97 @@ class ChatPanel : TdBotHandler() {
             }
 
             val chat = try {
-                syncOrNull<>()
-                execute<Chat>(GetChat(targetChat))
+
+                getChat(targetChat)
+
             } catch (e: TdException) {
-                sendUnit(Fn.sendText(chatId, Fn.plainText(L.GET_CHAT_FAILED, e)))
+
+                sudo make L.GET_CHAT_FAILED sendTo chatId
+
                 return
+
             }
+
             if (chat.type !is ChatTypePrivate) {
-                sendUnit(Fn.sendText(chatId, Fn.plainText(L.NO_PRIVATE_WARN)))
+
+                sudo make L.NO_PRIVATE_WARN sendTo chatId
+
                 return
+
             }
-            bot.chat = targetChat
-            sendUnit(Fn.sendText(chatId, Fn.parseHtml(L.CHAT_ENTERED, Fn.mention(chat.title, chat.id.toInt()))))
+
+            sudo.chat = targetChat
+
+            sudo makeHtml L.CHAT_ENTERED.input(chat.title.toInlineMention(chat.id.toInt())) sendTo chatId
+
         } else if ("exit" == function) {
-            if (bot.chat != -1) {
-                bot.chat = -1
-                sendUnit(Fn.sendText(chatId, Fn.plainText(L.CHAT_EXITED)))
+
+            if (sudo.chat != -1L) {
+
+                sudo.chat = -1L
+
+                sudo make L.CHAT_EXITED sendTo chatId
+
             } else {
-                sendUnit(Fn.sendText(chatId, Fn.plainText(L.NO_CHAT_ENTERED)))
+
+                sudo make L.NO_CHAT_ENTERED sendTo chatId
+
             }
+
         } else if ("chat" == function) {
+
             val targetChat: Long
+
             if (message.replyToMessageId != 0L) {
+
                 targetChat = findChat(message)
+
                 if (targetChat == -1L) {
-                    sendUnit(Fn.sendText(chatId, Fn.plainText(L.INVALID_REPLY)))
+
+                    sudo make L.INVALID_REPLY sendTo chatId
+
                     return
+
                 }
+
             } else if (params.size != 0) {
-                val targetUser: User = findUser(message, param, params)
+
+                val targetUser = findUser(message, param, params)
+
                 if (targetUser == null) {
-                    sendUnit(Fn.sendText(chatId, Fn.plainText(L.INVALID_CHAT_ID)))
+
+                    sudo make L.INVALID_CHAT_ID sendTo chatId
+
                     return
+
                 }
+
                 targetChat = targetUser.id.toLong()
+
             } else {
-                sendUnit(Fn.sendText(chatId, Fn.plainText(L.REPLY_OR_ID)))
+
+                sudo make L.REPLY_OR_ID sendTo chatId
+
                 return
+
             }
+
             val session = data.getSession(targetChat)
-            val targetUser: User = user(targetChat.toInt())
+
+            val targetUser = getUserOrNull(targetChat.toInt())
+
             if (targetUser == null) {
-                sendUnit(Fn.sendText(chatId, Fn.plainText(L.CHAT_NO_RECORD)))
+
+                sudo make L.CHAT_NO_RECORD sendTo chatId
+
                 return
+
             }
-            sendUnit(Fn.deleteMessage(message))
-            sendUnit(Fn.sendText(chatId, message.replyToMessageId, sessionActions(session), Fn.parseHtml(sessionStat(session))))
+
+            sudo delete message
+
+            sudo makeHtml sessionStat(session) withMarkup sessionActions(session) replyTo message.replyToMessageId sendTo chatId
+
         }
 
 
@@ -180,7 +235,7 @@ class ChatPanel : TdBotHandler() {
     
     }
 
-    override suspend fun onStartPayload(userId: Int, chatId: Long, message: TdApi.Message, payload: String, params: Array<String>) {
+    override suspend fun onStartPayload(userId: Int, chatId: Long, message: Message, payload: String, params: Array<String>) {
 
         if (bot.owner != userId) return sudo.onLaunch(userId, chatId, message)
         
@@ -242,5 +297,3 @@ class ChatPanel : TdBotHandler() {
     }
     
 }
-
- */
