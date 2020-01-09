@@ -1,20 +1,31 @@
 package tookox.scripts
 
+import cn.hutool.http.HttpUtil
 import tooko.td.TdApi
 import java.io.File
 import java.lang.reflect.Constructor
 
 object RawGen {
 
+    val scheme by lazy {
+
+        val file = File("target/td_api.tl")
+
+        val url = "https://raw.githubusercontent.com/tdlib/td/master/td/generate/scheme/td_api.tl"
+
+        if (!file.isFile) {
+
+            HttpUtil.downloadFile(url, file)
+
+        }
+
+        file.readText()
+
+    }
+
     @Suppress("UNCHECKED_CAST")
     @JvmStatic
     fun main(args: Array<String>) {
-
-        /*
-
-        需要添加Java编译参数 -parameters
-
-         */
 
         val src = File("src/main/java/tooko/td/TdApi.java").readText()
 
@@ -60,7 +71,18 @@ import tookox.core.client.*
             var params = ""
             var call = ""
 
-            constructor.parameters.forEach {
+            val tlParams = scheme
+                    .substringAfter("\n${clazz.simpleName.substring(0, 1).toLowerCase()}${clazz.simpleName.substring(1)} ")
+                    .substringBefore(" = ")
+                    .split(' ')
+                    .map { it.substringBefore(':') }
+
+            val rawParams = constructor.parameters
+
+            for (index in rawParams.indices) {
+
+                var name = tlParams[index]
+                val clzName = javaToKotlin(rawParams[index].type.simpleName)
 
                 if (!params.isBlank()) {
 
@@ -69,37 +91,52 @@ import tookox.core.client.*
 
                 }
 
-                if (it.name == "chatId") {
+                while (name.contains('_')) {
 
-                    params += "${it.name}: Number"
+                    val before = name.substringBefore('_')
+                    val after = name.substringAfter('_')
 
-                    call += "${it.name}.toLong()"
+                    name = before + after.substring(0,1).toUpperCase() + after.substring(1)
+
+                }
+
+                if (name == "chatId") {
+
+                    params += "${name}: Number"
+
+                    call += "${name}.toLong()"
 
                 } else {
 
-                    params += "${it.name}: ${(javaToKotlin(it.type.simpleName))}"
+                    params += "${name}: $clzName"
 
-                    call += it.name
+                    call += name
 
                 }
 
             }
 
+            val sync = scheme
+                    .substringBefore("\n${clazz.simpleName.substring(0, 1).toLowerCase()}${clazz.simpleName.substring(1)}")
+                    .substringAfterLast('\n')
+                    .contains("Can be called synchronously")
+
+
             var name = clazz.simpleName
 
             name = name.substring(0, 1).toLowerCase() + name.substring(1)
 
-            val returnType = javaToKotlin(getReturnType(src, clazz.simpleName))
+            val returnType = fmtSchemeClazz(scheme
+                    .substringAfter("\n${clazz.simpleName.substring(0, 1).toLowerCase()}${clazz.simpleName.substring(1)}")
+                    .substringBefore(";")
+                    .substringAfter(" = "))
 
-            val fn = if (constructor.parameterCount == 1) {
 
-                "suspend infix fun"
+            var fn = "fun"
 
-            } else {
+            if (constructor.parameterCount == 1) fn = "infix $fn"
 
-                "suspend fun"
-
-            }
+            if (!sync) fn = "suspend $fn"
 
             var paramsWithCallback = params
 
@@ -107,12 +144,21 @@ import tookox.core.client.*
 
             paramsWithCallback += "block: (suspend CoroutineScope.($returnType) -> Unit)"
 
-            raw.write("""
+            if (sync) {
 
+                raw.write("""
+$fn TdAbsHandler.$name($params) = syncRaw<$returnType>(${clazz.simpleName}($call))
+""")
+
+            } else {
+
+                raw.write("""
 $fn TdAbsHandler.$name($params) = sync<$returnType>(${clazz.simpleName}($call))
 $fn TdAbsHandler.${name}OrNull($params) = syncOrNull<$returnType>(${clazz.simpleName}($call))
 fun TdAbsHandler.$name($paramsWithCallback) = send(${clazz.simpleName}($call), 1, block)
 """)
+
+            }
 
         }
 
@@ -122,11 +168,19 @@ fun TdAbsHandler.$name($paramsWithCallback) = send(${clazz.simpleName}($call), 1
 
     }
 
-    fun getReturnType(src: String, name: String): String {
+    fun fmtSchemeClazz(name: String): String {
 
-        return src.substringBefore("public static class $name extends Function")
-                .substringAfter("Returns {@link ")
-                .substringBefore(' ')
+        return name
+                .replace("int32", "Int")
+                .replace("int53", "Long")
+                .replace("int64", "Long")
+                .replace("string", "String")
+                .replace("boolFalse", "Boolean")
+                .replace("boolTrue", "Bollean")
+                .replace("double", "Double")
+                .replace("bytes", "ByteArray")
+
+                .replace("vector<", "Array<")
 
     }
 

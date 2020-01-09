@@ -1,7 +1,6 @@
 package tookox.core.client
 
 import kotlinx.coroutines.CoroutineScope
-import tooko.td.Client
 import tooko.td.TdApi
 import tooko.td.TdApi.*
 import tooko.td.client.TdException
@@ -10,27 +9,6 @@ import java.util.*
 import kotlin.collections.HashMap
 
 interface TdAbsHandler {
-
-    companion object {
-
-        infix fun <T : Object> syncRaw(function: TdApi.Function): T {
-
-            val result = Client.nativeClientExecute(function)
-
-            if (result is Error) {
-
-                throw TdException(result)
-
-            } else {
-
-                @Suppress("UNCHECKED_CAST")
-                return result as T
-
-            }
-
-        }
-
-    }
 
     val sudo: TdClient
 

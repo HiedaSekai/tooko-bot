@@ -25,7 +25,7 @@ suspend fun TdAbsHandler.syncDeleteForSelf(chatId: Number, vararg messageIds: Lo
 
 fun TdAbsHandler.fetchAndDelete(chatId: Number, messageId: Long) {
 
-    getMessage(chatId, messageId) {
+   getMessage(chatId, messageId) {
 
         delete(chatId, messageId)
 

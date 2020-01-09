@@ -2,7 +2,10 @@
 
 package tookox.core
 
+import tooko.td.Client
+import tooko.td.TdApi
 import tooko.td.TdApi.*
+import tooko.td.client.TdException
 
 val User.displayName get() = "$firstName $lastName".trim()
 
@@ -17,3 +20,20 @@ val Message.text
         (content as MessageText).text.text
 
     } else null
+
+fun <T : Object> syncRaw(function: TdApi.Function): T {
+
+    val result = Client.nativeClientExecute(function)
+
+    if (result is Error) {
+
+        throw TdException(result)
+
+    } else {
+
+        @Suppress("UNCHECKED_CAST")
+        return result as T
+
+    }
+
+}

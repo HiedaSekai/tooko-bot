@@ -17,8 +17,8 @@ import kotlin.properties.Delegates
 
 
 val String.asText: FormattedText get() = FormattedText(this, null)
-val String.asHtml: FormattedText get() = TdAbsHandler.syncRaw(ParseTextEntities(this, TextParseModeHTML()))
-val String.asMarkdown: FormattedText get() = TdAbsHandler.syncRaw(ParseTextEntities(this, TextParseModeMarkdown()))
+val String.asHtml: FormattedText get() = syncRaw(ParseTextEntities(this, TextParseModeHTML()))
+val String.asMarkdown: FormattedText get() = syncRaw(ParseTextEntities(this, TextParseModeMarkdown()))
 
 infix fun TdAbsHandler.make(block: MessageFactory.() -> Unit): MessageFactory {
 
