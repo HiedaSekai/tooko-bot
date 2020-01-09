@@ -3,6 +3,7 @@ package tookox.core.utils
 
 import kotlinx.coroutines.CoroutineScope
 import tooko.td.TdApi.*
+import tookox.core.*
 import tookox.core.client.*
 
 suspend fun TdAbsHandler.writeGeneratedFilePart(generationId: Long, offset: Int, data: ByteArray) = sync<Ok>(WriteGeneratedFilePart(generationId, offset, data))

@@ -39,6 +39,7 @@ package tookox.core.utils
 
 import kotlinx.coroutines.CoroutineScope
 import tooko.td.TdApi.*
+import tookox.core.*
 import tookox.core.client.*
 """)
 
