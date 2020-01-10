@@ -30,7 +30,7 @@ class TdApi {
     class Error : Object {
 
         var code: Int by WeakField()
-        lateinit var message: String
+        var message: String by WeakField()
 
         constructor()
 
@@ -83,18 +83,18 @@ class TdApi {
     class TdlibParameters : Object {
 
         var useTestDc: Boolean by WeakField()
-        lateinit var databaseDirectory: String
-        lateinit var filesDirectory: String
+        var databaseDirectory: String by WeakField()
+        var filesDirectory: String by WeakField()
         var useFileDatabase: Boolean by WeakField()
         var useChatInfoDatabase: Boolean by WeakField()
         var useMessageDatabase: Boolean by WeakField()
         var useSecretChats: Boolean by WeakField()
         var apiId: Int by WeakField()
-        lateinit var apiHash: String
-        lateinit var systemLanguageCode: String
-        lateinit var deviceModel: String
-        lateinit var systemVersion: String
-        lateinit var applicationVersion: String
+        var apiHash: String by WeakField()
+        var systemLanguageCode: String by WeakField()
+        var deviceModel: String by WeakField()
+        var systemVersion: String by WeakField()
+        var applicationVersion: String by WeakField()
         var enableStorageOptimizer: Boolean by WeakField()
         var ignoreFileNames: Boolean by WeakField()
 
@@ -204,7 +204,7 @@ class TdApi {
      */
     class AuthenticationCodeTypeFlashCall : AuthenticationCodeType {
 
-        lateinit var pattern: String
+        var pattern: String by WeakField()
 
         constructor()
 
@@ -229,8 +229,8 @@ class TdApi {
      */
     class AuthenticationCodeInfo : Object {
 
-        lateinit var phoneNumber: String
-        lateinit var type: AuthenticationCodeType
+        var phoneNumber: String by WeakField()
+        var type: AuthenticationCodeType by WeakField()
         var nextType: AuthenticationCodeType? = null
         var timeout: Int by WeakField()
 
@@ -259,7 +259,7 @@ class TdApi {
      */
     class EmailAddressAuthenticationCodeInfo : Object {
 
-        lateinit var emailAddressPattern: String
+        var emailAddressPattern: String by WeakField()
         var length: Int by WeakField()
 
         constructor()
@@ -287,7 +287,7 @@ class TdApi {
 
         var offset: Int by WeakField()
         var length: Int by WeakField()
-        lateinit var type: TextEntityType
+        var type: TextEntityType by WeakField()
 
         constructor()
 
@@ -311,7 +311,7 @@ class TdApi {
      */
     class TextEntities : Object {
 
-        lateinit var entities: Array<TextEntity>
+        var entities: Array<TextEntity> by WeakField()
 
         constructor()
 
@@ -338,8 +338,8 @@ class TdApi {
      */
     class FormattedText : Object {
 
-        lateinit var text: String
-        lateinit var entities: Array<TextEntity>
+        var text: String by WeakField()
+        var entities: Array<TextEntity> by WeakField()
 
         constructor()
 
@@ -365,7 +365,7 @@ class TdApi {
      */
     class TermsOfService : Object {
 
-        lateinit var text: FormattedText
+        var text: FormattedText by WeakField()
         var minUserAge: Int by WeakField()
         var showPopup: Boolean by WeakField()
 
@@ -439,7 +439,7 @@ class TdApi {
      */
     class AuthorizationStateWaitCode : AuthorizationState {
 
-        lateinit var codeInfo: AuthenticationCodeInfo
+        var codeInfo: AuthenticationCodeInfo by WeakField()
 
         constructor()
 
@@ -462,7 +462,7 @@ class TdApi {
      */
     class AuthorizationStateWaitOtherDeviceConfirmation : AuthorizationState {
 
-        lateinit var link: String
+        var link: String by WeakField()
 
         constructor()
 
@@ -484,7 +484,7 @@ class TdApi {
      */
     class AuthorizationStateWaitRegistration : AuthorizationState {
 
-        lateinit var termsOfService: TermsOfService
+        var termsOfService: TermsOfService by WeakField()
 
         constructor()
 
@@ -511,7 +511,7 @@ class TdApi {
 
         var passwordHint: String? = null
         var hasRecoveryEmailAddress: Boolean by WeakField()
-        lateinit var recoveryEmailAddressPattern: String
+        var recoveryEmailAddressPattern: String by WeakField()
 
         constructor()
 
@@ -616,7 +616,7 @@ class TdApi {
      */
     class RecoveryEmailAddress : Object {
 
-        lateinit var recoveryEmailAddress: String
+        var recoveryEmailAddress: String by WeakField()
 
         constructor()
 
@@ -724,7 +724,7 @@ class TdApi {
     class RemoteFile : Object {
 
         var id: String? = null
-        lateinit var uniqueId: String
+        var uniqueId: String by WeakField()
         var isUploadingActive: Boolean by WeakField()
         var isUploadingCompleted: Boolean by WeakField()
         var uploadedSize: Int by WeakField()
@@ -762,8 +762,8 @@ class TdApi {
         var id: Int by WeakField()
         var size: Int by WeakField()
         var expectedSize: Int by WeakField()
-        lateinit var local: LocalFile
-        lateinit var remote: RemoteFile
+        var local: LocalFile by WeakField()
+        var remote: RemoteFile by WeakField()
 
         constructor()
 
@@ -898,8 +898,8 @@ class TdApi {
      */
     class PhotoSize : Object {
 
-        lateinit var type: String
-        lateinit var photo: File
+        var type: String by WeakField()
+        var photo: File by WeakField()
         var width: Int by WeakField()
         var height: Int by WeakField()
 
@@ -930,7 +930,7 @@ class TdApi {
 
         var width: Int by WeakField()
         var height: Int by WeakField()
-        lateinit var data: ByteArray
+        var data: ByteArray by WeakField()
 
         constructor()
 
@@ -1005,7 +1005,7 @@ class TdApi {
      */
     class MaskPosition : Object {
 
-        lateinit var point: MaskPoint
+        var point: MaskPoint by WeakField()
         var xShift: Double by WeakField()
         var yShift: Double by WeakField()
         var scale: Double by WeakField()
@@ -1037,7 +1037,7 @@ class TdApi {
      */
     class PollOption : Object {
 
-        lateinit var text: String
+        var text: String by WeakField()
         var voterCount: Int by WeakField()
         var votePercentage: Int by WeakField()
         var isChosen: Boolean by WeakField()
@@ -1080,11 +1080,11 @@ class TdApi {
         var duration: Int by WeakField()
         var width: Int by WeakField()
         var height: Int by WeakField()
-        lateinit var fileName: String
-        lateinit var mimeType: String
+        var fileName: String by WeakField()
+        var mimeType: String by WeakField()
         var minithumbnail: Minithumbnail? = null
         var thumbnail: PhotoSize? = null
-        lateinit var animation: File
+        var animation: File by WeakField()
 
         constructor()
 
@@ -1129,13 +1129,13 @@ class TdApi {
     class Audio : Object {
 
         var duration: Int by WeakField()
-        lateinit var title: String
-        lateinit var performer: String
-        lateinit var fileName: String
-        lateinit var mimeType: String
+        var title: String by WeakField()
+        var performer: String by WeakField()
+        var fileName: String by WeakField()
+        var mimeType: String by WeakField()
         var albumCoverMinithumbnail: Minithumbnail? = null
         var albumCoverThumbnail: PhotoSize? = null
-        lateinit var audio: File
+        var audio: File by WeakField()
 
         constructor()
 
@@ -1171,11 +1171,11 @@ class TdApi {
      */
     class Document : Object {
 
-        lateinit var fileName: String
-        lateinit var mimeType: String
+        var fileName: String by WeakField()
+        var mimeType: String by WeakField()
         var minithumbnail: Minithumbnail? = null
         var thumbnail: PhotoSize? = null
-        lateinit var document: File
+        var document: File by WeakField()
 
         constructor()
 
@@ -1205,7 +1205,7 @@ class TdApi {
 
         var hasStickers: Boolean by WeakField()
         var minithumbnail: Minithumbnail? = null
-        lateinit var sizes: Array<PhotoSize>
+        var sizes: Array<PhotoSize> by WeakField()
 
         constructor()
 
@@ -1243,12 +1243,12 @@ class TdApi {
         var setId: Long by WeakField()
         var width: Int by WeakField()
         var height: Int by WeakField()
-        lateinit var emoji: String
+        var emoji: String by WeakField()
         var isAnimated: Boolean by WeakField()
         var isMask: Boolean by WeakField()
         var maskPosition: MaskPosition? = null
         var thumbnail: PhotoSize? = null
-        lateinit var sticker: File
+        var sticker: File by WeakField()
 
         constructor()
 
@@ -1296,13 +1296,13 @@ class TdApi {
         var duration: Int by WeakField()
         var width: Int by WeakField()
         var height: Int by WeakField()
-        lateinit var fileName: String
-        lateinit var mimeType: String
+        var fileName: String by WeakField()
+        var mimeType: String by WeakField()
         var hasStickers: Boolean by WeakField()
         var supportsStreaming: Boolean by WeakField()
         var minithumbnail: Minithumbnail? = null
         var thumbnail: PhotoSize? = null
-        lateinit var video: File
+        var video: File by WeakField()
 
         constructor()
 
@@ -1345,7 +1345,7 @@ class TdApi {
         var length: Int by WeakField()
         var minithumbnail: Minithumbnail? = null
         var thumbnail: PhotoSize? = null
-        lateinit var video: File
+        var video: File by WeakField()
 
         constructor()
 
@@ -1379,9 +1379,9 @@ class TdApi {
     class VoiceNote : Object {
 
         var duration: Int by WeakField()
-        lateinit var waveform: ByteArray
-        lateinit var mimeType: String
-        lateinit var voice: File
+        var waveform: ByteArray by WeakField()
+        var mimeType: String by WeakField()
+        var voice: File by WeakField()
 
         constructor()
 
@@ -1411,10 +1411,10 @@ class TdApi {
      */
     class Contact : Object {
 
-        lateinit var phoneNumber: String
-        lateinit var firstName: String
-        lateinit var lastName: String
-        lateinit var vcard: String
+        var phoneNumber: String by WeakField()
+        var firstName: String by WeakField()
+        var lastName: String by WeakField()
+        var vcard: String by WeakField()
         var userId: Int by WeakField()
 
         constructor()
@@ -1480,12 +1480,12 @@ class TdApi {
      */
     class Venue : Object {
 
-        lateinit var location: Location
-        lateinit var title: String
-        lateinit var address: String
-        lateinit var provider: String
-        lateinit var id: String
-        lateinit var type: String
+        var location: Location by WeakField()
+        var title: String by WeakField()
+        var address: String by WeakField()
+        var provider: String by WeakField()
+        var id: String by WeakField()
+        var type: String by WeakField()
 
         constructor()
 
@@ -1520,11 +1520,11 @@ class TdApi {
     class Game : Object {
 
         var id: Long by WeakField()
-        lateinit var shortName: String
-        lateinit var title: String
-        lateinit var text: FormattedText
-        lateinit var description: String
-        lateinit var photo: Photo
+        var shortName: String by WeakField()
+        var title: String by WeakField()
+        var text: FormattedText by WeakField()
+        var description: String by WeakField()
+        var photo: Photo by WeakField()
         var animation: Animation? = null
 
         constructor()
@@ -1558,8 +1558,8 @@ class TdApi {
     class Poll : Object {
 
         var id: Long by WeakField()
-        lateinit var question: String
-        lateinit var options: Array<PollOption>
+        var question: String by WeakField()
+        var options: Array<PollOption> by WeakField()
         var totalVoterCount: Int by WeakField()
         var isClosed: Boolean by WeakField()
 
@@ -1594,8 +1594,8 @@ class TdApi {
     class ProfilePhoto : Object {
 
         var id: Long by WeakField()
-        lateinit var small: File
-        lateinit var big: File
+        var small: File by WeakField()
+        var big: File by WeakField()
 
         constructor()
 
@@ -1622,8 +1622,8 @@ class TdApi {
      */
     class ChatPhoto : Object {
 
-        lateinit var small: File
-        lateinit var big: File
+        var small: File by WeakField()
+        var big: File by WeakField()
 
         constructor()
 
@@ -1682,7 +1682,7 @@ class TdApi {
         var canJoinGroups: Boolean by WeakField()
         var canReadAllGroupMessages: Boolean by WeakField()
         var isInline: Boolean by WeakField()
-        lateinit var inlineQueryPlaceholder: String
+        var inlineQueryPlaceholder: String by WeakField()
         var needLocation: Boolean by WeakField()
 
         constructor()
@@ -1722,8 +1722,8 @@ class TdApi {
      */
     class BotCommand : Object {
 
-        lateinit var command: String
-        lateinit var description: String
+        var command: String by WeakField()
+        var description: String by WeakField()
 
         constructor()
 
@@ -1747,8 +1747,8 @@ class TdApi {
      */
     class BotInfo : Object {
 
-        lateinit var description: String
-        lateinit var commands: Array<BotCommand>
+        var description: String by WeakField()
+        var commands: Array<BotCommand> by WeakField()
 
         constructor()
 
@@ -1772,8 +1772,8 @@ class TdApi {
      */
     class ChatLocation : Object {
 
-        lateinit var location: Location
-        lateinit var address: String
+        var location: Location by WeakField()
+        var address: String by WeakField()
 
         constructor()
 
@@ -1814,21 +1814,21 @@ class TdApi {
     class User : Object {
 
         var id: Int by WeakField()
-        lateinit var firstName: String
-        lateinit var lastName: String
-        lateinit var username: String
-        lateinit var phoneNumber: String
-        lateinit var status: UserStatus
+        var firstName: String by WeakField()
+        var lastName: String by WeakField()
+        var username: String by WeakField()
+        var phoneNumber: String by WeakField()
+        var status: UserStatus by WeakField()
         var profilePhoto: ProfilePhoto? = null
         var isContact: Boolean by WeakField()
         var isMutualContact: Boolean by WeakField()
         var isVerified: Boolean by WeakField()
         var isSupport: Boolean by WeakField()
-        lateinit var restrictionReason: String
+        var restrictionReason: String by WeakField()
         var isScam: Boolean by WeakField()
         var haveAccess: Boolean by WeakField()
-        lateinit var type: UserType
-        lateinit var languageCode: String
+        var type: UserType by WeakField()
+        var languageCode: String by WeakField()
 
         constructor()
 
@@ -1877,8 +1877,8 @@ class TdApi {
         var canBeCalled: Boolean by WeakField()
         var hasPrivateCalls: Boolean by WeakField()
         var needPhoneNumberPrivacyException: Boolean by WeakField()
-        lateinit var bio: String
-        lateinit var shareText: String
+        var bio: String by WeakField()
+        var shareText: String by WeakField()
         var groupInCommonCount: Int by WeakField()
         var botInfo: BotInfo? = null
 
@@ -1913,7 +1913,7 @@ class TdApi {
 
         var id: Long by WeakField()
         var addedDate: Int by WeakField()
-        lateinit var sizes: Array<PhotoSize>
+        var sizes: Array<PhotoSize> by WeakField()
 
         constructor()
 
@@ -1939,7 +1939,7 @@ class TdApi {
     class UserProfilePhotos : Object {
 
         var totalCount: Int by WeakField()
-        lateinit var photos: Array<UserProfilePhoto>
+        var photos: Array<UserProfilePhoto> by WeakField()
 
         constructor()
 
@@ -1964,7 +1964,7 @@ class TdApi {
     class Users : Object {
 
         var totalCount: Int by WeakField()
-        lateinit var userIds: IntArray
+        var userIds: IntArray by WeakField()
 
         constructor()
 
@@ -1990,7 +1990,7 @@ class TdApi {
     class ChatAdministrator : Object {
 
         var userId: Int by WeakField()
-        lateinit var customTitle: String
+        var customTitle: String by WeakField()
         var isOwner: Boolean by WeakField()
 
         constructor()
@@ -2015,7 +2015,7 @@ class TdApi {
      */
     class ChatAdministrators : Object {
 
-        lateinit var administrators: Array<ChatAdministrator>
+        var administrators: Array<ChatAdministrator> by WeakField()
 
         constructor()
 
@@ -2091,7 +2091,7 @@ class TdApi {
      */
     class ChatMemberStatusCreator : ChatMemberStatus {
 
-        lateinit var customTitle: String
+        var customTitle: String by WeakField()
         var isMember: Boolean by WeakField()
 
         constructor()
@@ -2130,7 +2130,7 @@ class TdApi {
      */
     class ChatMemberStatusAdministrator : ChatMemberStatus {
 
-        lateinit var customTitle: String
+        var customTitle: String by WeakField()
         var canBeEdited: Boolean by WeakField()
         var canChangeInfo: Boolean by WeakField()
         var canPostMessages: Boolean by WeakField()
@@ -2187,7 +2187,7 @@ class TdApi {
 
         var isMember: Boolean by WeakField()
         var restrictedUntilDate: Int by WeakField()
-        lateinit var permissions: ChatPermissions
+        var permissions: ChatPermissions by WeakField()
 
         constructor()
 
@@ -2255,7 +2255,7 @@ class TdApi {
         var userId: Int by WeakField()
         var inviterUserId: Int by WeakField()
         var joinedChatDate: Int by WeakField()
-        lateinit var status: ChatMemberStatus
+        var status: ChatMemberStatus by WeakField()
         var botInfo: BotInfo? = null
 
         constructor()
@@ -2284,7 +2284,7 @@ class TdApi {
     class ChatMembers : Object {
 
         var totalCount: Int by WeakField()
-        lateinit var members: Array<ChatMember>
+        var members: Array<ChatMember> by WeakField()
 
         constructor()
 
@@ -2389,7 +2389,7 @@ class TdApi {
      */
     class SupergroupMembersFilterContacts : SupergroupMembersFilter {
 
-        lateinit var query: String
+        var query: String by WeakField()
 
         constructor()
 
@@ -2421,7 +2421,7 @@ class TdApi {
      */
     class SupergroupMembersFilterSearch : SupergroupMembersFilter {
 
-        lateinit var query: String
+        var query: String by WeakField()
 
         constructor()
 
@@ -2444,7 +2444,7 @@ class TdApi {
      */
     class SupergroupMembersFilterRestricted : SupergroupMembersFilter {
 
-        lateinit var query: String
+        var query: String by WeakField()
 
         constructor()
 
@@ -2467,7 +2467,7 @@ class TdApi {
      */
     class SupergroupMembersFilterBanned : SupergroupMembersFilter {
 
-        lateinit var query: String
+        var query: String by WeakField()
 
         constructor()
 
@@ -2506,7 +2506,7 @@ class TdApi {
 
         var id: Int by WeakField()
         var memberCount: Int by WeakField()
-        lateinit var status: ChatMemberStatus
+        var status: ChatMemberStatus by WeakField()
         var isActive: Boolean by WeakField()
         var upgradedToSupergroupId: Int by WeakField()
 
@@ -2539,10 +2539,10 @@ class TdApi {
      */
     class BasicGroupFullInfo : Object {
 
-        lateinit var description: String
+        var description: String by WeakField()
         var creatorUserId: Int by WeakField()
-        lateinit var members: Array<ChatMember>
-        lateinit var inviteLink: String
+        var members: Array<ChatMember> by WeakField()
+        var inviteLink: String by WeakField()
 
         constructor()
 
@@ -2588,9 +2588,9 @@ class TdApi {
     class Supergroup : Object {
 
         var id: Int by WeakField()
-        lateinit var username: String
+        var username: String by WeakField()
         var date: Int by WeakField()
-        lateinit var status: ChatMemberStatus
+        var status: ChatMemberStatus by WeakField()
         var memberCount: Int by WeakField()
         var hasLinkedChat: Boolean by WeakField()
         var hasLocation: Boolean by WeakField()
@@ -2598,7 +2598,7 @@ class TdApi {
         var isSlowModeEnabled: Boolean by WeakField()
         var isChannel: Boolean by WeakField()
         var isVerified: Boolean by WeakField()
-        lateinit var restrictionReason: String
+        var restrictionReason: String by WeakField()
         var isScam: Boolean by WeakField()
 
         constructor()
@@ -2662,7 +2662,7 @@ class TdApi {
      */
     class SupergroupFullInfo : Object {
 
-        lateinit var description: String
+        var description: String by WeakField()
         var memberCount: Int by WeakField()
         var administratorCount: Int by WeakField()
         var restrictedCount: Int by WeakField()
@@ -2678,7 +2678,7 @@ class TdApi {
         var isAllHistoryAvailable: Boolean by WeakField()
         var stickerSetId: Long by WeakField()
         var location: ChatLocation? = null
-        lateinit var inviteLink: String
+        var inviteLink: String by WeakField()
         var upgradedFromBasicGroupId: Int by WeakField()
         var upgradedFromMaxMessageId: Long by WeakField()
 
@@ -2771,10 +2771,10 @@ class TdApi {
 
         var id: Int by WeakField()
         var userId: Int by WeakField()
-        lateinit var state: SecretChatState
+        var state: SecretChatState by WeakField()
         var isOutbound: Boolean by WeakField()
         var ttl: Int by WeakField()
-        lateinit var keyHash: ByteArray
+        var keyHash: ByteArray by WeakField()
         var layer: Int by WeakField()
 
         constructor()
@@ -2830,7 +2830,7 @@ class TdApi {
      */
     class MessageForwardOriginHiddenUser : MessageForwardOrigin {
 
-        lateinit var senderName: String
+        var senderName: String by WeakField()
 
         constructor()
 
@@ -2857,7 +2857,7 @@ class TdApi {
 
         var chatId: Long by WeakField()
         var messageId: Long by WeakField()
-        lateinit var authorSignature: String
+        var authorSignature: String by WeakField()
 
         constructor()
 
@@ -2886,7 +2886,7 @@ class TdApi {
      */
     class MessageForwardInfo : Object {
 
-        lateinit var origin: MessageForwardOrigin
+        var origin: MessageForwardOrigin by WeakField()
         var date: Int by WeakField()
         var fromChatId: Long by WeakField()
         var fromMessageId: Long by WeakField()
@@ -2935,7 +2935,7 @@ class TdApi {
     class MessageSendingStateFailed : MessageSendingState {
 
         var errorCode: Int by WeakField()
-        lateinit var errorMessage: String
+        var errorMessage: String by WeakField()
         var canRetry: Boolean by WeakField()
         var retryAfter: Double by WeakField()
 
@@ -3013,11 +3013,11 @@ class TdApi {
         var ttl: Int by WeakField()
         var ttlExpiresIn: Double by WeakField()
         var viaBotUserId: Int by WeakField()
-        lateinit var authorSignature: String
+        var authorSignature: String by WeakField()
         var views: Int by WeakField()
         var mediaAlbumId: Long by WeakField()
-        lateinit var restrictionReason: String
-        lateinit var content: MessageContent
+        var restrictionReason: String by WeakField()
+        var content: MessageContent by WeakField()
         var replyMarkup: ReplyMarkup? = null
 
         constructor()
@@ -3067,7 +3067,7 @@ class TdApi {
     class Messages : Object {
 
         var totalCount: Int by WeakField()
-        lateinit var messages: Array<Message>
+        var messages: Array<Message> by WeakField()
 
         constructor()
 
@@ -3091,7 +3091,7 @@ class TdApi {
      */
     class FoundMessages : Object {
 
-        lateinit var messages: Array<Message>
+        var messages: Array<Message> by WeakField()
         var nextFromSearchId: Long by WeakField()
 
         constructor()
@@ -3163,7 +3163,7 @@ class TdApi {
         var useDefaultMuteFor: Boolean by WeakField()
         var muteFor: Int by WeakField()
         var useDefaultSound: Boolean by WeakField()
-        lateinit var sound: String
+        var sound: String by WeakField()
         var useDefaultShowPreview: Boolean by WeakField()
         var showPreview: Boolean by WeakField()
         var useDefaultDisablePinnedMessageNotifications: Boolean by WeakField()
@@ -3206,7 +3206,7 @@ class TdApi {
     class ScopeNotificationSettings : Object {
 
         var muteFor: Int by WeakField()
-        lateinit var sound: String
+        var sound: String by WeakField()
         var showPreview: Boolean by WeakField()
         var disablePinnedMessageNotifications: Boolean by WeakField()
         var disableMentionNotifications: Boolean by WeakField()
@@ -3239,7 +3239,7 @@ class TdApi {
     class DraftMessage : Object {
 
         var replyToMessageId: Long by WeakField()
-        lateinit var inputMessageText: InputMessageContent
+        var inputMessageText: InputMessageContent by WeakField()
 
         constructor()
 
@@ -3420,11 +3420,11 @@ class TdApi {
     class Chat : Object {
 
         var id: Long by WeakField()
-        lateinit var type: ChatType
+        var type: ChatType by WeakField()
         var chatList: ChatList? = null
-        lateinit var title: String
+        var title: String by WeakField()
         var photo: ChatPhoto? = null
-        lateinit var permissions: ChatPermissions
+        var permissions: ChatPermissions by WeakField()
         var lastMessage: Message? = null
         var order: Long by WeakField()
         var isPinned: Boolean by WeakField()
@@ -3439,12 +3439,12 @@ class TdApi {
         var lastReadInboxMessageId: Long by WeakField()
         var lastReadOutboxMessageId: Long by WeakField()
         var unreadMentionCount: Int by WeakField()
-        lateinit var notificationSettings: ChatNotificationSettings
+        var notificationSettings: ChatNotificationSettings by WeakField()
         var actionBar: ChatActionBar? = null
         var pinnedMessageId: Long by WeakField()
         var replyMarkupMessageId: Long by WeakField()
         var draftMessage: DraftMessage? = null
-        lateinit var clientData: String
+        var clientData: String by WeakField()
 
         constructor()
 
@@ -3491,7 +3491,7 @@ class TdApi {
      */
     class Chats : Object {
 
-        lateinit var chatIds: LongArray
+        var chatIds: LongArray by WeakField()
 
         constructor()
 
@@ -3539,8 +3539,8 @@ class TdApi {
      */
     class ChatsNearby : Object {
 
-        lateinit var usersNearby: Array<ChatNearby>
-        lateinit var supergroupsNearby: Array<ChatNearby>
+        var usersNearby: Array<ChatNearby> by WeakField()
+        var supergroupsNearby: Array<ChatNearby> by WeakField()
 
         constructor()
 
@@ -3563,7 +3563,7 @@ class TdApi {
      */
     class ChatInviteLink : Object {
 
-        lateinit var inviteLink: String
+        var inviteLink: String by WeakField()
 
         constructor()
 
@@ -3594,11 +3594,11 @@ class TdApi {
     class ChatInviteLinkInfo : Object {
 
         var chatId: Long by WeakField()
-        lateinit var type: ChatType
-        lateinit var title: String
+        var type: ChatType by WeakField()
+        var title: String by WeakField()
         var photo: ChatPhoto? = null
         var memberCount: Int by WeakField()
-        lateinit var memberUserIds: IntArray
+        var memberUserIds: IntArray by WeakField()
         var isPublic: Boolean by WeakField()
 
         constructor()
@@ -3745,8 +3745,8 @@ class TdApi {
      */
     class KeyboardButton : Object {
 
-        lateinit var text: String
-        lateinit var type: KeyboardButtonType
+        var text: String by WeakField()
+        var type: KeyboardButtonType by WeakField()
 
         constructor()
 
@@ -3774,7 +3774,7 @@ class TdApi {
      */
     class InlineKeyboardButtonTypeUrl : InlineKeyboardButtonType {
 
-        lateinit var url: String
+        var url: String by WeakField()
 
         constructor()
 
@@ -3798,9 +3798,9 @@ class TdApi {
      */
     class InlineKeyboardButtonTypeLoginUrl : InlineKeyboardButtonType {
 
-        lateinit var url: String
+        var url: String by WeakField()
         var id: Int by WeakField()
-        lateinit var forwardText: String
+        var forwardText: String by WeakField()
 
         constructor()
 
@@ -3824,7 +3824,7 @@ class TdApi {
      */
     class InlineKeyboardButtonTypeCallback : InlineKeyboardButtonType {
 
-        lateinit var data: ByteArray
+        var data: ByteArray by WeakField()
 
         constructor()
 
@@ -3858,7 +3858,7 @@ class TdApi {
      */
     class InlineKeyboardButtonTypeSwitchInline : InlineKeyboardButtonType {
 
-        lateinit var query: String
+        var query: String by WeakField()
         var inCurrentChat: Boolean by WeakField()
 
         constructor()
@@ -3894,8 +3894,8 @@ class TdApi {
      */
     class InlineKeyboardButton : Object {
 
-        lateinit var text: String
-        lateinit var type: InlineKeyboardButtonType
+        var text: String by WeakField()
+        var type: InlineKeyboardButtonType by WeakField()
 
         constructor()
 
@@ -3974,7 +3974,7 @@ class TdApi {
      */
     class ReplyMarkupShowKeyboard : ReplyMarkup {
 
-        lateinit var rows: Array<Array<KeyboardButton>>
+        var rows: Array<Array<KeyboardButton>> by WeakField()
         var resizeKeyboard: Boolean by WeakField()
         var oneTime: Boolean by WeakField()
         var isPersonal: Boolean by WeakField()
@@ -4002,7 +4002,7 @@ class TdApi {
      */
     class ReplyMarkupInlineKeyboard : ReplyMarkup {
 
-        lateinit var rows: Array<Array<InlineKeyboardButton>>
+        var rows: Array<Array<InlineKeyboardButton>> by WeakField()
 
         constructor()
 
@@ -4030,7 +4030,7 @@ class TdApi {
      */
     class LoginUrlInfoOpen : LoginUrlInfo {
 
-        lateinit var url: String
+        var url: String by WeakField()
         var skipConfirm: Boolean by WeakField()
 
         constructor()
@@ -4057,8 +4057,8 @@ class TdApi {
      */
     class LoginUrlInfoRequestConfirmation : LoginUrlInfo {
 
-        lateinit var url: String
-        lateinit var domain: String
+        var url: String by WeakField()
+        var domain: String by WeakField()
         var botUserId: Int by WeakField()
         var requestWriteAccess: Boolean by WeakField()
 
@@ -4090,7 +4090,7 @@ class TdApi {
      */
     class RichTextPlain : RichText {
 
-        lateinit var text: String
+        var text: String by WeakField()
 
         constructor()
 
@@ -4112,7 +4112,7 @@ class TdApi {
      */
     class RichTextBold : RichText {
 
-        lateinit var text: RichText
+        var text: RichText by WeakField()
 
         constructor()
 
@@ -4134,7 +4134,7 @@ class TdApi {
      */
     class RichTextItalic : RichText {
 
-        lateinit var text: RichText
+        var text: RichText by WeakField()
 
         constructor()
 
@@ -4156,7 +4156,7 @@ class TdApi {
      */
     class RichTextUnderline : RichText {
 
-        lateinit var text: RichText
+        var text: RichText by WeakField()
 
         constructor()
 
@@ -4178,7 +4178,7 @@ class TdApi {
      */
     class RichTextStrikethrough : RichText {
 
-        lateinit var text: RichText
+        var text: RichText by WeakField()
 
         constructor()
 
@@ -4200,7 +4200,7 @@ class TdApi {
      */
     class RichTextFixed : RichText {
 
-        lateinit var text: RichText
+        var text: RichText by WeakField()
 
         constructor()
 
@@ -4224,8 +4224,8 @@ class TdApi {
      */
     class RichTextUrl : RichText {
 
-        lateinit var text: RichText
-        lateinit var url: String
+        var text: RichText by WeakField()
+        var url: String by WeakField()
         var isCached: Boolean by WeakField()
 
         constructor()
@@ -4251,8 +4251,8 @@ class TdApi {
      */
     class RichTextEmailAddress : RichText {
 
-        lateinit var text: RichText
-        lateinit var emailAddress: String
+        var text: RichText by WeakField()
+        var emailAddress: String by WeakField()
 
         constructor()
 
@@ -4275,7 +4275,7 @@ class TdApi {
      */
     class RichTextSubscript : RichText {
 
-        lateinit var text: RichText
+        var text: RichText by WeakField()
 
         constructor()
 
@@ -4297,7 +4297,7 @@ class TdApi {
      */
     class RichTextSuperscript : RichText {
 
-        lateinit var text: RichText
+        var text: RichText by WeakField()
 
         constructor()
 
@@ -4319,7 +4319,7 @@ class TdApi {
      */
     class RichTextMarked : RichText {
 
-        lateinit var text: RichText
+        var text: RichText by WeakField()
 
         constructor()
 
@@ -4342,8 +4342,8 @@ class TdApi {
      */
     class RichTextPhoneNumber : RichText {
 
-        lateinit var text: RichText
-        lateinit var phoneNumber: String
+        var text: RichText by WeakField()
+        var phoneNumber: String by WeakField()
 
         constructor()
 
@@ -4371,7 +4371,7 @@ class TdApi {
      */
     class RichTextIcon : RichText {
 
-        lateinit var document: Document
+        var document: Document by WeakField()
         var width: Int by WeakField()
         var height: Int by WeakField()
 
@@ -4398,8 +4398,8 @@ class TdApi {
      */
     class RichTextAnchor : RichText {
 
-        lateinit var text: RichText
-        lateinit var name: String
+        var text: RichText by WeakField()
+        var name: String by WeakField()
 
         constructor()
 
@@ -4422,7 +4422,7 @@ class TdApi {
      */
     class RichTexts : RichText {
 
-        lateinit var texts: Array<RichText>
+        var texts: Array<RichText> by WeakField()
 
         constructor()
 
@@ -4445,8 +4445,8 @@ class TdApi {
      */
     class PageBlockCaption : Object {
 
-        lateinit var text: RichText
-        lateinit var credit: RichText
+        var text: RichText by WeakField()
+        var credit: RichText by WeakField()
 
         constructor()
 
@@ -4470,8 +4470,8 @@ class TdApi {
      */
     class PageBlockListItem : Object {
 
-        lateinit var label: String
-        lateinit var pageBlocks: Array<PageBlock>
+        var label: String by WeakField()
+        var pageBlocks: Array<PageBlock> by WeakField()
 
         constructor()
 
@@ -4574,8 +4574,8 @@ class TdApi {
         var isHeader: Boolean by WeakField()
         var colspan: Int by WeakField()
         var rowspan: Int by WeakField()
-        lateinit var align: PageBlockHorizontalAlignment
-        lateinit var valign: PageBlockVerticalAlignment
+        var align: PageBlockHorizontalAlignment by WeakField()
+        var valign: PageBlockVerticalAlignment by WeakField()
 
         constructor()
 
@@ -4608,7 +4608,7 @@ class TdApi {
      */
     class PageBlockRelatedArticle : Object {
 
-        lateinit var url: String
+        var url: String by WeakField()
         var title: String? = null
         var description: String? = null
         var photo: Photo? = null
@@ -4645,7 +4645,7 @@ class TdApi {
      */
     class PageBlockTitle : PageBlock {
 
-        lateinit var title: RichText
+        var title: RichText by WeakField()
 
         constructor()
 
@@ -4667,7 +4667,7 @@ class TdApi {
      */
     class PageBlockSubtitle : PageBlock {
 
-        lateinit var subtitle: RichText
+        var subtitle: RichText by WeakField()
 
         constructor()
 
@@ -4691,7 +4691,7 @@ class TdApi {
      */
     class PageBlockAuthorDate : PageBlock {
 
-        lateinit var author: RichText
+        var author: RichText by WeakField()
         var publishDate: Int by WeakField()
 
         constructor()
@@ -4715,7 +4715,7 @@ class TdApi {
      */
     class PageBlockHeader : PageBlock {
 
-        lateinit var header: RichText
+        var header: RichText by WeakField()
 
         constructor()
 
@@ -4737,7 +4737,7 @@ class TdApi {
      */
     class PageBlockSubheader : PageBlock {
 
-        lateinit var subheader: RichText
+        var subheader: RichText by WeakField()
 
         constructor()
 
@@ -4759,7 +4759,7 @@ class TdApi {
      */
     class PageBlockKicker : PageBlock {
 
-        lateinit var kicker: RichText
+        var kicker: RichText by WeakField()
 
         constructor()
 
@@ -4781,7 +4781,7 @@ class TdApi {
      */
     class PageBlockParagraph : PageBlock {
 
-        lateinit var text: RichText
+        var text: RichText by WeakField()
 
         constructor()
 
@@ -4804,8 +4804,8 @@ class TdApi {
      */
     class PageBlockPreformatted : PageBlock {
 
-        lateinit var text: RichText
-        lateinit var language: String
+        var text: RichText by WeakField()
+        var language: String by WeakField()
 
         constructor()
 
@@ -4828,7 +4828,7 @@ class TdApi {
      */
     class PageBlockFooter : PageBlock {
 
-        lateinit var footer: RichText
+        var footer: RichText by WeakField()
 
         constructor()
 
@@ -4860,7 +4860,7 @@ class TdApi {
      */
     class PageBlockAnchor : PageBlock {
 
-        lateinit var name: String
+        var name: String by WeakField()
 
         constructor()
 
@@ -4882,7 +4882,7 @@ class TdApi {
      */
     class PageBlockList : PageBlock {
 
-        lateinit var items: Array<PageBlockListItem>
+        var items: Array<PageBlockListItem> by WeakField()
 
         constructor()
 
@@ -4905,8 +4905,8 @@ class TdApi {
      */
     class PageBlockBlockQuote : PageBlock {
 
-        lateinit var text: RichText
-        lateinit var credit: RichText
+        var text: RichText by WeakField()
+        var credit: RichText by WeakField()
 
         constructor()
 
@@ -4930,8 +4930,8 @@ class TdApi {
      */
     class PageBlockPullQuote : PageBlock {
 
-        lateinit var text: RichText
-        lateinit var credit: RichText
+        var text: RichText by WeakField()
+        var credit: RichText by WeakField()
 
         constructor()
 
@@ -4957,7 +4957,7 @@ class TdApi {
     class PageBlockAnimation : PageBlock {
 
         var animation: Animation? = null
-        lateinit var caption: PageBlockCaption
+        var caption: PageBlockCaption by WeakField()
         var needAutoplay: Boolean by WeakField()
 
         constructor()
@@ -4984,7 +4984,7 @@ class TdApi {
     class PageBlockAudio : PageBlock {
 
         var audio: Audio? = null
-        lateinit var caption: PageBlockCaption
+        var caption: PageBlockCaption by WeakField()
 
         constructor()
 
@@ -5010,8 +5010,8 @@ class TdApi {
     class PageBlockPhoto : PageBlock {
 
         var photo: Photo? = null
-        lateinit var caption: PageBlockCaption
-        lateinit var url: String
+        var caption: PageBlockCaption by WeakField()
+        var url: String by WeakField()
 
         constructor()
 
@@ -5039,7 +5039,7 @@ class TdApi {
     class PageBlockVideo : PageBlock {
 
         var video: Video? = null
-        lateinit var caption: PageBlockCaption
+        var caption: PageBlockCaption by WeakField()
         var needAutoplay: Boolean by WeakField()
         var isLooped: Boolean by WeakField()
 
@@ -5068,7 +5068,7 @@ class TdApi {
     class PageBlockVoiceNote : PageBlock {
 
         var voiceNote: VoiceNote? = null
-        lateinit var caption: PageBlockCaption
+        var caption: PageBlockCaption by WeakField()
 
         constructor()
 
@@ -5091,7 +5091,7 @@ class TdApi {
      */
     class PageBlockCover : PageBlock {
 
-        lateinit var cover: PageBlock
+        var cover: PageBlock by WeakField()
 
         constructor()
 
@@ -5122,12 +5122,12 @@ class TdApi {
      */
     class PageBlockEmbedded : PageBlock {
 
-        lateinit var url: String
-        lateinit var html: String
+        var url: String by WeakField()
+        var html: String by WeakField()
         var posterPhoto: Photo? = null
         var width: Int by WeakField()
         var height: Int by WeakField()
-        lateinit var caption: PageBlockCaption
+        var caption: PageBlockCaption by WeakField()
         var isFullWidth: Boolean by WeakField()
         var allowScrolling: Boolean by WeakField()
 
@@ -5164,12 +5164,12 @@ class TdApi {
      */
     class PageBlockEmbeddedPost : PageBlock {
 
-        lateinit var url: String
-        lateinit var author: String
+        var url: String by WeakField()
+        var author: String by WeakField()
         var authorPhoto: Photo? = null
         var date: Int by WeakField()
-        lateinit var pageBlocks: Array<PageBlock>
-        lateinit var caption: PageBlockCaption
+        var pageBlocks: Array<PageBlock> by WeakField()
+        var caption: PageBlockCaption by WeakField()
 
         constructor()
 
@@ -5197,8 +5197,8 @@ class TdApi {
      */
     class PageBlockCollage : PageBlock {
 
-        lateinit var pageBlocks: Array<PageBlock>
-        lateinit var caption: PageBlockCaption
+        var pageBlocks: Array<PageBlock> by WeakField()
+        var caption: PageBlockCaption by WeakField()
 
         constructor()
 
@@ -5222,8 +5222,8 @@ class TdApi {
      */
     class PageBlockSlideshow : PageBlock {
 
-        lateinit var pageBlocks: Array<PageBlock>
-        lateinit var caption: PageBlockCaption
+        var pageBlocks: Array<PageBlock> by WeakField()
+        var caption: PageBlockCaption by WeakField()
 
         constructor()
 
@@ -5248,9 +5248,9 @@ class TdApi {
      */
     class PageBlockChatLink : PageBlock {
 
-        lateinit var title: String
+        var title: String by WeakField()
         var photo: ChatPhoto? = null
-        lateinit var username: String
+        var username: String by WeakField()
 
         constructor()
 
@@ -5277,8 +5277,8 @@ class TdApi {
      */
     class PageBlockTable : PageBlock {
 
-        lateinit var caption: RichText
-        lateinit var cells: Array<Array<PageBlockTableCell>>
+        var caption: RichText by WeakField()
+        var cells: Array<Array<PageBlockTableCell>> by WeakField()
         var isBordered: Boolean by WeakField()
         var isStriped: Boolean by WeakField()
 
@@ -5307,8 +5307,8 @@ class TdApi {
      */
     class PageBlockDetails : PageBlock {
 
-        lateinit var header: RichText
-        lateinit var pageBlocks: Array<PageBlock>
+        var header: RichText by WeakField()
+        var pageBlocks: Array<PageBlock> by WeakField()
         var isOpen: Boolean by WeakField()
 
         constructor()
@@ -5334,8 +5334,8 @@ class TdApi {
      */
     class PageBlockRelatedArticles : PageBlock {
 
-        lateinit var header: RichText
-        lateinit var articles: Array<PageBlockRelatedArticle>
+        var header: RichText by WeakField()
+        var articles: Array<PageBlockRelatedArticle> by WeakField()
 
         constructor()
 
@@ -5362,11 +5362,11 @@ class TdApi {
      */
     class PageBlockMap : PageBlock {
 
-        lateinit var location: Location
+        var location: Location by WeakField()
         var zoom: Int by WeakField()
         var width: Int by WeakField()
         var height: Int by WeakField()
-        lateinit var caption: PageBlockCaption
+        var caption: PageBlockCaption by WeakField()
 
         constructor()
 
@@ -5398,9 +5398,9 @@ class TdApi {
      */
     class WebPageInstantView : Object {
 
-        lateinit var pageBlocks: Array<PageBlock>
+        var pageBlocks: Array<PageBlock> by WeakField()
         var version: Int by WeakField()
-        lateinit var url: String
+        var url: String by WeakField()
         var isRtl: Boolean by WeakField()
         var isFull: Boolean by WeakField()
 
@@ -5449,19 +5449,19 @@ class TdApi {
      */
     class WebPage : Object {
 
-        lateinit var url: String
-        lateinit var displayUrl: String
-        lateinit var type: String
-        lateinit var siteName: String
-        lateinit var title: String
-        lateinit var description: String
+        var url: String by WeakField()
+        var displayUrl: String by WeakField()
+        var type: String by WeakField()
+        var siteName: String by WeakField()
+        var title: String by WeakField()
+        var description: String by WeakField()
         var photo: Photo? = null
-        lateinit var embedUrl: String
-        lateinit var embedType: String
+        var embedUrl: String by WeakField()
+        var embedType: String by WeakField()
         var embedWidth: Int by WeakField()
         var embedHeight: Int by WeakField()
         var duration: Int by WeakField()
-        lateinit var author: String
+        var author: String by WeakField()
         var animation: Animation? = null
         var audio: Audio? = null
         var document: Document? = null
@@ -5516,12 +5516,12 @@ class TdApi {
      */
     class Address : Object {
 
-        lateinit var countryCode: String
-        lateinit var state: String
-        lateinit var city: String
-        lateinit var streetLine1: String
-        lateinit var streetLine2: String
-        lateinit var postalCode: String
+        var countryCode: String by WeakField()
+        var state: String by WeakField()
+        var city: String by WeakField()
+        var streetLine1: String by WeakField()
+        var streetLine2: String by WeakField()
+        var postalCode: String by WeakField()
 
         constructor()
 
@@ -5549,7 +5549,7 @@ class TdApi {
      */
     class LabeledPricePart : Object {
 
-        lateinit var label: String
+        var label: String by WeakField()
         var amount: Long by WeakField()
 
         constructor()
@@ -5582,8 +5582,8 @@ class TdApi {
      */
     class Invoice : Object {
 
-        lateinit var currency: String
-        lateinit var priceParts: Array<LabeledPricePart>
+        var currency: String by WeakField()
+        var priceParts: Array<LabeledPricePart> by WeakField()
         var isTest: Boolean by WeakField()
         var needName: Boolean by WeakField()
         var needPhoneNumber: Boolean by WeakField()
@@ -5625,9 +5625,9 @@ class TdApi {
      */
     class OrderInfo : Object {
 
-        lateinit var name: String
-        lateinit var phoneNumber: String
-        lateinit var emailAddress: String
+        var name: String by WeakField()
+        var phoneNumber: String by WeakField()
+        var emailAddress: String by WeakField()
         var shippingAddress: Address? = null
 
         constructor()
@@ -5655,9 +5655,9 @@ class TdApi {
      */
     class ShippingOption : Object {
 
-        lateinit var id: String
-        lateinit var title: String
-        lateinit var priceParts: Array<LabeledPricePart>
+        var id: String by WeakField()
+        var title: String by WeakField()
+        var priceParts: Array<LabeledPricePart> by WeakField()
 
         constructor()
 
@@ -5682,8 +5682,8 @@ class TdApi {
      */
     class SavedCredentials : Object {
 
-        lateinit var id: String
-        lateinit var title: String
+        var id: String by WeakField()
+        var title: String by WeakField()
 
         constructor()
 
@@ -5806,7 +5806,7 @@ class TdApi {
      */
     class PaymentsProviderStripe : Object {
 
-        lateinit var publishableKey: String
+        var publishableKey: String by WeakField()
         var needCountry: Boolean by WeakField()
         var needPostalCode: Boolean by WeakField()
         var needCardholderName: Boolean by WeakField()
@@ -5840,8 +5840,8 @@ class TdApi {
      */
     class PaymentForm : Object {
 
-        lateinit var invoice: Invoice
-        lateinit var url: String
+        var invoice: Invoice by WeakField()
+        var url: String by WeakField()
         var paymentsProvider: PaymentsProviderStripe? = null
         var savedOrderInfo: OrderInfo? = null
         var savedCredentials: SavedCredentials? = null
@@ -5876,8 +5876,8 @@ class TdApi {
      */
     class ValidatedOrderInfo : Object {
 
-        lateinit var orderInfoId: String
-        lateinit var shippingOptions: Array<ShippingOption>
+        var orderInfoId: String by WeakField()
+        var shippingOptions: Array<ShippingOption> by WeakField()
 
         constructor()
 
@@ -5903,7 +5903,7 @@ class TdApi {
     class PaymentResult : Object {
 
         var success: Boolean by WeakField()
-        lateinit var verificationUrl: String
+        var verificationUrl: String by WeakField()
 
         constructor()
 
@@ -5933,10 +5933,10 @@ class TdApi {
 
         var date: Int by WeakField()
         var paymentsProviderUserId: Int by WeakField()
-        lateinit var invoice: Invoice
+        var invoice: Invoice by WeakField()
         var orderInfo: OrderInfo? = null
         var shippingOption: ShippingOption? = null
-        lateinit var credentialsTitle: String
+        var credentialsTitle: String by WeakField()
 
         constructor()
 
@@ -5964,7 +5964,7 @@ class TdApi {
      */
     class DatedFile : Object {
 
-        lateinit var file: File
+        var file: File by WeakField()
         var date: Int by WeakField()
 
         constructor()
@@ -6160,16 +6160,16 @@ class TdApi {
      */
     class PersonalDetails : Object {
 
-        lateinit var firstName: String
-        lateinit var middleName: String
-        lateinit var lastName: String
-        lateinit var nativeFirstName: String
-        lateinit var nativeMiddleName: String
-        lateinit var nativeLastName: String
-        lateinit var birthdate: Date
-        lateinit var gender: String
-        lateinit var countryCode: String
-        lateinit var residenceCountryCode: String
+        var firstName: String by WeakField()
+        var middleName: String by WeakField()
+        var lastName: String by WeakField()
+        var nativeFirstName: String by WeakField()
+        var nativeMiddleName: String by WeakField()
+        var nativeLastName: String by WeakField()
+        var birthdate: Date by WeakField()
+        var gender: String by WeakField()
+        var countryCode: String by WeakField()
+        var residenceCountryCode: String by WeakField()
 
         constructor()
 
@@ -6206,12 +6206,12 @@ class TdApi {
      */
     class IdentityDocument : Object {
 
-        lateinit var number: String
+        var number: String by WeakField()
         var expiryDate: Date? = null
-        lateinit var frontSide: DatedFile
-        lateinit var reverseSide: DatedFile
+        var frontSide: DatedFile by WeakField()
+        var reverseSide: DatedFile by WeakField()
         var selfie: DatedFile? = null
-        lateinit var translation: Array<DatedFile>
+        var translation: Array<DatedFile> by WeakField()
 
         constructor()
 
@@ -6277,8 +6277,8 @@ class TdApi {
      */
     class PersonalDocument : Object {
 
-        lateinit var files: Array<DatedFile>
-        lateinit var translation: Array<DatedFile>
+        var files: Array<DatedFile> by WeakField()
+        var translation: Array<DatedFile> by WeakField()
 
         constructor()
 
@@ -6331,7 +6331,7 @@ class TdApi {
      */
     class PassportElementPersonalDetails : PassportElement {
 
-        lateinit var personalDetails: PersonalDetails
+        var personalDetails: PersonalDetails by WeakField()
 
         constructor()
 
@@ -6353,7 +6353,7 @@ class TdApi {
      */
     class PassportElementPassport : PassportElement {
 
-        lateinit var passport: IdentityDocument
+        var passport: IdentityDocument by WeakField()
 
         constructor()
 
@@ -6375,7 +6375,7 @@ class TdApi {
      */
     class PassportElementDriverLicense : PassportElement {
 
-        lateinit var driverLicense: IdentityDocument
+        var driverLicense: IdentityDocument by WeakField()
 
         constructor()
 
@@ -6397,7 +6397,7 @@ class TdApi {
      */
     class PassportElementIdentityCard : PassportElement {
 
-        lateinit var identityCard: IdentityDocument
+        var identityCard: IdentityDocument by WeakField()
 
         constructor()
 
@@ -6419,7 +6419,7 @@ class TdApi {
      */
     class PassportElementInternalPassport : PassportElement {
 
-        lateinit var internalPassport: IdentityDocument
+        var internalPassport: IdentityDocument by WeakField()
 
         constructor()
 
@@ -6441,7 +6441,7 @@ class TdApi {
      */
     class PassportElementAddress : PassportElement {
 
-        lateinit var address: Address
+        var address: Address by WeakField()
 
         constructor()
 
@@ -6463,7 +6463,7 @@ class TdApi {
      */
     class PassportElementUtilityBill : PassportElement {
 
-        lateinit var utilityBill: PersonalDocument
+        var utilityBill: PersonalDocument by WeakField()
 
         constructor()
 
@@ -6485,7 +6485,7 @@ class TdApi {
      */
     class PassportElementBankStatement : PassportElement {
 
-        lateinit var bankStatement: PersonalDocument
+        var bankStatement: PersonalDocument by WeakField()
 
         constructor()
 
@@ -6507,7 +6507,7 @@ class TdApi {
      */
     class PassportElementRentalAgreement : PassportElement {
 
-        lateinit var rentalAgreement: PersonalDocument
+        var rentalAgreement: PersonalDocument by WeakField()
 
         constructor()
 
@@ -6529,7 +6529,7 @@ class TdApi {
      */
     class PassportElementPassportRegistration : PassportElement {
 
-        lateinit var passportRegistration: PersonalDocument
+        var passportRegistration: PersonalDocument by WeakField()
 
         constructor()
 
@@ -6551,7 +6551,7 @@ class TdApi {
      */
     class PassportElementTemporaryRegistration : PassportElement {
 
-        lateinit var temporaryRegistration: PersonalDocument
+        var temporaryRegistration: PersonalDocument by WeakField()
 
         constructor()
 
@@ -6573,7 +6573,7 @@ class TdApi {
      */
     class PassportElementPhoneNumber : PassportElement {
 
-        lateinit var phoneNumber: String
+        var phoneNumber: String by WeakField()
 
         constructor()
 
@@ -6595,7 +6595,7 @@ class TdApi {
      */
     class PassportElementEmailAddress : PassportElement {
 
-        lateinit var emailAddress: String
+        var emailAddress: String by WeakField()
 
         constructor()
 
@@ -6908,7 +6908,7 @@ class TdApi {
      */
     class PassportElements : Object {
 
-        lateinit var elements: Array<PassportElement>
+        var elements: Array<PassportElement> by WeakField()
 
         constructor()
 
@@ -6947,7 +6947,7 @@ class TdApi {
      */
     class PassportElementErrorSourceDataField : PassportElementErrorSource {
 
-        lateinit var fieldName: String
+        var fieldName: String by WeakField()
 
         constructor()
 
@@ -7072,9 +7072,9 @@ class TdApi {
      */
     class PassportElementError : Object {
 
-        lateinit var type: PassportElementType
-        lateinit var message: String
-        lateinit var source: PassportElementErrorSource
+        var type: PassportElementType by WeakField()
+        var message: String by WeakField()
+        var source: PassportElementErrorSource by WeakField()
 
         constructor()
 
@@ -7101,7 +7101,7 @@ class TdApi {
      */
     class PassportSuitableElement : Object {
 
-        lateinit var type: PassportElementType
+        var type: PassportElementType by WeakField()
         var isSelfieRequired: Boolean by WeakField()
         var isTranslationRequired: Boolean by WeakField()
         var isNativeNameRequired: Boolean by WeakField()
@@ -7129,7 +7129,7 @@ class TdApi {
      */
     class PassportRequiredElement : Object {
 
-        lateinit var suitableElements: Array<PassportSuitableElement>
+        var suitableElements: Array<PassportSuitableElement> by WeakField()
 
         constructor()
 
@@ -7154,7 +7154,7 @@ class TdApi {
     class PassportAuthorizationForm : Object {
 
         var id: Int by WeakField()
-        lateinit var requiredElements: Array<PassportRequiredElement>
+        var requiredElements: Array<PassportRequiredElement> by WeakField()
         var privacyPolicyUrl: String? = null
 
         constructor()
@@ -7180,8 +7180,8 @@ class TdApi {
      */
     class PassportElementsWithErrors : Object {
 
-        lateinit var elements: Array<PassportElement>
-        lateinit var errors: Array<PassportElementError>
+        var elements: Array<PassportElement> by WeakField()
+        var errors: Array<PassportElementError> by WeakField()
 
         constructor()
 
@@ -7206,9 +7206,9 @@ class TdApi {
      */
     class EncryptedCredentials : Object {
 
-        lateinit var data: ByteArray
-        lateinit var hash: ByteArray
-        lateinit var secret: ByteArray
+        var data: ByteArray by WeakField()
+        var hash: ByteArray by WeakField()
+        var secret: ByteArray by WeakField()
 
         constructor()
 
@@ -7241,15 +7241,15 @@ class TdApi {
      */
     class EncryptedPassportElement : Object {
 
-        lateinit var type: PassportElementType
-        lateinit var data: ByteArray
-        lateinit var frontSide: DatedFile
+        var type: PassportElementType by WeakField()
+        var data: ByteArray by WeakField()
+        var frontSide: DatedFile by WeakField()
         var reverseSide: DatedFile? = null
         var selfie: DatedFile? = null
-        lateinit var translation: Array<DatedFile>
-        lateinit var files: Array<DatedFile>
-        lateinit var value: String
-        lateinit var hash: String
+        var translation: Array<DatedFile> by WeakField()
+        var files: Array<DatedFile> by WeakField()
+        var value: String by WeakField()
+        var hash: String by WeakField()
 
         constructor()
 
@@ -7530,7 +7530,7 @@ class TdApi {
      */
     class MessageText : MessageContent {
 
-        lateinit var text: FormattedText
+        var text: FormattedText by WeakField()
         var webPage: WebPage? = null
 
         constructor()
@@ -7556,8 +7556,8 @@ class TdApi {
      */
     class MessageAnimation : MessageContent {
 
-        lateinit var animation: Animation
-        lateinit var caption: FormattedText
+        var animation: Animation by WeakField()
+        var caption: FormattedText by WeakField()
         var isSecret: Boolean by WeakField()
 
         constructor()
@@ -7583,8 +7583,8 @@ class TdApi {
      */
     class MessageAudio : MessageContent {
 
-        lateinit var audio: Audio
-        lateinit var caption: FormattedText
+        var audio: Audio by WeakField()
+        var caption: FormattedText by WeakField()
 
         constructor()
 
@@ -7608,8 +7608,8 @@ class TdApi {
      */
     class MessageDocument : MessageContent {
 
-        lateinit var document: Document
-        lateinit var caption: FormattedText
+        var document: Document by WeakField()
+        var caption: FormattedText by WeakField()
 
         constructor()
 
@@ -7634,8 +7634,8 @@ class TdApi {
      */
     class MessagePhoto : MessageContent {
 
-        lateinit var photo: Photo
-        lateinit var caption: FormattedText
+        var photo: Photo by WeakField()
+        var caption: FormattedText by WeakField()
         var isSecret: Boolean by WeakField()
 
         constructor()
@@ -7670,7 +7670,7 @@ class TdApi {
      */
     class MessageSticker : MessageContent {
 
-        lateinit var sticker: Sticker
+        var sticker: Sticker by WeakField()
 
         constructor()
 
@@ -7694,8 +7694,8 @@ class TdApi {
      */
     class MessageVideo : MessageContent {
 
-        lateinit var video: Video
-        lateinit var caption: FormattedText
+        var video: Video by WeakField()
+        var caption: FormattedText by WeakField()
         var isSecret: Boolean by WeakField()
 
         constructor()
@@ -7732,7 +7732,7 @@ class TdApi {
      */
     class MessageVideoNote : MessageContent {
 
-        lateinit var videoNote: VideoNote
+        var videoNote: VideoNote by WeakField()
         var isViewed: Boolean by WeakField()
         var isSecret: Boolean by WeakField()
 
@@ -7760,8 +7760,8 @@ class TdApi {
      */
     class MessageVoiceNote : MessageContent {
 
-        lateinit var voiceNote: VoiceNote
-        lateinit var caption: FormattedText
+        var voiceNote: VoiceNote by WeakField()
+        var caption: FormattedText by WeakField()
         var isListened: Boolean by WeakField()
 
         constructor()
@@ -7789,7 +7789,7 @@ class TdApi {
      */
     class MessageLocation : MessageContent {
 
-        lateinit var location: Location
+        var location: Location by WeakField()
         var livePeriod: Int by WeakField()
         var expiresIn: Int by WeakField()
 
@@ -7815,7 +7815,7 @@ class TdApi {
      */
     class MessageVenue : MessageContent {
 
-        lateinit var venue: Venue
+        var venue: Venue by WeakField()
 
         constructor()
 
@@ -7837,7 +7837,7 @@ class TdApi {
      */
     class MessageContact : MessageContent {
 
-        lateinit var contact: Contact
+        var contact: Contact by WeakField()
 
         constructor()
 
@@ -7859,7 +7859,7 @@ class TdApi {
      */
     class MessageGame : MessageContent {
 
-        lateinit var game: Game
+        var game: Game by WeakField()
 
         constructor()
 
@@ -7881,7 +7881,7 @@ class TdApi {
      */
     class MessagePoll : MessageContent {
 
-        lateinit var poll: Poll
+        var poll: Poll by WeakField()
 
         constructor()
 
@@ -7912,12 +7912,12 @@ class TdApi {
      */
     class MessageInvoice : MessageContent {
 
-        lateinit var title: String
-        lateinit var description: String
+        var title: String by WeakField()
+        var description: String by WeakField()
         var photo: Photo? = null
-        lateinit var currency: String
+        var currency: String by WeakField()
         var totalAmount: Long by WeakField()
-        lateinit var startParameter: String
+        var startParameter: String by WeakField()
         var isTest: Boolean by WeakField()
         var needShippingAddress: Boolean by WeakField()
         var receiptMessageId: Long by WeakField()
@@ -7951,7 +7951,7 @@ class TdApi {
      */
     class MessageCall : MessageContent {
 
-        lateinit var discardReason: CallDiscardReason
+        var discardReason: CallDiscardReason by WeakField()
         var duration: Int by WeakField()
 
         constructor()
@@ -7976,8 +7976,8 @@ class TdApi {
      */
     class MessageBasicGroupChatCreate : MessageContent {
 
-        lateinit var title: String
-        lateinit var memberUserIds: IntArray
+        var title: String by WeakField()
+        var memberUserIds: IntArray by WeakField()
 
         constructor()
 
@@ -8000,7 +8000,7 @@ class TdApi {
      */
     class MessageSupergroupChatCreate : MessageContent {
 
-        lateinit var title: String
+        var title: String by WeakField()
 
         constructor()
 
@@ -8022,7 +8022,7 @@ class TdApi {
      */
     class MessageChatChangeTitle : MessageContent {
 
-        lateinit var title: String
+        var title: String by WeakField()
 
         constructor()
 
@@ -8044,7 +8044,7 @@ class TdApi {
      */
     class MessageChatChangePhoto : MessageContent {
 
-        lateinit var photo: Photo
+        var photo: Photo by WeakField()
 
         constructor()
 
@@ -8076,7 +8076,7 @@ class TdApi {
      */
     class MessageChatAddMembers : MessageContent {
 
-        lateinit var memberUserIds: IntArray
+        var memberUserIds: IntArray by WeakField()
 
         constructor()
 
@@ -8153,7 +8153,7 @@ class TdApi {
      */
     class MessageChatUpgradeFrom : MessageContent {
 
-        lateinit var title: String
+        var title: String by WeakField()
         var basicGroupId: Int by WeakField()
 
         constructor()
@@ -8231,7 +8231,7 @@ class TdApi {
      */
     class MessageCustomServiceAction : MessageContent {
 
-        lateinit var text: String
+        var text: String by WeakField()
 
         constructor()
 
@@ -8286,7 +8286,7 @@ class TdApi {
     class MessagePaymentSuccessful : MessageContent {
 
         var invoiceMessageId: Long by WeakField()
-        lateinit var currency: String
+        var currency: String by WeakField()
         var totalAmount: Long by WeakField()
 
         constructor()
@@ -8322,13 +8322,13 @@ class TdApi {
     class MessagePaymentSuccessfulBot : MessageContent {
 
         var invoiceMessageId: Long by WeakField()
-        lateinit var currency: String
+        var currency: String by WeakField()
         var totalAmount: Long by WeakField()
-        lateinit var invoicePayload: ByteArray
+        var invoicePayload: ByteArray by WeakField()
         var shippingOptionId: String? = null
         var orderInfo: OrderInfo? = null
-        lateinit var telegramPaymentChargeId: String
-        lateinit var providerPaymentChargeId: String
+        var telegramPaymentChargeId: String by WeakField()
+        var providerPaymentChargeId: String by WeakField()
 
         constructor()
 
@@ -8367,7 +8367,7 @@ class TdApi {
      */
     class MessageWebsiteConnected : MessageContent {
 
-        lateinit var domainName: String
+        var domainName: String by WeakField()
 
         constructor()
 
@@ -8389,7 +8389,7 @@ class TdApi {
      */
     class MessagePassportDataSent : MessageContent {
 
-        lateinit var types: Array<PassportElementType>
+        var types: Array<PassportElementType> by WeakField()
 
         constructor()
 
@@ -8413,8 +8413,8 @@ class TdApi {
      */
     class MessagePassportDataReceived : MessageContent {
 
-        lateinit var elements: Array<EncryptedPassportElement>
-        lateinit var credentials: EncryptedCredentials
+        var elements: Array<EncryptedPassportElement> by WeakField()
+        var credentials: EncryptedCredentials by WeakField()
 
         constructor()
 
@@ -8585,7 +8585,7 @@ class TdApi {
      */
     class TextEntityTypePreCode : TextEntityType {
 
-        lateinit var language: String
+        var language: String by WeakField()
 
         constructor()
 
@@ -8607,7 +8607,7 @@ class TdApi {
      */
     class TextEntityTypeTextUrl : TextEntityType {
 
-        lateinit var url: String
+        var url: String by WeakField()
 
         constructor()
 
@@ -9743,7 +9743,7 @@ class TdApi {
      */
     class Stickers : Object {
 
-        lateinit var stickers: Array<Sticker>
+        var stickers: Array<Sticker> by WeakField()
 
         constructor()
 
@@ -9765,7 +9765,7 @@ class TdApi {
      */
     class Emojis : Object {
 
-        lateinit var emojis: Array<String>
+        var emojis: Array<String> by WeakField()
 
         constructor()
 
@@ -9802,8 +9802,8 @@ class TdApi {
     class StickerSet : Object {
 
         var id: Long by WeakField()
-        lateinit var title: String
-        lateinit var name: String
+        var title: String by WeakField()
+        var name: String by WeakField()
         var thumbnail: PhotoSize? = null
         var isInstalled: Boolean by WeakField()
         var isArchived: Boolean by WeakField()
@@ -9811,8 +9811,8 @@ class TdApi {
         var isAnimated: Boolean by WeakField()
         var isMasks: Boolean by WeakField()
         var isViewed: Boolean by WeakField()
-        lateinit var stickers: Array<Sticker>
-        lateinit var emojis: Array<Emojis>
+        var stickers: Array<Sticker> by WeakField()
+        var emojis: Array<Emojis> by WeakField()
 
         constructor()
 
@@ -9859,8 +9859,8 @@ class TdApi {
     class StickerSetInfo : Object {
 
         var id: Long by WeakField()
-        lateinit var title: String
-        lateinit var name: String
+        var title: String by WeakField()
+        var name: String by WeakField()
         var thumbnail: PhotoSize? = null
         var isInstalled: Boolean by WeakField()
         var isArchived: Boolean by WeakField()
@@ -9869,7 +9869,7 @@ class TdApi {
         var isMasks: Boolean by WeakField()
         var isViewed: Boolean by WeakField()
         var size: Int by WeakField()
-        lateinit var covers: Array<Sticker>
+        var covers: Array<Sticker> by WeakField()
 
         constructor()
 
@@ -9904,7 +9904,7 @@ class TdApi {
     class StickerSets : Object {
 
         var totalCount: Int by WeakField()
-        lateinit var sets: Array<StickerSetInfo>
+        var sets: Array<StickerSetInfo> by WeakField()
 
         constructor()
 
@@ -10020,10 +10020,10 @@ class TdApi {
     class CallConnection : Object {
 
         var id: Long by WeakField()
-        lateinit var ip: String
-        lateinit var ipv6: String
+        var ip: String by WeakField()
+        var ipv6: String by WeakField()
         var port: Int by WeakField()
-        lateinit var peerTag: ByteArray
+        var peerTag: ByteArray by WeakField()
 
         constructor()
 
@@ -10116,11 +10116,11 @@ class TdApi {
      */
     class CallStateReady : CallState {
 
-        lateinit var protocol: CallProtocol
-        lateinit var connections: Array<CallConnection>
-        lateinit var config: String
-        lateinit var encryptionKey: ByteArray
-        lateinit var emojis: Array<String>
+        var protocol: CallProtocol by WeakField()
+        var connections: Array<CallConnection> by WeakField()
+        var config: String by WeakField()
+        var encryptionKey: ByteArray by WeakField()
+        var emojis: Array<String> by WeakField()
         var allowP2p: Boolean by WeakField()
 
         constructor()
@@ -10160,7 +10160,7 @@ class TdApi {
      */
     class CallStateDiscarded : CallState {
 
-        lateinit var reason: CallDiscardReason
+        var reason: CallDiscardReason by WeakField()
         var needRating: Boolean by WeakField()
         var needDebugInformation: Boolean by WeakField()
 
@@ -10187,7 +10187,7 @@ class TdApi {
      */
     class CallStateError : CallState {
 
-        lateinit var error: Error
+        var error: Error by WeakField()
 
         constructor()
 
@@ -10290,7 +10290,7 @@ class TdApi {
         var id: Int by WeakField()
         var userId: Int by WeakField()
         var isOutgoing: Boolean by WeakField()
-        lateinit var state: CallState
+        var state: CallState by WeakField()
 
         constructor()
 
@@ -10345,7 +10345,7 @@ class TdApi {
      */
     class Animations : Object {
 
-        lateinit var animations: Array<Animation>
+        var animations: Array<Animation> by WeakField()
 
         constructor()
 
@@ -10370,8 +10370,8 @@ class TdApi {
      */
     class ImportedContacts : Object {
 
-        lateinit var userIds: IntArray
-        lateinit var importerCount: IntArray
+        var userIds: IntArray by WeakField()
+        var importerCount: IntArray by WeakField()
 
         constructor()
 
@@ -10394,7 +10394,7 @@ class TdApi {
      */
     class HttpUrl : Object {
 
-        lateinit var url: String
+        var url: String by WeakField()
 
         constructor()
 
@@ -11018,11 +11018,11 @@ class TdApi {
      */
     class InlineQueryResultArticle : InlineQueryResult {
 
-        lateinit var id: String
-        lateinit var url: String
+        var id: String by WeakField()
+        var url: String by WeakField()
         var hideUrl: Boolean by WeakField()
-        lateinit var title: String
-        lateinit var description: String
+        var title: String by WeakField()
+        var description: String by WeakField()
         var thumbnail: PhotoSize? = null
 
         constructor()
@@ -11052,8 +11052,8 @@ class TdApi {
      */
     class InlineQueryResultContact : InlineQueryResult {
 
-        lateinit var id: String
-        lateinit var contact: Contact
+        var id: String by WeakField()
+        var contact: Contact by WeakField()
         var thumbnail: PhotoSize? = null
 
         constructor()
@@ -11081,9 +11081,9 @@ class TdApi {
      */
     class InlineQueryResultLocation : InlineQueryResult {
 
-        lateinit var id: String
-        lateinit var location: Location
-        lateinit var title: String
+        var id: String by WeakField()
+        var location: Location by WeakField()
+        var title: String by WeakField()
         var thumbnail: PhotoSize? = null
 
         constructor()
@@ -11111,8 +11111,8 @@ class TdApi {
      */
     class InlineQueryResultVenue : InlineQueryResult {
 
-        lateinit var id: String
-        lateinit var venue: Venue
+        var id: String by WeakField()
+        var venue: Venue by WeakField()
         var thumbnail: PhotoSize? = null
 
         constructor()
@@ -11138,8 +11138,8 @@ class TdApi {
      */
     class InlineQueryResultGame : InlineQueryResult {
 
-        lateinit var id: String
-        lateinit var game: Game
+        var id: String by WeakField()
+        var game: Game by WeakField()
 
         constructor()
 
@@ -11164,9 +11164,9 @@ class TdApi {
      */
     class InlineQueryResultAnimation : InlineQueryResult {
 
-        lateinit var id: String
-        lateinit var animation: Animation
-        lateinit var title: String
+        var id: String by WeakField()
+        var animation: Animation by WeakField()
+        var title: String by WeakField()
 
         constructor()
 
@@ -11191,8 +11191,8 @@ class TdApi {
      */
     class InlineQueryResultAudio : InlineQueryResult {
 
-        lateinit var id: String
-        lateinit var audio: Audio
+        var id: String by WeakField()
+        var audio: Audio by WeakField()
 
         constructor()
 
@@ -11218,10 +11218,10 @@ class TdApi {
      */
     class InlineQueryResultDocument : InlineQueryResult {
 
-        lateinit var id: String
-        lateinit var document: Document
-        lateinit var title: String
-        lateinit var description: String
+        var id: String by WeakField()
+        var document: Document by WeakField()
+        var title: String by WeakField()
+        var description: String by WeakField()
 
         constructor()
 
@@ -11249,10 +11249,10 @@ class TdApi {
      */
     class InlineQueryResultPhoto : InlineQueryResult {
 
-        lateinit var id: String
-        lateinit var photo: Photo
-        lateinit var title: String
-        lateinit var description: String
+        var id: String by WeakField()
+        var photo: Photo by WeakField()
+        var title: String by WeakField()
+        var description: String by WeakField()
 
         constructor()
 
@@ -11278,8 +11278,8 @@ class TdApi {
      */
     class InlineQueryResultSticker : InlineQueryResult {
 
-        lateinit var id: String
-        lateinit var sticker: Sticker
+        var id: String by WeakField()
+        var sticker: Sticker by WeakField()
 
         constructor()
 
@@ -11305,10 +11305,10 @@ class TdApi {
      */
     class InlineQueryResultVideo : InlineQueryResult {
 
-        lateinit var id: String
-        lateinit var video: Video
-        lateinit var title: String
-        lateinit var description: String
+        var id: String by WeakField()
+        var video: Video by WeakField()
+        var title: String by WeakField()
+        var description: String by WeakField()
 
         constructor()
 
@@ -11335,9 +11335,9 @@ class TdApi {
      */
     class InlineQueryResultVoiceNote : InlineQueryResult {
 
-        lateinit var id: String
-        lateinit var voiceNote: VoiceNote
-        lateinit var title: String
+        var id: String by WeakField()
+        var voiceNote: VoiceNote by WeakField()
+        var title: String by WeakField()
 
         constructor()
 
@@ -11368,10 +11368,10 @@ class TdApi {
     class InlineQueryResults : Object {
 
         var inlineQueryId: Long by WeakField()
-        lateinit var nextOffset: String
-        lateinit var results: Array<InlineQueryResult>
-        lateinit var switchPmText: String
-        lateinit var switchPmParameter: String
+        var nextOffset: String by WeakField()
+        var results: Array<InlineQueryResult> by WeakField()
+        var switchPmText: String by WeakField()
+        var switchPmParameter: String by WeakField()
 
         constructor()
 
@@ -11402,7 +11402,7 @@ class TdApi {
      */
     class CallbackQueryPayloadData : CallbackQueryPayload {
 
-        lateinit var data: ByteArray
+        var data: ByteArray by WeakField()
 
         constructor()
 
@@ -11424,7 +11424,7 @@ class TdApi {
      */
     class CallbackQueryPayloadGame : CallbackQueryPayload {
 
-        lateinit var gameShortName: String
+        var gameShortName: String by WeakField()
 
         constructor()
 
@@ -11448,9 +11448,9 @@ class TdApi {
      */
     class CallbackQueryAnswer : Object {
 
-        lateinit var text: String
+        var text: String by WeakField()
         var showAlert: Boolean by WeakField()
-        lateinit var url: String
+        var url: String by WeakField()
 
         constructor()
 
@@ -11474,7 +11474,7 @@ class TdApi {
      */
     class CustomRequestResult : Object {
 
-        lateinit var result: String
+        var result: String by WeakField()
 
         constructor()
 
@@ -11524,7 +11524,7 @@ class TdApi {
      */
     class GameHighScores : Object {
 
-        lateinit var scores: Array<GameHighScore>
+        var scores: Array<GameHighScore> by WeakField()
 
         constructor()
 
@@ -11546,7 +11546,7 @@ class TdApi {
      */
     class TonLiteServerResponse : Object {
 
-        lateinit var response: ByteArray
+        var response: ByteArray by WeakField()
 
         constructor()
 
@@ -11568,7 +11568,7 @@ class TdApi {
      */
     class TonWalletPasswordSalt : Object {
 
-        lateinit var salt: ByteArray
+        var salt: ByteArray by WeakField()
 
         constructor()
 
@@ -11596,8 +11596,8 @@ class TdApi {
      */
     class ChatEventMessageEdited : ChatEventAction {
 
-        lateinit var oldMessage: Message
-        lateinit var newMessage: Message
+        var oldMessage: Message by WeakField()
+        var newMessage: Message by WeakField()
 
         constructor()
 
@@ -11620,7 +11620,7 @@ class TdApi {
      */
     class ChatEventMessageDeleted : ChatEventAction {
 
-        lateinit var message: Message
+        var message: Message by WeakField()
 
         constructor()
 
@@ -11642,7 +11642,7 @@ class TdApi {
      */
     class ChatEventPollStopped : ChatEventAction {
 
-        lateinit var message: Message
+        var message: Message by WeakField()
 
         constructor()
 
@@ -11664,7 +11664,7 @@ class TdApi {
      */
     class ChatEventMessagePinned : ChatEventAction {
 
-        lateinit var message: Message
+        var message: Message by WeakField()
 
         constructor()
 
@@ -11718,7 +11718,7 @@ class TdApi {
     class ChatEventMemberInvited : ChatEventAction {
 
         var userId: Int by WeakField()
-        lateinit var status: ChatMemberStatus
+        var status: ChatMemberStatus by WeakField()
 
         constructor()
 
@@ -11744,8 +11744,8 @@ class TdApi {
     class ChatEventMemberPromoted : ChatEventAction {
 
         var userId: Int by WeakField()
-        lateinit var oldStatus: ChatMemberStatus
-        lateinit var newStatus: ChatMemberStatus
+        var oldStatus: ChatMemberStatus by WeakField()
+        var newStatus: ChatMemberStatus by WeakField()
 
         constructor()
 
@@ -11772,8 +11772,8 @@ class TdApi {
     class ChatEventMemberRestricted : ChatEventAction {
 
         var userId: Int by WeakField()
-        lateinit var oldStatus: ChatMemberStatus
-        lateinit var newStatus: ChatMemberStatus
+        var oldStatus: ChatMemberStatus by WeakField()
+        var newStatus: ChatMemberStatus by WeakField()
 
         constructor()
 
@@ -11798,8 +11798,8 @@ class TdApi {
      */
     class ChatEventTitleChanged : ChatEventAction {
 
-        lateinit var oldTitle: String
-        lateinit var newTitle: String
+        var oldTitle: String by WeakField()
+        var newTitle: String by WeakField()
 
         constructor()
 
@@ -11823,8 +11823,8 @@ class TdApi {
      */
     class ChatEventPermissionsChanged : ChatEventAction {
 
-        lateinit var oldPermissions: ChatPermissions
-        lateinit var newPermissions: ChatPermissions
+        var oldPermissions: ChatPermissions by WeakField()
+        var newPermissions: ChatPermissions by WeakField()
 
         constructor()
 
@@ -11848,8 +11848,8 @@ class TdApi {
      */
     class ChatEventDescriptionChanged : ChatEventAction {
 
-        lateinit var oldDescription: String
-        lateinit var newDescription: String
+        var oldDescription: String by WeakField()
+        var newDescription: String by WeakField()
 
         constructor()
 
@@ -11873,8 +11873,8 @@ class TdApi {
      */
     class ChatEventUsernameChanged : ChatEventAction {
 
-        lateinit var oldUsername: String
-        lateinit var newUsername: String
+        var oldUsername: String by WeakField()
+        var newUsername: String by WeakField()
 
         constructor()
 
@@ -12096,7 +12096,7 @@ class TdApi {
         var id: Long by WeakField()
         var date: Int by WeakField()
         var userId: Int by WeakField()
-        lateinit var action: ChatEventAction
+        var action: ChatEventAction by WeakField()
 
         constructor()
 
@@ -12121,7 +12121,7 @@ class TdApi {
      */
     class ChatEvents : Object {
 
-        lateinit var events: Array<ChatEvent>
+        var events: Array<ChatEvent> by WeakField()
 
         constructor()
 
@@ -12197,7 +12197,7 @@ class TdApi {
      */
     class LanguagePackStringValueOrdinary : LanguagePackStringValue {
 
-        lateinit var value: String
+        var value: String by WeakField()
 
         constructor()
 
@@ -12225,12 +12225,12 @@ class TdApi {
      */
     class LanguagePackStringValuePluralized : LanguagePackStringValue {
 
-        lateinit var zeroValue: String
-        lateinit var oneValue: String
-        lateinit var twoValue: String
-        lateinit var fewValue: String
-        lateinit var manyValue: String
-        lateinit var otherValue: String
+        var zeroValue: String by WeakField()
+        var oneValue: String by WeakField()
+        var twoValue: String by WeakField()
+        var fewValue: String by WeakField()
+        var manyValue: String by WeakField()
+        var otherValue: String by WeakField()
 
         constructor()
 
@@ -12268,8 +12268,8 @@ class TdApi {
      */
     class LanguagePackString : Object {
 
-        lateinit var key: String
-        lateinit var value: LanguagePackStringValue
+        var key: String by WeakField()
+        var value: LanguagePackStringValue by WeakField()
 
         constructor()
 
@@ -12292,7 +12292,7 @@ class TdApi {
      */
     class LanguagePackStrings : Object {
 
-        lateinit var strings: Array<LanguagePackString>
+        var strings: Array<LanguagePackString> by WeakField()
 
         constructor()
 
@@ -12330,11 +12330,11 @@ class TdApi {
      */
     class LanguagePackInfo : Object {
 
-        lateinit var id: String
+        var id: String by WeakField()
         var baseLanguagePackId: String? = null
-        lateinit var name: String
-        lateinit var nativeName: String
-        lateinit var pluralCode: String
+        var name: String by WeakField()
+        var nativeName: String by WeakField()
+        var pluralCode: String by WeakField()
         var isOfficial: Boolean by WeakField()
         var isRtl: Boolean by WeakField()
         var isBeta: Boolean by WeakField()
@@ -12342,7 +12342,7 @@ class TdApi {
         var totalStringCount: Int by WeakField()
         var translatedStringCount: Int by WeakField()
         var localStringCount: Int by WeakField()
-        lateinit var translationUrl: String
+        var translationUrl: String by WeakField()
 
         constructor()
 
@@ -12376,7 +12376,7 @@ class TdApi {
      */
     class LocalizationTargetInfo : Object {
 
-        lateinit var languagePacks: Array<LanguagePackInfo>
+        var languagePacks: Array<LanguagePackInfo> by WeakField()
 
         constructor()
 
@@ -12558,8 +12558,8 @@ class TdApi {
     class DeviceTokenWebPush : DeviceToken {
 
         var endpoint: String? = null
-        lateinit var p256dhBase64url: String
-        lateinit var authBase64url: String
+        var p256dhBase64url: String by WeakField()
+        var authBase64url: String by WeakField()
 
         constructor()
 
@@ -12785,7 +12785,7 @@ class TdApi {
      */
     class BackgroundTypePattern : BackgroundType {
 
-        lateinit var fill: BackgroundFill
+        var fill: BackgroundFill by WeakField()
         var intensity: Int by WeakField()
         var isMoving: Boolean by WeakField()
 
@@ -12811,7 +12811,7 @@ class TdApi {
      */
     class BackgroundTypeFill : BackgroundType {
 
-        lateinit var fill: BackgroundFill
+        var fill: BackgroundFill by WeakField()
 
         constructor()
 
@@ -12842,9 +12842,9 @@ class TdApi {
         var id: Long by WeakField()
         var isDefault: Boolean by WeakField()
         var isDark: Boolean by WeakField()
-        lateinit var name: String
+        var name: String by WeakField()
         var document: Document? = null
-        lateinit var type: BackgroundType
+        var type: BackgroundType by WeakField()
 
         constructor()
 
@@ -12871,7 +12871,7 @@ class TdApi {
      */
     class Backgrounds : Object {
 
-        lateinit var backgrounds: Array<Background>
+        var backgrounds: Array<Background> by WeakField()
 
         constructor()
 
@@ -12944,7 +12944,7 @@ class TdApi {
      */
     class Hashtags : Object {
 
-        lateinit var hashtags: Array<String>
+        var hashtags: Array<String> by WeakField()
 
         constructor()
 
@@ -13120,7 +13120,7 @@ class TdApi {
     class PushMessageContentAnimation : PushMessageContent {
 
         var animation: Animation? = null
-        lateinit var caption: String
+        var caption: String by WeakField()
         var isPinned: Boolean by WeakField()
 
         constructor()
@@ -13171,7 +13171,7 @@ class TdApi {
      */
     class PushMessageContentContact : PushMessageContent {
 
-        lateinit var name: String
+        var name: String by WeakField()
         var isPinned: Boolean by WeakField()
 
         constructor()
@@ -13231,7 +13231,7 @@ class TdApi {
      */
     class PushMessageContentGame : PushMessageContent {
 
-        lateinit var title: String
+        var title: String by WeakField()
         var isPinned: Boolean by WeakField()
 
         constructor()
@@ -13257,7 +13257,7 @@ class TdApi {
      */
     class PushMessageContentGameScore : PushMessageContent {
 
-        lateinit var title: String
+        var title: String by WeakField()
         var score: Int by WeakField()
         var isPinned: Boolean by WeakField()
 
@@ -13284,7 +13284,7 @@ class TdApi {
      */
     class PushMessageContentInvoice : PushMessageContent {
 
-        lateinit var price: String
+        var price: String by WeakField()
         var isPinned: Boolean by WeakField()
 
         constructor()
@@ -13337,7 +13337,7 @@ class TdApi {
     class PushMessageContentPhoto : PushMessageContent {
 
         var photo: Photo? = null
-        lateinit var caption: String
+        var caption: String by WeakField()
         var isSecret: Boolean by WeakField()
         var isPinned: Boolean by WeakField()
 
@@ -13365,7 +13365,7 @@ class TdApi {
      */
     class PushMessageContentPoll : PushMessageContent {
 
-        lateinit var question: String
+        var question: String by WeakField()
         var isPinned: Boolean by WeakField()
 
         constructor()
@@ -13428,7 +13428,7 @@ class TdApi {
      */
     class PushMessageContentText : PushMessageContent {
 
-        lateinit var text: String
+        var text: String by WeakField()
         var isPinned: Boolean by WeakField()
 
         constructor()
@@ -13456,7 +13456,7 @@ class TdApi {
     class PushMessageContentVideo : PushMessageContent {
 
         var video: Video? = null
-        lateinit var caption: String
+        var caption: String by WeakField()
         var isSecret: Boolean by WeakField()
         var isPinned: Boolean by WeakField()
 
@@ -13545,7 +13545,7 @@ class TdApi {
      */
     class PushMessageContentChatAddMembers : PushMessageContent {
 
-        lateinit var memberName: String
+        var memberName: String by WeakField()
         var isCurrentUser: Boolean by WeakField()
         var isReturned: Boolean by WeakField()
 
@@ -13581,7 +13581,7 @@ class TdApi {
      */
     class PushMessageContentChatChangeTitle : PushMessageContent {
 
-        lateinit var title: String
+        var title: String by WeakField()
 
         constructor()
 
@@ -13605,7 +13605,7 @@ class TdApi {
      */
     class PushMessageContentChatDeleteMember : PushMessageContent {
 
-        lateinit var memberName: String
+        var memberName: String by WeakField()
         var isCurrentUser: Boolean by WeakField()
         var isLeft: Boolean by WeakField()
 
@@ -13696,7 +13696,7 @@ class TdApi {
      */
     class NotificationTypeNewMessage : NotificationType {
 
-        lateinit var message: Message
+        var message: Message by WeakField()
 
         constructor()
 
@@ -13756,7 +13756,7 @@ class TdApi {
 
         var messageId: Long by WeakField()
         var senderUserId: Int by WeakField()
-        lateinit var content: PushMessageContent
+        var content: PushMessageContent by WeakField()
 
         constructor()
 
@@ -13831,7 +13831,7 @@ class TdApi {
         var id: Int by WeakField()
         var date: Int by WeakField()
         var isSilent: Boolean by WeakField()
-        lateinit var type: NotificationType
+        var type: NotificationType by WeakField()
 
         constructor()
 
@@ -13861,10 +13861,10 @@ class TdApi {
     class NotificationGroup : Object {
 
         var id: Int by WeakField()
-        lateinit var type: NotificationGroupType
+        var type: NotificationGroupType by WeakField()
         var chatId: Long by WeakField()
         var totalCount: Int by WeakField()
-        lateinit var notifications: Array<Notification>
+        var notifications: Array<Notification> by WeakField()
 
         constructor()
 
@@ -13949,7 +13949,7 @@ class TdApi {
      */
     class OptionValueString : OptionValue {
 
-        lateinit var value: String
+        var value: String by WeakField()
 
         constructor()
 
@@ -13972,8 +13972,8 @@ class TdApi {
      */
     class JsonObjectMember : Object {
 
-        lateinit var key: String
-        lateinit var value: JsonValue
+        var key: String by WeakField()
+        var value: JsonValue by WeakField()
 
         constructor()
 
@@ -14055,7 +14055,7 @@ class TdApi {
      */
     class JsonValueString : JsonValue {
 
-        lateinit var value: String
+        var value: String by WeakField()
 
         constructor()
 
@@ -14077,7 +14077,7 @@ class TdApi {
      */
     class JsonValueArray : JsonValue {
 
-        lateinit var values: Array<JsonValue>
+        var values: Array<JsonValue> by WeakField()
 
         constructor()
 
@@ -14099,7 +14099,7 @@ class TdApi {
      */
     class JsonValueObject : JsonValue {
 
-        lateinit var members: Array<JsonObjectMember>
+        var members: Array<JsonObjectMember> by WeakField()
 
         constructor()
 
@@ -14146,7 +14146,7 @@ class TdApi {
      */
     class UserPrivacySettingRuleAllowUsers : UserPrivacySettingRule {
 
-        lateinit var userIds: IntArray
+        var userIds: IntArray by WeakField()
 
         constructor()
 
@@ -14168,7 +14168,7 @@ class TdApi {
      */
     class UserPrivacySettingRuleAllowChatMembers : UserPrivacySettingRule {
 
-        lateinit var chatIds: LongArray
+        var chatIds: LongArray by WeakField()
 
         constructor()
 
@@ -14210,7 +14210,7 @@ class TdApi {
      */
     class UserPrivacySettingRuleRestrictUsers : UserPrivacySettingRule {
 
-        lateinit var userIds: IntArray
+        var userIds: IntArray by WeakField()
 
         constructor()
 
@@ -14232,7 +14232,7 @@ class TdApi {
      */
     class UserPrivacySettingRuleRestrictChatMembers : UserPrivacySettingRule {
 
-        lateinit var chatIds: LongArray
+        var chatIds: LongArray by WeakField()
 
         constructor()
 
@@ -14257,7 +14257,7 @@ class TdApi {
      */
     class UserPrivacySettingRules : Object {
 
-        lateinit var rules: Array<UserPrivacySettingRule>
+        var rules: Array<UserPrivacySettingRule> by WeakField()
 
         constructor()
 
@@ -14408,17 +14408,17 @@ class TdApi {
         var isCurrent: Boolean by WeakField()
         var isPasswordPending: Boolean by WeakField()
         var apiId: Int by WeakField()
-        lateinit var applicationName: String
-        lateinit var applicationVersion: String
+        var applicationName: String by WeakField()
+        var applicationVersion: String by WeakField()
         var isOfficialApplication: Boolean by WeakField()
-        lateinit var deviceModel: String
-        lateinit var platform: String
-        lateinit var systemVersion: String
+        var deviceModel: String by WeakField()
+        var platform: String by WeakField()
+        var systemVersion: String by WeakField()
         var logInDate: Int by WeakField()
         var lastActiveDate: Int by WeakField()
-        lateinit var ip: String
-        lateinit var country: String
-        lateinit var region: String
+        var ip: String by WeakField()
+        var country: String by WeakField()
+        var region: String by WeakField()
 
         constructor()
 
@@ -14454,7 +14454,7 @@ class TdApi {
      */
     class Sessions : Object {
 
-        lateinit var sessions: Array<Session>
+        var sessions: Array<Session> by WeakField()
 
         constructor()
 
@@ -14485,14 +14485,14 @@ class TdApi {
     class ConnectedWebsite : Object {
 
         var id: Long by WeakField()
-        lateinit var domainName: String
+        var domainName: String by WeakField()
         var botUserId: Int by WeakField()
-        lateinit var browser: String
-        lateinit var platform: String
+        var browser: String by WeakField()
+        var platform: String by WeakField()
         var logInDate: Int by WeakField()
         var lastActiveDate: Int by WeakField()
-        lateinit var ip: String
-        lateinit var location: String
+        var ip: String by WeakField()
+        var location: String by WeakField()
 
         constructor()
 
@@ -14522,7 +14522,7 @@ class TdApi {
      */
     class ConnectedWebsites : Object {
 
-        lateinit var websites: Array<ConnectedWebsite>
+        var websites: Array<ConnectedWebsite> by WeakField()
 
         constructor()
 
@@ -14609,7 +14609,7 @@ class TdApi {
      */
     class ChatReportReasonCustom : ChatReportReason {
 
-        lateinit var text: String
+        var text: String by WeakField()
 
         constructor()
 
@@ -14632,8 +14632,8 @@ class TdApi {
      */
     class PublicMessageLink : Object {
 
-        lateinit var link: String
-        lateinit var html: String
+        var link: String by WeakField()
+        var html: String by WeakField()
 
         constructor()
 
@@ -14687,7 +14687,7 @@ class TdApi {
      */
     class FilePart : Object {
 
-        lateinit var data: ByteArray
+        var data: ByteArray by WeakField()
 
         constructor()
 
@@ -14876,7 +14876,7 @@ class TdApi {
      */
     class StorageStatisticsByFileType : Object {
 
-        lateinit var fileType: FileType
+        var fileType: FileType by WeakField()
         var size: Long by WeakField()
         var count: Int by WeakField()
 
@@ -14909,7 +14909,7 @@ class TdApi {
         var chatId: Long by WeakField()
         var size: Long by WeakField()
         var count: Int by WeakField()
-        lateinit var byFileType: Array<StorageStatisticsByFileType>
+        var byFileType: Array<StorageStatisticsByFileType> by WeakField()
 
         constructor()
 
@@ -14938,7 +14938,7 @@ class TdApi {
 
         var size: Long by WeakField()
         var count: Int by WeakField()
-        lateinit var byChat: Array<StorageStatisticsByChat>
+        var byChat: Array<StorageStatisticsByChat> by WeakField()
 
         constructor()
 
@@ -14996,7 +14996,7 @@ class TdApi {
      */
     class DatabaseStatistics : Object {
 
-        lateinit var statistics: String
+        var statistics: String by WeakField()
 
         constructor()
 
@@ -15082,8 +15082,8 @@ class TdApi {
      */
     class NetworkStatisticsEntryFile : NetworkStatisticsEntry {
 
-        lateinit var fileType: FileType
-        lateinit var networkType: NetworkType
+        var fileType: FileType by WeakField()
+        var networkType: NetworkType by WeakField()
         var sentBytes: Long by WeakField()
         var receivedBytes: Long by WeakField()
 
@@ -15114,7 +15114,7 @@ class TdApi {
      */
     class NetworkStatisticsEntryCall : NetworkStatisticsEntry {
 
-        lateinit var networkType: NetworkType
+        var networkType: NetworkType by WeakField()
         var sentBytes: Long by WeakField()
         var receivedBytes: Long by WeakField()
         var duration: Double by WeakField()
@@ -15144,7 +15144,7 @@ class TdApi {
     class NetworkStatistics : Object {
 
         var sinceDate: Int by WeakField()
-        lateinit var entries: Array<NetworkStatisticsEntry>
+        var entries: Array<NetworkStatisticsEntry> by WeakField()
 
         constructor()
 
@@ -15215,9 +15215,9 @@ class TdApi {
      */
     class AutoDownloadSettingsPresets : Object {
 
-        lateinit var low: AutoDownloadSettings
-        lateinit var medium: AutoDownloadSettings
-        lateinit var high: AutoDownloadSettings
+        var low: AutoDownloadSettings by WeakField()
+        var medium: AutoDownloadSettings by WeakField()
+        var high: AutoDownloadSettings by WeakField()
 
         constructor()
 
@@ -15421,7 +15421,7 @@ class TdApi {
      */
     class TMeUrlTypeChatInvite : TMeUrlType {
 
-        lateinit var info: ChatInviteLinkInfo
+        var info: ChatInviteLinkInfo by WeakField()
 
         constructor()
 
@@ -15466,8 +15466,8 @@ class TdApi {
      */
     class TMeUrl : Object {
 
-        lateinit var url: String
-        lateinit var type: TMeUrlType
+        var url: String by WeakField()
+        var type: TMeUrlType by WeakField()
 
         constructor()
 
@@ -15490,7 +15490,7 @@ class TdApi {
      */
     class TMeUrls : Object {
 
-        lateinit var urls: Array<TMeUrl>
+        var urls: Array<TMeUrl> by WeakField()
 
         constructor()
 
@@ -15534,7 +15534,7 @@ class TdApi {
      */
     class Text : Object {
 
-        lateinit var text: String
+        var text: String by WeakField()
 
         constructor()
 
@@ -15579,7 +15579,7 @@ class TdApi {
      */
     class DeepLinkInfo : Object {
 
-        lateinit var text: FormattedText
+        var text: FormattedText by WeakField()
         var needUpdateApplication: Boolean by WeakField()
 
         constructor()
@@ -15698,7 +15698,7 @@ class TdApi {
      */
     class ProxyTypeMtproto : ProxyType {
 
-        lateinit var secret: String
+        var secret: String by WeakField()
 
         constructor()
 
@@ -15727,11 +15727,11 @@ class TdApi {
     class Proxy : Object {
 
         var id: Int by WeakField()
-        lateinit var server: String
+        var server: String by WeakField()
         var port: Int by WeakField()
         var lastUsedDate: Int by WeakField()
         var isEnabled: Boolean by WeakField()
-        lateinit var type: ProxyType
+        var type: ProxyType by WeakField()
 
         constructor()
 
@@ -15758,7 +15758,7 @@ class TdApi {
      */
     class Proxies : Object {
 
-        lateinit var proxies: Array<Proxy>
+        var proxies: Array<Proxy> by WeakField()
 
         constructor()
 
@@ -15814,7 +15814,7 @@ class TdApi {
      */
     class UpdateAuthorizationState : Update {
 
-        lateinit var authorizationState: AuthorizationState
+        var authorizationState: AuthorizationState by WeakField()
 
         constructor()
 
@@ -15837,7 +15837,7 @@ class TdApi {
      */
     class UpdateNewMessage : Update {
 
-        lateinit var message: Message
+        var message: Message by WeakField()
 
         constructor()
 
@@ -15889,7 +15889,7 @@ class TdApi {
      */
     class UpdateMessageSendSucceeded : Update {
 
-        lateinit var message: Message
+        var message: Message by WeakField()
         var oldMessageId: Long by WeakField()
 
         constructor()
@@ -15917,10 +15917,10 @@ class TdApi {
      */
     class UpdateMessageSendFailed : Update {
 
-        lateinit var message: Message
+        var message: Message by WeakField()
         var oldMessageId: Long by WeakField()
         var errorCode: Int by WeakField()
-        lateinit var errorMessage: String
+        var errorMessage: String by WeakField()
 
         constructor()
 
@@ -15949,7 +15949,7 @@ class TdApi {
 
         var chatId: Long by WeakField()
         var messageId: Long by WeakField()
-        lateinit var newContent: MessageContent
+        var newContent: MessageContent by WeakField()
 
         constructor()
 
@@ -16115,7 +16115,7 @@ class TdApi {
      */
     class UpdateNewChat : Update {
 
-        lateinit var chat: Chat
+        var chat: Chat by WeakField()
 
         constructor()
 
@@ -16165,7 +16165,7 @@ class TdApi {
     class UpdateChatTitle : Update {
 
         var chatId: Long by WeakField()
-        lateinit var title: String
+        var title: String by WeakField()
 
         constructor()
 
@@ -16215,7 +16215,7 @@ class TdApi {
     class UpdateChatPermissions : Update {
 
         var chatId: Long by WeakField()
-        lateinit var permissions: ChatPermissions
+        var permissions: ChatPermissions by WeakField()
 
         constructor()
 
@@ -16505,7 +16505,7 @@ class TdApi {
     class UpdateChatNotificationSettings : Update {
 
         var chatId: Long by WeakField()
-        lateinit var notificationSettings: ChatNotificationSettings
+        var notificationSettings: ChatNotificationSettings by WeakField()
 
         constructor()
 
@@ -16529,8 +16529,8 @@ class TdApi {
      */
     class UpdateScopeNotificationSettings : Update {
 
-        lateinit var scope: NotificationSettingsScope
-        lateinit var notificationSettings: ScopeNotificationSettings
+        var scope: NotificationSettingsScope by WeakField()
+        var notificationSettings: ScopeNotificationSettings by WeakField()
 
         constructor()
 
@@ -16690,7 +16690,7 @@ class TdApi {
     class UpdateNotification : Update {
 
         var notificationGroupId: Int by WeakField()
-        lateinit var notification: Notification
+        var notification: Notification by WeakField()
 
         constructor()
 
@@ -16721,13 +16721,13 @@ class TdApi {
     class UpdateNotificationGroup : Update {
 
         var notificationGroupId: Int by WeakField()
-        lateinit var type: NotificationGroupType
+        var type: NotificationGroupType by WeakField()
         var chatId: Long by WeakField()
         var notificationSettingsChatId: Long by WeakField()
         var isSilent: Boolean by WeakField()
         var totalCount: Int by WeakField()
-        lateinit var addedNotifications: Array<Notification>
-        lateinit var removedNotificationIds: IntArray
+        var addedNotifications: Array<Notification> by WeakField()
+        var removedNotificationIds: IntArray by WeakField()
 
         constructor()
 
@@ -16758,7 +16758,7 @@ class TdApi {
      */
     class UpdateActiveNotifications : Update {
 
-        lateinit var groups: Array<NotificationGroup>
+        var groups: Array<NotificationGroup> by WeakField()
 
         constructor()
 
@@ -16810,7 +16810,7 @@ class TdApi {
     class UpdateDeleteMessages : Update {
 
         var chatId: Long by WeakField()
-        lateinit var messageIds: LongArray
+        var messageIds: LongArray by WeakField()
         var isPermanent: Boolean by WeakField()
         var fromCache: Boolean by WeakField()
 
@@ -16841,7 +16841,7 @@ class TdApi {
 
         var chatId: Long by WeakField()
         var userId: Int by WeakField()
-        lateinit var action: ChatAction
+        var action: ChatAction by WeakField()
 
         constructor()
 
@@ -16867,7 +16867,7 @@ class TdApi {
     class UpdateUserStatus : Update {
 
         var userId: Int by WeakField()
-        lateinit var status: UserStatus
+        var status: UserStatus by WeakField()
 
         constructor()
 
@@ -16891,7 +16891,7 @@ class TdApi {
      */
     class UpdateUser : Update {
 
-        lateinit var user: User
+        var user: User by WeakField()
 
         constructor()
 
@@ -16914,7 +16914,7 @@ class TdApi {
      */
     class UpdateBasicGroup : Update {
 
-        lateinit var basicGroup: BasicGroup
+        var basicGroup: BasicGroup by WeakField()
 
         constructor()
 
@@ -16937,7 +16937,7 @@ class TdApi {
      */
     class UpdateSupergroup : Update {
 
-        lateinit var supergroup: Supergroup
+        var supergroup: Supergroup by WeakField()
 
         constructor()
 
@@ -16960,7 +16960,7 @@ class TdApi {
      */
     class UpdateSecretChat : Update {
 
-        lateinit var secretChat: SecretChat
+        var secretChat: SecretChat by WeakField()
 
         constructor()
 
@@ -16984,7 +16984,7 @@ class TdApi {
     class UpdateUserFullInfo : Update {
 
         var userId: Int by WeakField()
-        lateinit var userFullInfo: UserFullInfo
+        var userFullInfo: UserFullInfo by WeakField()
 
         constructor()
 
@@ -17009,7 +17009,7 @@ class TdApi {
     class UpdateBasicGroupFullInfo : Update {
 
         var basicGroupId: Int by WeakField()
-        lateinit var basicGroupFullInfo: BasicGroupFullInfo
+        var basicGroupFullInfo: BasicGroupFullInfo by WeakField()
 
         constructor()
 
@@ -17034,7 +17034,7 @@ class TdApi {
     class UpdateSupergroupFullInfo : Update {
 
         var supergroupId: Int by WeakField()
-        lateinit var supergroupFullInfo: SupergroupFullInfo
+        var supergroupFullInfo: SupergroupFullInfo by WeakField()
 
         constructor()
 
@@ -17061,8 +17061,8 @@ class TdApi {
      */
     class UpdateServiceNotification : Update {
 
-        lateinit var type: String
-        lateinit var content: MessageContent
+        var type: String by WeakField()
+        var content: MessageContent by WeakField()
 
         constructor()
 
@@ -17085,7 +17085,7 @@ class TdApi {
      */
     class UpdateFile : Update {
 
-        lateinit var file: File
+        var file: File by WeakField()
 
         constructor()
 
@@ -17113,8 +17113,8 @@ class TdApi {
 
         var generationId: Long by WeakField()
         var originalPath: String? = null
-        lateinit var destinationPath: String
-        lateinit var conversion: String
+        var destinationPath: String by WeakField()
+        var conversion: String by WeakField()
 
         constructor()
 
@@ -17161,7 +17161,7 @@ class TdApi {
      */
     class UpdateCall : Update {
 
-        lateinit var call: Call
+        var call: Call by WeakField()
 
         constructor()
 
@@ -17184,8 +17184,8 @@ class TdApi {
      */
     class UpdateUserPrivacySettingRules : Update {
 
-        lateinit var setting: UserPrivacySetting
-        lateinit var rules: UserPrivacySettingRules
+        var setting: UserPrivacySetting by WeakField()
+        var rules: UserPrivacySettingRules by WeakField()
 
         constructor()
 
@@ -17211,7 +17211,7 @@ class TdApi {
      */
     class UpdateUnreadMessageCount : Update {
 
-        lateinit var chatList: ChatList
+        var chatList: ChatList by WeakField()
         var unreadCount: Int by WeakField()
         var unreadUnmutedCount: Int by WeakField()
 
@@ -17244,7 +17244,7 @@ class TdApi {
      */
     class UpdateUnreadChatCount : Update {
 
-        lateinit var chatList: ChatList
+        var chatList: ChatList by WeakField()
         var totalCount: Int by WeakField()
         var unreadCount: Int by WeakField()
         var unreadUnmutedCount: Int by WeakField()
@@ -17277,8 +17277,8 @@ class TdApi {
      */
     class UpdateOption : Update {
 
-        lateinit var name: String
-        lateinit var value: OptionValue
+        var name: String by WeakField()
+        var value: OptionValue by WeakField()
 
         constructor()
 
@@ -17303,7 +17303,7 @@ class TdApi {
     class UpdateInstalledStickerSets : Update {
 
         var isMasks: Boolean by WeakField()
-        lateinit var stickerSetIds: LongArray
+        var stickerSetIds: LongArray by WeakField()
 
         constructor()
 
@@ -17326,7 +17326,7 @@ class TdApi {
      */
     class UpdateTrendingStickerSets : Update {
 
-        lateinit var stickerSets: StickerSets
+        var stickerSets: StickerSets by WeakField()
 
         constructor()
 
@@ -17350,7 +17350,7 @@ class TdApi {
     class UpdateRecentStickers : Update {
 
         var isAttached: Boolean by WeakField()
-        lateinit var stickerIds: IntArray
+        var stickerIds: IntArray by WeakField()
 
         constructor()
 
@@ -17373,7 +17373,7 @@ class TdApi {
      */
     class UpdateFavoriteStickers : Update {
 
-        lateinit var stickerIds: IntArray
+        var stickerIds: IntArray by WeakField()
 
         constructor()
 
@@ -17395,7 +17395,7 @@ class TdApi {
      */
     class UpdateSavedAnimations : Update {
 
-        lateinit var animationIds: IntArray
+        var animationIds: IntArray by WeakField()
 
         constructor()
 
@@ -17444,9 +17444,9 @@ class TdApi {
      */
     class UpdateLanguagePackStrings : Update {
 
-        lateinit var localizationTarget: String
-        lateinit var languagePackId: String
-        lateinit var strings: Array<LanguagePackString>
+        var localizationTarget: String by WeakField()
+        var languagePackId: String by WeakField()
+        var strings: Array<LanguagePackString> by WeakField()
 
         constructor()
 
@@ -17470,7 +17470,7 @@ class TdApi {
      */
     class UpdateConnectionState : Update {
 
-        lateinit var state: ConnectionState
+        var state: ConnectionState by WeakField()
 
         constructor()
 
@@ -17494,8 +17494,8 @@ class TdApi {
      */
     class UpdateTermsOfService : Update {
 
-        lateinit var termsOfServiceId: String
-        lateinit var termsOfService: TermsOfService
+        var termsOfServiceId: String by WeakField()
+        var termsOfService: TermsOfService by WeakField()
 
         constructor()
 
@@ -17519,7 +17519,7 @@ class TdApi {
      */
     class UpdateUsersNearby : Update {
 
-        lateinit var usersNearby: Array<ChatNearby>
+        var usersNearby: Array<ChatNearby> by WeakField()
 
         constructor()
 
@@ -17549,8 +17549,8 @@ class TdApi {
         var id: Long by WeakField()
         var senderUserId: Int by WeakField()
         var userLocation: Location? = null
-        lateinit var query: String
-        lateinit var offset: String
+        var query: String by WeakField()
+        var offset: String by WeakField()
 
         constructor()
 
@@ -17583,9 +17583,9 @@ class TdApi {
 
         var senderUserId: Int by WeakField()
         var userLocation: Location? = null
-        lateinit var query: String
-        lateinit var resultId: String
-        lateinit var inlineMessageId: String
+        var query: String by WeakField()
+        var resultId: String by WeakField()
+        var inlineMessageId: String by WeakField()
 
         constructor()
 
@@ -17622,7 +17622,7 @@ class TdApi {
         var chatId: Long by WeakField()
         var messageId: Long by WeakField()
         var chatInstance: Long by WeakField()
-        lateinit var payload: CallbackQueryPayload
+        var payload: CallbackQueryPayload by WeakField()
 
         constructor()
 
@@ -17656,9 +17656,9 @@ class TdApi {
 
         var id: Long by WeakField()
         var senderUserId: Int by WeakField()
-        lateinit var inlineMessageId: String
+        var inlineMessageId: String by WeakField()
         var chatInstance: Long by WeakField()
-        lateinit var payload: CallbackQueryPayload
+        var payload: CallbackQueryPayload by WeakField()
 
         constructor()
 
@@ -17691,8 +17691,8 @@ class TdApi {
 
         var id: Long by WeakField()
         var senderUserId: Int by WeakField()
-        lateinit var invoicePayload: String
-        lateinit var shippingAddress: Address
+        var invoicePayload: String by WeakField()
+        var shippingAddress: Address by WeakField()
 
         constructor()
 
@@ -17728,9 +17728,9 @@ class TdApi {
 
         var id: Long by WeakField()
         var senderUserId: Int by WeakField()
-        lateinit var currency: String
+        var currency: String by WeakField()
         var totalAmount: Long by WeakField()
-        lateinit var invoicePayload: ByteArray
+        var invoicePayload: ByteArray by WeakField()
         var shippingOptionId: String? = null
         var orderInfo: OrderInfo? = null
 
@@ -17761,7 +17761,7 @@ class TdApi {
      */
     class UpdateNewCustomEvent : Update {
 
-        lateinit var event: String
+        var event: String by WeakField()
 
         constructor()
 
@@ -17787,7 +17787,7 @@ class TdApi {
     class UpdateNewCustomQuery : Update {
 
         var id: Long by WeakField()
-        lateinit var data: String
+        var data: String by WeakField()
         var timeout: Int by WeakField()
 
         constructor()
@@ -17813,7 +17813,7 @@ class TdApi {
      */
     class UpdatePoll : Update {
 
-        lateinit var poll: Poll
+        var poll: Poll by WeakField()
 
         constructor()
 
@@ -17835,7 +17835,7 @@ class TdApi {
      */
     class Updates : Object {
 
-        lateinit var updates: Array<Update>
+        var updates: Array<Update> by WeakField()
 
         constructor()
 
@@ -17873,7 +17873,7 @@ class TdApi {
      */
     class LogStreamFile : LogStream {
 
-        lateinit var path: String
+        var path: String by WeakField()
         var maxFileSize: Long by WeakField()
 
         constructor()
@@ -17929,7 +17929,7 @@ class TdApi {
      */
     class LogTags : Object {
 
-        lateinit var tags: Array<String>
+        var tags: Array<String> by WeakField()
 
         constructor()
 
@@ -17975,7 +17975,7 @@ class TdApi {
      */
     class TestString : Object {
 
-        lateinit var value: String
+        var value: String by WeakField()
 
         constructor()
 
@@ -17998,7 +17998,7 @@ class TdApi {
      */
     class TestBytes : Object {
 
-        lateinit var value: ByteArray
+        var value: ByteArray by WeakField()
 
         constructor()
 
@@ -18021,7 +18021,7 @@ class TdApi {
      */
     class TestVectorInt : Object {
 
-        lateinit var value: IntArray
+        var value: IntArray by WeakField()
 
         constructor()
 
@@ -18044,7 +18044,7 @@ class TdApi {
      */
     class TestVectorIntObject : Object {
 
-        lateinit var value: Array<TestInt>
+        var value: Array<TestInt> by WeakField()
 
         constructor()
 
@@ -18067,7 +18067,7 @@ class TdApi {
      */
     class TestVectorString : Object {
 
-        lateinit var value: Array<String>
+        var value: Array<String> by WeakField()
 
         constructor()
 
@@ -18090,7 +18090,7 @@ class TdApi {
      */
     class TestVectorStringObject : Object {
 
-        lateinit var value: Array<TestString>
+        var value: Array<TestString> by WeakField()
 
         constructor()
 
@@ -18149,7 +18149,7 @@ class TdApi {
      */
     class CheckDatabaseEncryptionKey : Function {
 
-        lateinit var encryptionKey: ByteArray
+        var encryptionKey: ByteArray by WeakField()
 
         constructor()
 
@@ -18232,7 +18232,7 @@ class TdApi {
      */
     class RequestQrCodeAuthentication : Function {
 
-        lateinit var otherUserIds: IntArray
+        var otherUserIds: IntArray by WeakField()
 
         constructor()
 
@@ -18439,7 +18439,7 @@ class TdApi {
      */
     class SetDatabaseEncryptionKey : Function {
 
-        lateinit var newEncryptionKey: ByteArray
+        var newEncryptionKey: ByteArray by WeakField()
 
         constructor()
 
@@ -18948,7 +18948,7 @@ class TdApi {
     class GetMessages : Function {
 
         var chatId: Long by WeakField()
-        lateinit var messageIds: LongArray
+        var messageIds: LongArray by WeakField()
 
         constructor()
 
@@ -19940,7 +19940,7 @@ class TdApi {
         var chatId: Long by WeakField()
         var replyToMessageId: Long by WeakField()
         var options: SendMessageOptions? = null
-        lateinit var inputMessageContents: Array<InputMessageContent>
+        var inputMessageContents: Array<InputMessageContent> by WeakField()
 
         constructor()
 
@@ -20049,7 +20049,7 @@ class TdApi {
 
         var chatId: Long by WeakField()
         var fromChatId: Long by WeakField()
-        lateinit var messageIds: LongArray
+        var messageIds: LongArray by WeakField()
         var options: SendMessageOptions? = null
         var asAlbum: Boolean by WeakField()
         var sendCopy: Boolean by WeakField()
@@ -20088,7 +20088,7 @@ class TdApi {
     class ResendMessages : Function {
 
         var chatId: Long by WeakField()
-        lateinit var messageIds: LongArray
+        var messageIds: LongArray by WeakField()
 
         constructor()
 
@@ -20200,7 +20200,7 @@ class TdApi {
     class DeleteMessages : Function {
 
         var chatId: Long by WeakField()
-        lateinit var messageIds: LongArray
+        var messageIds: LongArray by WeakField()
         var revoke: Boolean by WeakField()
 
         constructor()
@@ -20821,7 +20821,7 @@ class TdApi {
 
         var chatId: Long by WeakField()
         var messageId: Long by WeakField()
-        lateinit var optionIds: IntArray
+        var optionIds: IntArray by WeakField()
 
         constructor()
 
@@ -20982,7 +20982,7 @@ class TdApi {
 
         var inlineQueryId: Long by WeakField()
         var isPersonal: Boolean by WeakField()
-        lateinit var results: Array<InputInlineQueryResult>
+        var results: Array<InputInlineQueryResult> by WeakField()
         var cacheTime: Int by WeakField()
         var nextOffset: String? = null
         var switchPmText: String? = null
@@ -21082,7 +21082,7 @@ class TdApi {
     class AnswerShippingQuery : Function {
 
         var shippingQueryId: Long by WeakField()
-        lateinit var shippingOptions: Array<ShippingOption>
+        var shippingOptions: Array<ShippingOption> by WeakField()
         var errorMessage: String? = null
 
         constructor()
@@ -21365,7 +21365,7 @@ class TdApi {
     class ViewMessages : Function {
 
         var chatId: Long by WeakField()
-        lateinit var messageIds: LongArray
+        var messageIds: LongArray by WeakField()
         var forceRead: Boolean by WeakField()
 
         constructor()
@@ -21540,7 +21540,7 @@ class TdApi {
      */
     class CreateNewBasicGroupChat : Function {
 
-        lateinit var userIds: IntArray
+        var userIds: IntArray by WeakField()
         var title: String? = null
 
         constructor()
@@ -22155,7 +22155,7 @@ class TdApi {
     class AddChatMembers : Function {
 
         var chatId: Long by WeakField()
-        lateinit var userIds: IntArray
+        var userIds: IntArray by WeakField()
 
         constructor()
 
@@ -22438,7 +22438,7 @@ class TdApi {
     class SetPinnedChats : Function {
 
         var chatList: ChatList? = null
-        lateinit var chatIds: LongArray
+        var chatIds: LongArray by WeakField()
 
         constructor()
 
@@ -22613,7 +22613,7 @@ class TdApi {
 
         var generationId: Long by WeakField()
         var offset: Int by WeakField()
-        lateinit var data: ByteArray
+        var data: ByteArray by WeakField()
 
         constructor()
 
@@ -22902,7 +22902,7 @@ class TdApi {
         var callId: Int by WeakField()
         var rating: Int by WeakField()
         var comment: String? = null
-        lateinit var problems: Array<CallProblem>
+        var problems: Array<CallProblem> by WeakField()
 
         constructor()
 
@@ -23051,7 +23051,7 @@ class TdApi {
      */
     class ImportContacts : Function {
 
-        lateinit var contacts: Array<Contact>
+        var contacts: Array<Contact> by WeakField()
 
         constructor()
 
@@ -23109,7 +23109,7 @@ class TdApi {
      */
     class RemoveContacts : Function {
 
-        lateinit var userIds: IntArray
+        var userIds: IntArray by WeakField()
 
         constructor()
 
@@ -23143,7 +23143,7 @@ class TdApi {
      */
     class ChangeImportedContacts : Function {
 
-        lateinit var contacts: Array<Contact>
+        var contacts: Array<Contact> by WeakField()
 
         constructor()
 
@@ -23490,7 +23490,7 @@ class TdApi {
      */
     class ViewTrendingStickerSets : Function {
 
-        lateinit var stickerSetIds: LongArray
+        var stickerSetIds: LongArray by WeakField()
 
         constructor()
 
@@ -23515,7 +23515,7 @@ class TdApi {
     class ReorderInstalledStickerSets : Function {
 
         var isMasks: Boolean by WeakField()
-        lateinit var stickerSetIds: LongArray
+        var stickerSetIds: LongArray by WeakField()
 
         constructor()
 
@@ -24311,7 +24311,7 @@ class TdApi {
 
         var supergroupId: Int by WeakField()
         var userId: Int by WeakField()
-        lateinit var messageIds: LongArray
+        var messageIds: LongArray by WeakField()
 
         constructor()
 
@@ -24434,7 +24434,7 @@ class TdApi {
         var fromEventId: Long by WeakField()
         var limit: Int by WeakField()
         var filters: ChatEventLogFilters? = null
-        lateinit var userIds: IntArray
+        var userIds: IntArray by WeakField()
 
         constructor()
 
@@ -24801,7 +24801,7 @@ class TdApi {
     class GetLanguagePackStrings : Function {
 
         var languagePackId: String? = null
-        lateinit var keys: Array<String>
+        var keys: Array<String> by WeakField()
 
         constructor()
 
@@ -24876,7 +24876,7 @@ class TdApi {
     class SetCustomLanguagePack : Function {
 
         var info: LanguagePackInfo? = null
-        lateinit var strings: Array<LanguagePackString>
+        var strings: Array<LanguagePackString> by WeakField()
 
         constructor()
 
@@ -24975,7 +24975,7 @@ class TdApi {
     class RegisterDevice : Function {
 
         var deviceToken: DeviceToken? = null
-        lateinit var otherUserIds: IntArray
+        var otherUserIds: IntArray by WeakField()
 
         constructor()
 
@@ -25249,7 +25249,7 @@ class TdApi {
 
         var chatId: Long by WeakField()
         var reason: ChatReportReason? = null
-        lateinit var messageIds: LongArray
+        var messageIds: LongArray by WeakField()
 
         constructor()
 
@@ -25370,9 +25370,9 @@ class TdApi {
         var ttl: Int by WeakField()
         var count: Int by WeakField()
         var immunityDelay: Int by WeakField()
-        lateinit var fileTypes: Array<FileType>
-        lateinit var chatIds: LongArray
-        lateinit var excludeChatIds: LongArray
+        var fileTypes: Array<FileType> by WeakField()
+        var chatIds: LongArray by WeakField()
+        var excludeChatIds: LongArray by WeakField()
         var chatLimit: Int by WeakField()
 
         constructor()
@@ -25619,7 +25619,7 @@ class TdApi {
     class SetPassportElementErrors : Function {
 
         var userId: Int by WeakField()
-        lateinit var errors: Array<InputPassportElementError>
+        var errors: Array<InputPassportElementError> by WeakField()
 
         constructor()
 
@@ -25836,7 +25836,7 @@ class TdApi {
     class SendPassportAuthorizationForm : Function {
 
         var autorizationFormId: Int by WeakField()
-        lateinit var types: Array<PassportElementType>
+        var types: Array<PassportElementType> by WeakField()
 
         constructor()
 
@@ -25986,7 +25986,7 @@ class TdApi {
         var title: String? = null
         var name: String? = null
         var isMasks: Boolean by WeakField()
-        lateinit var stickers: Array<InputSticker>
+        var stickers: Array<InputSticker> by WeakField()
 
         constructor()
 
@@ -26207,7 +26207,7 @@ class TdApi {
      */
     class SendTonLiteServerRequest : Function {
 
-        lateinit var request: ByteArray
+        var request: ByteArray by WeakField()
 
         constructor()
 
@@ -26746,7 +26746,7 @@ class TdApi {
      */
     class TestCallBytes : Function {
 
-        lateinit var x: ByteArray
+        var x: ByteArray by WeakField()
 
         constructor()
 
@@ -26771,7 +26771,7 @@ class TdApi {
      */
     class TestCallVectorInt : Function {
 
-        lateinit var x: IntArray
+        var x: IntArray by WeakField()
 
         constructor()
 
@@ -26796,7 +26796,7 @@ class TdApi {
      */
     class TestCallVectorIntObject : Function {
 
-        lateinit var x: Array<TestInt>
+        var x: Array<TestInt> by WeakField()
 
         constructor()
 
@@ -26821,7 +26821,7 @@ class TdApi {
      */
     class TestCallVectorString : Function {
 
-        lateinit var x: Array<String>
+        var x: Array<String> by WeakField()
 
         constructor()
 
@@ -26846,7 +26846,7 @@ class TdApi {
      */
     class TestCallVectorStringObject : Function {
 
-        lateinit var x: Array<TestString>
+        var x: Array<TestString> by WeakField()
 
         constructor()
 

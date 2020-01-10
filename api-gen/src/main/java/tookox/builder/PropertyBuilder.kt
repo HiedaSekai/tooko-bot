@@ -50,9 +50,9 @@ fun TlProperty.toField(metadata: TlDataMetadata,nullable: Boolean): String {
 
         } else {
 
-            prefix = "lateinit var"
+            prefix = "var"
 
-            emptyToken
+            weakToken
 
         }
 
