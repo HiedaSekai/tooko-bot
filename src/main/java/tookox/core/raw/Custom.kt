@@ -50,7 +50,7 @@ fun TdAbsHandler.addCustomServerLanguagePack(
  */
 suspend fun TdAbsHandler.setCustomLanguagePack(
     info: LanguagePackInfo? = null,
-    strings: Array<LanguagePackString> = emptyArray()
+    strings: Array<LanguagePackString>
 ) = sync<Ok>(
     SetCustomLanguagePack(
         info,
@@ -60,7 +60,7 @@ suspend fun TdAbsHandler.setCustomLanguagePack(
 
 suspend fun TdAbsHandler.setCustomLanguagePackOrNull(
     info: LanguagePackInfo? = null,
-    strings: Array<LanguagePackString> = emptyArray()
+    strings: Array<LanguagePackString>
 ) = syncOrNull<Ok>(
     SetCustomLanguagePack(
         info,
@@ -70,7 +70,7 @@ suspend fun TdAbsHandler.setCustomLanguagePackOrNull(
 
 fun TdAbsHandler.setCustomLanguagePack(
     info: LanguagePackInfo? = null,
-    strings: Array<LanguagePackString> = emptyArray(),
+    strings: Array<LanguagePackString>,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     SetCustomLanguagePack(
@@ -194,7 +194,7 @@ fun TdAbsHandler.sendCustomRequest(
  * @data - JSON-serialized answer to the query
  */
 suspend fun TdAbsHandler.answerCustomQuery(
-    customQueryId: Long = 0L,
+    customQueryId: Long,
     data: String? = null
 ) = sync<Ok>(
     AnswerCustomQuery(
@@ -204,7 +204,7 @@ suspend fun TdAbsHandler.answerCustomQuery(
 )
 
 suspend fun TdAbsHandler.answerCustomQueryOrNull(
-    customQueryId: Long = 0L,
+    customQueryId: Long,
     data: String? = null
 ) = syncOrNull<Ok>(
     AnswerCustomQuery(
@@ -214,7 +214,7 @@ suspend fun TdAbsHandler.answerCustomQueryOrNull(
 )
 
 fun TdAbsHandler.answerCustomQuery(
-    customQueryId: Long = 0L,
+    customQueryId: Long,
     data: String? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(

@@ -49,7 +49,7 @@ fun TdAbsHandler.setNetworkType(
  * @onlyCurrent - If true, returns only data for the current library launch
  */
 suspend fun TdAbsHandler.getNetworkStatistics(
-    onlyCurrent: Boolean = false
+    onlyCurrent: Boolean
 ) = sync<NetworkStatistics>(
     GetNetworkStatistics(
         onlyCurrent
@@ -57,7 +57,7 @@ suspend fun TdAbsHandler.getNetworkStatistics(
 )
 
 suspend fun TdAbsHandler.getNetworkStatisticsOrNull(
-    onlyCurrent: Boolean = false
+    onlyCurrent: Boolean
 ) = syncOrNull<NetworkStatistics>(
     GetNetworkStatistics(
         onlyCurrent
@@ -65,7 +65,7 @@ suspend fun TdAbsHandler.getNetworkStatisticsOrNull(
 )
 
 fun TdAbsHandler.getNetworkStatistics(
-    onlyCurrent: Boolean = false,
+    onlyCurrent: Boolean,
     block: (suspend CoroutineScope.(NetworkStatistics) -> Unit)
 ) = send(
     GetNetworkStatistics(

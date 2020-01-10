@@ -63,7 +63,7 @@ fun TdAbsHandler.getActiveSessions(
  * @sessionId - Session identifier
  */
 suspend fun TdAbsHandler.terminateSession(
-    sessionId: Long = 0L
+    sessionId: Long
 ) = sync<Ok>(
     TerminateSession(
         sessionId
@@ -71,7 +71,7 @@ suspend fun TdAbsHandler.terminateSession(
 )
 
 suspend fun TdAbsHandler.terminateSessionOrNull(
-    sessionId: Long = 0L
+    sessionId: Long
 ) = syncOrNull<Ok>(
     TerminateSession(
         sessionId
@@ -79,7 +79,7 @@ suspend fun TdAbsHandler.terminateSessionOrNull(
 )
 
 fun TdAbsHandler.terminateSession(
-    sessionId: Long = 0L,
+    sessionId: Long,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     TerminateSession(

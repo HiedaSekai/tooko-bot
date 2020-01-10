@@ -14,7 +14,7 @@ import tookox.core.client.*
  * @forDarkTheme - True, if the backgrounds needs to be ordered for dark theme
  */
 suspend fun TdAbsHandler.getBackgrounds(
-    forDarkTheme: Boolean = false
+    forDarkTheme: Boolean
 ) = sync<Backgrounds>(
     GetBackgrounds(
         forDarkTheme
@@ -22,7 +22,7 @@ suspend fun TdAbsHandler.getBackgrounds(
 )
 
 suspend fun TdAbsHandler.getBackgroundsOrNull(
-    forDarkTheme: Boolean = false
+    forDarkTheme: Boolean
 ) = syncOrNull<Backgrounds>(
     GetBackgrounds(
         forDarkTheme
@@ -30,7 +30,7 @@ suspend fun TdAbsHandler.getBackgroundsOrNull(
 )
 
 fun TdAbsHandler.getBackgrounds(
-    forDarkTheme: Boolean = false,
+    forDarkTheme: Boolean,
     block: (suspend CoroutineScope.(Backgrounds) -> Unit)
 ) = send(
     GetBackgrounds(
@@ -118,7 +118,7 @@ fun TdAbsHandler.searchBackground(
 suspend fun TdAbsHandler.setBackground(
     background: InputBackground? = null,
     type: BackgroundType? = null,
-    forDarkTheme: Boolean = false
+    forDarkTheme: Boolean
 ) = sync<Background>(
     SetBackground(
         background,
@@ -130,7 +130,7 @@ suspend fun TdAbsHandler.setBackground(
 suspend fun TdAbsHandler.setBackgroundOrNull(
     background: InputBackground? = null,
     type: BackgroundType? = null,
-    forDarkTheme: Boolean = false
+    forDarkTheme: Boolean
 ) = syncOrNull<Background>(
     SetBackground(
         background,
@@ -142,7 +142,7 @@ suspend fun TdAbsHandler.setBackgroundOrNull(
 fun TdAbsHandler.setBackground(
     background: InputBackground? = null,
     type: BackgroundType? = null,
-    forDarkTheme: Boolean = false,
+    forDarkTheme: Boolean,
     block: (suspend CoroutineScope.(Background) -> Unit)
 ) = send(
     SetBackground(
@@ -158,7 +158,7 @@ fun TdAbsHandler.setBackground(
  * @backgroundId - The background indentifier
  */
 suspend fun TdAbsHandler.removeBackground(
-    backgroundId: Long = 0L
+    backgroundId: Long
 ) = sync<Ok>(
     RemoveBackground(
         backgroundId
@@ -166,7 +166,7 @@ suspend fun TdAbsHandler.removeBackground(
 )
 
 suspend fun TdAbsHandler.removeBackgroundOrNull(
-    backgroundId: Long = 0L
+    backgroundId: Long
 ) = syncOrNull<Ok>(
     RemoveBackground(
         backgroundId
@@ -174,7 +174,7 @@ suspend fun TdAbsHandler.removeBackgroundOrNull(
 )
 
 fun TdAbsHandler.removeBackground(
-    backgroundId: Long = 0L,
+    backgroundId: Long,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     RemoveBackground(

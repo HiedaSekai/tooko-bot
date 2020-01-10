@@ -532,7 +532,7 @@ class MessageFactory(val context: TdAbsHandler) : CaptionInterface {
 
         var thumbnail by photo::thumbnail
 
-        var addedStickerFileIds: IntArray by photo::addedStickerFileIds
+        var addedStickerFileIds by photo::addedStickerFileIds
 
         var width by photo::width
 

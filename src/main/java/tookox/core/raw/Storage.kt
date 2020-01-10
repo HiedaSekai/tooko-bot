@@ -17,7 +17,7 @@ import tookox.core.client.*
  *              If the chat info database is not used, the chat_limit is ignored and is always set to 0
  */
 suspend fun TdAbsHandler.getStorageStatistics(
-    chatLimit: Int = 0
+    chatLimit: Int
 ) = sync<StorageStatistics>(
     GetStorageStatistics(
         chatLimit
@@ -25,7 +25,7 @@ suspend fun TdAbsHandler.getStorageStatistics(
 )
 
 suspend fun TdAbsHandler.getStorageStatisticsOrNull(
-    chatLimit: Int = 0
+    chatLimit: Int
 ) = syncOrNull<StorageStatistics>(
     GetStorageStatistics(
         chatLimit
@@ -33,7 +33,7 @@ suspend fun TdAbsHandler.getStorageStatisticsOrNull(
 )
 
 fun TdAbsHandler.getStorageStatistics(
-    chatLimit: Int = 0,
+    chatLimit: Int,
     block: (suspend CoroutineScope.(StorageStatistics) -> Unit)
 ) = send(
     GetStorageStatistics(
@@ -82,14 +82,14 @@ fun TdAbsHandler.getStorageStatisticsFast(
  *              Affects only returned statistics
  */
 suspend fun TdAbsHandler.optimizeStorage(
-    size: Long = 0L,
-    ttl: Int = 0,
-    count: Int = 0,
-    immunityDelay: Int = 0,
-    fileTypes: Array<FileType> = emptyArray(),
-    chatIds: LongArray = longArrayOf(),
-    excludeChatIds: LongArray = longArrayOf(),
-    chatLimit: Int = 0
+    size: Long,
+    ttl: Int,
+    count: Int,
+    immunityDelay: Int,
+    fileTypes: Array<FileType>,
+    chatIds: LongArray,
+    excludeChatIds: LongArray,
+    chatLimit: Int
 ) = sync<StorageStatistics>(
     OptimizeStorage(
         size,
@@ -104,14 +104,14 @@ suspend fun TdAbsHandler.optimizeStorage(
 )
 
 suspend fun TdAbsHandler.optimizeStorageOrNull(
-    size: Long = 0L,
-    ttl: Int = 0,
-    count: Int = 0,
-    immunityDelay: Int = 0,
-    fileTypes: Array<FileType> = emptyArray(),
-    chatIds: LongArray = longArrayOf(),
-    excludeChatIds: LongArray = longArrayOf(),
-    chatLimit: Int = 0
+    size: Long,
+    ttl: Int,
+    count: Int,
+    immunityDelay: Int,
+    fileTypes: Array<FileType>,
+    chatIds: LongArray,
+    excludeChatIds: LongArray,
+    chatLimit: Int
 ) = syncOrNull<StorageStatistics>(
     OptimizeStorage(
         size,
@@ -126,14 +126,14 @@ suspend fun TdAbsHandler.optimizeStorageOrNull(
 )
 
 fun TdAbsHandler.optimizeStorage(
-    size: Long = 0L,
-    ttl: Int = 0,
-    count: Int = 0,
-    immunityDelay: Int = 0,
-    fileTypes: Array<FileType> = emptyArray(),
-    chatIds: LongArray = longArrayOf(),
-    excludeChatIds: LongArray = longArrayOf(),
-    chatLimit: Int = 0,
+    size: Long,
+    ttl: Int,
+    count: Int,
+    immunityDelay: Int,
+    fileTypes: Array<FileType>,
+    chatIds: LongArray,
+    excludeChatIds: LongArray,
+    chatLimit: Int,
     block: (suspend CoroutineScope.(StorageStatistics) -> Unit)
 ) = send(
     OptimizeStorage(

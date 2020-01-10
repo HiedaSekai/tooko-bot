@@ -15,7 +15,7 @@ import tookox.core.client.*
  * @encryptionKey - Encryption key to check or set up
  */
 suspend fun TdAbsHandler.checkDatabaseEncryptionKey(
-    encryptionKey: ByteArray = byteArrayOf()
+    encryptionKey: ByteArray
 ) = sync<Ok>(
     CheckDatabaseEncryptionKey(
         encryptionKey
@@ -23,7 +23,7 @@ suspend fun TdAbsHandler.checkDatabaseEncryptionKey(
 )
 
 suspend fun TdAbsHandler.checkDatabaseEncryptionKeyOrNull(
-    encryptionKey: ByteArray = byteArrayOf()
+    encryptionKey: ByteArray
 ) = syncOrNull<Ok>(
     CheckDatabaseEncryptionKey(
         encryptionKey
@@ -31,7 +31,7 @@ suspend fun TdAbsHandler.checkDatabaseEncryptionKeyOrNull(
 )
 
 fun TdAbsHandler.checkDatabaseEncryptionKey(
-    encryptionKey: ByteArray = byteArrayOf(),
+    encryptionKey: ByteArray,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     CheckDatabaseEncryptionKey(
@@ -142,7 +142,7 @@ fun TdAbsHandler.checkAuthenticationBotToken(
  * @username - Username to be checked
  */
 suspend fun TdAbsHandler.checkChatUsername(
-    chatId: Long = 0L,
+    chatId: Long,
     username: String? = null
 ) = sync<CheckChatUsernameResult>(
     CheckChatUsername(
@@ -152,7 +152,7 @@ suspend fun TdAbsHandler.checkChatUsername(
 )
 
 suspend fun TdAbsHandler.checkChatUsernameOrNull(
-    chatId: Long = 0L,
+    chatId: Long,
     username: String? = null
 ) = syncOrNull<CheckChatUsernameResult>(
     CheckChatUsername(
@@ -162,7 +162,7 @@ suspend fun TdAbsHandler.checkChatUsernameOrNull(
 )
 
 fun TdAbsHandler.checkChatUsername(
-    chatId: Long = 0L,
+    chatId: Long,
     username: String? = null,
     block: (suspend CoroutineScope.(CheckChatUsernameResult) -> Unit)
 ) = send(
@@ -211,7 +211,7 @@ fun TdAbsHandler.checkCreatedPublicChatsLimit(
  * @errorMessage - An error message, empty on success
  */
 suspend fun TdAbsHandler.answerPreCheckoutQuery(
-    preCheckoutQueryId: Long = 0L,
+    preCheckoutQueryId: Long,
     errorMessage: String? = null
 ) = sync<Ok>(
     AnswerPreCheckoutQuery(
@@ -221,7 +221,7 @@ suspend fun TdAbsHandler.answerPreCheckoutQuery(
 )
 
 suspend fun TdAbsHandler.answerPreCheckoutQueryOrNull(
-    preCheckoutQueryId: Long = 0L,
+    preCheckoutQueryId: Long,
     errorMessage: String? = null
 ) = syncOrNull<Ok>(
     AnswerPreCheckoutQuery(
@@ -231,7 +231,7 @@ suspend fun TdAbsHandler.answerPreCheckoutQueryOrNull(
 )
 
 fun TdAbsHandler.answerPreCheckoutQuery(
-    preCheckoutQueryId: Long = 0L,
+    preCheckoutQueryId: Long,
     errorMessage: String? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(

@@ -15,7 +15,7 @@ import tookox.core.client.*
  * @request - The request
  */
 suspend fun TdAbsHandler.sendTonLiteServerRequest(
-    request: ByteArray = byteArrayOf()
+    request: ByteArray
 ) = sync<TonLiteServerResponse>(
     SendTonLiteServerRequest(
         request
@@ -23,7 +23,7 @@ suspend fun TdAbsHandler.sendTonLiteServerRequest(
 )
 
 suspend fun TdAbsHandler.sendTonLiteServerRequestOrNull(
-    request: ByteArray = byteArrayOf()
+    request: ByteArray
 ) = syncOrNull<TonLiteServerResponse>(
     SendTonLiteServerRequest(
         request
@@ -31,7 +31,7 @@ suspend fun TdAbsHandler.sendTonLiteServerRequestOrNull(
 )
 
 fun TdAbsHandler.sendTonLiteServerRequest(
-    request: ByteArray = byteArrayOf(),
+    request: ByteArray,
     block: (suspend CoroutineScope.(TonLiteServerResponse) -> Unit)
 ) = send(
     SendTonLiteServerRequest(

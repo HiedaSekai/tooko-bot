@@ -14,7 +14,7 @@ import tookox.core.client.*
  * @chatId - Chat identifier
  */
 suspend fun TdAbsHandler.getChat(
-    chatId: Long = 0L
+    chatId: Long
 ) = sync<Chat>(
     GetChat(
         chatId
@@ -22,7 +22,7 @@ suspend fun TdAbsHandler.getChat(
 )
 
 suspend fun TdAbsHandler.getChatOrNull(
-    chatId: Long = 0L
+    chatId: Long
 ) = syncOrNull<Chat>(
     GetChat(
         chatId
@@ -30,7 +30,7 @@ suspend fun TdAbsHandler.getChatOrNull(
 )
 
 fun TdAbsHandler.getChat(
-    chatId: Long = 0L,
+    chatId: Long,
     block: (suspend CoroutineScope.(Chat) -> Unit)
 ) = send(
     GetChat(
@@ -52,9 +52,9 @@ fun TdAbsHandler.getChat(
  */
 suspend fun TdAbsHandler.getChats(
     chatList: ChatList? = null,
-    offsetOrder: Long = 0L,
-    offsetChatId: Long = 0L,
-    limit: Int = 0
+    offsetOrder: Long,
+    offsetChatId: Long,
+    limit: Int
 ) = sync<Chats>(
     GetChats(
         chatList,
@@ -66,9 +66,9 @@ suspend fun TdAbsHandler.getChats(
 
 suspend fun TdAbsHandler.getChatsOrNull(
     chatList: ChatList? = null,
-    offsetOrder: Long = 0L,
-    offsetChatId: Long = 0L,
-    limit: Int = 0
+    offsetOrder: Long,
+    offsetChatId: Long,
+    limit: Int
 ) = syncOrNull<Chats>(
     GetChats(
         chatList,
@@ -80,9 +80,9 @@ suspend fun TdAbsHandler.getChatsOrNull(
 
 fun TdAbsHandler.getChats(
     chatList: ChatList? = null,
-    offsetOrder: Long = 0L,
-    offsetChatId: Long = 0L,
-    limit: Int = 0,
+    offsetOrder: Long,
+    offsetChatId: Long,
+    limit: Int,
     block: (suspend CoroutineScope.(Chats) -> Unit)
 ) = send(
     GetChats(
@@ -170,7 +170,7 @@ fun TdAbsHandler.searchPublicChats(
  */
 suspend fun TdAbsHandler.searchChats(
     query: String? = null,
-    limit: Int = 0
+    limit: Int
 ) = sync<Chats>(
     SearchChats(
         query,
@@ -180,7 +180,7 @@ suspend fun TdAbsHandler.searchChats(
 
 suspend fun TdAbsHandler.searchChatsOrNull(
     query: String? = null,
-    limit: Int = 0
+    limit: Int
 ) = syncOrNull<Chats>(
     SearchChats(
         query,
@@ -190,7 +190,7 @@ suspend fun TdAbsHandler.searchChatsOrNull(
 
 fun TdAbsHandler.searchChats(
     query: String? = null,
-    limit: Int = 0,
+    limit: Int,
     block: (suspend CoroutineScope.(Chats) -> Unit)
 ) = send(
     SearchChats(
@@ -208,7 +208,7 @@ fun TdAbsHandler.searchChats(
  */
 suspend fun TdAbsHandler.searchChatsOnServer(
     query: String? = null,
-    limit: Int = 0
+    limit: Int
 ) = sync<Chats>(
     SearchChatsOnServer(
         query,
@@ -218,7 +218,7 @@ suspend fun TdAbsHandler.searchChatsOnServer(
 
 suspend fun TdAbsHandler.searchChatsOnServerOrNull(
     query: String? = null,
-    limit: Int = 0
+    limit: Int
 ) = syncOrNull<Chats>(
     SearchChatsOnServer(
         query,
@@ -228,7 +228,7 @@ suspend fun TdAbsHandler.searchChatsOnServerOrNull(
 
 fun TdAbsHandler.searchChatsOnServer(
     query: String? = null,
-    limit: Int = 0,
+    limit: Int,
     block: (suspend CoroutineScope.(Chats) -> Unit)
 ) = send(
     SearchChatsOnServer(
@@ -279,7 +279,7 @@ fun TdAbsHandler.searchChatsNearby(
  */
 suspend fun TdAbsHandler.getTopChats(
     category: TopChatCategory? = null,
-    limit: Int = 0
+    limit: Int
 ) = sync<Chats>(
     GetTopChats(
         category,
@@ -289,7 +289,7 @@ suspend fun TdAbsHandler.getTopChats(
 
 suspend fun TdAbsHandler.getTopChatsOrNull(
     category: TopChatCategory? = null,
-    limit: Int = 0
+    limit: Int
 ) = syncOrNull<Chats>(
     GetTopChats(
         category,
@@ -299,7 +299,7 @@ suspend fun TdAbsHandler.getTopChatsOrNull(
 
 fun TdAbsHandler.getTopChats(
     category: TopChatCategory? = null,
-    limit: Int = 0,
+    limit: Int,
     block: (suspend CoroutineScope.(Chats) -> Unit)
 ) = send(
     GetTopChats(
@@ -317,7 +317,7 @@ fun TdAbsHandler.getTopChats(
  */
 suspend fun TdAbsHandler.removeTopChat(
     category: TopChatCategory? = null,
-    chatId: Long = 0L
+    chatId: Long
 ) = sync<Ok>(
     RemoveTopChat(
         category,
@@ -327,7 +327,7 @@ suspend fun TdAbsHandler.removeTopChat(
 
 suspend fun TdAbsHandler.removeTopChatOrNull(
     category: TopChatCategory? = null,
-    chatId: Long = 0L
+    chatId: Long
 ) = syncOrNull<Ok>(
     RemoveTopChat(
         category,
@@ -337,7 +337,7 @@ suspend fun TdAbsHandler.removeTopChatOrNull(
 
 fun TdAbsHandler.removeTopChat(
     category: TopChatCategory? = null,
-    chatId: Long = 0L,
+    chatId: Long,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     RemoveTopChat(
@@ -354,7 +354,7 @@ fun TdAbsHandler.removeTopChat(
  * @chatId - Identifier of the chat to add
  */
 suspend fun TdAbsHandler.addRecentlyFoundChat(
-    chatId: Long = 0L
+    chatId: Long
 ) = sync<Ok>(
     AddRecentlyFoundChat(
         chatId
@@ -362,7 +362,7 @@ suspend fun TdAbsHandler.addRecentlyFoundChat(
 )
 
 suspend fun TdAbsHandler.addRecentlyFoundChatOrNull(
-    chatId: Long = 0L
+    chatId: Long
 ) = syncOrNull<Ok>(
     AddRecentlyFoundChat(
         chatId
@@ -370,7 +370,7 @@ suspend fun TdAbsHandler.addRecentlyFoundChatOrNull(
 )
 
 fun TdAbsHandler.addRecentlyFoundChat(
-    chatId: Long = 0L,
+    chatId: Long,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     AddRecentlyFoundChat(
@@ -384,7 +384,7 @@ fun TdAbsHandler.addRecentlyFoundChat(
  * @chatId - Identifier of the chat to be removed
  */
 suspend fun TdAbsHandler.removeRecentlyFoundChat(
-    chatId: Long = 0L
+    chatId: Long
 ) = sync<Ok>(
     RemoveRecentlyFoundChat(
         chatId
@@ -392,7 +392,7 @@ suspend fun TdAbsHandler.removeRecentlyFoundChat(
 )
 
 suspend fun TdAbsHandler.removeRecentlyFoundChatOrNull(
-    chatId: Long = 0L
+    chatId: Long
 ) = syncOrNull<Ok>(
     RemoveRecentlyFoundChat(
         chatId
@@ -400,7 +400,7 @@ suspend fun TdAbsHandler.removeRecentlyFoundChatOrNull(
 )
 
 fun TdAbsHandler.removeRecentlyFoundChat(
-    chatId: Long = 0L,
+    chatId: Long,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     RemoveRecentlyFoundChat(
@@ -501,9 +501,9 @@ fun TdAbsHandler.getInactiveSupergroupChats(
  * @limit - The maximum number of chats to be returned
  */
 suspend fun TdAbsHandler.getGroupsInCommon(
-    userId: Int = 0,
-    offsetChatId: Long = 0L,
-    limit: Int = 0
+    userId: Int,
+    offsetChatId: Long,
+    limit: Int
 ) = sync<Chats>(
     GetGroupsInCommon(
         userId,
@@ -513,9 +513,9 @@ suspend fun TdAbsHandler.getGroupsInCommon(
 )
 
 suspend fun TdAbsHandler.getGroupsInCommonOrNull(
-    userId: Int = 0,
-    offsetChatId: Long = 0L,
-    limit: Int = 0
+    userId: Int,
+    offsetChatId: Long,
+    limit: Int
 ) = syncOrNull<Chats>(
     GetGroupsInCommon(
         userId,
@@ -525,9 +525,9 @@ suspend fun TdAbsHandler.getGroupsInCommonOrNull(
 )
 
 fun TdAbsHandler.getGroupsInCommon(
-    userId: Int = 0,
-    offsetChatId: Long = 0L,
-    limit: Int = 0,
+    userId: Int,
+    offsetChatId: Long,
+    limit: Int,
     block: (suspend CoroutineScope.(Chats) -> Unit)
 ) = send(
     GetGroupsInCommon(
@@ -546,9 +546,9 @@ fun TdAbsHandler.getGroupsInCommon(
  * @revoke - Pass true to try to delete chat history for all users
  */
 suspend fun TdAbsHandler.deleteChatHistory(
-    chatId: Long = 0L,
-    removeFromChatList: Boolean = false,
-    revoke: Boolean = false
+    chatId: Long,
+    removeFromChatList: Boolean,
+    revoke: Boolean
 ) = sync<Ok>(
     DeleteChatHistory(
         chatId,
@@ -558,9 +558,9 @@ suspend fun TdAbsHandler.deleteChatHistory(
 )
 
 suspend fun TdAbsHandler.deleteChatHistoryOrNull(
-    chatId: Long = 0L,
-    removeFromChatList: Boolean = false,
-    revoke: Boolean = false
+    chatId: Long,
+    removeFromChatList: Boolean,
+    revoke: Boolean
 ) = syncOrNull<Ok>(
     DeleteChatHistory(
         chatId,
@@ -570,9 +570,9 @@ suspend fun TdAbsHandler.deleteChatHistoryOrNull(
 )
 
 fun TdAbsHandler.deleteChatHistory(
-    chatId: Long = 0L,
-    removeFromChatList: Boolean = false,
-    revoke: Boolean = false,
+    chatId: Long,
+    removeFromChatList: Boolean,
+    revoke: Boolean,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     DeleteChatHistory(
@@ -591,9 +591,9 @@ fun TdAbsHandler.deleteChatHistory(
  * @returnLocal - If true, returns count that is available locally without sending network requests, returning -1 if the number of messages is unknown
  */
 suspend fun TdAbsHandler.getChatMessageCount(
-    chatId: Long = 0L,
+    chatId: Long,
     filter: SearchMessagesFilter? = null,
-    returnLocal: Boolean = false
+    returnLocal: Boolean
 ) = sync<Count>(
     GetChatMessageCount(
         chatId,
@@ -603,9 +603,9 @@ suspend fun TdAbsHandler.getChatMessageCount(
 )
 
 suspend fun TdAbsHandler.getChatMessageCountOrNull(
-    chatId: Long = 0L,
+    chatId: Long,
     filter: SearchMessagesFilter? = null,
-    returnLocal: Boolean = false
+    returnLocal: Boolean
 ) = syncOrNull<Count>(
     GetChatMessageCount(
         chatId,
@@ -615,9 +615,9 @@ suspend fun TdAbsHandler.getChatMessageCountOrNull(
 )
 
 fun TdAbsHandler.getChatMessageCount(
-    chatId: Long = 0L,
+    chatId: Long,
     filter: SearchMessagesFilter? = null,
-    returnLocal: Boolean = false,
+    returnLocal: Boolean,
     block: (suspend CoroutineScope.(Count) -> Unit)
 ) = send(
     GetChatMessageCount(
@@ -636,8 +636,8 @@ fun TdAbsHandler.getChatMessageCount(
  * @userId - User identifier
  */
 suspend fun TdAbsHandler.deleteChatMessagesFromUser(
-    chatId: Long = 0L,
-    userId: Int = 0
+    chatId: Long,
+    userId: Int
 ) = sync<Ok>(
     DeleteChatMessagesFromUser(
         chatId,
@@ -646,8 +646,8 @@ suspend fun TdAbsHandler.deleteChatMessagesFromUser(
 )
 
 suspend fun TdAbsHandler.deleteChatMessagesFromUserOrNull(
-    chatId: Long = 0L,
-    userId: Int = 0
+    chatId: Long,
+    userId: Int
 ) = syncOrNull<Ok>(
     DeleteChatMessagesFromUser(
         chatId,
@@ -656,8 +656,8 @@ suspend fun TdAbsHandler.deleteChatMessagesFromUserOrNull(
 )
 
 fun TdAbsHandler.deleteChatMessagesFromUser(
-    chatId: Long = 0L,
-    userId: Int = 0,
+    chatId: Long,
+    userId: Int,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     DeleteChatMessagesFromUser(
@@ -675,8 +675,8 @@ fun TdAbsHandler.deleteChatMessagesFromUser(
  * @messageId - The message identifier of the used keyboard
  */
 suspend fun TdAbsHandler.deleteChatReplyMarkup(
-    chatId: Long = 0L,
-    messageId: Long = 0L
+    chatId: Long,
+    messageId: Long
 ) = sync<Ok>(
     DeleteChatReplyMarkup(
         chatId,
@@ -685,8 +685,8 @@ suspend fun TdAbsHandler.deleteChatReplyMarkup(
 )
 
 suspend fun TdAbsHandler.deleteChatReplyMarkupOrNull(
-    chatId: Long = 0L,
-    messageId: Long = 0L
+    chatId: Long,
+    messageId: Long
 ) = syncOrNull<Ok>(
     DeleteChatReplyMarkup(
         chatId,
@@ -695,8 +695,8 @@ suspend fun TdAbsHandler.deleteChatReplyMarkupOrNull(
 )
 
 fun TdAbsHandler.deleteChatReplyMarkup(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     DeleteChatReplyMarkup(
@@ -712,7 +712,7 @@ fun TdAbsHandler.deleteChatReplyMarkup(
  * @chatId - Chat identifier
  */
 suspend fun TdAbsHandler.openChat(
-    chatId: Long = 0L
+    chatId: Long
 ) = sync<Ok>(
     OpenChat(
         chatId
@@ -720,7 +720,7 @@ suspend fun TdAbsHandler.openChat(
 )
 
 suspend fun TdAbsHandler.openChatOrNull(
-    chatId: Long = 0L
+    chatId: Long
 ) = syncOrNull<Ok>(
     OpenChat(
         chatId
@@ -728,7 +728,7 @@ suspend fun TdAbsHandler.openChatOrNull(
 )
 
 fun TdAbsHandler.openChat(
-    chatId: Long = 0L,
+    chatId: Long,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     OpenChat(
@@ -743,7 +743,7 @@ fun TdAbsHandler.openChat(
  * @chatId - Chat identifier
  */
 suspend fun TdAbsHandler.closeChat(
-    chatId: Long = 0L
+    chatId: Long
 ) = sync<Ok>(
     CloseChat(
         chatId
@@ -751,7 +751,7 @@ suspend fun TdAbsHandler.closeChat(
 )
 
 suspend fun TdAbsHandler.closeChatOrNull(
-    chatId: Long = 0L
+    chatId: Long
 ) = syncOrNull<Ok>(
     CloseChat(
         chatId
@@ -759,7 +759,7 @@ suspend fun TdAbsHandler.closeChatOrNull(
 )
 
 fun TdAbsHandler.closeChat(
-    chatId: Long = 0L,
+    chatId: Long,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     CloseChat(
@@ -773,7 +773,7 @@ fun TdAbsHandler.closeChat(
  * @chatId - Chat identifier
  */
 suspend fun TdAbsHandler.readAllChatMentions(
-    chatId: Long = 0L
+    chatId: Long
 ) = sync<Ok>(
     ReadAllChatMentions(
         chatId
@@ -781,7 +781,7 @@ suspend fun TdAbsHandler.readAllChatMentions(
 )
 
 suspend fun TdAbsHandler.readAllChatMentionsOrNull(
-    chatId: Long = 0L
+    chatId: Long
 ) = syncOrNull<Ok>(
     ReadAllChatMentions(
         chatId
@@ -789,7 +789,7 @@ suspend fun TdAbsHandler.readAllChatMentionsOrNull(
 )
 
 fun TdAbsHandler.readAllChatMentions(
-    chatId: Long = 0L,
+    chatId: Long,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     ReadAllChatMentions(
@@ -805,8 +805,8 @@ fun TdAbsHandler.readAllChatMentions(
  *          In this case all information about the chat except its type, title and photo can be incorrect
  */
 suspend fun TdAbsHandler.createPrivateChat(
-    userId: Int = 0,
-    force: Boolean = false
+    userId: Int,
+    force: Boolean
 ) = sync<Chat>(
     CreatePrivateChat(
         userId,
@@ -815,8 +815,8 @@ suspend fun TdAbsHandler.createPrivateChat(
 )
 
 suspend fun TdAbsHandler.createPrivateChatOrNull(
-    userId: Int = 0,
-    force: Boolean = false
+    userId: Int,
+    force: Boolean
 ) = syncOrNull<Chat>(
     CreatePrivateChat(
         userId,
@@ -825,8 +825,8 @@ suspend fun TdAbsHandler.createPrivateChatOrNull(
 )
 
 fun TdAbsHandler.createPrivateChat(
-    userId: Int = 0,
-    force: Boolean = false,
+    userId: Int,
+    force: Boolean,
     block: (suspend CoroutineScope.(Chat) -> Unit)
 ) = send(
     CreatePrivateChat(
@@ -843,8 +843,8 @@ fun TdAbsHandler.createPrivateChat(
  *          In this case all information about the chat except its type, title and photo can be incorrect
  */
 suspend fun TdAbsHandler.createBasicGroupChat(
-    basicGroupId: Int = 0,
-    force: Boolean = false
+    basicGroupId: Int,
+    force: Boolean
 ) = sync<Chat>(
     CreateBasicGroupChat(
         basicGroupId,
@@ -853,8 +853,8 @@ suspend fun TdAbsHandler.createBasicGroupChat(
 )
 
 suspend fun TdAbsHandler.createBasicGroupChatOrNull(
-    basicGroupId: Int = 0,
-    force: Boolean = false
+    basicGroupId: Int,
+    force: Boolean
 ) = syncOrNull<Chat>(
     CreateBasicGroupChat(
         basicGroupId,
@@ -863,8 +863,8 @@ suspend fun TdAbsHandler.createBasicGroupChatOrNull(
 )
 
 fun TdAbsHandler.createBasicGroupChat(
-    basicGroupId: Int = 0,
-    force: Boolean = false,
+    basicGroupId: Int,
+    force: Boolean,
     block: (suspend CoroutineScope.(Chat) -> Unit)
 ) = send(
     CreateBasicGroupChat(
@@ -881,8 +881,8 @@ fun TdAbsHandler.createBasicGroupChat(
  *          In this case all information about the chat except its type, title and photo can be incorrect
  */
 suspend fun TdAbsHandler.createSupergroupChat(
-    supergroupId: Int = 0,
-    force: Boolean = false
+    supergroupId: Int,
+    force: Boolean
 ) = sync<Chat>(
     CreateSupergroupChat(
         supergroupId,
@@ -891,8 +891,8 @@ suspend fun TdAbsHandler.createSupergroupChat(
 )
 
 suspend fun TdAbsHandler.createSupergroupChatOrNull(
-    supergroupId: Int = 0,
-    force: Boolean = false
+    supergroupId: Int,
+    force: Boolean
 ) = syncOrNull<Chat>(
     CreateSupergroupChat(
         supergroupId,
@@ -901,8 +901,8 @@ suspend fun TdAbsHandler.createSupergroupChatOrNull(
 )
 
 fun TdAbsHandler.createSupergroupChat(
-    supergroupId: Int = 0,
-    force: Boolean = false,
+    supergroupId: Int,
+    force: Boolean,
     block: (suspend CoroutineScope.(Chat) -> Unit)
 ) = send(
     CreateSupergroupChat(
@@ -917,7 +917,7 @@ fun TdAbsHandler.createSupergroupChat(
  * @secretChatId - Secret chat identifier
  */
 suspend fun TdAbsHandler.createSecretChat(
-    secretChatId: Int = 0
+    secretChatId: Int
 ) = sync<Chat>(
     CreateSecretChat(
         secretChatId
@@ -925,7 +925,7 @@ suspend fun TdAbsHandler.createSecretChat(
 )
 
 suspend fun TdAbsHandler.createSecretChatOrNull(
-    secretChatId: Int = 0
+    secretChatId: Int
 ) = syncOrNull<Chat>(
     CreateSecretChat(
         secretChatId
@@ -933,7 +933,7 @@ suspend fun TdAbsHandler.createSecretChatOrNull(
 )
 
 fun TdAbsHandler.createSecretChat(
-    secretChatId: Int = 0,
+    secretChatId: Int,
     block: (suspend CoroutineScope.(Chat) -> Unit)
 ) = send(
     CreateSecretChat(
@@ -949,7 +949,7 @@ fun TdAbsHandler.createSecretChat(
  * @title - Title of the new basic group
  */
 suspend fun TdAbsHandler.createNewBasicGroupChat(
-    userIds: IntArray = intArrayOf(),
+    userIds: IntArray,
     title: String? = null
 ) = sync<Chat>(
     CreateNewBasicGroupChat(
@@ -959,7 +959,7 @@ suspend fun TdAbsHandler.createNewBasicGroupChat(
 )
 
 suspend fun TdAbsHandler.createNewBasicGroupChatOrNull(
-    userIds: IntArray = intArrayOf(),
+    userIds: IntArray,
     title: String? = null
 ) = syncOrNull<Chat>(
     CreateNewBasicGroupChat(
@@ -969,7 +969,7 @@ suspend fun TdAbsHandler.createNewBasicGroupChatOrNull(
 )
 
 fun TdAbsHandler.createNewBasicGroupChat(
-    userIds: IntArray = intArrayOf(),
+    userIds: IntArray,
     title: String? = null,
     block: (suspend CoroutineScope.(Chat) -> Unit)
 ) = send(
@@ -990,7 +990,7 @@ fun TdAbsHandler.createNewBasicGroupChat(
  */
 suspend fun TdAbsHandler.createNewSupergroupChat(
     title: String? = null,
-    isChannel: Boolean = false,
+    isChannel: Boolean,
     description: String? = null,
     location: ChatLocation? = null
 ) = sync<Chat>(
@@ -1004,7 +1004,7 @@ suspend fun TdAbsHandler.createNewSupergroupChat(
 
 suspend fun TdAbsHandler.createNewSupergroupChatOrNull(
     title: String? = null,
-    isChannel: Boolean = false,
+    isChannel: Boolean,
     description: String? = null,
     location: ChatLocation? = null
 ) = syncOrNull<Chat>(
@@ -1018,7 +1018,7 @@ suspend fun TdAbsHandler.createNewSupergroupChatOrNull(
 
 fun TdAbsHandler.createNewSupergroupChat(
     title: String? = null,
-    isChannel: Boolean = false,
+    isChannel: Boolean,
     description: String? = null,
     location: ChatLocation? = null,
     block: (suspend CoroutineScope.(Chat) -> Unit)
@@ -1038,7 +1038,7 @@ fun TdAbsHandler.createNewSupergroupChat(
  * @userId - Identifier of the target user
  */
 suspend fun TdAbsHandler.createNewSecretChat(
-    userId: Int = 0
+    userId: Int
 ) = sync<Chat>(
     CreateNewSecretChat(
         userId
@@ -1046,7 +1046,7 @@ suspend fun TdAbsHandler.createNewSecretChat(
 )
 
 suspend fun TdAbsHandler.createNewSecretChatOrNull(
-    userId: Int = 0
+    userId: Int
 ) = syncOrNull<Chat>(
     CreateNewSecretChat(
         userId
@@ -1054,7 +1054,7 @@ suspend fun TdAbsHandler.createNewSecretChatOrNull(
 )
 
 fun TdAbsHandler.createNewSecretChat(
-    userId: Int = 0,
+    userId: Int,
     block: (suspend CoroutineScope.(Chat) -> Unit)
 ) = send(
     CreateNewSecretChat(
@@ -1070,7 +1070,7 @@ fun TdAbsHandler.createNewSecretChat(
  * @chatId - Identifier of the chat to upgrade
  */
 suspend fun TdAbsHandler.upgradeBasicGroupChatToSupergroupChat(
-    chatId: Long = 0L
+    chatId: Long
 ) = sync<Chat>(
     UpgradeBasicGroupChatToSupergroupChat(
         chatId
@@ -1078,7 +1078,7 @@ suspend fun TdAbsHandler.upgradeBasicGroupChatToSupergroupChat(
 )
 
 suspend fun TdAbsHandler.upgradeBasicGroupChatToSupergroupChatOrNull(
-    chatId: Long = 0L
+    chatId: Long
 ) = syncOrNull<Chat>(
     UpgradeBasicGroupChatToSupergroupChat(
         chatId
@@ -1086,7 +1086,7 @@ suspend fun TdAbsHandler.upgradeBasicGroupChatToSupergroupChatOrNull(
 )
 
 fun TdAbsHandler.upgradeBasicGroupChatToSupergroupChat(
-    chatId: Long = 0L,
+    chatId: Long,
     block: (suspend CoroutineScope.(Chat) -> Unit)
 ) = send(
     UpgradeBasicGroupChatToSupergroupChat(
@@ -1102,7 +1102,7 @@ fun TdAbsHandler.upgradeBasicGroupChatToSupergroupChat(
  * @chatList - New chat list of the chat
  */
 suspend fun TdAbsHandler.setChatChatList(
-    chatId: Long = 0L,
+    chatId: Long,
     chatList: ChatList? = null
 ) = sync<Ok>(
     SetChatChatList(
@@ -1112,7 +1112,7 @@ suspend fun TdAbsHandler.setChatChatList(
 )
 
 suspend fun TdAbsHandler.setChatChatListOrNull(
-    chatId: Long = 0L,
+    chatId: Long,
     chatList: ChatList? = null
 ) = syncOrNull<Ok>(
     SetChatChatList(
@@ -1122,7 +1122,7 @@ suspend fun TdAbsHandler.setChatChatListOrNull(
 )
 
 fun TdAbsHandler.setChatChatList(
-    chatId: Long = 0L,
+    chatId: Long,
     chatList: ChatList? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
@@ -1142,7 +1142,7 @@ fun TdAbsHandler.setChatChatList(
  * @title - New title of the chat
  */
 suspend fun TdAbsHandler.setChatTitle(
-    chatId: Long = 0L,
+    chatId: Long,
     title: String? = null
 ) = sync<Ok>(
     SetChatTitle(
@@ -1152,7 +1152,7 @@ suspend fun TdAbsHandler.setChatTitle(
 )
 
 suspend fun TdAbsHandler.setChatTitleOrNull(
-    chatId: Long = 0L,
+    chatId: Long,
     title: String? = null
 ) = syncOrNull<Ok>(
     SetChatTitle(
@@ -1162,7 +1162,7 @@ suspend fun TdAbsHandler.setChatTitleOrNull(
 )
 
 fun TdAbsHandler.setChatTitle(
-    chatId: Long = 0L,
+    chatId: Long,
     title: String? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
@@ -1184,7 +1184,7 @@ fun TdAbsHandler.setChatTitle(
  *          Files that are accessible only by HTTP URL are not acceptable
  */
 suspend fun TdAbsHandler.setChatPhoto(
-    chatId: Long = 0L,
+    chatId: Long,
     photo: InputFile? = null
 ) = sync<Ok>(
     SetChatPhoto(
@@ -1194,7 +1194,7 @@ suspend fun TdAbsHandler.setChatPhoto(
 )
 
 suspend fun TdAbsHandler.setChatPhotoOrNull(
-    chatId: Long = 0L,
+    chatId: Long,
     photo: InputFile? = null
 ) = syncOrNull<Ok>(
     SetChatPhoto(
@@ -1204,7 +1204,7 @@ suspend fun TdAbsHandler.setChatPhotoOrNull(
 )
 
 fun TdAbsHandler.setChatPhoto(
-    chatId: Long = 0L,
+    chatId: Long,
     photo: InputFile? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
@@ -1223,7 +1223,7 @@ fun TdAbsHandler.setChatPhoto(
  * @permissions - New non-administrator members permissions in the chat
  */
 suspend fun TdAbsHandler.setChatPermissions(
-    chatId: Long = 0L,
+    chatId: Long,
     permissions: ChatPermissions? = null
 ) = sync<Ok>(
     SetChatPermissions(
@@ -1233,7 +1233,7 @@ suspend fun TdAbsHandler.setChatPermissions(
 )
 
 suspend fun TdAbsHandler.setChatPermissionsOrNull(
-    chatId: Long = 0L,
+    chatId: Long,
     permissions: ChatPermissions? = null
 ) = syncOrNull<Ok>(
     SetChatPermissions(
@@ -1243,7 +1243,7 @@ suspend fun TdAbsHandler.setChatPermissionsOrNull(
 )
 
 fun TdAbsHandler.setChatPermissions(
-    chatId: Long = 0L,
+    chatId: Long,
     permissions: ChatPermissions? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
@@ -1260,7 +1260,7 @@ fun TdAbsHandler.setChatPermissions(
  * @draftMessage - New draft message
  */
 suspend fun TdAbsHandler.setChatDraftMessage(
-    chatId: Long = 0L,
+    chatId: Long,
     draftMessage: DraftMessage? = null
 ) = sync<Ok>(
     SetChatDraftMessage(
@@ -1270,7 +1270,7 @@ suspend fun TdAbsHandler.setChatDraftMessage(
 )
 
 suspend fun TdAbsHandler.setChatDraftMessageOrNull(
-    chatId: Long = 0L,
+    chatId: Long,
     draftMessage: DraftMessage? = null
 ) = syncOrNull<Ok>(
     SetChatDraftMessage(
@@ -1280,7 +1280,7 @@ suspend fun TdAbsHandler.setChatDraftMessageOrNull(
 )
 
 fun TdAbsHandler.setChatDraftMessage(
-    chatId: Long = 0L,
+    chatId: Long,
     draftMessage: DraftMessage? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
@@ -1299,7 +1299,7 @@ fun TdAbsHandler.setChatDraftMessage(
  *                         If the chat is muted for more than 1 week, it is considered to be muted forever
  */
 suspend fun TdAbsHandler.setChatNotificationSettings(
-    chatId: Long = 0L,
+    chatId: Long,
     notificationSettings: ChatNotificationSettings? = null
 ) = sync<Ok>(
     SetChatNotificationSettings(
@@ -1309,7 +1309,7 @@ suspend fun TdAbsHandler.setChatNotificationSettings(
 )
 
 suspend fun TdAbsHandler.setChatNotificationSettingsOrNull(
-    chatId: Long = 0L,
+    chatId: Long,
     notificationSettings: ChatNotificationSettings? = null
 ) = syncOrNull<Ok>(
     SetChatNotificationSettings(
@@ -1319,7 +1319,7 @@ suspend fun TdAbsHandler.setChatNotificationSettingsOrNull(
 )
 
 fun TdAbsHandler.setChatNotificationSettings(
-    chatId: Long = 0L,
+    chatId: Long,
     notificationSettings: ChatNotificationSettings? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
@@ -1337,8 +1337,8 @@ fun TdAbsHandler.setChatNotificationSettings(
  * @isPinned - New value of is_pinned
  */
 suspend fun TdAbsHandler.toggleChatIsPinned(
-    chatId: Long = 0L,
-    isPinned: Boolean = false
+    chatId: Long,
+    isPinned: Boolean
 ) = sync<Ok>(
     ToggleChatIsPinned(
         chatId,
@@ -1347,8 +1347,8 @@ suspend fun TdAbsHandler.toggleChatIsPinned(
 )
 
 suspend fun TdAbsHandler.toggleChatIsPinnedOrNull(
-    chatId: Long = 0L,
-    isPinned: Boolean = false
+    chatId: Long,
+    isPinned: Boolean
 ) = syncOrNull<Ok>(
     ToggleChatIsPinned(
         chatId,
@@ -1357,8 +1357,8 @@ suspend fun TdAbsHandler.toggleChatIsPinnedOrNull(
 )
 
 fun TdAbsHandler.toggleChatIsPinned(
-    chatId: Long = 0L,
-    isPinned: Boolean = false,
+    chatId: Long,
+    isPinned: Boolean,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     ToggleChatIsPinned(
@@ -1374,8 +1374,8 @@ fun TdAbsHandler.toggleChatIsPinned(
  * @isMarkedAsUnread - New value of is_marked_as_unread
  */
 suspend fun TdAbsHandler.toggleChatIsMarkedAsUnread(
-    chatId: Long = 0L,
-    isMarkedAsUnread: Boolean = false
+    chatId: Long,
+    isMarkedAsUnread: Boolean
 ) = sync<Ok>(
     ToggleChatIsMarkedAsUnread(
         chatId,
@@ -1384,8 +1384,8 @@ suspend fun TdAbsHandler.toggleChatIsMarkedAsUnread(
 )
 
 suspend fun TdAbsHandler.toggleChatIsMarkedAsUnreadOrNull(
-    chatId: Long = 0L,
-    isMarkedAsUnread: Boolean = false
+    chatId: Long,
+    isMarkedAsUnread: Boolean
 ) = syncOrNull<Ok>(
     ToggleChatIsMarkedAsUnread(
         chatId,
@@ -1394,8 +1394,8 @@ suspend fun TdAbsHandler.toggleChatIsMarkedAsUnreadOrNull(
 )
 
 fun TdAbsHandler.toggleChatIsMarkedAsUnread(
-    chatId: Long = 0L,
-    isMarkedAsUnread: Boolean = false,
+    chatId: Long,
+    isMarkedAsUnread: Boolean,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     ToggleChatIsMarkedAsUnread(
@@ -1411,8 +1411,8 @@ fun TdAbsHandler.toggleChatIsMarkedAsUnread(
  * @defaultDisableNotification - New value of default_disable_notification
  */
 suspend fun TdAbsHandler.toggleChatDefaultDisableNotification(
-    chatId: Long = 0L,
-    defaultDisableNotification: Boolean = false
+    chatId: Long,
+    defaultDisableNotification: Boolean
 ) = sync<Ok>(
     ToggleChatDefaultDisableNotification(
         chatId,
@@ -1421,8 +1421,8 @@ suspend fun TdAbsHandler.toggleChatDefaultDisableNotification(
 )
 
 suspend fun TdAbsHandler.toggleChatDefaultDisableNotificationOrNull(
-    chatId: Long = 0L,
-    defaultDisableNotification: Boolean = false
+    chatId: Long,
+    defaultDisableNotification: Boolean
 ) = syncOrNull<Ok>(
     ToggleChatDefaultDisableNotification(
         chatId,
@@ -1431,8 +1431,8 @@ suspend fun TdAbsHandler.toggleChatDefaultDisableNotificationOrNull(
 )
 
 fun TdAbsHandler.toggleChatDefaultDisableNotification(
-    chatId: Long = 0L,
-    defaultDisableNotification: Boolean = false,
+    chatId: Long,
+    defaultDisableNotification: Boolean,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     ToggleChatDefaultDisableNotification(
@@ -1448,7 +1448,7 @@ fun TdAbsHandler.toggleChatDefaultDisableNotification(
  * @clientData - New value of client_data
  */
 suspend fun TdAbsHandler.setChatClientData(
-    chatId: Long = 0L,
+    chatId: Long,
     clientData: String? = null
 ) = sync<Ok>(
     SetChatClientData(
@@ -1458,7 +1458,7 @@ suspend fun TdAbsHandler.setChatClientData(
 )
 
 suspend fun TdAbsHandler.setChatClientDataOrNull(
-    chatId: Long = 0L,
+    chatId: Long,
     clientData: String? = null
 ) = syncOrNull<Ok>(
     SetChatClientData(
@@ -1468,7 +1468,7 @@ suspend fun TdAbsHandler.setChatClientDataOrNull(
 )
 
 fun TdAbsHandler.setChatClientData(
-    chatId: Long = 0L,
+    chatId: Long,
     clientData: String? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
@@ -1487,7 +1487,7 @@ fun TdAbsHandler.setChatClientData(
  * @description - New chat description
  */
 suspend fun TdAbsHandler.setChatDescription(
-    chatId: Long = 0L,
+    chatId: Long,
     description: String? = null
 ) = sync<Ok>(
     SetChatDescription(
@@ -1497,7 +1497,7 @@ suspend fun TdAbsHandler.setChatDescription(
 )
 
 suspend fun TdAbsHandler.setChatDescriptionOrNull(
-    chatId: Long = 0L,
+    chatId: Long,
     description: String? = null
 ) = syncOrNull<Ok>(
     SetChatDescription(
@@ -1507,7 +1507,7 @@ suspend fun TdAbsHandler.setChatDescriptionOrNull(
 )
 
 fun TdAbsHandler.setChatDescription(
-    chatId: Long = 0L,
+    chatId: Long,
     description: String? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
@@ -1530,8 +1530,8 @@ fun TdAbsHandler.setChatDescription(
  *                     If new chat members don't have access to old messages in the supergroup, then toggleSupergroupIsAllHistoryAvailable needs to be used first to change that
  */
 suspend fun TdAbsHandler.setChatDiscussionGroup(
-    chatId: Long = 0L,
-    discussionChatId: Long = 0L
+    chatId: Long,
+    discussionChatId: Long
 ) = sync<Ok>(
     SetChatDiscussionGroup(
         chatId,
@@ -1540,8 +1540,8 @@ suspend fun TdAbsHandler.setChatDiscussionGroup(
 )
 
 suspend fun TdAbsHandler.setChatDiscussionGroupOrNull(
-    chatId: Long = 0L,
-    discussionChatId: Long = 0L
+    chatId: Long,
+    discussionChatId: Long
 ) = syncOrNull<Ok>(
     SetChatDiscussionGroup(
         chatId,
@@ -1550,8 +1550,8 @@ suspend fun TdAbsHandler.setChatDiscussionGroupOrNull(
 )
 
 fun TdAbsHandler.setChatDiscussionGroup(
-    chatId: Long = 0L,
-    discussionChatId: Long = 0L,
+    chatId: Long,
+    discussionChatId: Long,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     SetChatDiscussionGroup(
@@ -1569,7 +1569,7 @@ fun TdAbsHandler.setChatDiscussionGroup(
  *             Must be valid and not null
  */
 suspend fun TdAbsHandler.setChatLocation(
-    chatId: Long = 0L,
+    chatId: Long,
     location: ChatLocation? = null
 ) = sync<Ok>(
     SetChatLocation(
@@ -1579,7 +1579,7 @@ suspend fun TdAbsHandler.setChatLocation(
 )
 
 suspend fun TdAbsHandler.setChatLocationOrNull(
-    chatId: Long = 0L,
+    chatId: Long,
     location: ChatLocation? = null
 ) = syncOrNull<Ok>(
     SetChatLocation(
@@ -1589,7 +1589,7 @@ suspend fun TdAbsHandler.setChatLocationOrNull(
 )
 
 fun TdAbsHandler.setChatLocation(
-    chatId: Long = 0L,
+    chatId: Long,
     location: ChatLocation? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
@@ -1609,8 +1609,8 @@ fun TdAbsHandler.setChatLocation(
  *                  Must be one of 0, 10, 30, 60, 300, 900, 3600
  */
 suspend fun TdAbsHandler.setChatSlowModeDelay(
-    chatId: Long = 0L,
-    slowModeDelay: Int = 0
+    chatId: Long,
+    slowModeDelay: Int
 ) = sync<Ok>(
     SetChatSlowModeDelay(
         chatId,
@@ -1619,8 +1619,8 @@ suspend fun TdAbsHandler.setChatSlowModeDelay(
 )
 
 suspend fun TdAbsHandler.setChatSlowModeDelayOrNull(
-    chatId: Long = 0L,
-    slowModeDelay: Int = 0
+    chatId: Long,
+    slowModeDelay: Int
 ) = syncOrNull<Ok>(
     SetChatSlowModeDelay(
         chatId,
@@ -1629,8 +1629,8 @@ suspend fun TdAbsHandler.setChatSlowModeDelayOrNull(
 )
 
 fun TdAbsHandler.setChatSlowModeDelay(
-    chatId: Long = 0L,
-    slowModeDelay: Int = 0,
+    chatId: Long,
+    slowModeDelay: Int,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     SetChatSlowModeDelay(
@@ -1648,9 +1648,9 @@ fun TdAbsHandler.setChatSlowModeDelay(
  * @disableNotification - True, if there should be no notification about the pinned message
  */
 suspend fun TdAbsHandler.pinChatMessage(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
-    disableNotification: Boolean = false
+    chatId: Long,
+    messageId: Long,
+    disableNotification: Boolean
 ) = sync<Ok>(
     PinChatMessage(
         chatId,
@@ -1660,9 +1660,9 @@ suspend fun TdAbsHandler.pinChatMessage(
 )
 
 suspend fun TdAbsHandler.pinChatMessageOrNull(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
-    disableNotification: Boolean = false
+    chatId: Long,
+    messageId: Long,
+    disableNotification: Boolean
 ) = syncOrNull<Ok>(
     PinChatMessage(
         chatId,
@@ -1672,9 +1672,9 @@ suspend fun TdAbsHandler.pinChatMessageOrNull(
 )
 
 fun TdAbsHandler.pinChatMessage(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
-    disableNotification: Boolean = false,
+    chatId: Long,
+    messageId: Long,
+    disableNotification: Boolean,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     PinChatMessage(
@@ -1691,7 +1691,7 @@ fun TdAbsHandler.pinChatMessage(
  * @chatId - Identifier of the chat
  */
 suspend fun TdAbsHandler.unpinChatMessage(
-    chatId: Long = 0L
+    chatId: Long
 ) = sync<Ok>(
     UnpinChatMessage(
         chatId
@@ -1699,7 +1699,7 @@ suspend fun TdAbsHandler.unpinChatMessage(
 )
 
 suspend fun TdAbsHandler.unpinChatMessageOrNull(
-    chatId: Long = 0L
+    chatId: Long
 ) = syncOrNull<Ok>(
     UnpinChatMessage(
         chatId
@@ -1707,7 +1707,7 @@ suspend fun TdAbsHandler.unpinChatMessageOrNull(
 )
 
 fun TdAbsHandler.unpinChatMessage(
-    chatId: Long = 0L,
+    chatId: Long,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     UnpinChatMessage(
@@ -1722,7 +1722,7 @@ fun TdAbsHandler.unpinChatMessage(
  * @chatId - Chat identifier
  */
 suspend fun TdAbsHandler.joinChat(
-    chatId: Long = 0L
+    chatId: Long
 ) = sync<Ok>(
     JoinChat(
         chatId
@@ -1730,7 +1730,7 @@ suspend fun TdAbsHandler.joinChat(
 )
 
 suspend fun TdAbsHandler.joinChatOrNull(
-    chatId: Long = 0L
+    chatId: Long
 ) = syncOrNull<Ok>(
     JoinChat(
         chatId
@@ -1738,7 +1738,7 @@ suspend fun TdAbsHandler.joinChatOrNull(
 )
 
 fun TdAbsHandler.joinChat(
-    chatId: Long = 0L,
+    chatId: Long,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     JoinChat(
@@ -1753,7 +1753,7 @@ fun TdAbsHandler.joinChat(
  * @chatId - Chat identifier
  */
 suspend fun TdAbsHandler.leaveChat(
-    chatId: Long = 0L
+    chatId: Long
 ) = sync<Ok>(
     LeaveChat(
         chatId
@@ -1761,7 +1761,7 @@ suspend fun TdAbsHandler.leaveChat(
 )
 
 suspend fun TdAbsHandler.leaveChatOrNull(
-    chatId: Long = 0L
+    chatId: Long
 ) = syncOrNull<Ok>(
     LeaveChat(
         chatId
@@ -1769,7 +1769,7 @@ suspend fun TdAbsHandler.leaveChatOrNull(
 )
 
 fun TdAbsHandler.leaveChat(
-    chatId: Long = 0L,
+    chatId: Long,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     LeaveChat(
@@ -1788,9 +1788,9 @@ fun TdAbsHandler.leaveChat(
  *                 Ignored for supergroups and channels
  */
 suspend fun TdAbsHandler.addChatMember(
-    chatId: Long = 0L,
-    userId: Int = 0,
-    forwardLimit: Int = 0
+    chatId: Long,
+    userId: Int,
+    forwardLimit: Int
 ) = sync<Ok>(
     AddChatMember(
         chatId,
@@ -1800,9 +1800,9 @@ suspend fun TdAbsHandler.addChatMember(
 )
 
 suspend fun TdAbsHandler.addChatMemberOrNull(
-    chatId: Long = 0L,
-    userId: Int = 0,
-    forwardLimit: Int = 0
+    chatId: Long,
+    userId: Int,
+    forwardLimit: Int
 ) = syncOrNull<Ok>(
     AddChatMember(
         chatId,
@@ -1812,9 +1812,9 @@ suspend fun TdAbsHandler.addChatMemberOrNull(
 )
 
 fun TdAbsHandler.addChatMember(
-    chatId: Long = 0L,
-    userId: Int = 0,
-    forwardLimit: Int = 0,
+    chatId: Long,
+    userId: Int,
+    forwardLimit: Int,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     AddChatMember(
@@ -1835,8 +1835,8 @@ fun TdAbsHandler.addChatMember(
  * @userIds - Identifiers of the users to be added to the chat
  */
 suspend fun TdAbsHandler.addChatMembers(
-    chatId: Long = 0L,
-    userIds: IntArray = intArrayOf()
+    chatId: Long,
+    userIds: IntArray
 ) = sync<Ok>(
     AddChatMembers(
         chatId,
@@ -1845,8 +1845,8 @@ suspend fun TdAbsHandler.addChatMembers(
 )
 
 suspend fun TdAbsHandler.addChatMembersOrNull(
-    chatId: Long = 0L,
-    userIds: IntArray = intArrayOf()
+    chatId: Long,
+    userIds: IntArray
 ) = syncOrNull<Ok>(
     AddChatMembers(
         chatId,
@@ -1855,8 +1855,8 @@ suspend fun TdAbsHandler.addChatMembersOrNull(
 )
 
 fun TdAbsHandler.addChatMembers(
-    chatId: Long = 0L,
-    userIds: IntArray = intArrayOf(),
+    chatId: Long,
+    userIds: IntArray,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     AddChatMembers(
@@ -1876,8 +1876,8 @@ fun TdAbsHandler.addChatMembers(
  * @status - The new status of the member in the chat
  */
 suspend fun TdAbsHandler.setChatMemberStatus(
-    chatId: Long = 0L,
-    userId: Int = 0,
+    chatId: Long,
+    userId: Int,
     status: ChatMemberStatus? = null
 ) = sync<Ok>(
     SetChatMemberStatus(
@@ -1888,8 +1888,8 @@ suspend fun TdAbsHandler.setChatMemberStatus(
 )
 
 suspend fun TdAbsHandler.setChatMemberStatusOrNull(
-    chatId: Long = 0L,
-    userId: Int = 0,
+    chatId: Long,
+    userId: Int,
     status: ChatMemberStatus? = null
 ) = syncOrNull<Ok>(
     SetChatMemberStatus(
@@ -1900,8 +1900,8 @@ suspend fun TdAbsHandler.setChatMemberStatusOrNull(
 )
 
 fun TdAbsHandler.setChatMemberStatus(
-    chatId: Long = 0L,
-    userId: Int = 0,
+    chatId: Long,
+    userId: Int,
     status: ChatMemberStatus? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
@@ -1924,8 +1924,8 @@ fun TdAbsHandler.setChatMemberStatus(
  * @password - The password of the current user
  */
 suspend fun TdAbsHandler.transferChatOwnership(
-    chatId: Long = 0L,
-    userId: Int = 0,
+    chatId: Long,
+    userId: Int,
     password: String? = null
 ) = sync<Ok>(
     TransferChatOwnership(
@@ -1936,8 +1936,8 @@ suspend fun TdAbsHandler.transferChatOwnership(
 )
 
 suspend fun TdAbsHandler.transferChatOwnershipOrNull(
-    chatId: Long = 0L,
-    userId: Int = 0,
+    chatId: Long,
+    userId: Int,
     password: String? = null
 ) = syncOrNull<Ok>(
     TransferChatOwnership(
@@ -1948,8 +1948,8 @@ suspend fun TdAbsHandler.transferChatOwnershipOrNull(
 )
 
 fun TdAbsHandler.transferChatOwnership(
-    chatId: Long = 0L,
-    userId: Int = 0,
+    chatId: Long,
+    userId: Int,
     password: String? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
@@ -1967,8 +1967,8 @@ fun TdAbsHandler.transferChatOwnership(
  * @userId - User identifier
  */
 suspend fun TdAbsHandler.getChatMember(
-    chatId: Long = 0L,
-    userId: Int = 0
+    chatId: Long,
+    userId: Int
 ) = sync<ChatMember>(
     GetChatMember(
         chatId,
@@ -1977,8 +1977,8 @@ suspend fun TdAbsHandler.getChatMember(
 )
 
 suspend fun TdAbsHandler.getChatMemberOrNull(
-    chatId: Long = 0L,
-    userId: Int = 0
+    chatId: Long,
+    userId: Int
 ) = syncOrNull<ChatMember>(
     GetChatMember(
         chatId,
@@ -1987,8 +1987,8 @@ suspend fun TdAbsHandler.getChatMemberOrNull(
 )
 
 fun TdAbsHandler.getChatMember(
-    chatId: Long = 0L,
-    userId: Int = 0,
+    chatId: Long,
+    userId: Int,
     block: (suspend CoroutineScope.(ChatMember) -> Unit)
 ) = send(
     GetChatMember(
@@ -2008,9 +2008,9 @@ fun TdAbsHandler.getChatMember(
  *           By default, chatMembersFilterMembers
  */
 suspend fun TdAbsHandler.searchChatMembers(
-    chatId: Long = 0L,
+    chatId: Long,
     query: String? = null,
-    limit: Int = 0,
+    limit: Int,
     filter: ChatMembersFilter? = null
 ) = sync<ChatMembers>(
     SearchChatMembers(
@@ -2022,9 +2022,9 @@ suspend fun TdAbsHandler.searchChatMembers(
 )
 
 suspend fun TdAbsHandler.searchChatMembersOrNull(
-    chatId: Long = 0L,
+    chatId: Long,
     query: String? = null,
-    limit: Int = 0,
+    limit: Int,
     filter: ChatMembersFilter? = null
 ) = syncOrNull<ChatMembers>(
     SearchChatMembers(
@@ -2036,9 +2036,9 @@ suspend fun TdAbsHandler.searchChatMembersOrNull(
 )
 
 fun TdAbsHandler.searchChatMembers(
-    chatId: Long = 0L,
+    chatId: Long,
     query: String? = null,
-    limit: Int = 0,
+    limit: Int,
     filter: ChatMembersFilter? = null,
     block: (suspend CoroutineScope.(ChatMembers) -> Unit)
 ) = send(
@@ -2056,7 +2056,7 @@ fun TdAbsHandler.searchChatMembers(
  * @chatId - Chat identifier
  */
 suspend fun TdAbsHandler.getChatAdministrators(
-    chatId: Long = 0L
+    chatId: Long
 ) = sync<ChatAdministrators>(
     GetChatAdministrators(
         chatId
@@ -2064,7 +2064,7 @@ suspend fun TdAbsHandler.getChatAdministrators(
 )
 
 suspend fun TdAbsHandler.getChatAdministratorsOrNull(
-    chatId: Long = 0L
+    chatId: Long
 ) = syncOrNull<ChatAdministrators>(
     GetChatAdministrators(
         chatId
@@ -2072,7 +2072,7 @@ suspend fun TdAbsHandler.getChatAdministratorsOrNull(
 )
 
 fun TdAbsHandler.getChatAdministrators(
-    chatId: Long = 0L,
+    chatId: Long,
     block: (suspend CoroutineScope.(ChatAdministrators) -> Unit)
 ) = send(
     GetChatAdministrators(
@@ -2088,7 +2088,7 @@ fun TdAbsHandler.getChatAdministrators(
  */
 suspend fun TdAbsHandler.getChatNotificationSettingsExceptions(
     scope: NotificationSettingsScope? = null,
-    compareSound: Boolean = false
+    compareSound: Boolean
 ) = sync<Chats>(
     GetChatNotificationSettingsExceptions(
         scope,
@@ -2098,7 +2098,7 @@ suspend fun TdAbsHandler.getChatNotificationSettingsExceptions(
 
 suspend fun TdAbsHandler.getChatNotificationSettingsExceptionsOrNull(
     scope: NotificationSettingsScope? = null,
-    compareSound: Boolean = false
+    compareSound: Boolean
 ) = syncOrNull<Chats>(
     GetChatNotificationSettingsExceptions(
         scope,
@@ -2108,7 +2108,7 @@ suspend fun TdAbsHandler.getChatNotificationSettingsExceptionsOrNull(
 
 fun TdAbsHandler.getChatNotificationSettingsExceptions(
     scope: NotificationSettingsScope? = null,
-    compareSound: Boolean = false,
+    compareSound: Boolean,
     block: (suspend CoroutineScope.(Chats) -> Unit)
 ) = send(
     GetChatNotificationSettingsExceptions(
@@ -2125,7 +2125,7 @@ fun TdAbsHandler.getChatNotificationSettingsExceptions(
  */
 suspend fun TdAbsHandler.setPinnedChats(
     chatList: ChatList? = null,
-    chatIds: LongArray = longArrayOf()
+    chatIds: LongArray
 ) = sync<Ok>(
     SetPinnedChats(
         chatList,
@@ -2135,7 +2135,7 @@ suspend fun TdAbsHandler.setPinnedChats(
 
 suspend fun TdAbsHandler.setPinnedChatsOrNull(
     chatList: ChatList? = null,
-    chatIds: LongArray = longArrayOf()
+    chatIds: LongArray
 ) = syncOrNull<Ok>(
     SetPinnedChats(
         chatList,
@@ -2145,7 +2145,7 @@ suspend fun TdAbsHandler.setPinnedChatsOrNull(
 
 fun TdAbsHandler.setPinnedChats(
     chatList: ChatList? = null,
-    chatIds: LongArray = longArrayOf(),
+    chatIds: LongArray,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     SetPinnedChats(
@@ -2163,7 +2163,7 @@ fun TdAbsHandler.setPinnedChats(
  * @chatId - Chat identifier
  */
 suspend fun TdAbsHandler.generateChatInviteLink(
-    chatId: Long = 0L
+    chatId: Long
 ) = sync<ChatInviteLink>(
     GenerateChatInviteLink(
         chatId
@@ -2171,7 +2171,7 @@ suspend fun TdAbsHandler.generateChatInviteLink(
 )
 
 suspend fun TdAbsHandler.generateChatInviteLinkOrNull(
-    chatId: Long = 0L
+    chatId: Long
 ) = syncOrNull<ChatInviteLink>(
     GenerateChatInviteLink(
         chatId
@@ -2179,7 +2179,7 @@ suspend fun TdAbsHandler.generateChatInviteLinkOrNull(
 )
 
 fun TdAbsHandler.generateChatInviteLink(
-    chatId: Long = 0L,
+    chatId: Long,
     block: (suspend CoroutineScope.(ChatInviteLink) -> Unit)
 ) = send(
     GenerateChatInviteLink(
@@ -2261,10 +2261,10 @@ fun TdAbsHandler.joinChatByInviteLink(
  *          Up to 200
  */
 suspend fun TdAbsHandler.getSupergroupMembers(
-    supergroupId: Int = 0,
+    supergroupId: Int,
     filter: SupergroupMembersFilter? = null,
-    offset: Int = 0,
-    limit: Int = 0
+    offset: Int,
+    limit: Int
 ) = sync<ChatMembers>(
     GetSupergroupMembers(
         supergroupId,
@@ -2275,10 +2275,10 @@ suspend fun TdAbsHandler.getSupergroupMembers(
 )
 
 suspend fun TdAbsHandler.getSupergroupMembersOrNull(
-    supergroupId: Int = 0,
+    supergroupId: Int,
     filter: SupergroupMembersFilter? = null,
-    offset: Int = 0,
-    limit: Int = 0
+    offset: Int,
+    limit: Int
 ) = syncOrNull<ChatMembers>(
     GetSupergroupMembers(
         supergroupId,
@@ -2289,10 +2289,10 @@ suspend fun TdAbsHandler.getSupergroupMembersOrNull(
 )
 
 fun TdAbsHandler.getSupergroupMembers(
-    supergroupId: Int = 0,
+    supergroupId: Int,
     filter: SupergroupMembersFilter? = null,
-    offset: Int = 0,
-    limit: Int = 0,
+    offset: Int,
+    limit: Int,
     block: (suspend CoroutineScope.(ChatMembers) -> Unit)
 ) = send(
     GetSupergroupMembers(
@@ -2321,12 +2321,12 @@ fun TdAbsHandler.getSupergroupMembers(
  *            By default, events relating to all users will be returned
  */
 suspend fun TdAbsHandler.getChatEventLog(
-    chatId: Long = 0L,
+    chatId: Long,
     query: String? = null,
-    fromEventId: Long = 0L,
-    limit: Int = 0,
+    fromEventId: Long,
+    limit: Int,
     filters: ChatEventLogFilters? = null,
-    userIds: IntArray = intArrayOf()
+    userIds: IntArray
 ) = sync<ChatEvents>(
     GetChatEventLog(
         chatId,
@@ -2339,12 +2339,12 @@ suspend fun TdAbsHandler.getChatEventLog(
 )
 
 suspend fun TdAbsHandler.getChatEventLogOrNull(
-    chatId: Long = 0L,
+    chatId: Long,
     query: String? = null,
-    fromEventId: Long = 0L,
-    limit: Int = 0,
+    fromEventId: Long,
+    limit: Int,
     filters: ChatEventLogFilters? = null,
-    userIds: IntArray = intArrayOf()
+    userIds: IntArray
 ) = syncOrNull<ChatEvents>(
     GetChatEventLog(
         chatId,
@@ -2357,12 +2357,12 @@ suspend fun TdAbsHandler.getChatEventLogOrNull(
 )
 
 fun TdAbsHandler.getChatEventLog(
-    chatId: Long = 0L,
+    chatId: Long,
     query: String? = null,
-    fromEventId: Long = 0L,
-    limit: Int = 0,
+    fromEventId: Long,
+    limit: Int,
     filters: ChatEventLogFilters? = null,
-    userIds: IntArray = intArrayOf(),
+    userIds: IntArray,
     block: (suspend CoroutineScope.(ChatEvents) -> Unit)
 ) = send(
     GetChatEventLog(
@@ -2381,7 +2381,7 @@ fun TdAbsHandler.getChatEventLog(
  * @chatId - Chat identifier
  */
 suspend fun TdAbsHandler.removeChatActionBar(
-    chatId: Long = 0L
+    chatId: Long
 ) = sync<Ok>(
     RemoveChatActionBar(
         chatId
@@ -2389,7 +2389,7 @@ suspend fun TdAbsHandler.removeChatActionBar(
 )
 
 suspend fun TdAbsHandler.removeChatActionBarOrNull(
-    chatId: Long = 0L
+    chatId: Long
 ) = syncOrNull<Ok>(
     RemoveChatActionBar(
         chatId
@@ -2397,7 +2397,7 @@ suspend fun TdAbsHandler.removeChatActionBarOrNull(
 )
 
 fun TdAbsHandler.removeChatActionBar(
-    chatId: Long = 0L,
+    chatId: Long,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     RemoveChatActionBar(
@@ -2414,9 +2414,9 @@ fun TdAbsHandler.removeChatActionBar(
  * @messageIds - Identifiers of reported messages, if any
  */
 suspend fun TdAbsHandler.reportChat(
-    chatId: Long = 0L,
+    chatId: Long,
     reason: ChatReportReason? = null,
-    messageIds: LongArray = longArrayOf()
+    messageIds: LongArray
 ) = sync<Ok>(
     ReportChat(
         chatId,
@@ -2426,9 +2426,9 @@ suspend fun TdAbsHandler.reportChat(
 )
 
 suspend fun TdAbsHandler.reportChatOrNull(
-    chatId: Long = 0L,
+    chatId: Long,
     reason: ChatReportReason? = null,
-    messageIds: LongArray = longArrayOf()
+    messageIds: LongArray
 ) = syncOrNull<Ok>(
     ReportChat(
         chatId,
@@ -2438,9 +2438,9 @@ suspend fun TdAbsHandler.reportChatOrNull(
 )
 
 fun TdAbsHandler.reportChat(
-    chatId: Long = 0L,
+    chatId: Long,
     reason: ChatReportReason? = null,
-    messageIds: LongArray = longArrayOf(),
+    messageIds: LongArray,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     ReportChat(
@@ -2460,9 +2460,9 @@ fun TdAbsHandler.reportChat(
  * @isDark - Pass true if a URL with the dark theme must be returned
  */
 suspend fun TdAbsHandler.getChatStatisticsUrl(
-    chatId: Long = 0L,
+    chatId: Long,
     parameters: String? = null,
-    isDark: Boolean = false
+    isDark: Boolean
 ) = sync<HttpUrl>(
     GetChatStatisticsUrl(
         chatId,
@@ -2472,9 +2472,9 @@ suspend fun TdAbsHandler.getChatStatisticsUrl(
 )
 
 suspend fun TdAbsHandler.getChatStatisticsUrlOrNull(
-    chatId: Long = 0L,
+    chatId: Long,
     parameters: String? = null,
-    isDark: Boolean = false
+    isDark: Boolean
 ) = syncOrNull<HttpUrl>(
     GetChatStatisticsUrl(
         chatId,
@@ -2484,9 +2484,9 @@ suspend fun TdAbsHandler.getChatStatisticsUrlOrNull(
 )
 
 fun TdAbsHandler.getChatStatisticsUrl(
-    chatId: Long = 0L,
+    chatId: Long,
     parameters: String? = null,
-    isDark: Boolean = false,
+    isDark: Boolean,
     block: (suspend CoroutineScope.(HttpUrl) -> Unit)
 ) = send(
     GetChatStatisticsUrl(

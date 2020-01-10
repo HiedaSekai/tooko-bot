@@ -71,7 +71,7 @@ fun TdAbsHandler.resendAuthenticationCode(
  * @otherUserIds - List of user identifiers of other users currently using the client
  */
 suspend fun TdAbsHandler.requestQrCodeAuthentication(
-    otherUserIds: IntArray = intArrayOf()
+    otherUserIds: IntArray
 ) = sync<Ok>(
     RequestQrCodeAuthentication(
         otherUserIds
@@ -79,7 +79,7 @@ suspend fun TdAbsHandler.requestQrCodeAuthentication(
 )
 
 suspend fun TdAbsHandler.requestQrCodeAuthenticationOrNull(
-    otherUserIds: IntArray = intArrayOf()
+    otherUserIds: IntArray
 ) = syncOrNull<Ok>(
     RequestQrCodeAuthentication(
         otherUserIds
@@ -87,7 +87,7 @@ suspend fun TdAbsHandler.requestQrCodeAuthenticationOrNull(
 )
 
 fun TdAbsHandler.requestQrCodeAuthentication(
-    otherUserIds: IntArray = intArrayOf(),
+    otherUserIds: IntArray,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     RequestQrCodeAuthentication(

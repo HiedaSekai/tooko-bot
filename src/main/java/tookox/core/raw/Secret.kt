@@ -15,7 +15,7 @@ import tookox.core.client.*
  * @secretChatId - Secret chat identifier
  */
 suspend fun TdAbsHandler.getSecretChat(
-    secretChatId: Int = 0
+    secretChatId: Int
 ) = sync<SecretChat>(
     GetSecretChat(
         secretChatId
@@ -23,7 +23,7 @@ suspend fun TdAbsHandler.getSecretChat(
 )
 
 suspend fun TdAbsHandler.getSecretChatOrNull(
-    secretChatId: Int = 0
+    secretChatId: Int
 ) = syncOrNull<SecretChat>(
     GetSecretChat(
         secretChatId
@@ -31,7 +31,7 @@ suspend fun TdAbsHandler.getSecretChatOrNull(
 )
 
 fun TdAbsHandler.getSecretChat(
-    secretChatId: Int = 0,
+    secretChatId: Int,
     block: (suspend CoroutineScope.(SecretChat) -> Unit)
 ) = send(
     GetSecretChat(
@@ -45,7 +45,7 @@ fun TdAbsHandler.getSecretChat(
  * @secretChatId - Secret chat identifier
  */
 suspend fun TdAbsHandler.closeSecretChat(
-    secretChatId: Int = 0
+    secretChatId: Int
 ) = sync<Ok>(
     CloseSecretChat(
         secretChatId
@@ -53,7 +53,7 @@ suspend fun TdAbsHandler.closeSecretChat(
 )
 
 suspend fun TdAbsHandler.closeSecretChatOrNull(
-    secretChatId: Int = 0
+    secretChatId: Int
 ) = syncOrNull<Ok>(
     CloseSecretChat(
         secretChatId
@@ -61,7 +61,7 @@ suspend fun TdAbsHandler.closeSecretChatOrNull(
 )
 
 fun TdAbsHandler.closeSecretChat(
-    secretChatId: Int = 0,
+    secretChatId: Int,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     CloseSecretChat(

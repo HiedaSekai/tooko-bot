@@ -15,7 +15,7 @@ import tookox.core.client.*
  * @basicGroupId - Basic group identifier
  */
 suspend fun TdAbsHandler.getBasicGroup(
-    basicGroupId: Int = 0
+    basicGroupId: Int
 ) = sync<BasicGroup>(
     GetBasicGroup(
         basicGroupId
@@ -23,7 +23,7 @@ suspend fun TdAbsHandler.getBasicGroup(
 )
 
 suspend fun TdAbsHandler.getBasicGroupOrNull(
-    basicGroupId: Int = 0
+    basicGroupId: Int
 ) = syncOrNull<BasicGroup>(
     GetBasicGroup(
         basicGroupId
@@ -31,7 +31,7 @@ suspend fun TdAbsHandler.getBasicGroupOrNull(
 )
 
 fun TdAbsHandler.getBasicGroup(
-    basicGroupId: Int = 0,
+    basicGroupId: Int,
     block: (suspend CoroutineScope.(BasicGroup) -> Unit)
 ) = send(
     GetBasicGroup(
@@ -45,7 +45,7 @@ fun TdAbsHandler.getBasicGroup(
  * @basicGroupId - Basic group identifier
  */
 suspend fun TdAbsHandler.getBasicGroupFullInfo(
-    basicGroupId: Int = 0
+    basicGroupId: Int
 ) = sync<BasicGroupFullInfo>(
     GetBasicGroupFullInfo(
         basicGroupId
@@ -53,7 +53,7 @@ suspend fun TdAbsHandler.getBasicGroupFullInfo(
 )
 
 suspend fun TdAbsHandler.getBasicGroupFullInfoOrNull(
-    basicGroupId: Int = 0
+    basicGroupId: Int
 ) = syncOrNull<BasicGroupFullInfo>(
     GetBasicGroupFullInfo(
         basicGroupId
@@ -61,7 +61,7 @@ suspend fun TdAbsHandler.getBasicGroupFullInfoOrNull(
 )
 
 fun TdAbsHandler.getBasicGroupFullInfo(
-    basicGroupId: Int = 0,
+    basicGroupId: Int,
     block: (suspend CoroutineScope.(BasicGroupFullInfo) -> Unit)
 ) = send(
     GetBasicGroupFullInfo(

@@ -40,7 +40,7 @@ suspend fun TdAbsHandler.setPassword(
     oldPassword: String? = null,
     newPassword: String? = null,
     newHint: String? = null,
-    setRecoveryEmailAddress: Boolean = false,
+    setRecoveryEmailAddress: Boolean,
     newRecoveryEmailAddress: String? = null
 ) = sync<PasswordState>(
     SetPassword(
@@ -56,7 +56,7 @@ suspend fun TdAbsHandler.setPasswordOrNull(
     oldPassword: String? = null,
     newPassword: String? = null,
     newHint: String? = null,
-    setRecoveryEmailAddress: Boolean = false,
+    setRecoveryEmailAddress: Boolean,
     newRecoveryEmailAddress: String? = null
 ) = syncOrNull<PasswordState>(
     SetPassword(
@@ -72,7 +72,7 @@ fun TdAbsHandler.setPassword(
     oldPassword: String? = null,
     newPassword: String? = null,
     newHint: String? = null,
-    setRecoveryEmailAddress: Boolean = false,
+    setRecoveryEmailAddress: Boolean,
     newRecoveryEmailAddress: String? = null,
     block: (suspend CoroutineScope.(PasswordState) -> Unit)
 ) = send(
@@ -210,7 +210,7 @@ fun TdAbsHandler.recoverPassword(
  */
 suspend fun TdAbsHandler.createTemporaryPassword(
     password: String? = null,
-    validFor: Int = 0
+    validFor: Int
 ) = sync<TemporaryPasswordState>(
     CreateTemporaryPassword(
         password,
@@ -220,7 +220,7 @@ suspend fun TdAbsHandler.createTemporaryPassword(
 
 suspend fun TdAbsHandler.createTemporaryPasswordOrNull(
     password: String? = null,
-    validFor: Int = 0
+    validFor: Int
 ) = syncOrNull<TemporaryPasswordState>(
     CreateTemporaryPassword(
         password,
@@ -230,7 +230,7 @@ suspend fun TdAbsHandler.createTemporaryPasswordOrNull(
 
 fun TdAbsHandler.createTemporaryPassword(
     password: String? = null,
-    validFor: Int = 0,
+    validFor: Int,
     block: (suspend CoroutineScope.(TemporaryPasswordState) -> Unit)
 ) = send(
     CreateTemporaryPassword(

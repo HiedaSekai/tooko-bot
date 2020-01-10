@@ -16,8 +16,8 @@ import tookox.core.client.*
  * @messageId - Message identifier
  */
 suspend fun TdAbsHandler.getPaymentForm(
-    chatId: Long = 0L,
-    messageId: Long = 0L
+    chatId: Long,
+    messageId: Long
 ) = sync<PaymentForm>(
     GetPaymentForm(
         chatId,
@@ -26,8 +26,8 @@ suspend fun TdAbsHandler.getPaymentForm(
 )
 
 suspend fun TdAbsHandler.getPaymentFormOrNull(
-    chatId: Long = 0L,
-    messageId: Long = 0L
+    chatId: Long,
+    messageId: Long
 ) = syncOrNull<PaymentForm>(
     GetPaymentForm(
         chatId,
@@ -36,8 +36,8 @@ suspend fun TdAbsHandler.getPaymentFormOrNull(
 )
 
 fun TdAbsHandler.getPaymentForm(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     block: (suspend CoroutineScope.(PaymentForm) -> Unit)
 ) = send(
     GetPaymentForm(
@@ -56,8 +56,8 @@ fun TdAbsHandler.getPaymentForm(
  * @credentials - The credentials chosen by user for payment
  */
 suspend fun TdAbsHandler.sendPaymentForm(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     orderInfoId: String? = null,
     shippingOptionId: String? = null,
     credentials: InputCredentials? = null
@@ -72,8 +72,8 @@ suspend fun TdAbsHandler.sendPaymentForm(
 )
 
 suspend fun TdAbsHandler.sendPaymentFormOrNull(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     orderInfoId: String? = null,
     shippingOptionId: String? = null,
     credentials: InputCredentials? = null
@@ -88,8 +88,8 @@ suspend fun TdAbsHandler.sendPaymentFormOrNull(
 )
 
 fun TdAbsHandler.sendPaymentForm(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     orderInfoId: String? = null,
     shippingOptionId: String? = null,
     credentials: InputCredentials? = null,
@@ -111,8 +111,8 @@ fun TdAbsHandler.sendPaymentForm(
  * @messageId - Message identifier
  */
 suspend fun TdAbsHandler.getPaymentReceipt(
-    chatId: Long = 0L,
-    messageId: Long = 0L
+    chatId: Long,
+    messageId: Long
 ) = sync<PaymentReceipt>(
     GetPaymentReceipt(
         chatId,
@@ -121,8 +121,8 @@ suspend fun TdAbsHandler.getPaymentReceipt(
 )
 
 suspend fun TdAbsHandler.getPaymentReceiptOrNull(
-    chatId: Long = 0L,
-    messageId: Long = 0L
+    chatId: Long,
+    messageId: Long
 ) = syncOrNull<PaymentReceipt>(
     GetPaymentReceipt(
         chatId,
@@ -131,8 +131,8 @@ suspend fun TdAbsHandler.getPaymentReceiptOrNull(
 )
 
 fun TdAbsHandler.getPaymentReceipt(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     block: (suspend CoroutineScope.(PaymentReceipt) -> Unit)
 ) = send(
     GetPaymentReceipt(

@@ -4,9 +4,8 @@
 
 package tookox.core.raw
 
-import kotlinx.coroutines.CoroutineScope
-import td.TdApi.GetLocalizationTargetInfo
-import td.TdApi.LocalizationTargetInfo
+import kotlinx.coroutines.*
+import td.TdApi.*
 import tookox.core.client.*
 
 /**
@@ -17,7 +16,7 @@ import tookox.core.client.*
  * @onlyLocal - If true, returns only locally available information without sending network requests
  */
 suspend fun TdAbsHandler.getLocalizationTargetInfo(
-    onlyLocal: Boolean = false
+    onlyLocal: Boolean
 ) = sync<LocalizationTargetInfo>(
     GetLocalizationTargetInfo(
         onlyLocal
@@ -25,7 +24,7 @@ suspend fun TdAbsHandler.getLocalizationTargetInfo(
 )
 
 suspend fun TdAbsHandler.getLocalizationTargetInfoOrNull(
-    onlyLocal: Boolean = false
+    onlyLocal: Boolean
 ) = syncOrNull<LocalizationTargetInfo>(
     GetLocalizationTargetInfo(
         onlyLocal
@@ -33,7 +32,7 @@ suspend fun TdAbsHandler.getLocalizationTargetInfoOrNull(
 )
 
 fun TdAbsHandler.getLocalizationTargetInfo(
-    onlyLocal: Boolean = false,
+    onlyLocal: Boolean,
     block: (suspend CoroutineScope.(LocalizationTargetInfo) -> Unit)
 ) = send(
     GetLocalizationTargetInfo(

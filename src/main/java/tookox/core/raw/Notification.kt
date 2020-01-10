@@ -16,8 +16,8 @@ import tookox.core.client.*
  * @notificationId - Identifier of removed notification
  */
 suspend fun TdAbsHandler.removeNotification(
-    notificationGroupId: Int = 0,
-    notificationId: Int = 0
+    notificationGroupId: Int,
+    notificationId: Int
 ) = sync<Ok>(
     RemoveNotification(
         notificationGroupId,
@@ -26,8 +26,8 @@ suspend fun TdAbsHandler.removeNotification(
 )
 
 suspend fun TdAbsHandler.removeNotificationOrNull(
-    notificationGroupId: Int = 0,
-    notificationId: Int = 0
+    notificationGroupId: Int,
+    notificationId: Int
 ) = syncOrNull<Ok>(
     RemoveNotification(
         notificationGroupId,
@@ -36,8 +36,8 @@ suspend fun TdAbsHandler.removeNotificationOrNull(
 )
 
 fun TdAbsHandler.removeNotification(
-    notificationGroupId: Int = 0,
-    notificationId: Int = 0,
+    notificationGroupId: Int,
+    notificationId: Int,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     RemoveNotification(
@@ -54,8 +54,8 @@ fun TdAbsHandler.removeNotification(
  * @maxNotificationId - The maximum identifier of removed notifications
  */
 suspend fun TdAbsHandler.removeNotificationGroup(
-    notificationGroupId: Int = 0,
-    maxNotificationId: Int = 0
+    notificationGroupId: Int,
+    maxNotificationId: Int
 ) = sync<Ok>(
     RemoveNotificationGroup(
         notificationGroupId,
@@ -64,8 +64,8 @@ suspend fun TdAbsHandler.removeNotificationGroup(
 )
 
 suspend fun TdAbsHandler.removeNotificationGroupOrNull(
-    notificationGroupId: Int = 0,
-    maxNotificationId: Int = 0
+    notificationGroupId: Int,
+    maxNotificationId: Int
 ) = syncOrNull<Ok>(
     RemoveNotificationGroup(
         notificationGroupId,
@@ -74,8 +74,8 @@ suspend fun TdAbsHandler.removeNotificationGroupOrNull(
 )
 
 fun TdAbsHandler.removeNotificationGroup(
-    notificationGroupId: Int = 0,
-    maxNotificationId: Int = 0,
+    notificationGroupId: Int,
+    maxNotificationId: Int,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     RemoveNotificationGroup(

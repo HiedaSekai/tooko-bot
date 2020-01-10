@@ -17,10 +17,10 @@ import tookox.core.client.*
  * @allowSave - True, if the order information can be saved
  */
 suspend fun TdAbsHandler.validateOrderInfo(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     orderInfo: OrderInfo? = null,
-    allowSave: Boolean = false
+    allowSave: Boolean
 ) = sync<ValidatedOrderInfo>(
     ValidateOrderInfo(
         chatId,
@@ -31,10 +31,10 @@ suspend fun TdAbsHandler.validateOrderInfo(
 )
 
 suspend fun TdAbsHandler.validateOrderInfoOrNull(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     orderInfo: OrderInfo? = null,
-    allowSave: Boolean = false
+    allowSave: Boolean
 ) = syncOrNull<ValidatedOrderInfo>(
     ValidateOrderInfo(
         chatId,
@@ -45,10 +45,10 @@ suspend fun TdAbsHandler.validateOrderInfoOrNull(
 )
 
 fun TdAbsHandler.validateOrderInfo(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     orderInfo: OrderInfo? = null,
-    allowSave: Boolean = false,
+    allowSave: Boolean,
     block: (suspend CoroutineScope.(ValidatedOrderInfo) -> Unit)
 ) = send(
     ValidateOrderInfo(

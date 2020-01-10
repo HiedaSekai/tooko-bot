@@ -2,33 +2,78 @@ package tookox.builder
 
 import tookox.tl.*
 
-fun StringBuilder.buildClass(data: TlData, metadata: TlDataMetadata,paramNullable: Boolean) {
+fun StringBuilder.buildClass(data: TlData, metadata: TlDataMetadata, paramNullable: Boolean) {
+
     val declaration = when (data) {
         is TlAbstract -> "abstract class "
         is TlClass -> "class "
     }
 
     buildDescription(data.descriptionsWithProperties())
-    //buildAnnotations(data.metadata.additions)
+    // buildAnnotations(listOf(TlAddition.JvmOverloads))
     append(declaration).append(data.type.capitalize())
-    buildParameters(data.metadata.properties.map {
+    append(" : ").append(data.parentType.capitalize())
 
-        if(paramNullable) it.toVar(metadata) else it.toVal(metadata)
+    if (data.metadata.properties.isEmpty()) append("()")
 
-    })
+    if (data is TlClass || data.metadata.properties.isNotEmpty()) append(spaceToken).withCurlyBrackets {
 
-    append(" : ").append(data.parentType.capitalize()).append("()")
+        append("\n")
 
-    if (data is TlClass) {
-        append(spaceToken)
-        withCurlyBrackets {
-            buildConstructorField(data.crc)
+        if (data.metadata.properties.isNotEmpty()) {
+
+            data.metadata.properties.forEach {
+
+                append(it.toField(metadata,paramNullable)).append("\n")
+
+            }
+
+            append("\nconstructor()\n\nconstructor")
+
+            append("(")
+
+            data.metadata.properties.joinTo(this) {
+
+                it.toParameter(metadata, nullable = paramNullable)
+
+            }
+
+            append(")")
+
+            append(spaceToken)
+
+            withCurlyBrackets {
+
+                data.metadata.properties.joinTo(this, "\n", "\n", "\n") {
+
+                    val propName = it.name.snakeToCamel()
+
+                    "this.$propName = $propName"
+
+                }
+
+            }
+
+            append("\n")
+
         }
-    } else append("\n")
+
+        if (data is TlClass) {
+
+            buildConstructorField(data.crc)
+
+            append("\n")
+
+        }
+
+    }
+
+    append("\n")
+
 }
 
 fun StringBuilder.buildConstructorField(crc: Int) {
-    append("override val constructor: Int get() = ").append(crc)
+    append("override val constructor: Int @BsonIgnore get() = ").append(crc)
 }
 
 fun TlData.descriptions(): List<String> = metadata.descriptions + metadata.additions.strings()

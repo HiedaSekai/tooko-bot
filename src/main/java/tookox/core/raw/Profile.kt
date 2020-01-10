@@ -47,7 +47,7 @@ fun TdAbsHandler.setProfilePhoto(
  * @profilePhotoId - Identifier of the profile photo to delete
  */
 suspend fun TdAbsHandler.deleteProfilePhoto(
-    profilePhotoId: Long = 0L
+    profilePhotoId: Long
 ) = sync<Ok>(
     DeleteProfilePhoto(
         profilePhotoId
@@ -55,7 +55,7 @@ suspend fun TdAbsHandler.deleteProfilePhoto(
 )
 
 suspend fun TdAbsHandler.deleteProfilePhotoOrNull(
-    profilePhotoId: Long = 0L
+    profilePhotoId: Long
 ) = syncOrNull<Ok>(
     DeleteProfilePhoto(
         profilePhotoId
@@ -63,7 +63,7 @@ suspend fun TdAbsHandler.deleteProfilePhotoOrNull(
 )
 
 fun TdAbsHandler.deleteProfilePhoto(
-    profilePhotoId: Long = 0L,
+    profilePhotoId: Long,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     DeleteProfilePhoto(

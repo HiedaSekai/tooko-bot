@@ -18,7 +18,7 @@ import tookox.core.client.*
  */
 suspend fun TdAbsHandler.getStickers(
     emoji: String? = null,
-    limit: Int = 0
+    limit: Int
 ) = sync<Stickers>(
     GetStickers(
         emoji,
@@ -28,7 +28,7 @@ suspend fun TdAbsHandler.getStickers(
 
 suspend fun TdAbsHandler.getStickersOrNull(
     emoji: String? = null,
-    limit: Int = 0
+    limit: Int
 ) = syncOrNull<Stickers>(
     GetStickers(
         emoji,
@@ -38,7 +38,7 @@ suspend fun TdAbsHandler.getStickersOrNull(
 
 fun TdAbsHandler.getStickers(
     emoji: String? = null,
-    limit: Int = 0,
+    limit: Int,
     block: (suspend CoroutineScope.(Stickers) -> Unit)
 ) = send(
     GetStickers(
@@ -55,7 +55,7 @@ fun TdAbsHandler.getStickers(
  */
 suspend fun TdAbsHandler.searchStickers(
     emoji: String? = null,
-    limit: Int = 0
+    limit: Int
 ) = sync<Stickers>(
     SearchStickers(
         emoji,
@@ -65,7 +65,7 @@ suspend fun TdAbsHandler.searchStickers(
 
 suspend fun TdAbsHandler.searchStickersOrNull(
     emoji: String? = null,
-    limit: Int = 0
+    limit: Int
 ) = syncOrNull<Stickers>(
     SearchStickers(
         emoji,
@@ -75,7 +75,7 @@ suspend fun TdAbsHandler.searchStickersOrNull(
 
 fun TdAbsHandler.searchStickers(
     emoji: String? = null,
-    limit: Int = 0,
+    limit: Int,
     block: (suspend CoroutineScope.(Stickers) -> Unit)
 ) = send(
     SearchStickers(
@@ -91,7 +91,7 @@ fun TdAbsHandler.searchStickers(
  *            Pass false to return ordinary sticker sets
  */
 suspend fun TdAbsHandler.getInstalledStickerSets(
-    isMasks: Boolean = false
+    isMasks: Boolean
 ) = sync<StickerSets>(
     GetInstalledStickerSets(
         isMasks
@@ -99,7 +99,7 @@ suspend fun TdAbsHandler.getInstalledStickerSets(
 )
 
 suspend fun TdAbsHandler.getInstalledStickerSetsOrNull(
-    isMasks: Boolean = false
+    isMasks: Boolean
 ) = syncOrNull<StickerSets>(
     GetInstalledStickerSets(
         isMasks
@@ -107,7 +107,7 @@ suspend fun TdAbsHandler.getInstalledStickerSetsOrNull(
 )
 
 fun TdAbsHandler.getInstalledStickerSets(
-    isMasks: Boolean = false,
+    isMasks: Boolean,
     block: (suspend CoroutineScope.(StickerSets) -> Unit)
 ) = send(
     GetInstalledStickerSets(
@@ -124,9 +124,9 @@ fun TdAbsHandler.getInstalledStickerSets(
  * @limit - The maximum number of sticker sets to return
  */
 suspend fun TdAbsHandler.getArchivedStickerSets(
-    isMasks: Boolean = false,
-    offsetStickerSetId: Long = 0L,
-    limit: Int = 0
+    isMasks: Boolean,
+    offsetStickerSetId: Long,
+    limit: Int
 ) = sync<StickerSets>(
     GetArchivedStickerSets(
         isMasks,
@@ -136,9 +136,9 @@ suspend fun TdAbsHandler.getArchivedStickerSets(
 )
 
 suspend fun TdAbsHandler.getArchivedStickerSetsOrNull(
-    isMasks: Boolean = false,
-    offsetStickerSetId: Long = 0L,
-    limit: Int = 0
+    isMasks: Boolean,
+    offsetStickerSetId: Long,
+    limit: Int
 ) = syncOrNull<StickerSets>(
     GetArchivedStickerSets(
         isMasks,
@@ -148,9 +148,9 @@ suspend fun TdAbsHandler.getArchivedStickerSetsOrNull(
 )
 
 fun TdAbsHandler.getArchivedStickerSets(
-    isMasks: Boolean = false,
-    offsetStickerSetId: Long = 0L,
-    limit: Int = 0,
+    isMasks: Boolean,
+    offsetStickerSetId: Long,
+    limit: Int,
     block: (suspend CoroutineScope.(StickerSets) -> Unit)
 ) = send(
     GetArchivedStickerSets(
@@ -184,7 +184,7 @@ fun TdAbsHandler.getTrendingStickerSets(
  * @fileId - File identifier
  */
 suspend fun TdAbsHandler.getAttachedStickerSets(
-    fileId: Int = 0
+    fileId: Int
 ) = sync<StickerSets>(
     GetAttachedStickerSets(
         fileId
@@ -192,7 +192,7 @@ suspend fun TdAbsHandler.getAttachedStickerSets(
 )
 
 suspend fun TdAbsHandler.getAttachedStickerSetsOrNull(
-    fileId: Int = 0
+    fileId: Int
 ) = syncOrNull<StickerSets>(
     GetAttachedStickerSets(
         fileId
@@ -200,7 +200,7 @@ suspend fun TdAbsHandler.getAttachedStickerSetsOrNull(
 )
 
 fun TdAbsHandler.getAttachedStickerSets(
-    fileId: Int = 0,
+    fileId: Int,
     block: (suspend CoroutineScope.(StickerSets) -> Unit)
 ) = send(
     GetAttachedStickerSets(
@@ -214,7 +214,7 @@ fun TdAbsHandler.getAttachedStickerSets(
  * @setId - Identifier of the sticker set
  */
 suspend fun TdAbsHandler.getStickerSet(
-    setId: Long = 0L
+    setId: Long
 ) = sync<StickerSet>(
     GetStickerSet(
         setId
@@ -222,7 +222,7 @@ suspend fun TdAbsHandler.getStickerSet(
 )
 
 suspend fun TdAbsHandler.getStickerSetOrNull(
-    setId: Long = 0L
+    setId: Long
 ) = syncOrNull<StickerSet>(
     GetStickerSet(
         setId
@@ -230,7 +230,7 @@ suspend fun TdAbsHandler.getStickerSetOrNull(
 )
 
 fun TdAbsHandler.getStickerSet(
-    setId: Long = 0L,
+    setId: Long,
     block: (suspend CoroutineScope.(StickerSet) -> Unit)
 ) = send(
     GetStickerSet(
@@ -277,9 +277,9 @@ fun TdAbsHandler.searchStickerSet(
  * @limit - The maximum number of sticker sets to return
  */
 suspend fun TdAbsHandler.searchInstalledStickerSets(
-    isMasks: Boolean = false,
+    isMasks: Boolean,
     query: String? = null,
-    limit: Int = 0
+    limit: Int
 ) = sync<StickerSets>(
     SearchInstalledStickerSets(
         isMasks,
@@ -289,9 +289,9 @@ suspend fun TdAbsHandler.searchInstalledStickerSets(
 )
 
 suspend fun TdAbsHandler.searchInstalledStickerSetsOrNull(
-    isMasks: Boolean = false,
+    isMasks: Boolean,
     query: String? = null,
-    limit: Int = 0
+    limit: Int
 ) = syncOrNull<StickerSets>(
     SearchInstalledStickerSets(
         isMasks,
@@ -301,9 +301,9 @@ suspend fun TdAbsHandler.searchInstalledStickerSetsOrNull(
 )
 
 fun TdAbsHandler.searchInstalledStickerSets(
-    isMasks: Boolean = false,
+    isMasks: Boolean,
     query: String? = null,
-    limit: Int = 0,
+    limit: Int,
     block: (suspend CoroutineScope.(StickerSets) -> Unit)
 ) = send(
     SearchInstalledStickerSets(
@@ -353,9 +353,9 @@ fun TdAbsHandler.searchStickerSets(
  *               A sticker set can't be installed and archived simultaneously
  */
 suspend fun TdAbsHandler.changeStickerSet(
-    setId: Long = 0L,
-    isInstalled: Boolean = false,
-    isArchived: Boolean = false
+    setId: Long,
+    isInstalled: Boolean,
+    isArchived: Boolean
 ) = sync<Ok>(
     ChangeStickerSet(
         setId,
@@ -365,9 +365,9 @@ suspend fun TdAbsHandler.changeStickerSet(
 )
 
 suspend fun TdAbsHandler.changeStickerSetOrNull(
-    setId: Long = 0L,
-    isInstalled: Boolean = false,
-    isArchived: Boolean = false
+    setId: Long,
+    isInstalled: Boolean,
+    isArchived: Boolean
 ) = syncOrNull<Ok>(
     ChangeStickerSet(
         setId,
@@ -377,9 +377,9 @@ suspend fun TdAbsHandler.changeStickerSetOrNull(
 )
 
 fun TdAbsHandler.changeStickerSet(
-    setId: Long = 0L,
-    isInstalled: Boolean = false,
-    isArchived: Boolean = false,
+    setId: Long,
+    isInstalled: Boolean,
+    isArchived: Boolean,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     ChangeStickerSet(
@@ -395,7 +395,7 @@ fun TdAbsHandler.changeStickerSet(
  * @stickerSetIds - Identifiers of viewed trending sticker sets
  */
 suspend fun TdAbsHandler.viewTrendingStickerSets(
-    stickerSetIds: LongArray = longArrayOf()
+    stickerSetIds: LongArray
 ) = sync<Ok>(
     ViewTrendingStickerSets(
         stickerSetIds
@@ -403,7 +403,7 @@ suspend fun TdAbsHandler.viewTrendingStickerSets(
 )
 
 suspend fun TdAbsHandler.viewTrendingStickerSetsOrNull(
-    stickerSetIds: LongArray = longArrayOf()
+    stickerSetIds: LongArray
 ) = syncOrNull<Ok>(
     ViewTrendingStickerSets(
         stickerSetIds
@@ -411,7 +411,7 @@ suspend fun TdAbsHandler.viewTrendingStickerSetsOrNull(
 )
 
 fun TdAbsHandler.viewTrendingStickerSets(
-    stickerSetIds: LongArray = longArrayOf(),
+    stickerSetIds: LongArray,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     ViewTrendingStickerSets(
@@ -427,8 +427,8 @@ fun TdAbsHandler.viewTrendingStickerSets(
  * @stickerSetIds - Identifiers of installed sticker sets in the new correct order
  */
 suspend fun TdAbsHandler.reorderInstalledStickerSets(
-    isMasks: Boolean = false,
-    stickerSetIds: LongArray = longArrayOf()
+    isMasks: Boolean,
+    stickerSetIds: LongArray
 ) = sync<Ok>(
     ReorderInstalledStickerSets(
         isMasks,
@@ -437,8 +437,8 @@ suspend fun TdAbsHandler.reorderInstalledStickerSets(
 )
 
 suspend fun TdAbsHandler.reorderInstalledStickerSetsOrNull(
-    isMasks: Boolean = false,
-    stickerSetIds: LongArray = longArrayOf()
+    isMasks: Boolean,
+    stickerSetIds: LongArray
 ) = syncOrNull<Ok>(
     ReorderInstalledStickerSets(
         isMasks,
@@ -447,8 +447,8 @@ suspend fun TdAbsHandler.reorderInstalledStickerSetsOrNull(
 )
 
 fun TdAbsHandler.reorderInstalledStickerSets(
-    isMasks: Boolean = false,
-    stickerSetIds: LongArray = longArrayOf(),
+    isMasks: Boolean,
+    stickerSetIds: LongArray,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     ReorderInstalledStickerSets(
@@ -464,7 +464,7 @@ fun TdAbsHandler.reorderInstalledStickerSets(
  *               Pass false to return recently sent stickers
  */
 suspend fun TdAbsHandler.getRecentStickers(
-    isAttached: Boolean = false
+    isAttached: Boolean
 ) = sync<Stickers>(
     GetRecentStickers(
         isAttached
@@ -472,7 +472,7 @@ suspend fun TdAbsHandler.getRecentStickers(
 )
 
 suspend fun TdAbsHandler.getRecentStickersOrNull(
-    isAttached: Boolean = false
+    isAttached: Boolean
 ) = syncOrNull<Stickers>(
     GetRecentStickers(
         isAttached
@@ -480,7 +480,7 @@ suspend fun TdAbsHandler.getRecentStickersOrNull(
 )
 
 fun TdAbsHandler.getRecentStickers(
-    isAttached: Boolean = false,
+    isAttached: Boolean,
     block: (suspend CoroutineScope.(Stickers) -> Unit)
 ) = send(
     GetRecentStickers(
@@ -499,7 +499,7 @@ fun TdAbsHandler.getRecentStickers(
  * @sticker - Sticker file to add
  */
 suspend fun TdAbsHandler.addRecentSticker(
-    isAttached: Boolean = false,
+    isAttached: Boolean,
     sticker: InputFile? = null
 ) = sync<Stickers>(
     AddRecentSticker(
@@ -509,7 +509,7 @@ suspend fun TdAbsHandler.addRecentSticker(
 )
 
 suspend fun TdAbsHandler.addRecentStickerOrNull(
-    isAttached: Boolean = false,
+    isAttached: Boolean,
     sticker: InputFile? = null
 ) = syncOrNull<Stickers>(
     AddRecentSticker(
@@ -519,7 +519,7 @@ suspend fun TdAbsHandler.addRecentStickerOrNull(
 )
 
 fun TdAbsHandler.addRecentSticker(
-    isAttached: Boolean = false,
+    isAttached: Boolean,
     sticker: InputFile? = null,
     block: (suspend CoroutineScope.(Stickers) -> Unit)
 ) = send(
@@ -537,7 +537,7 @@ fun TdAbsHandler.addRecentSticker(
  * @sticker - Sticker file to delete
  */
 suspend fun TdAbsHandler.removeRecentSticker(
-    isAttached: Boolean = false,
+    isAttached: Boolean,
     sticker: InputFile? = null
 ) = sync<Ok>(
     RemoveRecentSticker(
@@ -547,7 +547,7 @@ suspend fun TdAbsHandler.removeRecentSticker(
 )
 
 suspend fun TdAbsHandler.removeRecentStickerOrNull(
-    isAttached: Boolean = false,
+    isAttached: Boolean,
     sticker: InputFile? = null
 ) = syncOrNull<Ok>(
     RemoveRecentSticker(
@@ -557,7 +557,7 @@ suspend fun TdAbsHandler.removeRecentStickerOrNull(
 )
 
 fun TdAbsHandler.removeRecentSticker(
-    isAttached: Boolean = false,
+    isAttached: Boolean,
     sticker: InputFile? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
@@ -574,7 +574,7 @@ fun TdAbsHandler.removeRecentSticker(
  *               Pass false to clear the list of recently sent stickers
  */
 suspend fun TdAbsHandler.clearRecentStickers(
-    isAttached: Boolean = false
+    isAttached: Boolean
 ) = sync<Ok>(
     ClearRecentStickers(
         isAttached
@@ -582,7 +582,7 @@ suspend fun TdAbsHandler.clearRecentStickers(
 )
 
 suspend fun TdAbsHandler.clearRecentStickersOrNull(
-    isAttached: Boolean = false
+    isAttached: Boolean
 ) = syncOrNull<Ok>(
     ClearRecentStickers(
         isAttached
@@ -590,7 +590,7 @@ suspend fun TdAbsHandler.clearRecentStickersOrNull(
 )
 
 fun TdAbsHandler.clearRecentStickers(
-    isAttached: Boolean = false,
+    isAttached: Boolean,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     ClearRecentStickers(
@@ -692,11 +692,11 @@ fun TdAbsHandler.removeFavoriteSticker(
  * @stickers - List of stickers to be added to the set
  */
 suspend fun TdAbsHandler.createNewStickerSet(
-    userId: Int = 0,
+    userId: Int,
     title: String? = null,
     name: String? = null,
-    isMasks: Boolean = false,
-    stickers: Array<InputSticker> = emptyArray()
+    isMasks: Boolean,
+    stickers: Array<InputSticker>
 ) = sync<StickerSet>(
     CreateNewStickerSet(
         userId,
@@ -708,11 +708,11 @@ suspend fun TdAbsHandler.createNewStickerSet(
 )
 
 suspend fun TdAbsHandler.createNewStickerSetOrNull(
-    userId: Int = 0,
+    userId: Int,
     title: String? = null,
     name: String? = null,
-    isMasks: Boolean = false,
-    stickers: Array<InputSticker> = emptyArray()
+    isMasks: Boolean,
+    stickers: Array<InputSticker>
 ) = syncOrNull<StickerSet>(
     CreateNewStickerSet(
         userId,
@@ -724,11 +724,11 @@ suspend fun TdAbsHandler.createNewStickerSetOrNull(
 )
 
 fun TdAbsHandler.createNewStickerSet(
-    userId: Int = 0,
+    userId: Int,
     title: String? = null,
     name: String? = null,
-    isMasks: Boolean = false,
-    stickers: Array<InputSticker> = emptyArray(),
+    isMasks: Boolean,
+    stickers: Array<InputSticker>,
     block: (suspend CoroutineScope.(StickerSet) -> Unit)
 ) = send(
     CreateNewStickerSet(
@@ -750,7 +750,7 @@ fun TdAbsHandler.createNewStickerSet(
  * @sticker - Sticker to add to the set
  */
 suspend fun TdAbsHandler.addStickerToSet(
-    userId: Int = 0,
+    userId: Int,
     name: String? = null,
     sticker: InputSticker? = null
 ) = sync<StickerSet>(
@@ -762,7 +762,7 @@ suspend fun TdAbsHandler.addStickerToSet(
 )
 
 suspend fun TdAbsHandler.addStickerToSetOrNull(
-    userId: Int = 0,
+    userId: Int,
     name: String? = null,
     sticker: InputSticker? = null
 ) = syncOrNull<StickerSet>(
@@ -774,7 +774,7 @@ suspend fun TdAbsHandler.addStickerToSetOrNull(
 )
 
 fun TdAbsHandler.addStickerToSet(
-    userId: Int = 0,
+    userId: Int,
     name: String? = null,
     sticker: InputSticker? = null,
     block: (suspend CoroutineScope.(StickerSet) -> Unit)
@@ -796,7 +796,7 @@ fun TdAbsHandler.addStickerToSet(
  */
 suspend fun TdAbsHandler.setStickerPositionInSet(
     sticker: InputFile? = null,
-    position: Int = 0
+    position: Int
 ) = sync<Ok>(
     SetStickerPositionInSet(
         sticker,
@@ -806,7 +806,7 @@ suspend fun TdAbsHandler.setStickerPositionInSet(
 
 suspend fun TdAbsHandler.setStickerPositionInSetOrNull(
     sticker: InputFile? = null,
-    position: Int = 0
+    position: Int
 ) = syncOrNull<Ok>(
     SetStickerPositionInSet(
         sticker,
@@ -816,7 +816,7 @@ suspend fun TdAbsHandler.setStickerPositionInSetOrNull(
 
 fun TdAbsHandler.setStickerPositionInSet(
     sticker: InputFile? = null,
-    position: Int = 0,
+    position: Int,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     SetStickerPositionInSet(

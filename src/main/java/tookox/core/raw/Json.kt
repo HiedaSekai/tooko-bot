@@ -4,7 +4,7 @@
 
 package tookox.core.raw
 
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.*
 import td.TdApi.*
 import tookox.core.client.*
 

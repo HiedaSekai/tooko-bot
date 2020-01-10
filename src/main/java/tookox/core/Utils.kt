@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package tookox.core
 
 import cn.hutool.core.collection.CollUtil
@@ -63,6 +65,20 @@ class WriteOnlyField<T>(val setter: (T) -> Unit) {
     }
 
 }
+
+class WeakField<T> {
+
+    private var value: T? = null
+
+    operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
+        return value ?: throw IllegalStateException("Property ${property.name} should be initialized before get.")
+    }
+
+    operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T?) {
+        this.value = value
+    }
+}
+
 
 operator fun <F> KProperty0<F>.getValue(thisRef: Any?, property: KProperty<*>): F = get()
 operator fun <F> KMutableProperty0<F>.setValue(thisRef: Any?, property: KProperty<*>, value: F) = set(value)

@@ -16,7 +16,7 @@ import tookox.core.client.*
  *           The user must be a mutual contact
  */
 suspend fun TdAbsHandler.sharePhoneNumber(
-    userId: Int = 0
+    userId: Int
 ) = sync<Ok>(
     SharePhoneNumber(
         userId
@@ -24,7 +24,7 @@ suspend fun TdAbsHandler.sharePhoneNumber(
 )
 
 suspend fun TdAbsHandler.sharePhoneNumberOrNull(
-    userId: Int = 0
+    userId: Int
 ) = syncOrNull<Ok>(
     SharePhoneNumber(
         userId
@@ -32,7 +32,7 @@ suspend fun TdAbsHandler.sharePhoneNumberOrNull(
 )
 
 fun TdAbsHandler.sharePhoneNumber(
-    userId: Int = 0,
+    userId: Int,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     SharePhoneNumber(

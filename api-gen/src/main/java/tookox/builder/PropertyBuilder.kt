@@ -8,18 +8,64 @@ fun StringBuilder.buildParameters(parameters: List<String>, addEmptyBrackets: Bo
     } else if (addEmptyBrackets) append("()")
 }
 
-fun TlProperty.toVal(metadata: TlDataMetadata): String = toParameter(metadata, "var ",false)
-fun TlProperty.toVar(metadata: TlDataMetadata): String = toParameter(metadata, "var ",true)
-
-fun TlProperty.toParameter(metadata: TlDataMetadata, prefix: String = "",nullable: Boolean = false): String {
+fun TlProperty.toParameter(metadata: TlDataMetadata, prefix: String = "", nullable: Boolean = false): String {
     val (withDefault, withNullables) = metadata
     val propName = name.snakeToCamel()
-    val defaultValue = if (withDefault) " = ${type.default}" else if (nullable) nullToken else emptyToken
-    val default = if (type is TlRefType) {
-        if (additions.any { it is TlAddition.Nullable } || withNullables) questionToken + defaultValue
-        else if (nullable) nullToken else emptyToken
-    } else defaultValue
-    return "${inlineAnnotations()}$prefix$propName: ${type.kotlinType}$default".replace("??","?")
+
+    val default = if (nullable)
+
+        questionToken + nullToken
+
+    else if (type is TlRefType) {
+
+        if (additions.any { it is TlAddition.Nullable } || withNullables) questionToken + nullToken
+        else emptyToken
+
+    } else emptyToken
+
+    return "${inlineAnnotations()}$prefix$propName: ${type.kotlinType}$default".replace("??", "?")
+}
+
+fun TlProperty.toField(metadata: TlDataMetadata,nullable: Boolean): String {
+
+    val (withDefault, withNullables) = metadata
+
+    val propName = name.snakeToCamel()
+
+    val prefix: String
+
+    val default = if (nullable) {
+
+        prefix = "var"
+
+        questionToken + nullToken
+
+    } else if (type !is TlPrimitiveType) {
+
+        if (type is TlRefType && (additions.any { it is TlAddition.Nullable } || withNullables)) {
+
+            prefix = "var"
+
+            questionToken + nullToken
+
+        } else {
+
+            prefix = "lateinit var"
+
+            emptyToken
+
+        }
+
+    } else {
+
+        prefix = "var"
+
+        weakToken
+
+    }
+
+    return "${inlineAnnotations()}$prefix $propName: ${type.kotlinType}$default"
+
 }
 
 fun TlProperty.descriptionLines(): List<String> {
@@ -30,11 +76,11 @@ fun TlProperty.descriptionLines(): List<String> {
 
 
 fun TlProperty.inlineAnnotations(): String =
-    additions
-        .filterIsInstance<TlAddition.Annotation>()
-        .takeIf(List<*>::isNotEmpty)
-        ?.map(TlAddition.Annotation::annotation)
-        ?.distinct()
-        ?.sorted()
-        ?.joinToString(spaceToken + addressToken, addressToken, spaceToken)
-        ?: ""
+        additions
+                .filterIsInstance<TlAddition.Annotation>()
+                .takeIf(List<*>::isNotEmpty)
+                ?.map(TlAddition.Annotation::annotation)
+                ?.distinct()
+                ?.sorted()
+                ?.joinToString(spaceToken + addressToken, addressToken, spaceToken)
+                ?: ""

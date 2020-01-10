@@ -16,7 +16,7 @@ import tookox.core.client.*
  */
 suspend fun TdAbsHandler.searchHashtags(
     prefix: String? = null,
-    limit: Int = 0
+    limit: Int
 ) = sync<Hashtags>(
     SearchHashtags(
         prefix,
@@ -26,7 +26,7 @@ suspend fun TdAbsHandler.searchHashtags(
 
 suspend fun TdAbsHandler.searchHashtagsOrNull(
     prefix: String? = null,
-    limit: Int = 0
+    limit: Int
 ) = syncOrNull<Hashtags>(
     SearchHashtags(
         prefix,
@@ -36,7 +36,7 @@ suspend fun TdAbsHandler.searchHashtagsOrNull(
 
 fun TdAbsHandler.searchHashtags(
     prefix: String? = null,
-    limit: Int = 0,
+    limit: Int,
     block: (suspend CoroutineScope.(Hashtags) -> Unit)
 ) = send(
     SearchHashtags(

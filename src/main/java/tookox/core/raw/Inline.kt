@@ -4,7 +4,7 @@
 
 package tookox.core.raw
 
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.*
 import td.TdApi.*
 import tookox.core.client.*
 
@@ -242,8 +242,8 @@ fun TdAbsHandler.editInlineMessageReplyMarkup(
  * @offset - Offset of the first entry to return
  */
 suspend fun TdAbsHandler.getInlineQueryResults(
-    botUserId: Int = 0,
-    chatId: Long = 0L,
+    botUserId: Int,
+    chatId: Long,
     userLocation: Location? = null,
     query: String? = null,
     offset: String? = null
@@ -258,8 +258,8 @@ suspend fun TdAbsHandler.getInlineQueryResults(
 )
 
 suspend fun TdAbsHandler.getInlineQueryResultsOrNull(
-    botUserId: Int = 0,
-    chatId: Long = 0L,
+    botUserId: Int,
+    chatId: Long,
     userLocation: Location? = null,
     query: String? = null,
     offset: String? = null
@@ -274,8 +274,8 @@ suspend fun TdAbsHandler.getInlineQueryResultsOrNull(
 )
 
 fun TdAbsHandler.getInlineQueryResults(
-    botUserId: Int = 0,
-    chatId: Long = 0L,
+    botUserId: Int,
+    chatId: Long,
     userLocation: Location? = null,
     query: String? = null,
     offset: String? = null,
@@ -304,10 +304,10 @@ fun TdAbsHandler.getInlineQueryResults(
  * @switchPmParameter - The parameter for the bot start message
  */
 suspend fun TdAbsHandler.answerInlineQuery(
-    inlineQueryId: Long = 0L,
-    isPersonal: Boolean = false,
-    results: Array<InputInlineQueryResult> = emptyArray(),
-    cacheTime: Int = 0,
+    inlineQueryId: Long,
+    isPersonal: Boolean,
+    results: Array<InputInlineQueryResult>,
+    cacheTime: Int,
     nextOffset: String? = null,
     switchPmText: String? = null,
     switchPmParameter: String? = null
@@ -324,10 +324,10 @@ suspend fun TdAbsHandler.answerInlineQuery(
 )
 
 suspend fun TdAbsHandler.answerInlineQueryOrNull(
-    inlineQueryId: Long = 0L,
-    isPersonal: Boolean = false,
-    results: Array<InputInlineQueryResult> = emptyArray(),
-    cacheTime: Int = 0,
+    inlineQueryId: Long,
+    isPersonal: Boolean,
+    results: Array<InputInlineQueryResult>,
+    cacheTime: Int,
     nextOffset: String? = null,
     switchPmText: String? = null,
     switchPmParameter: String? = null
@@ -344,10 +344,10 @@ suspend fun TdAbsHandler.answerInlineQueryOrNull(
 )
 
 fun TdAbsHandler.answerInlineQuery(
-    inlineQueryId: Long = 0L,
-    isPersonal: Boolean = false,
-    results: Array<InputInlineQueryResult> = emptyArray(),
-    cacheTime: Int = 0,
+    inlineQueryId: Long,
+    isPersonal: Boolean,
+    results: Array<InputInlineQueryResult>,
+    cacheTime: Int,
     nextOffset: String? = null,
     switchPmText: String? = null,
     switchPmParameter: String? = null,
@@ -377,10 +377,10 @@ fun TdAbsHandler.answerInlineQuery(
  */
 suspend fun TdAbsHandler.setInlineGameScore(
     inlineMessageId: String? = null,
-    editMessage: Boolean = false,
-    userId: Int = 0,
-    score: Int = 0,
-    force: Boolean = false
+    editMessage: Boolean,
+    userId: Int,
+    score: Int,
+    force: Boolean
 ) = sync<Ok>(
     SetInlineGameScore(
         inlineMessageId,
@@ -393,10 +393,10 @@ suspend fun TdAbsHandler.setInlineGameScore(
 
 suspend fun TdAbsHandler.setInlineGameScoreOrNull(
     inlineMessageId: String? = null,
-    editMessage: Boolean = false,
-    userId: Int = 0,
-    score: Int = 0,
-    force: Boolean = false
+    editMessage: Boolean,
+    userId: Int,
+    score: Int,
+    force: Boolean
 ) = syncOrNull<Ok>(
     SetInlineGameScore(
         inlineMessageId,
@@ -409,10 +409,10 @@ suspend fun TdAbsHandler.setInlineGameScoreOrNull(
 
 fun TdAbsHandler.setInlineGameScore(
     inlineMessageId: String? = null,
-    editMessage: Boolean = false,
-    userId: Int = 0,
-    score: Int = 0,
-    force: Boolean = false,
+    editMessage: Boolean,
+    userId: Int,
+    score: Int,
+    force: Boolean,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     SetInlineGameScore(

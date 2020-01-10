@@ -19,7 +19,7 @@ import tookox.core.client.*
  */
 suspend fun TdAbsHandler.addContact(
     contact: Contact? = null,
-    sharePhoneNumber: Boolean = false
+    sharePhoneNumber: Boolean
 ) = sync<Ok>(
     AddContact(
         contact,
@@ -29,7 +29,7 @@ suspend fun TdAbsHandler.addContact(
 
 suspend fun TdAbsHandler.addContactOrNull(
     contact: Contact? = null,
-    sharePhoneNumber: Boolean = false
+    sharePhoneNumber: Boolean
 ) = syncOrNull<Ok>(
     AddContact(
         contact,
@@ -39,7 +39,7 @@ suspend fun TdAbsHandler.addContactOrNull(
 
 fun TdAbsHandler.addContact(
     contact: Contact? = null,
-    sharePhoneNumber: Boolean = false,
+    sharePhoneNumber: Boolean,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     AddContact(
@@ -56,7 +56,7 @@ fun TdAbsHandler.addContact(
  *             Contacts' vCard are ignored and are not imported
  */
 suspend fun TdAbsHandler.importContacts(
-    contacts: Array<Contact> = emptyArray()
+    contacts: Array<Contact>
 ) = sync<ImportedContacts>(
     ImportContacts(
         contacts
@@ -64,7 +64,7 @@ suspend fun TdAbsHandler.importContacts(
 )
 
 suspend fun TdAbsHandler.importContactsOrNull(
-    contacts: Array<Contact> = emptyArray()
+    contacts: Array<Contact>
 ) = syncOrNull<ImportedContacts>(
     ImportContacts(
         contacts
@@ -72,7 +72,7 @@ suspend fun TdAbsHandler.importContactsOrNull(
 )
 
 fun TdAbsHandler.importContacts(
-    contacts: Array<Contact> = emptyArray(),
+    contacts: Array<Contact>,
     block: (suspend CoroutineScope.(ImportedContacts) -> Unit)
 ) = send(
     ImportContacts(
@@ -86,7 +86,7 @@ fun TdAbsHandler.importContacts(
  * @userIds - Identifiers of users to be deleted
  */
 suspend fun TdAbsHandler.removeContacts(
-    userIds: IntArray = intArrayOf()
+    userIds: IntArray
 ) = sync<Ok>(
     RemoveContacts(
         userIds
@@ -94,7 +94,7 @@ suspend fun TdAbsHandler.removeContacts(
 )
 
 suspend fun TdAbsHandler.removeContactsOrNull(
-    userIds: IntArray = intArrayOf()
+    userIds: IntArray
 ) = syncOrNull<Ok>(
     RemoveContacts(
         userIds
@@ -102,7 +102,7 @@ suspend fun TdAbsHandler.removeContactsOrNull(
 )
 
 fun TdAbsHandler.removeContacts(
-    userIds: IntArray = intArrayOf(),
+    userIds: IntArray,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     RemoveContacts(
@@ -135,7 +135,7 @@ fun TdAbsHandler.getImportedContactCount(
  * @contacts - The new list of contacts, contact's vCard are ignored and are not imported
  */
 suspend fun TdAbsHandler.changeImportedContacts(
-    contacts: Array<Contact> = emptyArray()
+    contacts: Array<Contact>
 ) = sync<ImportedContacts>(
     ChangeImportedContacts(
         contacts
@@ -143,7 +143,7 @@ suspend fun TdAbsHandler.changeImportedContacts(
 )
 
 suspend fun TdAbsHandler.changeImportedContactsOrNull(
-    contacts: Array<Contact> = emptyArray()
+    contacts: Array<Contact>
 ) = syncOrNull<ImportedContacts>(
     ChangeImportedContacts(
         contacts
@@ -151,7 +151,7 @@ suspend fun TdAbsHandler.changeImportedContactsOrNull(
 )
 
 fun TdAbsHandler.changeImportedContacts(
-    contacts: Array<Contact> = emptyArray(),
+    contacts: Array<Contact>,
     block: (suspend CoroutineScope.(ImportedContacts) -> Unit)
 ) = send(
     ChangeImportedContacts(

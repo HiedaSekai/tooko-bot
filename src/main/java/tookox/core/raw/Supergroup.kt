@@ -15,7 +15,7 @@ import tookox.core.client.*
  * @supergroupId - Supergroup or channel identifier
  */
 suspend fun TdAbsHandler.getSupergroup(
-    supergroupId: Int = 0
+    supergroupId: Int
 ) = sync<Supergroup>(
     GetSupergroup(
         supergroupId
@@ -23,7 +23,7 @@ suspend fun TdAbsHandler.getSupergroup(
 )
 
 suspend fun TdAbsHandler.getSupergroupOrNull(
-    supergroupId: Int = 0
+    supergroupId: Int
 ) = syncOrNull<Supergroup>(
     GetSupergroup(
         supergroupId
@@ -31,7 +31,7 @@ suspend fun TdAbsHandler.getSupergroupOrNull(
 )
 
 fun TdAbsHandler.getSupergroup(
-    supergroupId: Int = 0,
+    supergroupId: Int,
     block: (suspend CoroutineScope.(Supergroup) -> Unit)
 ) = send(
     GetSupergroup(
@@ -45,7 +45,7 @@ fun TdAbsHandler.getSupergroup(
  * @supergroupId - Supergroup or channel identifier
  */
 suspend fun TdAbsHandler.getSupergroupFullInfo(
-    supergroupId: Int = 0
+    supergroupId: Int
 ) = sync<SupergroupFullInfo>(
     GetSupergroupFullInfo(
         supergroupId
@@ -53,7 +53,7 @@ suspend fun TdAbsHandler.getSupergroupFullInfo(
 )
 
 suspend fun TdAbsHandler.getSupergroupFullInfoOrNull(
-    supergroupId: Int = 0
+    supergroupId: Int
 ) = syncOrNull<SupergroupFullInfo>(
     GetSupergroupFullInfo(
         supergroupId
@@ -61,7 +61,7 @@ suspend fun TdAbsHandler.getSupergroupFullInfoOrNull(
 )
 
 fun TdAbsHandler.getSupergroupFullInfo(
-    supergroupId: Int = 0,
+    supergroupId: Int,
     block: (suspend CoroutineScope.(SupergroupFullInfo) -> Unit)
 ) = send(
     GetSupergroupFullInfo(
@@ -77,7 +77,7 @@ fun TdAbsHandler.getSupergroupFullInfo(
  *             Use an empty string to remove the username
  */
 suspend fun TdAbsHandler.setSupergroupUsername(
-    supergroupId: Int = 0,
+    supergroupId: Int,
     username: String? = null
 ) = sync<Ok>(
     SetSupergroupUsername(
@@ -87,7 +87,7 @@ suspend fun TdAbsHandler.setSupergroupUsername(
 )
 
 suspend fun TdAbsHandler.setSupergroupUsernameOrNull(
-    supergroupId: Int = 0,
+    supergroupId: Int,
     username: String? = null
 ) = syncOrNull<Ok>(
     SetSupergroupUsername(
@@ -97,7 +97,7 @@ suspend fun TdAbsHandler.setSupergroupUsernameOrNull(
 )
 
 fun TdAbsHandler.setSupergroupUsername(
-    supergroupId: Int = 0,
+    supergroupId: Int,
     username: String? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
@@ -116,8 +116,8 @@ fun TdAbsHandler.setSupergroupUsername(
  *                 Use 0 to remove the supergroup sticker set
  */
 suspend fun TdAbsHandler.setSupergroupStickerSet(
-    supergroupId: Int = 0,
-    stickerSetId: Long = 0L
+    supergroupId: Int,
+    stickerSetId: Long
 ) = sync<Ok>(
     SetSupergroupStickerSet(
         supergroupId,
@@ -126,8 +126,8 @@ suspend fun TdAbsHandler.setSupergroupStickerSet(
 )
 
 suspend fun TdAbsHandler.setSupergroupStickerSetOrNull(
-    supergroupId: Int = 0,
-    stickerSetId: Long = 0L
+    supergroupId: Int,
+    stickerSetId: Long
 ) = syncOrNull<Ok>(
     SetSupergroupStickerSet(
         supergroupId,
@@ -136,8 +136,8 @@ suspend fun TdAbsHandler.setSupergroupStickerSetOrNull(
 )
 
 fun TdAbsHandler.setSupergroupStickerSet(
-    supergroupId: Int = 0,
-    stickerSetId: Long = 0L,
+    supergroupId: Int,
+    stickerSetId: Long,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     SetSupergroupStickerSet(
@@ -154,8 +154,8 @@ fun TdAbsHandler.setSupergroupStickerSet(
  * @signMessages - New value of sign_messages
  */
 suspend fun TdAbsHandler.toggleSupergroupSignMessages(
-    supergroupId: Int = 0,
-    signMessages: Boolean = false
+    supergroupId: Int,
+    signMessages: Boolean
 ) = sync<Ok>(
     ToggleSupergroupSignMessages(
         supergroupId,
@@ -164,8 +164,8 @@ suspend fun TdAbsHandler.toggleSupergroupSignMessages(
 )
 
 suspend fun TdAbsHandler.toggleSupergroupSignMessagesOrNull(
-    supergroupId: Int = 0,
-    signMessages: Boolean = false
+    supergroupId: Int,
+    signMessages: Boolean
 ) = syncOrNull<Ok>(
     ToggleSupergroupSignMessages(
         supergroupId,
@@ -174,8 +174,8 @@ suspend fun TdAbsHandler.toggleSupergroupSignMessagesOrNull(
 )
 
 fun TdAbsHandler.toggleSupergroupSignMessages(
-    supergroupId: Int = 0,
-    signMessages: Boolean = false,
+    supergroupId: Int,
+    signMessages: Boolean,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     ToggleSupergroupSignMessages(
@@ -192,8 +192,8 @@ fun TdAbsHandler.toggleSupergroupSignMessages(
  * @isAllHistoryAvailable - The new value of is_all_history_available
  */
 suspend fun TdAbsHandler.toggleSupergroupIsAllHistoryAvailable(
-    supergroupId: Int = 0,
-    isAllHistoryAvailable: Boolean = false
+    supergroupId: Int,
+    isAllHistoryAvailable: Boolean
 ) = sync<Ok>(
     ToggleSupergroupIsAllHistoryAvailable(
         supergroupId,
@@ -202,8 +202,8 @@ suspend fun TdAbsHandler.toggleSupergroupIsAllHistoryAvailable(
 )
 
 suspend fun TdAbsHandler.toggleSupergroupIsAllHistoryAvailableOrNull(
-    supergroupId: Int = 0,
-    isAllHistoryAvailable: Boolean = false
+    supergroupId: Int,
+    isAllHistoryAvailable: Boolean
 ) = syncOrNull<Ok>(
     ToggleSupergroupIsAllHistoryAvailable(
         supergroupId,
@@ -212,8 +212,8 @@ suspend fun TdAbsHandler.toggleSupergroupIsAllHistoryAvailableOrNull(
 )
 
 fun TdAbsHandler.toggleSupergroupIsAllHistoryAvailable(
-    supergroupId: Int = 0,
-    isAllHistoryAvailable: Boolean = false,
+    supergroupId: Int,
+    isAllHistoryAvailable: Boolean,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     ToggleSupergroupIsAllHistoryAvailable(
@@ -232,9 +232,9 @@ fun TdAbsHandler.toggleSupergroupIsAllHistoryAvailable(
  *               This list must be non-empty
  */
 suspend fun TdAbsHandler.reportSupergroupSpam(
-    supergroupId: Int = 0,
-    userId: Int = 0,
-    messageIds: LongArray = longArrayOf()
+    supergroupId: Int,
+    userId: Int,
+    messageIds: LongArray
 ) = sync<Ok>(
     ReportSupergroupSpam(
         supergroupId,
@@ -244,9 +244,9 @@ suspend fun TdAbsHandler.reportSupergroupSpam(
 )
 
 suspend fun TdAbsHandler.reportSupergroupSpamOrNull(
-    supergroupId: Int = 0,
-    userId: Int = 0,
-    messageIds: LongArray = longArrayOf()
+    supergroupId: Int,
+    userId: Int,
+    messageIds: LongArray
 ) = syncOrNull<Ok>(
     ReportSupergroupSpam(
         supergroupId,
@@ -256,9 +256,9 @@ suspend fun TdAbsHandler.reportSupergroupSpamOrNull(
 )
 
 fun TdAbsHandler.reportSupergroupSpam(
-    supergroupId: Int = 0,
-    userId: Int = 0,
-    messageIds: LongArray = longArrayOf(),
+    supergroupId: Int,
+    userId: Int,
+    messageIds: LongArray,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     ReportSupergroupSpam(
@@ -277,7 +277,7 @@ fun TdAbsHandler.reportSupergroupSpam(
  * @supergroupId - Identifier of the supergroup or channel
  */
 suspend fun TdAbsHandler.deleteSupergroup(
-    supergroupId: Int = 0
+    supergroupId: Int
 ) = sync<Ok>(
     DeleteSupergroup(
         supergroupId
@@ -285,7 +285,7 @@ suspend fun TdAbsHandler.deleteSupergroup(
 )
 
 suspend fun TdAbsHandler.deleteSupergroupOrNull(
-    supergroupId: Int = 0
+    supergroupId: Int
 ) = syncOrNull<Ok>(
     DeleteSupergroup(
         supergroupId
@@ -293,7 +293,7 @@ suspend fun TdAbsHandler.deleteSupergroupOrNull(
 )
 
 fun TdAbsHandler.deleteSupergroup(
-    supergroupId: Int = 0,
+    supergroupId: Int,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     DeleteSupergroup(

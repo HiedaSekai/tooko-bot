@@ -152,8 +152,8 @@ fun TdAbsHandler.deletePassportElement(
  * @errors - The errors
  */
 suspend fun TdAbsHandler.setPassportElementErrors(
-    userId: Int = 0,
-    errors: Array<InputPassportElementError> = emptyArray()
+    userId: Int,
+    errors: Array<InputPassportElementError>
 ) = sync<Ok>(
     SetPassportElementErrors(
         userId,
@@ -162,8 +162,8 @@ suspend fun TdAbsHandler.setPassportElementErrors(
 )
 
 suspend fun TdAbsHandler.setPassportElementErrorsOrNull(
-    userId: Int = 0,
-    errors: Array<InputPassportElementError> = emptyArray()
+    userId: Int,
+    errors: Array<InputPassportElementError>
 ) = syncOrNull<Ok>(
     SetPassportElementErrors(
         userId,
@@ -172,8 +172,8 @@ suspend fun TdAbsHandler.setPassportElementErrorsOrNull(
 )
 
 fun TdAbsHandler.setPassportElementErrors(
-    userId: Int = 0,
-    errors: Array<InputPassportElementError> = emptyArray(),
+    userId: Int,
+    errors: Array<InputPassportElementError>,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     SetPassportElementErrors(
@@ -191,7 +191,7 @@ fun TdAbsHandler.setPassportElementErrors(
  * @nonce - Authorization form nonce provided by the service
  */
 suspend fun TdAbsHandler.getPassportAuthorizationForm(
-    botUserId: Int = 0,
+    botUserId: Int,
     scope: String? = null,
     publicKey: String? = null,
     nonce: String? = null
@@ -205,7 +205,7 @@ suspend fun TdAbsHandler.getPassportAuthorizationForm(
 )
 
 suspend fun TdAbsHandler.getPassportAuthorizationFormOrNull(
-    botUserId: Int = 0,
+    botUserId: Int,
     scope: String? = null,
     publicKey: String? = null,
     nonce: String? = null
@@ -219,7 +219,7 @@ suspend fun TdAbsHandler.getPassportAuthorizationFormOrNull(
 )
 
 fun TdAbsHandler.getPassportAuthorizationForm(
-    botUserId: Int = 0,
+    botUserId: Int,
     scope: String? = null,
     publicKey: String? = null,
     nonce: String? = null,
@@ -241,7 +241,7 @@ fun TdAbsHandler.getPassportAuthorizationForm(
  * @password - Password of the current user
  */
 suspend fun TdAbsHandler.getPassportAuthorizationFormAvailableElements(
-    autorizationFormId: Int = 0,
+    autorizationFormId: Int,
     password: String? = null
 ) = sync<PassportElementsWithErrors>(
     GetPassportAuthorizationFormAvailableElements(
@@ -251,7 +251,7 @@ suspend fun TdAbsHandler.getPassportAuthorizationFormAvailableElements(
 )
 
 suspend fun TdAbsHandler.getPassportAuthorizationFormAvailableElementsOrNull(
-    autorizationFormId: Int = 0,
+    autorizationFormId: Int,
     password: String? = null
 ) = syncOrNull<PassportElementsWithErrors>(
     GetPassportAuthorizationFormAvailableElements(
@@ -261,7 +261,7 @@ suspend fun TdAbsHandler.getPassportAuthorizationFormAvailableElementsOrNull(
 )
 
 fun TdAbsHandler.getPassportAuthorizationFormAvailableElements(
-    autorizationFormId: Int = 0,
+    autorizationFormId: Int,
     password: String? = null,
     block: (suspend CoroutineScope.(PassportElementsWithErrors) -> Unit)
 ) = send(

@@ -85,7 +85,7 @@ fun TdAbsHandler.getRecentlyVisitedTMeUrls(
  * @seconds - Number of seconds before the function returns
  */
 suspend fun TdAbsHandler.setAlarm(
-    seconds: Double = 0.0
+    seconds: Double
 ) = sync<Ok>(
     SetAlarm(
         seconds
@@ -93,7 +93,7 @@ suspend fun TdAbsHandler.setAlarm(
 )
 
 suspend fun TdAbsHandler.setAlarmOrNull(
-    seconds: Double = 0.0
+    seconds: Double
 ) = syncOrNull<Ok>(
     SetAlarm(
         seconds
@@ -101,7 +101,7 @@ suspend fun TdAbsHandler.setAlarmOrNull(
 )
 
 fun TdAbsHandler.setAlarm(
-    seconds: Double = 0.0,
+    seconds: Double,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     SetAlarm(

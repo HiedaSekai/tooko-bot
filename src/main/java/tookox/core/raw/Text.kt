@@ -292,7 +292,7 @@ fun TdAbsHandler.getInviteText(
  * @proxyId - Proxy identifier
  */
 suspend fun TdAbsHandler.getProxyLink(
-    proxyId: Int = 0
+    proxyId: Int
 ) = sync<Text>(
     GetProxyLink(
         proxyId
@@ -300,7 +300,7 @@ suspend fun TdAbsHandler.getProxyLink(
 )
 
 suspend fun TdAbsHandler.getProxyLinkOrNull(
-    proxyId: Int = 0
+    proxyId: Int
 ) = syncOrNull<Text>(
     GetProxyLink(
         proxyId
@@ -308,7 +308,7 @@ suspend fun TdAbsHandler.getProxyLinkOrNull(
 )
 
 fun TdAbsHandler.getProxyLink(
-    proxyId: Int = 0,
+    proxyId: Int,
     block: (suspend CoroutineScope.(Text) -> Unit)
 ) = send(
     GetProxyLink(

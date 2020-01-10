@@ -15,7 +15,7 @@ import tookox.core.client.*
  * @newEncryptionKey - New encryption key
  */
 suspend fun TdAbsHandler.setDatabaseEncryptionKey(
-    newEncryptionKey: ByteArray = byteArrayOf()
+    newEncryptionKey: ByteArray
 ) = sync<Ok>(
     SetDatabaseEncryptionKey(
         newEncryptionKey
@@ -23,7 +23,7 @@ suspend fun TdAbsHandler.setDatabaseEncryptionKey(
 )
 
 suspend fun TdAbsHandler.setDatabaseEncryptionKeyOrNull(
-    newEncryptionKey: ByteArray = byteArrayOf()
+    newEncryptionKey: ByteArray
 ) = syncOrNull<Ok>(
     SetDatabaseEncryptionKey(
         newEncryptionKey
@@ -31,7 +31,7 @@ suspend fun TdAbsHandler.setDatabaseEncryptionKeyOrNull(
 )
 
 fun TdAbsHandler.setDatabaseEncryptionKey(
-    newEncryptionKey: ByteArray = byteArrayOf(),
+    newEncryptionKey: ByteArray,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     SetDatabaseEncryptionKey(

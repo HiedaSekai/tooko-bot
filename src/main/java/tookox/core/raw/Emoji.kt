@@ -50,7 +50,7 @@ fun TdAbsHandler.getStickerEmojis(
  */
 suspend fun TdAbsHandler.searchEmojis(
     text: String? = null,
-    exactMatch: Boolean = false,
+    exactMatch: Boolean,
     inputLanguageCode: String? = null
 ) = sync<Emojis>(
     SearchEmojis(
@@ -62,7 +62,7 @@ suspend fun TdAbsHandler.searchEmojis(
 
 suspend fun TdAbsHandler.searchEmojisOrNull(
     text: String? = null,
-    exactMatch: Boolean = false,
+    exactMatch: Boolean,
     inputLanguageCode: String? = null
 ) = syncOrNull<Emojis>(
     SearchEmojis(
@@ -74,7 +74,7 @@ suspend fun TdAbsHandler.searchEmojisOrNull(
 
 fun TdAbsHandler.searchEmojis(
     text: String? = null,
-    exactMatch: Boolean = false,
+    exactMatch: Boolean,
     inputLanguageCode: String? = null,
     block: (suspend CoroutineScope.(Emojis) -> Unit)
 ) = send(

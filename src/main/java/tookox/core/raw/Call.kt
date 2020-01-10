@@ -15,7 +15,7 @@ import tookox.core.client.*
  * @protocol - Description of the call protocols supported by the client
  */
 suspend fun TdAbsHandler.createCall(
-    userId: Int = 0,
+    userId: Int,
     protocol: CallProtocol? = null
 ) = sync<CallId>(
     CreateCall(
@@ -25,7 +25,7 @@ suspend fun TdAbsHandler.createCall(
 )
 
 suspend fun TdAbsHandler.createCallOrNull(
-    userId: Int = 0,
+    userId: Int,
     protocol: CallProtocol? = null
 ) = syncOrNull<CallId>(
     CreateCall(
@@ -35,7 +35,7 @@ suspend fun TdAbsHandler.createCallOrNull(
 )
 
 fun TdAbsHandler.createCall(
-    userId: Int = 0,
+    userId: Int,
     protocol: CallProtocol? = null,
     block: (suspend CoroutineScope.(CallId) -> Unit)
 ) = send(
@@ -52,7 +52,7 @@ fun TdAbsHandler.createCall(
  * @protocol - Description of the call protocols supported by the client
  */
 suspend fun TdAbsHandler.acceptCall(
-    callId: Int = 0,
+    callId: Int,
     protocol: CallProtocol? = null
 ) = sync<Ok>(
     AcceptCall(
@@ -62,7 +62,7 @@ suspend fun TdAbsHandler.acceptCall(
 )
 
 suspend fun TdAbsHandler.acceptCallOrNull(
-    callId: Int = 0,
+    callId: Int,
     protocol: CallProtocol? = null
 ) = syncOrNull<Ok>(
     AcceptCall(
@@ -72,7 +72,7 @@ suspend fun TdAbsHandler.acceptCallOrNull(
 )
 
 fun TdAbsHandler.acceptCall(
-    callId: Int = 0,
+    callId: Int,
     protocol: CallProtocol? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
@@ -91,10 +91,10 @@ fun TdAbsHandler.acceptCall(
  * @connectionId - Identifier of the connection used during the call
  */
 suspend fun TdAbsHandler.discardCall(
-    callId: Int = 0,
-    isDisconnected: Boolean = false,
-    duration: Int = 0,
-    connectionId: Long = 0L
+    callId: Int,
+    isDisconnected: Boolean,
+    duration: Int,
+    connectionId: Long
 ) = sync<Ok>(
     DiscardCall(
         callId,
@@ -105,10 +105,10 @@ suspend fun TdAbsHandler.discardCall(
 )
 
 suspend fun TdAbsHandler.discardCallOrNull(
-    callId: Int = 0,
-    isDisconnected: Boolean = false,
-    duration: Int = 0,
-    connectionId: Long = 0L
+    callId: Int,
+    isDisconnected: Boolean,
+    duration: Int,
+    connectionId: Long
 ) = syncOrNull<Ok>(
     DiscardCall(
         callId,
@@ -119,10 +119,10 @@ suspend fun TdAbsHandler.discardCallOrNull(
 )
 
 fun TdAbsHandler.discardCall(
-    callId: Int = 0,
-    isDisconnected: Boolean = false,
-    duration: Int = 0,
-    connectionId: Long = 0L,
+    callId: Int,
+    isDisconnected: Boolean,
+    duration: Int,
+    connectionId: Long,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     DiscardCall(

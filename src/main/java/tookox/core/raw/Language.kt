@@ -105,7 +105,7 @@ fun TdAbsHandler.getLanguagePackInfo(
  */
 suspend fun TdAbsHandler.getLanguagePackStrings(
     languagePackId: String? = null,
-    keys: Array<String> = emptyArray()
+    keys: Array<String>
 ) = sync<LanguagePackStrings>(
     GetLanguagePackStrings(
         languagePackId,
@@ -115,7 +115,7 @@ suspend fun TdAbsHandler.getLanguagePackStrings(
 
 suspend fun TdAbsHandler.getLanguagePackStringsOrNull(
     languagePackId: String? = null,
-    keys: Array<String> = emptyArray()
+    keys: Array<String>
 ) = syncOrNull<LanguagePackStrings>(
     GetLanguagePackStrings(
         languagePackId,
@@ -125,7 +125,7 @@ suspend fun TdAbsHandler.getLanguagePackStringsOrNull(
 
 fun TdAbsHandler.getLanguagePackStrings(
     languagePackId: String? = null,
-    keys: Array<String> = emptyArray(),
+    keys: Array<String>,
     block: (suspend CoroutineScope.(LanguagePackStrings) -> Unit)
 ) = send(
     GetLanguagePackStrings(

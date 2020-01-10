@@ -17,8 +17,8 @@ import tookox.core.client.*
  * @errorMessage - An error message, empty on success
  */
 suspend fun TdAbsHandler.answerShippingQuery(
-    shippingQueryId: Long = 0L,
-    shippingOptions: Array<ShippingOption> = emptyArray(),
+    shippingQueryId: Long,
+    shippingOptions: Array<ShippingOption>,
     errorMessage: String? = null
 ) = sync<Ok>(
     AnswerShippingQuery(
@@ -29,8 +29,8 @@ suspend fun TdAbsHandler.answerShippingQuery(
 )
 
 suspend fun TdAbsHandler.answerShippingQueryOrNull(
-    shippingQueryId: Long = 0L,
-    shippingOptions: Array<ShippingOption> = emptyArray(),
+    shippingQueryId: Long,
+    shippingOptions: Array<ShippingOption>,
     errorMessage: String? = null
 ) = syncOrNull<Ok>(
     AnswerShippingQuery(
@@ -41,8 +41,8 @@ suspend fun TdAbsHandler.answerShippingQueryOrNull(
 )
 
 fun TdAbsHandler.answerShippingQuery(
-    shippingQueryId: Long = 0L,
-    shippingOptions: Array<ShippingOption> = emptyArray(),
+    shippingQueryId: Long,
+    shippingOptions: Array<ShippingOption>,
     errorMessage: String? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(

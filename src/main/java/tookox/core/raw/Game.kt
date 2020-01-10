@@ -17,9 +17,9 @@ import tookox.core.client.*
  * @userId - User identifier
  */
 suspend fun TdAbsHandler.getGameHighScores(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
-    userId: Int = 0
+    chatId: Long,
+    messageId: Long,
+    userId: Int
 ) = sync<GameHighScores>(
     GetGameHighScores(
         chatId,
@@ -29,9 +29,9 @@ suspend fun TdAbsHandler.getGameHighScores(
 )
 
 suspend fun TdAbsHandler.getGameHighScoresOrNull(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
-    userId: Int = 0
+    chatId: Long,
+    messageId: Long,
+    userId: Int
 ) = syncOrNull<GameHighScores>(
     GetGameHighScores(
         chatId,
@@ -41,9 +41,9 @@ suspend fun TdAbsHandler.getGameHighScoresOrNull(
 )
 
 fun TdAbsHandler.getGameHighScores(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
-    userId: Int = 0,
+    chatId: Long,
+    messageId: Long,
+    userId: Int,
     block: (suspend CoroutineScope.(GameHighScores) -> Unit)
 ) = send(
     GetGameHighScores(
@@ -62,7 +62,7 @@ fun TdAbsHandler.getGameHighScores(
  */
 suspend fun TdAbsHandler.getInlineGameHighScores(
     inlineMessageId: String? = null,
-    userId: Int = 0
+    userId: Int
 ) = sync<GameHighScores>(
     GetInlineGameHighScores(
         inlineMessageId,
@@ -72,7 +72,7 @@ suspend fun TdAbsHandler.getInlineGameHighScores(
 
 suspend fun TdAbsHandler.getInlineGameHighScoresOrNull(
     inlineMessageId: String? = null,
-    userId: Int = 0
+    userId: Int
 ) = syncOrNull<GameHighScores>(
     GetInlineGameHighScores(
         inlineMessageId,
@@ -82,7 +82,7 @@ suspend fun TdAbsHandler.getInlineGameHighScoresOrNull(
 
 fun TdAbsHandler.getInlineGameHighScores(
     inlineMessageId: String? = null,
-    userId: Int = 0,
+    userId: Int,
     block: (suspend CoroutineScope.(GameHighScores) -> Unit)
 ) = send(
     GetInlineGameHighScores(

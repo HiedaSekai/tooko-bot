@@ -70,7 +70,7 @@ fun TdAbsHandler.testCallString(
  * @x - Bytes to return
  */
 suspend fun TdAbsHandler.testCallBytes(
-    x: ByteArray = byteArrayOf()
+    x: ByteArray
 ) = sync<TestBytes>(
     TestCallBytes(
         x
@@ -78,7 +78,7 @@ suspend fun TdAbsHandler.testCallBytes(
 )
 
 suspend fun TdAbsHandler.testCallBytesOrNull(
-    x: ByteArray = byteArrayOf()
+    x: ByteArray
 ) = syncOrNull<TestBytes>(
     TestCallBytes(
         x
@@ -86,7 +86,7 @@ suspend fun TdAbsHandler.testCallBytesOrNull(
 )
 
 fun TdAbsHandler.testCallBytes(
-    x: ByteArray = byteArrayOf(),
+    x: ByteArray,
     block: (suspend CoroutineScope.(TestBytes) -> Unit)
 ) = send(
     TestCallBytes(
@@ -103,7 +103,7 @@ fun TdAbsHandler.testCallBytes(
  * @x - Vector of numbers to return
  */
 suspend fun TdAbsHandler.testCallVectorInt(
-    x: IntArray = intArrayOf()
+    x: IntArray
 ) = sync<TestVectorInt>(
     TestCallVectorInt(
         x
@@ -111,7 +111,7 @@ suspend fun TdAbsHandler.testCallVectorInt(
 )
 
 suspend fun TdAbsHandler.testCallVectorIntOrNull(
-    x: IntArray = intArrayOf()
+    x: IntArray
 ) = syncOrNull<TestVectorInt>(
     TestCallVectorInt(
         x
@@ -119,7 +119,7 @@ suspend fun TdAbsHandler.testCallVectorIntOrNull(
 )
 
 fun TdAbsHandler.testCallVectorInt(
-    x: IntArray = intArrayOf(),
+    x: IntArray,
     block: (suspend CoroutineScope.(TestVectorInt) -> Unit)
 ) = send(
     TestCallVectorInt(
@@ -136,7 +136,7 @@ fun TdAbsHandler.testCallVectorInt(
  * @x - Vector of objects to return
  */
 suspend fun TdAbsHandler.testCallVectorIntObject(
-    x: Array<TestInt> = emptyArray()
+    x: Array<TestInt>
 ) = sync<TestVectorIntObject>(
     TestCallVectorIntObject(
         x
@@ -144,7 +144,7 @@ suspend fun TdAbsHandler.testCallVectorIntObject(
 )
 
 suspend fun TdAbsHandler.testCallVectorIntObjectOrNull(
-    x: Array<TestInt> = emptyArray()
+    x: Array<TestInt>
 ) = syncOrNull<TestVectorIntObject>(
     TestCallVectorIntObject(
         x
@@ -152,7 +152,7 @@ suspend fun TdAbsHandler.testCallVectorIntObjectOrNull(
 )
 
 fun TdAbsHandler.testCallVectorIntObject(
-    x: Array<TestInt> = emptyArray(),
+    x: Array<TestInt>,
     block: (suspend CoroutineScope.(TestVectorIntObject) -> Unit)
 ) = send(
     TestCallVectorIntObject(
@@ -169,7 +169,7 @@ fun TdAbsHandler.testCallVectorIntObject(
  * @x - Vector of strings to return
  */
 suspend fun TdAbsHandler.testCallVectorString(
-    x: Array<String> = emptyArray()
+    x: Array<String>
 ) = sync<TestVectorString>(
     TestCallVectorString(
         x
@@ -177,7 +177,7 @@ suspend fun TdAbsHandler.testCallVectorString(
 )
 
 suspend fun TdAbsHandler.testCallVectorStringOrNull(
-    x: Array<String> = emptyArray()
+    x: Array<String>
 ) = syncOrNull<TestVectorString>(
     TestCallVectorString(
         x
@@ -185,7 +185,7 @@ suspend fun TdAbsHandler.testCallVectorStringOrNull(
 )
 
 fun TdAbsHandler.testCallVectorString(
-    x: Array<String> = emptyArray(),
+    x: Array<String>,
     block: (suspend CoroutineScope.(TestVectorString) -> Unit)
 ) = send(
     TestCallVectorString(
@@ -202,7 +202,7 @@ fun TdAbsHandler.testCallVectorString(
  * @x - Vector of objects to return
  */
 suspend fun TdAbsHandler.testCallVectorStringObject(
-    x: Array<TestString> = emptyArray()
+    x: Array<TestString>
 ) = sync<TestVectorStringObject>(
     TestCallVectorStringObject(
         x
@@ -210,7 +210,7 @@ suspend fun TdAbsHandler.testCallVectorStringObject(
 )
 
 suspend fun TdAbsHandler.testCallVectorStringObjectOrNull(
-    x: Array<TestString> = emptyArray()
+    x: Array<TestString>
 ) = syncOrNull<TestVectorStringObject>(
     TestCallVectorStringObject(
         x
@@ -218,7 +218,7 @@ suspend fun TdAbsHandler.testCallVectorStringObjectOrNull(
 )
 
 fun TdAbsHandler.testCallVectorStringObject(
-    x: Array<TestString> = emptyArray(),
+    x: Array<TestString>,
     block: (suspend CoroutineScope.(TestVectorStringObject) -> Unit)
 ) = send(
     TestCallVectorStringObject(
@@ -235,7 +235,7 @@ fun TdAbsHandler.testCallVectorStringObject(
  * @x - Number to square
  */
 suspend fun TdAbsHandler.testSquareInt(
-    x: Int = 0
+    x: Int
 ) = sync<TestInt>(
     TestSquareInt(
         x
@@ -243,7 +243,7 @@ suspend fun TdAbsHandler.testSquareInt(
 )
 
 suspend fun TdAbsHandler.testSquareIntOrNull(
-    x: Int = 0
+    x: Int
 ) = syncOrNull<TestInt>(
     TestSquareInt(
         x
@@ -251,7 +251,7 @@ suspend fun TdAbsHandler.testSquareIntOrNull(
 )
 
 fun TdAbsHandler.testSquareInt(
-    x: Int = 0,
+    x: Int,
     block: (suspend CoroutineScope.(TestInt) -> Unit)
 ) = send(
     TestSquareInt(
@@ -291,10 +291,10 @@ fun TdAbsHandler.testNetwork(
  */
 suspend fun TdAbsHandler.testProxy(
     server: String? = null,
-    port: Int = 0,
+    port: Int,
     type: ProxyType? = null,
-    dcId: Int = 0,
-    timeout: Double = 0.0
+    dcId: Int,
+    timeout: Double
 ) = sync<Ok>(
     TestProxy(
         server,
@@ -307,10 +307,10 @@ suspend fun TdAbsHandler.testProxy(
 
 suspend fun TdAbsHandler.testProxyOrNull(
     server: String? = null,
-    port: Int = 0,
+    port: Int,
     type: ProxyType? = null,
-    dcId: Int = 0,
-    timeout: Double = 0.0
+    dcId: Int,
+    timeout: Double
 ) = syncOrNull<Ok>(
     TestProxy(
         server,
@@ -323,10 +323,10 @@ suspend fun TdAbsHandler.testProxyOrNull(
 
 fun TdAbsHandler.testProxy(
     server: String? = null,
-    port: Int = 0,
+    port: Int,
     type: ProxyType? = null,
-    dcId: Int = 0,
-    timeout: Double = 0.0,
+    dcId: Int,
+    timeout: Double,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     TestProxy(

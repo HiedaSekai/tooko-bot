@@ -38,7 +38,7 @@ fun TdAbsHandler.logOut(
  */
 suspend fun TdAbsHandler.saveApplicationLogEvent(
     type: String? = null,
-    chatId: Long = 0L,
+    chatId: Long,
     data: JsonValue? = null
 ) = sync<Ok>(
     SaveApplicationLogEvent(
@@ -50,7 +50,7 @@ suspend fun TdAbsHandler.saveApplicationLogEvent(
 
 suspend fun TdAbsHandler.saveApplicationLogEventOrNull(
     type: String? = null,
-    chatId: Long = 0L,
+    chatId: Long,
     data: JsonValue? = null
 ) = syncOrNull<Ok>(
     SaveApplicationLogEvent(
@@ -62,7 +62,7 @@ suspend fun TdAbsHandler.saveApplicationLogEventOrNull(
 
 fun TdAbsHandler.saveApplicationLogEvent(
     type: String? = null,
-    chatId: Long = 0L,
+    chatId: Long,
     data: JsonValue? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
@@ -136,7 +136,7 @@ fun TdAbsHandler.getLogStream(
  *                      Value 0 corresponds to fatal errors, value 1 corresponds to errors, value 2 corresponds to warnings and debug warnings, value 3 corresponds to informational, value 4 corresponds to debug, value 5 corresponds to verbose debug, value greater than 5 and up to 1023 can be used to enable even more logging
  */
 suspend fun TdAbsHandler.setLogVerbosityLevel(
-    newVerbosityLevel: Int = 0
+    newVerbosityLevel: Int
 ) = sync<Ok>(
     SetLogVerbosityLevel(
         newVerbosityLevel
@@ -144,7 +144,7 @@ suspend fun TdAbsHandler.setLogVerbosityLevel(
 )
 
 suspend fun TdAbsHandler.setLogVerbosityLevelOrNull(
-    newVerbosityLevel: Int = 0
+    newVerbosityLevel: Int
 ) = syncOrNull<Ok>(
     SetLogVerbosityLevel(
         newVerbosityLevel
@@ -152,7 +152,7 @@ suspend fun TdAbsHandler.setLogVerbosityLevelOrNull(
 )
 
 fun TdAbsHandler.setLogVerbosityLevel(
-    newVerbosityLevel: Int = 0,
+    newVerbosityLevel: Int,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     SetLogVerbosityLevel(
@@ -211,7 +211,7 @@ fun TdAbsHandler.getLogTags(
  */
 suspend fun TdAbsHandler.setLogTagVerbosityLevel(
     tag: String? = null,
-    newVerbosityLevel: Int = 0
+    newVerbosityLevel: Int
 ) = sync<Ok>(
     SetLogTagVerbosityLevel(
         tag,
@@ -221,7 +221,7 @@ suspend fun TdAbsHandler.setLogTagVerbosityLevel(
 
 suspend fun TdAbsHandler.setLogTagVerbosityLevelOrNull(
     tag: String? = null,
-    newVerbosityLevel: Int = 0
+    newVerbosityLevel: Int
 ) = syncOrNull<Ok>(
     SetLogTagVerbosityLevel(
         tag,
@@ -231,7 +231,7 @@ suspend fun TdAbsHandler.setLogTagVerbosityLevelOrNull(
 
 fun TdAbsHandler.setLogTagVerbosityLevel(
     tag: String? = null,
-    newVerbosityLevel: Int = 0,
+    newVerbosityLevel: Int,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     SetLogTagVerbosityLevel(
@@ -283,7 +283,7 @@ fun TdAbsHandler.getLogTagVerbosityLevel(
  * @text - Text of a message to log
  */
 suspend fun TdAbsHandler.addLogMessage(
-    verbosityLevel: Int = 0,
+    verbosityLevel: Int,
     text: String? = null
 ) = sync<Ok>(
     AddLogMessage(
@@ -293,7 +293,7 @@ suspend fun TdAbsHandler.addLogMessage(
 )
 
 suspend fun TdAbsHandler.addLogMessageOrNull(
-    verbosityLevel: Int = 0,
+    verbosityLevel: Int,
     text: String? = null
 ) = syncOrNull<Ok>(
     AddLogMessage(
@@ -303,7 +303,7 @@ suspend fun TdAbsHandler.addLogMessageOrNull(
 )
 
 fun TdAbsHandler.addLogMessage(
-    verbosityLevel: Int = 0,
+    verbosityLevel: Int,
     text: String? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(

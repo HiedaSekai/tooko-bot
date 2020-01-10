@@ -15,8 +15,8 @@ import tookox.core.client.*
  * @messageId - Identifier of the message to get
  */
 suspend fun TdAbsHandler.getMessage(
-    chatId: Long = 0L,
-    messageId: Long = 0L
+    chatId: Long,
+    messageId: Long
 ) = sync<Message>(
     GetMessage(
         chatId,
@@ -25,8 +25,8 @@ suspend fun TdAbsHandler.getMessage(
 )
 
 suspend fun TdAbsHandler.getMessageOrNull(
-    chatId: Long = 0L,
-    messageId: Long = 0L
+    chatId: Long,
+    messageId: Long
 ) = syncOrNull<Message>(
     GetMessage(
         chatId,
@@ -35,8 +35,8 @@ suspend fun TdAbsHandler.getMessageOrNull(
 )
 
 fun TdAbsHandler.getMessage(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     block: (suspend CoroutineScope.(Message) -> Unit)
 ) = send(
     GetMessage(
@@ -53,8 +53,8 @@ fun TdAbsHandler.getMessage(
  * @messageId - Identifier of the message to get
  */
 suspend fun TdAbsHandler.getMessageLocally(
-    chatId: Long = 0L,
-    messageId: Long = 0L
+    chatId: Long,
+    messageId: Long
 ) = sync<Message>(
     GetMessageLocally(
         chatId,
@@ -63,8 +63,8 @@ suspend fun TdAbsHandler.getMessageLocally(
 )
 
 suspend fun TdAbsHandler.getMessageLocallyOrNull(
-    chatId: Long = 0L,
-    messageId: Long = 0L
+    chatId: Long,
+    messageId: Long
 ) = syncOrNull<Message>(
     GetMessageLocally(
         chatId,
@@ -73,8 +73,8 @@ suspend fun TdAbsHandler.getMessageLocallyOrNull(
 )
 
 fun TdAbsHandler.getMessageLocally(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     block: (suspend CoroutineScope.(Message) -> Unit)
 ) = send(
     GetMessageLocally(
@@ -90,8 +90,8 @@ fun TdAbsHandler.getMessageLocally(
  * @messageId - Identifier of the message reply to which get
  */
 suspend fun TdAbsHandler.getRepliedMessage(
-    chatId: Long = 0L,
-    messageId: Long = 0L
+    chatId: Long,
+    messageId: Long
 ) = sync<Message>(
     GetRepliedMessage(
         chatId,
@@ -100,8 +100,8 @@ suspend fun TdAbsHandler.getRepliedMessage(
 )
 
 suspend fun TdAbsHandler.getRepliedMessageOrNull(
-    chatId: Long = 0L,
-    messageId: Long = 0L
+    chatId: Long,
+    messageId: Long
 ) = syncOrNull<Message>(
     GetRepliedMessage(
         chatId,
@@ -110,8 +110,8 @@ suspend fun TdAbsHandler.getRepliedMessageOrNull(
 )
 
 fun TdAbsHandler.getRepliedMessage(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     block: (suspend CoroutineScope.(Message) -> Unit)
 ) = send(
     GetRepliedMessage(
@@ -126,7 +126,7 @@ fun TdAbsHandler.getRepliedMessage(
  * @chatId - Identifier of the chat the message belongs to
  */
 suspend fun TdAbsHandler.getChatPinnedMessage(
-    chatId: Long = 0L
+    chatId: Long
 ) = sync<Message>(
     GetChatPinnedMessage(
         chatId
@@ -134,7 +134,7 @@ suspend fun TdAbsHandler.getChatPinnedMessage(
 )
 
 suspend fun TdAbsHandler.getChatPinnedMessageOrNull(
-    chatId: Long = 0L
+    chatId: Long
 ) = syncOrNull<Message>(
     GetChatPinnedMessage(
         chatId
@@ -142,7 +142,7 @@ suspend fun TdAbsHandler.getChatPinnedMessageOrNull(
 )
 
 fun TdAbsHandler.getChatPinnedMessage(
-    chatId: Long = 0L,
+    chatId: Long,
     block: (suspend CoroutineScope.(Message) -> Unit)
 ) = send(
     GetChatPinnedMessage(
@@ -158,8 +158,8 @@ fun TdAbsHandler.getChatPinnedMessage(
  * @messageIds - Identifiers of the messages to get
  */
 suspend fun TdAbsHandler.getMessages(
-    chatId: Long = 0L,
-    messageIds: LongArray = longArrayOf()
+    chatId: Long,
+    messageIds: LongArray
 ) = sync<Messages>(
     GetMessages(
         chatId,
@@ -168,8 +168,8 @@ suspend fun TdAbsHandler.getMessages(
 )
 
 suspend fun TdAbsHandler.getMessagesOrNull(
-    chatId: Long = 0L,
-    messageIds: LongArray = longArrayOf()
+    chatId: Long,
+    messageIds: LongArray
 ) = syncOrNull<Messages>(
     GetMessages(
         chatId,
@@ -178,8 +178,8 @@ suspend fun TdAbsHandler.getMessagesOrNull(
 )
 
 fun TdAbsHandler.getMessages(
-    chatId: Long = 0L,
-    messageIds: LongArray = longArrayOf(),
+    chatId: Long,
+    messageIds: LongArray,
     block: (suspend CoroutineScope.(Messages) -> Unit)
 ) = send(
     GetMessages(
@@ -205,11 +205,11 @@ fun TdAbsHandler.getMessages(
  * @onlyLocal - If true, returns only messages that are available locally without sending network requests
  */
 suspend fun TdAbsHandler.getChatHistory(
-    chatId: Long = 0L,
-    fromMessageId: Long = 0L,
-    offset: Int = 0,
-    limit: Int = 0,
-    onlyLocal: Boolean = false
+    chatId: Long,
+    fromMessageId: Long,
+    offset: Int,
+    limit: Int,
+    onlyLocal: Boolean
 ) = sync<Messages>(
     GetChatHistory(
         chatId,
@@ -221,11 +221,11 @@ suspend fun TdAbsHandler.getChatHistory(
 )
 
 suspend fun TdAbsHandler.getChatHistoryOrNull(
-    chatId: Long = 0L,
-    fromMessageId: Long = 0L,
-    offset: Int = 0,
-    limit: Int = 0,
-    onlyLocal: Boolean = false
+    chatId: Long,
+    fromMessageId: Long,
+    offset: Int,
+    limit: Int,
+    onlyLocal: Boolean
 ) = syncOrNull<Messages>(
     GetChatHistory(
         chatId,
@@ -237,11 +237,11 @@ suspend fun TdAbsHandler.getChatHistoryOrNull(
 )
 
 fun TdAbsHandler.getChatHistory(
-    chatId: Long = 0L,
-    fromMessageId: Long = 0L,
-    offset: Int = 0,
-    limit: Int = 0,
-    onlyLocal: Boolean = false,
+    chatId: Long,
+    fromMessageId: Long,
+    offset: Int,
+    limit: Int,
+    onlyLocal: Boolean,
     block: (suspend CoroutineScope.(Messages) -> Unit)
 ) = send(
     GetChatHistory(
@@ -274,12 +274,12 @@ fun TdAbsHandler.getChatHistory(
  * @filter - Filter for message content in the search results
  */
 suspend fun TdAbsHandler.searchChatMessages(
-    chatId: Long = 0L,
+    chatId: Long,
     query: String? = null,
-    senderUserId: Int = 0,
-    fromMessageId: Long = 0L,
-    offset: Int = 0,
-    limit: Int = 0,
+    senderUserId: Int,
+    fromMessageId: Long,
+    offset: Int,
+    limit: Int,
     filter: SearchMessagesFilter? = null
 ) = sync<Messages>(
     SearchChatMessages(
@@ -294,12 +294,12 @@ suspend fun TdAbsHandler.searchChatMessages(
 )
 
 suspend fun TdAbsHandler.searchChatMessagesOrNull(
-    chatId: Long = 0L,
+    chatId: Long,
     query: String? = null,
-    senderUserId: Int = 0,
-    fromMessageId: Long = 0L,
-    offset: Int = 0,
-    limit: Int = 0,
+    senderUserId: Int,
+    fromMessageId: Long,
+    offset: Int,
+    limit: Int,
     filter: SearchMessagesFilter? = null
 ) = syncOrNull<Messages>(
     SearchChatMessages(
@@ -314,12 +314,12 @@ suspend fun TdAbsHandler.searchChatMessagesOrNull(
 )
 
 fun TdAbsHandler.searchChatMessages(
-    chatId: Long = 0L,
+    chatId: Long,
     query: String? = null,
-    senderUserId: Int = 0,
-    fromMessageId: Long = 0L,
-    offset: Int = 0,
-    limit: Int = 0,
+    senderUserId: Int,
+    fromMessageId: Long,
+    offset: Int,
+    limit: Int,
     filter: SearchMessagesFilter? = null,
     block: (suspend CoroutineScope.(Messages) -> Unit)
 ) = send(
@@ -352,10 +352,10 @@ fun TdAbsHandler.searchChatMessages(
 suspend fun TdAbsHandler.searchMessages(
     chatList: ChatList? = null,
     query: String? = null,
-    offsetDate: Int = 0,
-    offsetChatId: Long = 0L,
-    offsetMessageId: Long = 0L,
-    limit: Int = 0
+    offsetDate: Int,
+    offsetChatId: Long,
+    offsetMessageId: Long,
+    limit: Int
 ) = sync<Messages>(
     SearchMessages(
         chatList,
@@ -370,10 +370,10 @@ suspend fun TdAbsHandler.searchMessages(
 suspend fun TdAbsHandler.searchMessagesOrNull(
     chatList: ChatList? = null,
     query: String? = null,
-    offsetDate: Int = 0,
-    offsetChatId: Long = 0L,
-    offsetMessageId: Long = 0L,
-    limit: Int = 0
+    offsetDate: Int,
+    offsetChatId: Long,
+    offsetMessageId: Long,
+    limit: Int
 ) = syncOrNull<Messages>(
     SearchMessages(
         chatList,
@@ -388,10 +388,10 @@ suspend fun TdAbsHandler.searchMessagesOrNull(
 fun TdAbsHandler.searchMessages(
     chatList: ChatList? = null,
     query: String? = null,
-    offsetDate: Int = 0,
-    offsetChatId: Long = 0L,
-    offsetMessageId: Long = 0L,
-    limit: Int = 0,
+    offsetDate: Int,
+    offsetChatId: Long,
+    offsetMessageId: Long,
+    limit: Int,
     block: (suspend CoroutineScope.(Messages) -> Unit)
 ) = send(
     SearchMessages(
@@ -419,10 +419,10 @@ fun TdAbsHandler.searchMessages(
  * @filter - A filter for the content of messages in the search results
  */
 suspend fun TdAbsHandler.searchSecretMessages(
-    chatId: Long = 0L,
+    chatId: Long,
     query: String? = null,
-    fromSearchId: Long = 0L,
-    limit: Int = 0,
+    fromSearchId: Long,
+    limit: Int,
     filter: SearchMessagesFilter? = null
 ) = sync<FoundMessages>(
     SearchSecretMessages(
@@ -435,10 +435,10 @@ suspend fun TdAbsHandler.searchSecretMessages(
 )
 
 suspend fun TdAbsHandler.searchSecretMessagesOrNull(
-    chatId: Long = 0L,
+    chatId: Long,
     query: String? = null,
-    fromSearchId: Long = 0L,
-    limit: Int = 0,
+    fromSearchId: Long,
+    limit: Int,
     filter: SearchMessagesFilter? = null
 ) = syncOrNull<FoundMessages>(
     SearchSecretMessages(
@@ -451,10 +451,10 @@ suspend fun TdAbsHandler.searchSecretMessagesOrNull(
 )
 
 fun TdAbsHandler.searchSecretMessages(
-    chatId: Long = 0L,
+    chatId: Long,
     query: String? = null,
-    fromSearchId: Long = 0L,
-    limit: Int = 0,
+    fromSearchId: Long,
+    limit: Int,
     filter: SearchMessagesFilter? = null,
     block: (suspend CoroutineScope.(FoundMessages) -> Unit)
 ) = send(
@@ -480,9 +480,9 @@ fun TdAbsHandler.searchSecretMessages(
  * @onlyMissed - If true, returns only messages with missed calls
  */
 suspend fun TdAbsHandler.searchCallMessages(
-    fromMessageId: Long = 0L,
-    limit: Int = 0,
-    onlyMissed: Boolean = false
+    fromMessageId: Long,
+    limit: Int,
+    onlyMissed: Boolean
 ) = sync<Messages>(
     SearchCallMessages(
         fromMessageId,
@@ -492,9 +492,9 @@ suspend fun TdAbsHandler.searchCallMessages(
 )
 
 suspend fun TdAbsHandler.searchCallMessagesOrNull(
-    fromMessageId: Long = 0L,
-    limit: Int = 0,
-    onlyMissed: Boolean = false
+    fromMessageId: Long,
+    limit: Int,
+    onlyMissed: Boolean
 ) = syncOrNull<Messages>(
     SearchCallMessages(
         fromMessageId,
@@ -504,9 +504,9 @@ suspend fun TdAbsHandler.searchCallMessagesOrNull(
 )
 
 fun TdAbsHandler.searchCallMessages(
-    fromMessageId: Long = 0L,
-    limit: Int = 0,
-    onlyMissed: Boolean = false,
+    fromMessageId: Long,
+    limit: Int,
+    onlyMissed: Boolean,
     block: (suspend CoroutineScope.(Messages) -> Unit)
 ) = send(
     SearchCallMessages(
@@ -524,8 +524,8 @@ fun TdAbsHandler.searchCallMessages(
  * @limit - The maximum number of messages to be returned
  */
 suspend fun TdAbsHandler.searchChatRecentLocationMessages(
-    chatId: Long = 0L,
-    limit: Int = 0
+    chatId: Long,
+    limit: Int
 ) = sync<Messages>(
     SearchChatRecentLocationMessages(
         chatId,
@@ -534,8 +534,8 @@ suspend fun TdAbsHandler.searchChatRecentLocationMessages(
 )
 
 suspend fun TdAbsHandler.searchChatRecentLocationMessagesOrNull(
-    chatId: Long = 0L,
-    limit: Int = 0
+    chatId: Long,
+    limit: Int
 ) = syncOrNull<Messages>(
     SearchChatRecentLocationMessages(
         chatId,
@@ -544,8 +544,8 @@ suspend fun TdAbsHandler.searchChatRecentLocationMessagesOrNull(
 )
 
 fun TdAbsHandler.searchChatRecentLocationMessages(
-    chatId: Long = 0L,
-    limit: Int = 0,
+    chatId: Long,
+    limit: Int,
     block: (suspend CoroutineScope.(Messages) -> Unit)
 ) = send(
     SearchChatRecentLocationMessages(
@@ -579,8 +579,8 @@ fun TdAbsHandler.getActiveLiveLocationMessages(
  * @date - Point in time (Unix timestamp) relative to which to search for messages
  */
 suspend fun TdAbsHandler.getChatMessageByDate(
-    chatId: Long = 0L,
-    date: Int = 0
+    chatId: Long,
+    date: Int
 ) = sync<Message>(
     GetChatMessageByDate(
         chatId,
@@ -589,8 +589,8 @@ suspend fun TdAbsHandler.getChatMessageByDate(
 )
 
 suspend fun TdAbsHandler.getChatMessageByDateOrNull(
-    chatId: Long = 0L,
-    date: Int = 0
+    chatId: Long,
+    date: Int
 ) = syncOrNull<Message>(
     GetChatMessageByDate(
         chatId,
@@ -599,8 +599,8 @@ suspend fun TdAbsHandler.getChatMessageByDateOrNull(
 )
 
 fun TdAbsHandler.getChatMessageByDate(
-    chatId: Long = 0L,
-    date: Int = 0,
+    chatId: Long,
+    date: Int,
     block: (suspend CoroutineScope.(Message) -> Unit)
 ) = send(
     GetChatMessageByDate(
@@ -616,7 +616,7 @@ fun TdAbsHandler.getChatMessageByDate(
  * @chatId - Chat identifier
  */
 suspend fun TdAbsHandler.getChatScheduledMessages(
-    chatId: Long = 0L
+    chatId: Long
 ) = sync<Messages>(
     GetChatScheduledMessages(
         chatId
@@ -624,7 +624,7 @@ suspend fun TdAbsHandler.getChatScheduledMessages(
 )
 
 suspend fun TdAbsHandler.getChatScheduledMessagesOrNull(
-    chatId: Long = 0L
+    chatId: Long
 ) = syncOrNull<Messages>(
     GetChatScheduledMessages(
         chatId
@@ -632,7 +632,7 @@ suspend fun TdAbsHandler.getChatScheduledMessagesOrNull(
 )
 
 fun TdAbsHandler.getChatScheduledMessages(
-    chatId: Long = 0L,
+    chatId: Long,
     block: (suspend CoroutineScope.(Messages) -> Unit)
 ) = send(
     GetChatScheduledMessages(
@@ -649,9 +649,9 @@ fun TdAbsHandler.getChatScheduledMessages(
  * @forAlbum - Pass true if a link for a whole media album should be returned
  */
 suspend fun TdAbsHandler.getPublicMessageLink(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
-    forAlbum: Boolean = false
+    chatId: Long,
+    messageId: Long,
+    forAlbum: Boolean
 ) = sync<PublicMessageLink>(
     GetPublicMessageLink(
         chatId,
@@ -661,9 +661,9 @@ suspend fun TdAbsHandler.getPublicMessageLink(
 )
 
 suspend fun TdAbsHandler.getPublicMessageLinkOrNull(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
-    forAlbum: Boolean = false
+    chatId: Long,
+    messageId: Long,
+    forAlbum: Boolean
 ) = syncOrNull<PublicMessageLink>(
     GetPublicMessageLink(
         chatId,
@@ -673,9 +673,9 @@ suspend fun TdAbsHandler.getPublicMessageLinkOrNull(
 )
 
 fun TdAbsHandler.getPublicMessageLink(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
-    forAlbum: Boolean = false,
+    chatId: Long,
+    messageId: Long,
+    forAlbum: Boolean,
     block: (suspend CoroutineScope.(PublicMessageLink) -> Unit)
 ) = send(
     GetPublicMessageLink(
@@ -694,8 +694,8 @@ fun TdAbsHandler.getPublicMessageLink(
  * @messageId - Identifier of the message
  */
 suspend fun TdAbsHandler.getMessageLink(
-    chatId: Long = 0L,
-    messageId: Long = 0L
+    chatId: Long,
+    messageId: Long
 ) = sync<HttpUrl>(
     GetMessageLink(
         chatId,
@@ -704,8 +704,8 @@ suspend fun TdAbsHandler.getMessageLink(
 )
 
 suspend fun TdAbsHandler.getMessageLinkOrNull(
-    chatId: Long = 0L,
-    messageId: Long = 0L
+    chatId: Long,
+    messageId: Long
 ) = syncOrNull<HttpUrl>(
     GetMessageLink(
         chatId,
@@ -714,8 +714,8 @@ suspend fun TdAbsHandler.getMessageLinkOrNull(
 )
 
 fun TdAbsHandler.getMessageLink(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     block: (suspend CoroutineScope.(HttpUrl) -> Unit)
 ) = send(
     GetMessageLink(
@@ -766,8 +766,8 @@ fun TdAbsHandler.getMessageLinkInfo(
  * @inputMessageContent - The content of the message to be sent
  */
 suspend fun TdAbsHandler.sendMessage(
-    chatId: Long = 0L,
-    replyToMessageId: Long = 0L,
+    chatId: Long,
+    replyToMessageId: Long,
     options: SendMessageOptions? = null,
     replyMarkup: ReplyMarkup? = null,
     inputMessageContent: InputMessageContent? = null
@@ -782,8 +782,8 @@ suspend fun TdAbsHandler.sendMessage(
 )
 
 suspend fun TdAbsHandler.sendMessageOrNull(
-    chatId: Long = 0L,
-    replyToMessageId: Long = 0L,
+    chatId: Long,
+    replyToMessageId: Long,
     options: SendMessageOptions? = null,
     replyMarkup: ReplyMarkup? = null,
     inputMessageContent: InputMessageContent? = null
@@ -798,8 +798,8 @@ suspend fun TdAbsHandler.sendMessageOrNull(
 )
 
 fun TdAbsHandler.sendMessage(
-    chatId: Long = 0L,
-    replyToMessageId: Long = 0L,
+    chatId: Long,
+    replyToMessageId: Long,
     options: SendMessageOptions? = null,
     replyMarkup: ReplyMarkup? = null,
     inputMessageContent: InputMessageContent? = null,
@@ -825,10 +825,10 @@ fun TdAbsHandler.sendMessage(
  * @inputMessageContents - Contents of messages to be sent
  */
 suspend fun TdAbsHandler.sendMessageAlbum(
-    chatId: Long = 0L,
-    replyToMessageId: Long = 0L,
+    chatId: Long,
+    replyToMessageId: Long,
     options: SendMessageOptions? = null,
-    inputMessageContents: Array<InputMessageContent> = emptyArray()
+    inputMessageContents: Array<InputMessageContent>
 ) = sync<Messages>(
     SendMessageAlbum(
         chatId,
@@ -839,10 +839,10 @@ suspend fun TdAbsHandler.sendMessageAlbum(
 )
 
 suspend fun TdAbsHandler.sendMessageAlbumOrNull(
-    chatId: Long = 0L,
-    replyToMessageId: Long = 0L,
+    chatId: Long,
+    replyToMessageId: Long,
     options: SendMessageOptions? = null,
-    inputMessageContents: Array<InputMessageContent> = emptyArray()
+    inputMessageContents: Array<InputMessageContent>
 ) = syncOrNull<Messages>(
     SendMessageAlbum(
         chatId,
@@ -853,10 +853,10 @@ suspend fun TdAbsHandler.sendMessageAlbumOrNull(
 )
 
 fun TdAbsHandler.sendMessageAlbum(
-    chatId: Long = 0L,
-    replyToMessageId: Long = 0L,
+    chatId: Long,
+    replyToMessageId: Long,
     options: SendMessageOptions? = null,
-    inputMessageContents: Array<InputMessageContent> = emptyArray(),
+    inputMessageContents: Array<InputMessageContent>,
     block: (suspend CoroutineScope.(Messages) -> Unit)
 ) = send(
     SendMessageAlbum(
@@ -878,8 +878,8 @@ fun TdAbsHandler.sendMessageAlbum(
  * @parameter - A hidden parameter sent to the bot for deep linking purposes (https://core.telegram.org/bots#deep-linking)
  */
 suspend fun TdAbsHandler.sendBotStartMessage(
-    botUserId: Int = 0,
-    chatId: Long = 0L,
+    botUserId: Int,
+    chatId: Long,
     parameter: String? = null
 ) = sync<Message>(
     SendBotStartMessage(
@@ -890,8 +890,8 @@ suspend fun TdAbsHandler.sendBotStartMessage(
 )
 
 suspend fun TdAbsHandler.sendBotStartMessageOrNull(
-    botUserId: Int = 0,
-    chatId: Long = 0L,
+    botUserId: Int,
+    chatId: Long,
     parameter: String? = null
 ) = syncOrNull<Message>(
     SendBotStartMessage(
@@ -902,8 +902,8 @@ suspend fun TdAbsHandler.sendBotStartMessageOrNull(
 )
 
 fun TdAbsHandler.sendBotStartMessage(
-    botUserId: Int = 0,
-    chatId: Long = 0L,
+    botUserId: Int,
+    chatId: Long,
     parameter: String? = null,
     block: (suspend CoroutineScope.(Message) -> Unit)
 ) = send(
@@ -928,12 +928,12 @@ fun TdAbsHandler.sendBotStartMessage(
  *               Can be used only for bots GetOption("animation_search_bot_username"), GetOption("photo_search_bot_username") and GetOption("venue_search_bot_username")
  */
 suspend fun TdAbsHandler.sendInlineQueryResultMessage(
-    chatId: Long = 0L,
-    replyToMessageId: Long = 0L,
+    chatId: Long,
+    replyToMessageId: Long,
     options: SendMessageOptions? = null,
-    queryId: Long = 0L,
+    queryId: Long,
     resultId: String? = null,
-    hideViaBot: Boolean = false
+    hideViaBot: Boolean
 ) = sync<Message>(
     SendInlineQueryResultMessage(
         chatId,
@@ -946,12 +946,12 @@ suspend fun TdAbsHandler.sendInlineQueryResultMessage(
 )
 
 suspend fun TdAbsHandler.sendInlineQueryResultMessageOrNull(
-    chatId: Long = 0L,
-    replyToMessageId: Long = 0L,
+    chatId: Long,
+    replyToMessageId: Long,
     options: SendMessageOptions? = null,
-    queryId: Long = 0L,
+    queryId: Long,
     resultId: String? = null,
-    hideViaBot: Boolean = false
+    hideViaBot: Boolean
 ) = syncOrNull<Message>(
     SendInlineQueryResultMessage(
         chatId,
@@ -964,12 +964,12 @@ suspend fun TdAbsHandler.sendInlineQueryResultMessageOrNull(
 )
 
 fun TdAbsHandler.sendInlineQueryResultMessage(
-    chatId: Long = 0L,
-    replyToMessageId: Long = 0L,
+    chatId: Long,
+    replyToMessageId: Long,
     options: SendMessageOptions? = null,
-    queryId: Long = 0L,
+    queryId: Long,
     resultId: String? = null,
-    hideViaBot: Boolean = false,
+    hideViaBot: Boolean,
     block: (suspend CoroutineScope.(Message) -> Unit)
 ) = send(
     SendInlineQueryResultMessage(
@@ -999,13 +999,13 @@ fun TdAbsHandler.sendInlineQueryResultMessage(
  *                  Ignored if send_copy is false
  */
 suspend fun TdAbsHandler.forwardMessages(
-    chatId: Long = 0L,
-    fromChatId: Long = 0L,
-    messageIds: LongArray = longArrayOf(),
+    chatId: Long,
+    fromChatId: Long,
+    messageIds: LongArray,
     options: SendMessageOptions? = null,
-    asAlbum: Boolean = false,
-    sendCopy: Boolean = false,
-    removeCaption: Boolean = false
+    asAlbum: Boolean,
+    sendCopy: Boolean,
+    removeCaption: Boolean
 ) = sync<Messages>(
     ForwardMessages(
         chatId,
@@ -1019,13 +1019,13 @@ suspend fun TdAbsHandler.forwardMessages(
 )
 
 suspend fun TdAbsHandler.forwardMessagesOrNull(
-    chatId: Long = 0L,
-    fromChatId: Long = 0L,
-    messageIds: LongArray = longArrayOf(),
+    chatId: Long,
+    fromChatId: Long,
+    messageIds: LongArray,
     options: SendMessageOptions? = null,
-    asAlbum: Boolean = false,
-    sendCopy: Boolean = false,
-    removeCaption: Boolean = false
+    asAlbum: Boolean,
+    sendCopy: Boolean,
+    removeCaption: Boolean
 ) = syncOrNull<Messages>(
     ForwardMessages(
         chatId,
@@ -1039,13 +1039,13 @@ suspend fun TdAbsHandler.forwardMessagesOrNull(
 )
 
 fun TdAbsHandler.forwardMessages(
-    chatId: Long = 0L,
-    fromChatId: Long = 0L,
-    messageIds: LongArray = longArrayOf(),
+    chatId: Long,
+    fromChatId: Long,
+    messageIds: LongArray,
     options: SendMessageOptions? = null,
-    asAlbum: Boolean = false,
-    sendCopy: Boolean = false,
-    removeCaption: Boolean = false,
+    asAlbum: Boolean,
+    sendCopy: Boolean,
+    removeCaption: Boolean,
     block: (suspend CoroutineScope.(Messages) -> Unit)
 ) = send(
     ForwardMessages(
@@ -1071,8 +1071,8 @@ fun TdAbsHandler.forwardMessages(
  *               Message identifiers must be in a strictly increasing order
  */
 suspend fun TdAbsHandler.resendMessages(
-    chatId: Long = 0L,
-    messageIds: LongArray = longArrayOf()
+    chatId: Long,
+    messageIds: LongArray
 ) = sync<Messages>(
     ResendMessages(
         chatId,
@@ -1081,8 +1081,8 @@ suspend fun TdAbsHandler.resendMessages(
 )
 
 suspend fun TdAbsHandler.resendMessagesOrNull(
-    chatId: Long = 0L,
-    messageIds: LongArray = longArrayOf()
+    chatId: Long,
+    messageIds: LongArray
 ) = syncOrNull<Messages>(
     ResendMessages(
         chatId,
@@ -1091,8 +1091,8 @@ suspend fun TdAbsHandler.resendMessagesOrNull(
 )
 
 fun TdAbsHandler.resendMessages(
-    chatId: Long = 0L,
-    messageIds: LongArray = longArrayOf(),
+    chatId: Long,
+    messageIds: LongArray,
     block: (suspend CoroutineScope.(Messages) -> Unit)
 ) = send(
     ResendMessages(
@@ -1108,8 +1108,8 @@ fun TdAbsHandler.resendMessages(
  * @ttl - New TTL value, in seconds
  */
 suspend fun TdAbsHandler.sendChatSetTtlMessage(
-    chatId: Long = 0L,
-    ttl: Int = 0
+    chatId: Long,
+    ttl: Int
 ) = sync<Message>(
     SendChatSetTtlMessage(
         chatId,
@@ -1118,8 +1118,8 @@ suspend fun TdAbsHandler.sendChatSetTtlMessage(
 )
 
 suspend fun TdAbsHandler.sendChatSetTtlMessageOrNull(
-    chatId: Long = 0L,
-    ttl: Int = 0
+    chatId: Long,
+    ttl: Int
 ) = syncOrNull<Message>(
     SendChatSetTtlMessage(
         chatId,
@@ -1128,8 +1128,8 @@ suspend fun TdAbsHandler.sendChatSetTtlMessageOrNull(
 )
 
 fun TdAbsHandler.sendChatSetTtlMessage(
-    chatId: Long = 0L,
-    ttl: Int = 0,
+    chatId: Long,
+    ttl: Int,
     block: (suspend CoroutineScope.(Message) -> Unit)
 ) = send(
     SendChatSetTtlMessage(
@@ -1151,10 +1151,10 @@ fun TdAbsHandler.sendChatSetTtlMessage(
  * @inputMessageContent - The content of the message to be added
  */
 suspend fun TdAbsHandler.addLocalMessage(
-    chatId: Long = 0L,
-    senderUserId: Int = 0,
-    replyToMessageId: Long = 0L,
-    disableNotification: Boolean = false,
+    chatId: Long,
+    senderUserId: Int,
+    replyToMessageId: Long,
+    disableNotification: Boolean,
     inputMessageContent: InputMessageContent? = null
 ) = sync<Message>(
     AddLocalMessage(
@@ -1167,10 +1167,10 @@ suspend fun TdAbsHandler.addLocalMessage(
 )
 
 suspend fun TdAbsHandler.addLocalMessageOrNull(
-    chatId: Long = 0L,
-    senderUserId: Int = 0,
-    replyToMessageId: Long = 0L,
-    disableNotification: Boolean = false,
+    chatId: Long,
+    senderUserId: Int,
+    replyToMessageId: Long,
+    disableNotification: Boolean,
     inputMessageContent: InputMessageContent? = null
 ) = syncOrNull<Message>(
     AddLocalMessage(
@@ -1183,10 +1183,10 @@ suspend fun TdAbsHandler.addLocalMessageOrNull(
 )
 
 fun TdAbsHandler.addLocalMessage(
-    chatId: Long = 0L,
-    senderUserId: Int = 0,
-    replyToMessageId: Long = 0L,
-    disableNotification: Boolean = false,
+    chatId: Long,
+    senderUserId: Int,
+    replyToMessageId: Long,
+    disableNotification: Boolean,
     inputMessageContent: InputMessageContent? = null,
     block: (suspend CoroutineScope.(Message) -> Unit)
 ) = send(
@@ -1208,9 +1208,9 @@ fun TdAbsHandler.addLocalMessage(
  *           Always true for supergroups, channels and secret chats
  */
 suspend fun TdAbsHandler.deleteMessages(
-    chatId: Long = 0L,
-    messageIds: LongArray = longArrayOf(),
-    revoke: Boolean = false
+    chatId: Long,
+    messageIds: LongArray,
+    revoke: Boolean
 ) = sync<Ok>(
     DeleteMessages(
         chatId,
@@ -1220,9 +1220,9 @@ suspend fun TdAbsHandler.deleteMessages(
 )
 
 suspend fun TdAbsHandler.deleteMessagesOrNull(
-    chatId: Long = 0L,
-    messageIds: LongArray = longArrayOf(),
-    revoke: Boolean = false
+    chatId: Long,
+    messageIds: LongArray,
+    revoke: Boolean
 ) = syncOrNull<Ok>(
     DeleteMessages(
         chatId,
@@ -1232,9 +1232,9 @@ suspend fun TdAbsHandler.deleteMessagesOrNull(
 )
 
 fun TdAbsHandler.deleteMessages(
-    chatId: Long = 0L,
-    messageIds: LongArray = longArrayOf(),
-    revoke: Boolean = false,
+    chatId: Long,
+    messageIds: LongArray,
+    revoke: Boolean,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     DeleteMessages(
@@ -1256,8 +1256,8 @@ fun TdAbsHandler.deleteMessages(
  *                        Should be of type InputMessageText
  */
 suspend fun TdAbsHandler.editMessageText(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     replyMarkup: ReplyMarkup? = null,
     inputMessageContent: InputMessageContent? = null
 ) = sync<Message>(
@@ -1270,8 +1270,8 @@ suspend fun TdAbsHandler.editMessageText(
 )
 
 suspend fun TdAbsHandler.editMessageTextOrNull(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     replyMarkup: ReplyMarkup? = null,
     inputMessageContent: InputMessageContent? = null
 ) = syncOrNull<Message>(
@@ -1284,8 +1284,8 @@ suspend fun TdAbsHandler.editMessageTextOrNull(
 )
 
 fun TdAbsHandler.editMessageText(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     replyMarkup: ReplyMarkup? = null,
     inputMessageContent: InputMessageContent? = null,
     block: (suspend CoroutineScope.(Message) -> Unit)
@@ -1311,8 +1311,8 @@ fun TdAbsHandler.editMessageText(
  *             Pass null to stop sharing the live location
  */
 suspend fun TdAbsHandler.editMessageLiveLocation(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     replyMarkup: ReplyMarkup? = null,
     location: Location? = null
 ) = sync<Message>(
@@ -1325,8 +1325,8 @@ suspend fun TdAbsHandler.editMessageLiveLocation(
 )
 
 suspend fun TdAbsHandler.editMessageLiveLocationOrNull(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     replyMarkup: ReplyMarkup? = null,
     location: Location? = null
 ) = syncOrNull<Message>(
@@ -1339,8 +1339,8 @@ suspend fun TdAbsHandler.editMessageLiveLocationOrNull(
 )
 
 fun TdAbsHandler.editMessageLiveLocation(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     replyMarkup: ReplyMarkup? = null,
     location: Location? = null,
     block: (suspend CoroutineScope.(Message) -> Unit)
@@ -1368,8 +1368,8 @@ fun TdAbsHandler.editMessageLiveLocation(
  *                        Must be one of the following types: InputMessageAnimation, InputMessageAudio, InputMessageDocument, InputMessagePhoto or InputMessageVideo
  */
 suspend fun TdAbsHandler.editMessageMedia(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     replyMarkup: ReplyMarkup? = null,
     inputMessageContent: InputMessageContent? = null
 ) = sync<Message>(
@@ -1382,8 +1382,8 @@ suspend fun TdAbsHandler.editMessageMedia(
 )
 
 suspend fun TdAbsHandler.editMessageMediaOrNull(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     replyMarkup: ReplyMarkup? = null,
     inputMessageContent: InputMessageContent? = null
 ) = syncOrNull<Message>(
@@ -1396,8 +1396,8 @@ suspend fun TdAbsHandler.editMessageMediaOrNull(
 )
 
 fun TdAbsHandler.editMessageMedia(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     replyMarkup: ReplyMarkup? = null,
     inputMessageContent: InputMessageContent? = null,
     block: (suspend CoroutineScope.(Message) -> Unit)
@@ -1422,8 +1422,8 @@ fun TdAbsHandler.editMessageMedia(
  *            0-GetOption("message_caption_length_max") characters
  */
 suspend fun TdAbsHandler.editMessageCaption(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     replyMarkup: ReplyMarkup? = null,
     caption: FormattedText? = null
 ) = sync<Message>(
@@ -1436,8 +1436,8 @@ suspend fun TdAbsHandler.editMessageCaption(
 )
 
 suspend fun TdAbsHandler.editMessageCaptionOrNull(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     replyMarkup: ReplyMarkup? = null,
     caption: FormattedText? = null
 ) = syncOrNull<Message>(
@@ -1450,8 +1450,8 @@ suspend fun TdAbsHandler.editMessageCaptionOrNull(
 )
 
 fun TdAbsHandler.editMessageCaption(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     replyMarkup: ReplyMarkup? = null,
     caption: FormattedText? = null,
     block: (suspend CoroutineScope.(Message) -> Unit)
@@ -1474,8 +1474,8 @@ fun TdAbsHandler.editMessageCaption(
  * @replyMarkup - The new message reply markup
  */
 suspend fun TdAbsHandler.editMessageReplyMarkup(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     replyMarkup: ReplyMarkup? = null
 ) = sync<Message>(
     EditMessageReplyMarkup(
@@ -1486,8 +1486,8 @@ suspend fun TdAbsHandler.editMessageReplyMarkup(
 )
 
 suspend fun TdAbsHandler.editMessageReplyMarkupOrNull(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     replyMarkup: ReplyMarkup? = null
 ) = syncOrNull<Message>(
     EditMessageReplyMarkup(
@@ -1498,8 +1498,8 @@ suspend fun TdAbsHandler.editMessageReplyMarkupOrNull(
 )
 
 fun TdAbsHandler.editMessageReplyMarkup(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     replyMarkup: ReplyMarkup? = null,
     block: (suspend CoroutineScope.(Message) -> Unit)
 ) = send(
@@ -1520,8 +1520,8 @@ fun TdAbsHandler.editMessageReplyMarkup(
  *                    Pass null to send the message immediately
  */
 suspend fun TdAbsHandler.editMessageSchedulingState(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     schedulingState: MessageSchedulingState? = null
 ) = sync<Ok>(
     EditMessageSchedulingState(
@@ -1532,8 +1532,8 @@ suspend fun TdAbsHandler.editMessageSchedulingState(
 )
 
 suspend fun TdAbsHandler.editMessageSchedulingStateOrNull(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     schedulingState: MessageSchedulingState? = null
 ) = syncOrNull<Ok>(
     EditMessageSchedulingState(
@@ -1544,8 +1544,8 @@ suspend fun TdAbsHandler.editMessageSchedulingStateOrNull(
 )
 
 fun TdAbsHandler.editMessageSchedulingState(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     schedulingState: MessageSchedulingState? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
@@ -1569,12 +1569,12 @@ fun TdAbsHandler.editMessageSchedulingState(
  *          If the score is 0, the user will be deleted from the high score table
  */
 suspend fun TdAbsHandler.setGameScore(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
-    editMessage: Boolean = false,
-    userId: Int = 0,
-    score: Int = 0,
-    force: Boolean = false
+    chatId: Long,
+    messageId: Long,
+    editMessage: Boolean,
+    userId: Int,
+    score: Int,
+    force: Boolean
 ) = sync<Message>(
     SetGameScore(
         chatId,
@@ -1587,12 +1587,12 @@ suspend fun TdAbsHandler.setGameScore(
 )
 
 suspend fun TdAbsHandler.setGameScoreOrNull(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
-    editMessage: Boolean = false,
-    userId: Int = 0,
-    score: Int = 0,
-    force: Boolean = false
+    chatId: Long,
+    messageId: Long,
+    editMessage: Boolean,
+    userId: Int,
+    score: Int,
+    force: Boolean
 ) = syncOrNull<Message>(
     SetGameScore(
         chatId,
@@ -1605,12 +1605,12 @@ suspend fun TdAbsHandler.setGameScoreOrNull(
 )
 
 fun TdAbsHandler.setGameScore(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
-    editMessage: Boolean = false,
-    userId: Int = 0,
-    score: Int = 0,
-    force: Boolean = false,
+    chatId: Long,
+    messageId: Long,
+    editMessage: Boolean,
+    userId: Int,
+    score: Int,
+    force: Boolean,
     block: (suspend CoroutineScope.(Message) -> Unit)
 ) = send(
     SetGameScore(
@@ -1632,9 +1632,9 @@ fun TdAbsHandler.setGameScore(
  * @forceRead - True, if messages in closed chats should be marked as read
  */
 suspend fun TdAbsHandler.viewMessages(
-    chatId: Long = 0L,
-    messageIds: LongArray = longArrayOf(),
-    forceRead: Boolean = false
+    chatId: Long,
+    messageIds: LongArray,
+    forceRead: Boolean
 ) = sync<Ok>(
     ViewMessages(
         chatId,
@@ -1644,9 +1644,9 @@ suspend fun TdAbsHandler.viewMessages(
 )
 
 suspend fun TdAbsHandler.viewMessagesOrNull(
-    chatId: Long = 0L,
-    messageIds: LongArray = longArrayOf(),
-    forceRead: Boolean = false
+    chatId: Long,
+    messageIds: LongArray,
+    forceRead: Boolean
 ) = syncOrNull<Ok>(
     ViewMessages(
         chatId,
@@ -1656,9 +1656,9 @@ suspend fun TdAbsHandler.viewMessagesOrNull(
 )
 
 fun TdAbsHandler.viewMessages(
-    chatId: Long = 0L,
-    messageIds: LongArray = longArrayOf(),
-    forceRead: Boolean = false,
+    chatId: Long,
+    messageIds: LongArray,
+    forceRead: Boolean,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     ViewMessages(
@@ -1676,8 +1676,8 @@ fun TdAbsHandler.viewMessages(
  * @messageId - Identifier of the message with the opened content
  */
 suspend fun TdAbsHandler.openMessageContent(
-    chatId: Long = 0L,
-    messageId: Long = 0L
+    chatId: Long,
+    messageId: Long
 ) = sync<Ok>(
     OpenMessageContent(
         chatId,
@@ -1686,8 +1686,8 @@ suspend fun TdAbsHandler.openMessageContent(
 )
 
 suspend fun TdAbsHandler.openMessageContentOrNull(
-    chatId: Long = 0L,
-    messageId: Long = 0L
+    chatId: Long,
+    messageId: Long
 ) = syncOrNull<Ok>(
     OpenMessageContent(
         chatId,
@@ -1696,8 +1696,8 @@ suspend fun TdAbsHandler.openMessageContentOrNull(
 )
 
 fun TdAbsHandler.openMessageContent(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     OpenMessageContent(
@@ -1712,7 +1712,7 @@ fun TdAbsHandler.openMessageContent(
  * @excludeSecretChats - If true, local draft messages in secret chats will not be cleared
  */
 suspend fun TdAbsHandler.clearAllDraftMessages(
-    excludeSecretChats: Boolean = false
+    excludeSecretChats: Boolean
 ) = sync<Ok>(
     ClearAllDraftMessages(
         excludeSecretChats
@@ -1720,7 +1720,7 @@ suspend fun TdAbsHandler.clearAllDraftMessages(
 )
 
 suspend fun TdAbsHandler.clearAllDraftMessagesOrNull(
-    excludeSecretChats: Boolean = false
+    excludeSecretChats: Boolean
 ) = syncOrNull<Ok>(
     ClearAllDraftMessages(
         excludeSecretChats
@@ -1728,7 +1728,7 @@ suspend fun TdAbsHandler.clearAllDraftMessagesOrNull(
 )
 
 fun TdAbsHandler.clearAllDraftMessages(
-    excludeSecretChats: Boolean = false,
+    excludeSecretChats: Boolean,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     ClearAllDraftMessages(

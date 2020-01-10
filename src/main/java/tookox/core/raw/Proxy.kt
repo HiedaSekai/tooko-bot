@@ -4,7 +4,7 @@
 
 package tookox.core.raw
 
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.*
 import td.TdApi.*
 import tookox.core.client.*
 
@@ -19,8 +19,8 @@ import tookox.core.client.*
  */
 suspend fun TdAbsHandler.addProxy(
     server: String? = null,
-    port: Int = 0,
-    enable: Boolean = false,
+    port: Int,
+    enable: Boolean,
     type: ProxyType? = null
 ) = sync<Proxy>(
     AddProxy(
@@ -33,8 +33,8 @@ suspend fun TdAbsHandler.addProxy(
 
 suspend fun TdAbsHandler.addProxyOrNull(
     server: String? = null,
-    port: Int = 0,
-    enable: Boolean = false,
+    port: Int,
+    enable: Boolean,
     type: ProxyType? = null
 ) = syncOrNull<Proxy>(
     AddProxy(
@@ -47,8 +47,8 @@ suspend fun TdAbsHandler.addProxyOrNull(
 
 fun TdAbsHandler.addProxy(
     server: String? = null,
-    port: Int = 0,
-    enable: Boolean = false,
+    port: Int,
+    enable: Boolean,
     type: ProxyType? = null,
     block: (suspend CoroutineScope.(Proxy) -> Unit)
 ) = send(
@@ -71,10 +71,10 @@ fun TdAbsHandler.addProxy(
  * @type - Proxy type
  */
 suspend fun TdAbsHandler.editProxy(
-    proxyId: Int = 0,
+    proxyId: Int,
     server: String? = null,
-    port: Int = 0,
-    enable: Boolean = false,
+    port: Int,
+    enable: Boolean,
     type: ProxyType? = null
 ) = sync<Proxy>(
     EditProxy(
@@ -87,10 +87,10 @@ suspend fun TdAbsHandler.editProxy(
 )
 
 suspend fun TdAbsHandler.editProxyOrNull(
-    proxyId: Int = 0,
+    proxyId: Int,
     server: String? = null,
-    port: Int = 0,
-    enable: Boolean = false,
+    port: Int,
+    enable: Boolean,
     type: ProxyType? = null
 ) = syncOrNull<Proxy>(
     EditProxy(
@@ -103,10 +103,10 @@ suspend fun TdAbsHandler.editProxyOrNull(
 )
 
 fun TdAbsHandler.editProxy(
-    proxyId: Int = 0,
+    proxyId: Int,
     server: String? = null,
-    port: Int = 0,
-    enable: Boolean = false,
+    port: Int,
+    enable: Boolean,
     type: ProxyType? = null,
     block: (suspend CoroutineScope.(Proxy) -> Unit)
 ) = send(
@@ -127,7 +127,7 @@ fun TdAbsHandler.editProxy(
  * @proxyId - Proxy identifier
  */
 suspend fun TdAbsHandler.enableProxy(
-    proxyId: Int = 0
+    proxyId: Int
 ) = sync<Ok>(
     EnableProxy(
         proxyId
@@ -135,7 +135,7 @@ suspend fun TdAbsHandler.enableProxy(
 )
 
 suspend fun TdAbsHandler.enableProxyOrNull(
-    proxyId: Int = 0
+    proxyId: Int
 ) = syncOrNull<Ok>(
     EnableProxy(
         proxyId
@@ -143,7 +143,7 @@ suspend fun TdAbsHandler.enableProxyOrNull(
 )
 
 fun TdAbsHandler.enableProxy(
-    proxyId: Int = 0,
+    proxyId: Int,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     EnableProxy(
@@ -176,7 +176,7 @@ fun TdAbsHandler.disableProxy(
  * @proxyId - Proxy identifier
  */
 suspend fun TdAbsHandler.removeProxy(
-    proxyId: Int = 0
+    proxyId: Int
 ) = sync<Ok>(
     RemoveProxy(
         proxyId
@@ -184,7 +184,7 @@ suspend fun TdAbsHandler.removeProxy(
 )
 
 suspend fun TdAbsHandler.removeProxyOrNull(
-    proxyId: Int = 0
+    proxyId: Int
 ) = syncOrNull<Ok>(
     RemoveProxy(
         proxyId
@@ -192,7 +192,7 @@ suspend fun TdAbsHandler.removeProxyOrNull(
 )
 
 fun TdAbsHandler.removeProxy(
-    proxyId: Int = 0,
+    proxyId: Int,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     RemoveProxy(
@@ -208,7 +208,7 @@ fun TdAbsHandler.removeProxy(
  *            Use 0 to ping a Telegram server without a proxy
  */
 suspend fun TdAbsHandler.pingProxy(
-    proxyId: Int = 0
+    proxyId: Int
 ) = sync<Seconds>(
     PingProxy(
         proxyId
@@ -216,7 +216,7 @@ suspend fun TdAbsHandler.pingProxy(
 )
 
 suspend fun TdAbsHandler.pingProxyOrNull(
-    proxyId: Int = 0
+    proxyId: Int
 ) = syncOrNull<Seconds>(
     PingProxy(
         proxyId
@@ -224,7 +224,7 @@ suspend fun TdAbsHandler.pingProxyOrNull(
 )
 
 fun TdAbsHandler.pingProxy(
-    proxyId: Int = 0,
+    proxyId: Int,
     block: (suspend CoroutineScope.(Seconds) -> Unit)
 ) = send(
     PingProxy(

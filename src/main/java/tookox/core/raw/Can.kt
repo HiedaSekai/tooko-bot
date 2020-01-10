@@ -34,8 +34,8 @@ fun TdAbsHandler.canTransferOwnership(
  *                  Request hasn't been sent to server
  */
 suspend fun TdAbsHandler.cancelDownloadFile(
-    fileId: Int = 0,
-    onlyIfPending: Boolean = false
+    fileId: Int,
+    onlyIfPending: Boolean
 ) = sync<Ok>(
     CancelDownloadFile(
         fileId,
@@ -44,8 +44,8 @@ suspend fun TdAbsHandler.cancelDownloadFile(
 )
 
 suspend fun TdAbsHandler.cancelDownloadFileOrNull(
-    fileId: Int = 0,
-    onlyIfPending: Boolean = false
+    fileId: Int,
+    onlyIfPending: Boolean
 ) = syncOrNull<Ok>(
     CancelDownloadFile(
         fileId,
@@ -54,8 +54,8 @@ suspend fun TdAbsHandler.cancelDownloadFileOrNull(
 )
 
 fun TdAbsHandler.cancelDownloadFile(
-    fileId: Int = 0,
-    onlyIfPending: Boolean = false,
+    fileId: Int,
+    onlyIfPending: Boolean,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     CancelDownloadFile(
@@ -72,7 +72,7 @@ fun TdAbsHandler.cancelDownloadFile(
  * @fileId - Identifier of the file to stop uploading
  */
 suspend fun TdAbsHandler.cancelUploadFile(
-    fileId: Int = 0
+    fileId: Int
 ) = sync<Ok>(
     CancelUploadFile(
         fileId
@@ -80,7 +80,7 @@ suspend fun TdAbsHandler.cancelUploadFile(
 )
 
 suspend fun TdAbsHandler.cancelUploadFileOrNull(
-    fileId: Int = 0
+    fileId: Int
 ) = syncOrNull<Ok>(
     CancelUploadFile(
         fileId
@@ -88,7 +88,7 @@ suspend fun TdAbsHandler.cancelUploadFileOrNull(
 )
 
 fun TdAbsHandler.cancelUploadFile(
-    fileId: Int = 0,
+    fileId: Int,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     CancelUploadFile(

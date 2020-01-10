@@ -17,9 +17,9 @@ import tookox.core.client.*
  * @buttonId - Button identifier
  */
 suspend fun TdAbsHandler.getLoginUrlInfo(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
-    buttonId: Int = 0
+    chatId: Long,
+    messageId: Long,
+    buttonId: Int
 ) = sync<LoginUrlInfo>(
     GetLoginUrlInfo(
         chatId,
@@ -29,9 +29,9 @@ suspend fun TdAbsHandler.getLoginUrlInfo(
 )
 
 suspend fun TdAbsHandler.getLoginUrlInfoOrNull(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
-    buttonId: Int = 0
+    chatId: Long,
+    messageId: Long,
+    buttonId: Int
 ) = syncOrNull<LoginUrlInfo>(
     GetLoginUrlInfo(
         chatId,
@@ -41,9 +41,9 @@ suspend fun TdAbsHandler.getLoginUrlInfoOrNull(
 )
 
 fun TdAbsHandler.getLoginUrlInfo(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
-    buttonId: Int = 0,
+    chatId: Long,
+    messageId: Long,
+    buttonId: Int,
     block: (suspend CoroutineScope.(LoginUrlInfo) -> Unit)
 ) = send(
     GetLoginUrlInfo(
@@ -64,10 +64,10 @@ fun TdAbsHandler.getLoginUrlInfo(
  * @allowWriteAccess - True, if the user allowed the bot to send them messages
  */
 suspend fun TdAbsHandler.getLoginUrl(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
-    buttonId: Int = 0,
-    allowWriteAccess: Boolean = false
+    chatId: Long,
+    messageId: Long,
+    buttonId: Int,
+    allowWriteAccess: Boolean
 ) = sync<HttpUrl>(
     GetLoginUrl(
         chatId,
@@ -78,10 +78,10 @@ suspend fun TdAbsHandler.getLoginUrl(
 )
 
 suspend fun TdAbsHandler.getLoginUrlOrNull(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
-    buttonId: Int = 0,
-    allowWriteAccess: Boolean = false
+    chatId: Long,
+    messageId: Long,
+    buttonId: Int,
+    allowWriteAccess: Boolean
 ) = syncOrNull<HttpUrl>(
     GetLoginUrl(
         chatId,
@@ -92,10 +92,10 @@ suspend fun TdAbsHandler.getLoginUrlOrNull(
 )
 
 fun TdAbsHandler.getLoginUrl(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
-    buttonId: Int = 0,
-    allowWriteAccess: Boolean = false,
+    chatId: Long,
+    messageId: Long,
+    buttonId: Int,
+    allowWriteAccess: Boolean,
     block: (suspend CoroutineScope.(HttpUrl) -> Unit)
 ) = send(
     GetLoginUrl(

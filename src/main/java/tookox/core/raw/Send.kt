@@ -15,7 +15,7 @@ import tookox.core.client.*
  * @chatId - Chat identifier
  */
 suspend fun TdAbsHandler.sendChatScreenshotTakenNotification(
-    chatId: Long = 0L
+    chatId: Long
 ) = sync<Ok>(
     SendChatScreenshotTakenNotification(
         chatId
@@ -23,7 +23,7 @@ suspend fun TdAbsHandler.sendChatScreenshotTakenNotification(
 )
 
 suspend fun TdAbsHandler.sendChatScreenshotTakenNotificationOrNull(
-    chatId: Long = 0L
+    chatId: Long
 ) = syncOrNull<Ok>(
     SendChatScreenshotTakenNotification(
         chatId
@@ -31,7 +31,7 @@ suspend fun TdAbsHandler.sendChatScreenshotTakenNotificationOrNull(
 )
 
 fun TdAbsHandler.sendChatScreenshotTakenNotification(
-    chatId: Long = 0L,
+    chatId: Long,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     SendChatScreenshotTakenNotification(
@@ -46,7 +46,7 @@ fun TdAbsHandler.sendChatScreenshotTakenNotification(
  * @action - The action description
  */
 suspend fun TdAbsHandler.sendChatAction(
-    chatId: Long = 0L,
+    chatId: Long,
     action: ChatAction? = null
 ) = sync<Ok>(
     SendChatAction(
@@ -56,7 +56,7 @@ suspend fun TdAbsHandler.sendChatAction(
 )
 
 suspend fun TdAbsHandler.sendChatActionOrNull(
-    chatId: Long = 0L,
+    chatId: Long,
     action: ChatAction? = null
 ) = syncOrNull<Ok>(
     SendChatAction(
@@ -66,7 +66,7 @@ suspend fun TdAbsHandler.sendChatActionOrNull(
 )
 
 fun TdAbsHandler.sendChatAction(
-    chatId: Long = 0L,
+    chatId: Long,
     action: ChatAction? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
@@ -85,10 +85,10 @@ fun TdAbsHandler.sendChatAction(
  * @problems - List of the exact types of problems with the call, specified by the user
  */
 suspend fun TdAbsHandler.sendCallRating(
-    callId: Int = 0,
-    rating: Int = 0,
+    callId: Int,
+    rating: Int,
     comment: String? = null,
-    problems: Array<CallProblem> = emptyArray()
+    problems: Array<CallProblem>
 ) = sync<Ok>(
     SendCallRating(
         callId,
@@ -99,10 +99,10 @@ suspend fun TdAbsHandler.sendCallRating(
 )
 
 suspend fun TdAbsHandler.sendCallRatingOrNull(
-    callId: Int = 0,
-    rating: Int = 0,
+    callId: Int,
+    rating: Int,
     comment: String? = null,
-    problems: Array<CallProblem> = emptyArray()
+    problems: Array<CallProblem>
 ) = syncOrNull<Ok>(
     SendCallRating(
         callId,
@@ -113,10 +113,10 @@ suspend fun TdAbsHandler.sendCallRatingOrNull(
 )
 
 fun TdAbsHandler.sendCallRating(
-    callId: Int = 0,
-    rating: Int = 0,
+    callId: Int,
+    rating: Int,
     comment: String? = null,
-    problems: Array<CallProblem> = emptyArray(),
+    problems: Array<CallProblem>,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     SendCallRating(
@@ -134,7 +134,7 @@ fun TdAbsHandler.sendCallRating(
  * @debugInformation - Debug information in application-specific format
  */
 suspend fun TdAbsHandler.sendCallDebugInformation(
-    callId: Int = 0,
+    callId: Int,
     debugInformation: String? = null
 ) = sync<Ok>(
     SendCallDebugInformation(
@@ -144,7 +144,7 @@ suspend fun TdAbsHandler.sendCallDebugInformation(
 )
 
 suspend fun TdAbsHandler.sendCallDebugInformationOrNull(
-    callId: Int = 0,
+    callId: Int,
     debugInformation: String? = null
 ) = syncOrNull<Ok>(
     SendCallDebugInformation(
@@ -154,7 +154,7 @@ suspend fun TdAbsHandler.sendCallDebugInformationOrNull(
 )
 
 fun TdAbsHandler.sendCallDebugInformation(
-    callId: Int = 0,
+    callId: Int,
     debugInformation: String? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
@@ -172,8 +172,8 @@ fun TdAbsHandler.sendCallDebugInformation(
  * @types - Types of Telegram Passport elements chosen by user to complete the authorization form
  */
 suspend fun TdAbsHandler.sendPassportAuthorizationForm(
-    autorizationFormId: Int = 0,
-    types: Array<PassportElementType> = emptyArray()
+    autorizationFormId: Int,
+    types: Array<PassportElementType>
 ) = sync<Ok>(
     SendPassportAuthorizationForm(
         autorizationFormId,
@@ -182,8 +182,8 @@ suspend fun TdAbsHandler.sendPassportAuthorizationForm(
 )
 
 suspend fun TdAbsHandler.sendPassportAuthorizationFormOrNull(
-    autorizationFormId: Int = 0,
-    types: Array<PassportElementType> = emptyArray()
+    autorizationFormId: Int,
+    types: Array<PassportElementType>
 ) = syncOrNull<Ok>(
     SendPassportAuthorizationForm(
         autorizationFormId,
@@ -192,8 +192,8 @@ suspend fun TdAbsHandler.sendPassportAuthorizationFormOrNull(
 )
 
 fun TdAbsHandler.sendPassportAuthorizationForm(
-    autorizationFormId: Int = 0,
-    types: Array<PassportElementType> = emptyArray(),
+    autorizationFormId: Int,
+    types: Array<PassportElementType>,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     SendPassportAuthorizationForm(

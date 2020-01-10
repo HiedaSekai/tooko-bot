@@ -17,9 +17,9 @@ import tookox.core.client.*
  *              Currently user can't choose more than 1 option
  */
 suspend fun TdAbsHandler.setPollAnswer(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
-    optionIds: IntArray = intArrayOf()
+    chatId: Long,
+    messageId: Long,
+    optionIds: IntArray
 ) = sync<Ok>(
     SetPollAnswer(
         chatId,
@@ -29,9 +29,9 @@ suspend fun TdAbsHandler.setPollAnswer(
 )
 
 suspend fun TdAbsHandler.setPollAnswerOrNull(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
-    optionIds: IntArray = intArrayOf()
+    chatId: Long,
+    messageId: Long,
+    optionIds: IntArray
 ) = syncOrNull<Ok>(
     SetPollAnswer(
         chatId,
@@ -41,9 +41,9 @@ suspend fun TdAbsHandler.setPollAnswerOrNull(
 )
 
 fun TdAbsHandler.setPollAnswer(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
-    optionIds: IntArray = intArrayOf(),
+    chatId: Long,
+    messageId: Long,
+    optionIds: IntArray,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     SetPollAnswer(
@@ -63,8 +63,8 @@ fun TdAbsHandler.setPollAnswer(
  *                For bots only
  */
 suspend fun TdAbsHandler.stopPoll(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     replyMarkup: ReplyMarkup? = null
 ) = sync<Ok>(
     StopPoll(
@@ -75,8 +75,8 @@ suspend fun TdAbsHandler.stopPoll(
 )
 
 suspend fun TdAbsHandler.stopPollOrNull(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     replyMarkup: ReplyMarkup? = null
 ) = syncOrNull<Ok>(
     StopPoll(
@@ -87,8 +87,8 @@ suspend fun TdAbsHandler.stopPollOrNull(
 )
 
 fun TdAbsHandler.stopPoll(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     replyMarkup: ReplyMarkup? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(

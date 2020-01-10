@@ -4,7 +4,7 @@
 
 package tookox.core.raw
 
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.*
 import td.TdApi.*
 import tookox.core.client.*
 
@@ -70,7 +70,7 @@ fun TdAbsHandler.getMe(
  * @userId - User identifier
  */
 suspend fun TdAbsHandler.getUser(
-    userId: Int = 0
+    userId: Int
 ) = sync<User>(
     GetUser(
         userId
@@ -78,7 +78,7 @@ suspend fun TdAbsHandler.getUser(
 )
 
 suspend fun TdAbsHandler.getUserOrNull(
-    userId: Int = 0
+    userId: Int
 ) = syncOrNull<User>(
     GetUser(
         userId
@@ -86,7 +86,7 @@ suspend fun TdAbsHandler.getUserOrNull(
 )
 
 fun TdAbsHandler.getUser(
-    userId: Int = 0,
+    userId: Int,
     block: (suspend CoroutineScope.(User) -> Unit)
 ) = send(
     GetUser(
@@ -100,7 +100,7 @@ fun TdAbsHandler.getUser(
  * @userId - User identifier
  */
 suspend fun TdAbsHandler.getUserFullInfo(
-    userId: Int = 0
+    userId: Int
 ) = sync<UserFullInfo>(
     GetUserFullInfo(
         userId
@@ -108,7 +108,7 @@ suspend fun TdAbsHandler.getUserFullInfo(
 )
 
 suspend fun TdAbsHandler.getUserFullInfoOrNull(
-    userId: Int = 0
+    userId: Int
 ) = syncOrNull<UserFullInfo>(
     GetUserFullInfo(
         userId
@@ -116,7 +116,7 @@ suspend fun TdAbsHandler.getUserFullInfoOrNull(
 )
 
 fun TdAbsHandler.getUserFullInfo(
-    userId: Int = 0,
+    userId: Int,
     block: (suspend CoroutineScope.(UserFullInfo) -> Unit)
 ) = send(
     GetUserFullInfo(
@@ -130,7 +130,7 @@ fun TdAbsHandler.getUserFullInfo(
  * @userId - User identifier
  */
 suspend fun TdAbsHandler.blockUser(
-    userId: Int = 0
+    userId: Int
 ) = sync<Ok>(
     BlockUser(
         userId
@@ -138,7 +138,7 @@ suspend fun TdAbsHandler.blockUser(
 )
 
 suspend fun TdAbsHandler.blockUserOrNull(
-    userId: Int = 0
+    userId: Int
 ) = syncOrNull<Ok>(
     BlockUser(
         userId
@@ -146,7 +146,7 @@ suspend fun TdAbsHandler.blockUserOrNull(
 )
 
 fun TdAbsHandler.blockUser(
-    userId: Int = 0,
+    userId: Int,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     BlockUser(
@@ -160,7 +160,7 @@ fun TdAbsHandler.blockUser(
  * @userId - User identifier
  */
 suspend fun TdAbsHandler.unblockUser(
-    userId: Int = 0
+    userId: Int
 ) = sync<Ok>(
     UnblockUser(
         userId
@@ -168,7 +168,7 @@ suspend fun TdAbsHandler.unblockUser(
 )
 
 suspend fun TdAbsHandler.unblockUserOrNull(
-    userId: Int = 0
+    userId: Int
 ) = syncOrNull<Ok>(
     UnblockUser(
         userId
@@ -176,7 +176,7 @@ suspend fun TdAbsHandler.unblockUserOrNull(
 )
 
 fun TdAbsHandler.unblockUser(
-    userId: Int = 0,
+    userId: Int,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     UnblockUser(
@@ -191,8 +191,8 @@ fun TdAbsHandler.unblockUser(
  * @limit - The maximum number of users to return
  */
 suspend fun TdAbsHandler.getBlockedUsers(
-    offset: Int = 0,
-    limit: Int = 0
+    offset: Int,
+    limit: Int
 ) = sync<Users>(
     GetBlockedUsers(
         offset,
@@ -201,8 +201,8 @@ suspend fun TdAbsHandler.getBlockedUsers(
 )
 
 suspend fun TdAbsHandler.getBlockedUsersOrNull(
-    offset: Int = 0,
-    limit: Int = 0
+    offset: Int,
+    limit: Int
 ) = syncOrNull<Users>(
     GetBlockedUsers(
         offset,
@@ -211,8 +211,8 @@ suspend fun TdAbsHandler.getBlockedUsersOrNull(
 )
 
 fun TdAbsHandler.getBlockedUsers(
-    offset: Int = 0,
-    limit: Int = 0,
+    offset: Int,
+    limit: Int,
     block: (suspend CoroutineScope.(Users) -> Unit)
 ) = send(
     GetBlockedUsers(
@@ -247,7 +247,7 @@ fun TdAbsHandler.getContacts(
  */
 suspend fun TdAbsHandler.searchContacts(
     query: String? = null,
-    limit: Int = 0
+    limit: Int
 ) = sync<Users>(
     SearchContacts(
         query,
@@ -257,7 +257,7 @@ suspend fun TdAbsHandler.searchContacts(
 
 suspend fun TdAbsHandler.searchContactsOrNull(
     query: String? = null,
-    limit: Int = 0
+    limit: Int
 ) = syncOrNull<Users>(
     SearchContacts(
         query,
@@ -267,7 +267,7 @@ suspend fun TdAbsHandler.searchContactsOrNull(
 
 fun TdAbsHandler.searchContacts(
     query: String? = null,
-    limit: Int = 0,
+    limit: Int,
     block: (suspend CoroutineScope.(Users) -> Unit)
 ) = send(
     SearchContacts(
@@ -285,9 +285,9 @@ fun TdAbsHandler.searchContacts(
  * @limit - The maximum number of photos to be returned
  */
 suspend fun TdAbsHandler.getUserProfilePhotos(
-    userId: Int = 0,
-    offset: Int = 0,
-    limit: Int = 0
+    userId: Int,
+    offset: Int,
+    limit: Int
 ) = sync<UserProfilePhotos>(
     GetUserProfilePhotos(
         userId,
@@ -297,9 +297,9 @@ suspend fun TdAbsHandler.getUserProfilePhotos(
 )
 
 suspend fun TdAbsHandler.getUserProfilePhotosOrNull(
-    userId: Int = 0,
-    offset: Int = 0,
-    limit: Int = 0
+    userId: Int,
+    offset: Int,
+    limit: Int
 ) = syncOrNull<UserProfilePhotos>(
     GetUserProfilePhotos(
         userId,
@@ -309,9 +309,9 @@ suspend fun TdAbsHandler.getUserProfilePhotosOrNull(
 )
 
 fun TdAbsHandler.getUserProfilePhotos(
-    userId: Int = 0,
-    offset: Int = 0,
-    limit: Int = 0,
+    userId: Int,
+    offset: Int,
+    limit: Int,
     block: (suspend CoroutineScope.(UserProfilePhotos) -> Unit)
 ) = send(
     GetUserProfilePhotos(

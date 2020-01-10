@@ -15,7 +15,15 @@ object TdApiGenerator {
 
         val scheme = "https://raw.githubusercontent.com/tdlib/td/master/td/generate/scheme/td_api.tl"
 
-        val api = generateApi(HttpUtil.createGet(scheme).execute().bodyBytes())
+        val file = File("td_api.tl")
+
+        if (!file.isFile) {
+
+            HttpUtil.downloadFile(scheme,file)
+
+        }
+
+        val api = generateApi(file.readBytes())
 
         api.forEach { (path, src) ->
 

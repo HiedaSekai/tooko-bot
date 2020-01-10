@@ -49,7 +49,7 @@ fun TdAbsHandler.getWebPagePreview(
  */
 suspend fun TdAbsHandler.getWebPageInstantView(
     url: String? = null,
-    forceFull: Boolean = false
+    forceFull: Boolean
 ) = sync<WebPageInstantView>(
     GetWebPageInstantView(
         url,
@@ -59,7 +59,7 @@ suspend fun TdAbsHandler.getWebPageInstantView(
 
 suspend fun TdAbsHandler.getWebPageInstantViewOrNull(
     url: String? = null,
-    forceFull: Boolean = false
+    forceFull: Boolean
 ) = syncOrNull<WebPageInstantView>(
     GetWebPageInstantView(
         url,
@@ -69,7 +69,7 @@ suspend fun TdAbsHandler.getWebPageInstantViewOrNull(
 
 fun TdAbsHandler.getWebPageInstantView(
     url: String? = null,
-    forceFull: Boolean = false,
+    forceFull: Boolean,
     block: (suspend CoroutineScope.(WebPageInstantView) -> Unit)
 ) = send(
     GetWebPageInstantView(
@@ -84,7 +84,7 @@ fun TdAbsHandler.getWebPageInstantView(
  * @websiteId - Website identifier
  */
 suspend fun TdAbsHandler.disconnectWebsite(
-    websiteId: Long = 0L
+    websiteId: Long
 ) = sync<Ok>(
     DisconnectWebsite(
         websiteId
@@ -92,7 +92,7 @@ suspend fun TdAbsHandler.disconnectWebsite(
 )
 
 suspend fun TdAbsHandler.disconnectWebsiteOrNull(
-    websiteId: Long = 0L
+    websiteId: Long
 ) = syncOrNull<Ok>(
     DisconnectWebsite(
         websiteId
@@ -100,7 +100,7 @@ suspend fun TdAbsHandler.disconnectWebsiteOrNull(
 )
 
 fun TdAbsHandler.disconnectWebsite(
-    websiteId: Long = 0L,
+    websiteId: Long,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     DisconnectWebsite(

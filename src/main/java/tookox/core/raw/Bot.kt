@@ -16,7 +16,7 @@ import tookox.core.client.*
  * @errorMessage - The last error message
  */
 suspend fun TdAbsHandler.setBotUpdatesStatus(
-    pendingUpdateCount: Int = 0,
+    pendingUpdateCount: Int,
     errorMessage: String? = null
 ) = sync<Ok>(
     SetBotUpdatesStatus(
@@ -26,7 +26,7 @@ suspend fun TdAbsHandler.setBotUpdatesStatus(
 )
 
 suspend fun TdAbsHandler.setBotUpdatesStatusOrNull(
-    pendingUpdateCount: Int = 0,
+    pendingUpdateCount: Int,
     errorMessage: String? = null
 ) = syncOrNull<Ok>(
     SetBotUpdatesStatus(
@@ -36,7 +36,7 @@ suspend fun TdAbsHandler.setBotUpdatesStatusOrNull(
 )
 
 fun TdAbsHandler.setBotUpdatesStatus(
-    pendingUpdateCount: Int = 0,
+    pendingUpdateCount: Int,
     errorMessage: String? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(

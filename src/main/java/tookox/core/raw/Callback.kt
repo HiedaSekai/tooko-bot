@@ -17,8 +17,8 @@ import tookox.core.client.*
  * @payload - Query payload
  */
 suspend fun TdAbsHandler.getCallbackQueryAnswer(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     payload: CallbackQueryPayload? = null
 ) = sync<CallbackQueryAnswer>(
     GetCallbackQueryAnswer(
@@ -29,8 +29,8 @@ suspend fun TdAbsHandler.getCallbackQueryAnswer(
 )
 
 suspend fun TdAbsHandler.getCallbackQueryAnswerOrNull(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     payload: CallbackQueryPayload? = null
 ) = syncOrNull<CallbackQueryAnswer>(
     GetCallbackQueryAnswer(
@@ -41,8 +41,8 @@ suspend fun TdAbsHandler.getCallbackQueryAnswerOrNull(
 )
 
 fun TdAbsHandler.getCallbackQueryAnswer(
-    chatId: Long = 0L,
-    messageId: Long = 0L,
+    chatId: Long,
+    messageId: Long,
     payload: CallbackQueryPayload? = null,
     block: (suspend CoroutineScope.(CallbackQueryAnswer) -> Unit)
 ) = send(
@@ -64,11 +64,11 @@ fun TdAbsHandler.getCallbackQueryAnswer(
  * @cacheTime - Time during which the result of the query can be cached, in seconds
  */
 suspend fun TdAbsHandler.answerCallbackQuery(
-    callbackQueryId: Long = 0L,
+    callbackQueryId: Long,
     text: String? = null,
-    showAlert: Boolean = false,
+    showAlert: Boolean,
     url: String? = null,
-    cacheTime: Int = 0
+    cacheTime: Int
 ) = sync<Ok>(
     AnswerCallbackQuery(
         callbackQueryId,
@@ -80,11 +80,11 @@ suspend fun TdAbsHandler.answerCallbackQuery(
 )
 
 suspend fun TdAbsHandler.answerCallbackQueryOrNull(
-    callbackQueryId: Long = 0L,
+    callbackQueryId: Long,
     text: String? = null,
-    showAlert: Boolean = false,
+    showAlert: Boolean,
     url: String? = null,
-    cacheTime: Int = 0
+    cacheTime: Int
 ) = syncOrNull<Ok>(
     AnswerCallbackQuery(
         callbackQueryId,
@@ -96,11 +96,11 @@ suspend fun TdAbsHandler.answerCallbackQueryOrNull(
 )
 
 fun TdAbsHandler.answerCallbackQuery(
-    callbackQueryId: Long = 0L,
+    callbackQueryId: Long,
     text: String? = null,
-    showAlert: Boolean = false,
+    showAlert: Boolean,
     url: String? = null,
-    cacheTime: Int = 0,
+    cacheTime: Int,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     AnswerCallbackQuery(

@@ -320,7 +320,7 @@ fun syncRaw(
  *                      Value 0 corresponds to fatal errors, value 1 corresponds to errors, value 2 corresponds to warnings and debug warnings, value 3 corresponds to informational, value 4 corresponds to debug, value 5 corresponds to verbose debug, value greater than 5 and up to 1023 can be used to enable even more logging
  */
 fun setLogVerbosityLevel(
-    newVerbosityLevel: Int = 0
+    newVerbosityLevel: Int
 ) = syncRaw(
     SetLogVerbosityLevel(
         newVerbosityLevel
@@ -388,7 +388,7 @@ fun syncRaw(
  */
 fun setLogTagVerbosityLevel(
     tag: String? = null,
-    newVerbosityLevel: Int = 0
+    newVerbosityLevel: Int
 ) = syncRaw(
     SetLogTagVerbosityLevel(
         tag,
@@ -442,7 +442,7 @@ fun syncRaw(
  * @text - Text of a message to log
  */
 fun addLogMessage(
-    verbosityLevel: Int = 0,
+    verbosityLevel: Int,
     text: String? = null
 ) = syncRaw(
     AddLogMessage(

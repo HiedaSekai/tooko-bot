@@ -10,10 +10,8 @@ fun StringBuilder.buildApi(scheme: TlScheme) {
     append("\n")
     buildPackage("td")
     append("\n")
-    buildTypealias("TelegramObject", "TdApi.Object")
-    buildTypealias("TelegramFunction", "TdApi.Function")
-    buildTypealias("TelegramUpdate", "TdApi.Update")
-    buildTypealias("TelegramError", "TdApi.Error")
+    buildImport("tookox.core")
+    buildImport("org.bson.codecs.pojo.annotations")
     append("\n")
     append("class TdApi ")
     withCurlyBrackets {

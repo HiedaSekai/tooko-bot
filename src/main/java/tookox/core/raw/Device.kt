@@ -4,7 +4,7 @@
 
 package tookox.core.raw
 
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.*
 import td.TdApi.*
 import tookox.core.client.*
 
@@ -17,7 +17,7 @@ import tookox.core.client.*
  */
 suspend fun TdAbsHandler.registerDevice(
     deviceToken: DeviceToken? = null,
-    otherUserIds: IntArray = intArrayOf()
+    otherUserIds: IntArray
 ) = sync<PushReceiverId>(
     RegisterDevice(
         deviceToken,
@@ -27,7 +27,7 @@ suspend fun TdAbsHandler.registerDevice(
 
 suspend fun TdAbsHandler.registerDeviceOrNull(
     deviceToken: DeviceToken? = null,
-    otherUserIds: IntArray = intArrayOf()
+    otherUserIds: IntArray
 ) = syncOrNull<PushReceiverId>(
     RegisterDevice(
         deviceToken,
@@ -37,7 +37,7 @@ suspend fun TdAbsHandler.registerDeviceOrNull(
 
 fun TdAbsHandler.registerDevice(
     deviceToken: DeviceToken? = null,
-    otherUserIds: IntArray = intArrayOf(),
+    otherUserIds: IntArray,
     block: (suspend CoroutineScope.(PushReceiverId) -> Unit)
 ) = send(
     RegisterDevice(

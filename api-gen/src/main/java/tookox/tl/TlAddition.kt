@@ -13,12 +13,8 @@ sealed class TlAddition {
 
     data class Nullable(override val message: String? = null) : TlAddition(), WithMessage
 
-    object BotsOnly : TlAddition(), Annotation {
-        override val annotation: String = "BotsOnly"
-    }
-
-    object TestingOnly : TlAddition(), Annotation {
-        override val annotation: String = "TestingOnly"
+    object JvmOverloads : TlAddition(), Annotation {
+        override val annotation: String = "JvmOverloads"
     }
 
     data class Other(override val message: String? = null) : TlAddition(), WithMessage
@@ -30,7 +26,7 @@ sealed class TlAddition {
     object Sync : TlAddition()
 
     companion object {
-        fun annotations() = listOf<Annotation>(BotsOnly, TestingOnly)
+        fun annotations() = listOf<Annotation>(JvmOverloads)
     }
 }
 

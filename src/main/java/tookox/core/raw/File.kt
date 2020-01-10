@@ -15,7 +15,7 @@ import tookox.core.client.*
  * @fileId - Identifier of the file to get
  */
 suspend fun TdAbsHandler.getFile(
-    fileId: Int = 0
+    fileId: Int
 ) = sync<File>(
     GetFile(
         fileId
@@ -23,7 +23,7 @@ suspend fun TdAbsHandler.getFile(
 )
 
 suspend fun TdAbsHandler.getFileOrNull(
-    fileId: Int = 0
+    fileId: Int
 ) = syncOrNull<File>(
     GetFile(
         fileId
@@ -31,7 +31,7 @@ suspend fun TdAbsHandler.getFileOrNull(
 )
 
 fun TdAbsHandler.getFile(
-    fileId: Int = 0,
+    fileId: Int,
     block: (suspend CoroutineScope.(File) -> Unit)
 ) = send(
     GetFile(
@@ -96,11 +96,11 @@ fun TdAbsHandler.getRemoteFile(
  *                If true, this request returns file state only after the download has succeeded, has failed, has been cancelled or a new downloadFile request with different offset/limit parameters was sent
  */
 suspend fun TdAbsHandler.downloadFile(
-    fileId: Int = 0,
-    priority: Int = 0,
-    offset: Int = 0,
-    limit: Int = 0,
-    synchronous: Boolean = false
+    fileId: Int,
+    priority: Int,
+    offset: Int,
+    limit: Int,
+    synchronous: Boolean
 ) = sync<File>(
     DownloadFile(
         fileId,
@@ -112,11 +112,11 @@ suspend fun TdAbsHandler.downloadFile(
 )
 
 suspend fun TdAbsHandler.downloadFileOrNull(
-    fileId: Int = 0,
-    priority: Int = 0,
-    offset: Int = 0,
-    limit: Int = 0,
-    synchronous: Boolean = false
+    fileId: Int,
+    priority: Int,
+    offset: Int,
+    limit: Int,
+    synchronous: Boolean
 ) = syncOrNull<File>(
     DownloadFile(
         fileId,
@@ -128,11 +128,11 @@ suspend fun TdAbsHandler.downloadFileOrNull(
 )
 
 fun TdAbsHandler.downloadFile(
-    fileId: Int = 0,
-    priority: Int = 0,
-    offset: Int = 0,
-    limit: Int = 0,
-    synchronous: Boolean = false,
+    fileId: Int,
+    priority: Int,
+    offset: Int,
+    limit: Int,
+    synchronous: Boolean,
     block: (suspend CoroutineScope.(File) -> Unit)
 ) = send(
     DownloadFile(
@@ -151,8 +151,8 @@ fun TdAbsHandler.downloadFile(
  * @offset - Offset from which downloaded prefix size should be calculated
  */
 suspend fun TdAbsHandler.getFileDownloadedPrefixSize(
-    fileId: Int = 0,
-    offset: Int = 0
+    fileId: Int,
+    offset: Int
 ) = sync<Count>(
     GetFileDownloadedPrefixSize(
         fileId,
@@ -161,8 +161,8 @@ suspend fun TdAbsHandler.getFileDownloadedPrefixSize(
 )
 
 suspend fun TdAbsHandler.getFileDownloadedPrefixSizeOrNull(
-    fileId: Int = 0,
-    offset: Int = 0
+    fileId: Int,
+    offset: Int
 ) = syncOrNull<Count>(
     GetFileDownloadedPrefixSize(
         fileId,
@@ -171,8 +171,8 @@ suspend fun TdAbsHandler.getFileDownloadedPrefixSizeOrNull(
 )
 
 fun TdAbsHandler.getFileDownloadedPrefixSize(
-    fileId: Int = 0,
-    offset: Int = 0,
+    fileId: Int,
+    offset: Int,
     block: (suspend CoroutineScope.(Count) -> Unit)
 ) = send(
     GetFileDownloadedPrefixSize(
@@ -195,7 +195,7 @@ fun TdAbsHandler.getFileDownloadedPrefixSize(
 suspend fun TdAbsHandler.uploadFile(
     file: InputFile? = null,
     fileType: FileType? = null,
-    priority: Int = 0
+    priority: Int
 ) = sync<File>(
     UploadFile(
         file,
@@ -207,7 +207,7 @@ suspend fun TdAbsHandler.uploadFile(
 suspend fun TdAbsHandler.uploadFileOrNull(
     file: InputFile? = null,
     fileType: FileType? = null,
-    priority: Int = 0
+    priority: Int
 ) = syncOrNull<File>(
     UploadFile(
         file,
@@ -219,7 +219,7 @@ suspend fun TdAbsHandler.uploadFileOrNull(
 fun TdAbsHandler.uploadFile(
     file: InputFile? = null,
     fileType: FileType? = null,
-    priority: Int = 0,
+    priority: Int,
     block: (suspend CoroutineScope.(File) -> Unit)
 ) = send(
     UploadFile(
@@ -238,9 +238,9 @@ fun TdAbsHandler.uploadFile(
  * @data - The data to write
  */
 suspend fun TdAbsHandler.writeGeneratedFilePart(
-    generationId: Long = 0L,
-    offset: Int = 0,
-    data: ByteArray = byteArrayOf()
+    generationId: Long,
+    offset: Int,
+    data: ByteArray
 ) = sync<Ok>(
     WriteGeneratedFilePart(
         generationId,
@@ -250,9 +250,9 @@ suspend fun TdAbsHandler.writeGeneratedFilePart(
 )
 
 suspend fun TdAbsHandler.writeGeneratedFilePartOrNull(
-    generationId: Long = 0L,
-    offset: Int = 0,
-    data: ByteArray = byteArrayOf()
+    generationId: Long,
+    offset: Int,
+    data: ByteArray
 ) = syncOrNull<Ok>(
     WriteGeneratedFilePart(
         generationId,
@@ -262,9 +262,9 @@ suspend fun TdAbsHandler.writeGeneratedFilePartOrNull(
 )
 
 fun TdAbsHandler.writeGeneratedFilePart(
-    generationId: Long = 0L,
-    offset: Int = 0,
-    data: ByteArray = byteArrayOf(),
+    generationId: Long,
+    offset: Int,
+    data: ByteArray,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     WriteGeneratedFilePart(
@@ -283,9 +283,9 @@ fun TdAbsHandler.writeGeneratedFilePart(
  * @localPrefixSize - The number of bytes already generated
  */
 suspend fun TdAbsHandler.setFileGenerationProgress(
-    generationId: Long = 0L,
-    expectedSize: Int = 0,
-    localPrefixSize: Int = 0
+    generationId: Long,
+    expectedSize: Int,
+    localPrefixSize: Int
 ) = sync<Ok>(
     SetFileGenerationProgress(
         generationId,
@@ -295,9 +295,9 @@ suspend fun TdAbsHandler.setFileGenerationProgress(
 )
 
 suspend fun TdAbsHandler.setFileGenerationProgressOrNull(
-    generationId: Long = 0L,
-    expectedSize: Int = 0,
-    localPrefixSize: Int = 0
+    generationId: Long,
+    expectedSize: Int,
+    localPrefixSize: Int
 ) = syncOrNull<Ok>(
     SetFileGenerationProgress(
         generationId,
@@ -307,9 +307,9 @@ suspend fun TdAbsHandler.setFileGenerationProgressOrNull(
 )
 
 fun TdAbsHandler.setFileGenerationProgress(
-    generationId: Long = 0L,
-    expectedSize: Int = 0,
-    localPrefixSize: Int = 0,
+    generationId: Long,
+    expectedSize: Int,
+    localPrefixSize: Int,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     SetFileGenerationProgress(
@@ -326,7 +326,7 @@ fun TdAbsHandler.setFileGenerationProgress(
  * @error - If set, means that file generation has failed and should be terminated
  */
 suspend fun TdAbsHandler.finishFileGeneration(
-    generationId: Long = 0L,
+    generationId: Long,
     error: Error? = null
 ) = sync<Ok>(
     FinishFileGeneration(
@@ -336,7 +336,7 @@ suspend fun TdAbsHandler.finishFileGeneration(
 )
 
 suspend fun TdAbsHandler.finishFileGenerationOrNull(
-    generationId: Long = 0L,
+    generationId: Long,
     error: Error? = null
 ) = syncOrNull<Ok>(
     FinishFileGeneration(
@@ -346,7 +346,7 @@ suspend fun TdAbsHandler.finishFileGenerationOrNull(
 )
 
 fun TdAbsHandler.finishFileGeneration(
-    generationId: Long = 0L,
+    generationId: Long,
     error: Error? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
@@ -368,9 +368,9 @@ fun TdAbsHandler.finishFileGeneration(
  *          Pass 0 to read all available data from the specified position
  */
 suspend fun TdAbsHandler.readFilePart(
-    fileId: Int = 0,
-    offset: Int = 0,
-    count: Int = 0
+    fileId: Int,
+    offset: Int,
+    count: Int
 ) = sync<FilePart>(
     ReadFilePart(
         fileId,
@@ -380,9 +380,9 @@ suspend fun TdAbsHandler.readFilePart(
 )
 
 suspend fun TdAbsHandler.readFilePartOrNull(
-    fileId: Int = 0,
-    offset: Int = 0,
-    count: Int = 0
+    fileId: Int,
+    offset: Int,
+    count: Int
 ) = syncOrNull<FilePart>(
     ReadFilePart(
         fileId,
@@ -392,9 +392,9 @@ suspend fun TdAbsHandler.readFilePartOrNull(
 )
 
 fun TdAbsHandler.readFilePart(
-    fileId: Int = 0,
-    offset: Int = 0,
-    count: Int = 0,
+    fileId: Int,
+    offset: Int,
+    count: Int,
     block: (suspend CoroutineScope.(FilePart) -> Unit)
 ) = send(
     ReadFilePart(
@@ -410,7 +410,7 @@ fun TdAbsHandler.readFilePart(
  * @fileId - Identifier of the file to delete
  */
 suspend fun TdAbsHandler.deleteFile(
-    fileId: Int = 0
+    fileId: Int
 ) = sync<Ok>(
     DeleteFile(
         fileId
@@ -418,7 +418,7 @@ suspend fun TdAbsHandler.deleteFile(
 )
 
 suspend fun TdAbsHandler.deleteFileOrNull(
-    fileId: Int = 0
+    fileId: Int
 ) = syncOrNull<Ok>(
     DeleteFile(
         fileId
@@ -426,7 +426,7 @@ suspend fun TdAbsHandler.deleteFileOrNull(
 )
 
 fun TdAbsHandler.deleteFile(
-    fileId: Int = 0,
+    fileId: Int,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
     DeleteFile(
@@ -444,7 +444,7 @@ fun TdAbsHandler.deleteFile(
  *               Must be up to 512 kB in size and fit in 512x512 square
  */
 suspend fun TdAbsHandler.uploadStickerFile(
-    userId: Int = 0,
+    userId: Int,
     pngSticker: InputFile? = null
 ) = sync<File>(
     UploadStickerFile(
@@ -454,7 +454,7 @@ suspend fun TdAbsHandler.uploadStickerFile(
 )
 
 suspend fun TdAbsHandler.uploadStickerFileOrNull(
-    userId: Int = 0,
+    userId: Int,
     pngSticker: InputFile? = null
 ) = syncOrNull<File>(
     UploadStickerFile(
@@ -464,7 +464,7 @@ suspend fun TdAbsHandler.uploadStickerFileOrNull(
 )
 
 fun TdAbsHandler.uploadStickerFile(
-    userId: Int = 0,
+    userId: Int,
     pngSticker: InputFile? = null,
     block: (suspend CoroutineScope.(File) -> Unit)
 ) = send(
@@ -488,11 +488,11 @@ fun TdAbsHandler.uploadStickerFile(
  */
 suspend fun TdAbsHandler.getMapThumbnailFile(
     location: Location? = null,
-    zoom: Int = 0,
-    width: Int = 0,
-    height: Int = 0,
-    scale: Int = 0,
-    chatId: Long = 0L
+    zoom: Int,
+    width: Int,
+    height: Int,
+    scale: Int,
+    chatId: Long
 ) = sync<File>(
     GetMapThumbnailFile(
         location,
@@ -506,11 +506,11 @@ suspend fun TdAbsHandler.getMapThumbnailFile(
 
 suspend fun TdAbsHandler.getMapThumbnailFileOrNull(
     location: Location? = null,
-    zoom: Int = 0,
-    width: Int = 0,
-    height: Int = 0,
-    scale: Int = 0,
-    chatId: Long = 0L
+    zoom: Int,
+    width: Int,
+    height: Int,
+    scale: Int,
+    chatId: Long
 ) = syncOrNull<File>(
     GetMapThumbnailFile(
         location,
@@ -524,11 +524,11 @@ suspend fun TdAbsHandler.getMapThumbnailFileOrNull(
 
 fun TdAbsHandler.getMapThumbnailFile(
     location: Location? = null,
-    zoom: Int = 0,
-    width: Int = 0,
-    height: Int = 0,
-    scale: Int = 0,
-    chatId: Long = 0L,
+    zoom: Int,
+    width: Int,
+    height: Int,
+    scale: Int,
+    chatId: Long,
     block: (suspend CoroutineScope.(File) -> Unit)
 ) = send(
     GetMapThumbnailFile(
