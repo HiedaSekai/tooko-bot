@@ -171,8 +171,8 @@ class TdApi {
     /**
      * Represents a part of the text that needs to be formatted in some unusual way
      *
-     * @offset - Offset of the entity in UTF-16 code points
-     * @length - Length of the entity, in UTF-16 code points
+     * @offset - Offset of the entity in UTF-16 code units
+     * @length - Length of the entity, in UTF-16 code units
      * @type - Type of the entity
      */
     class TextEntity(
@@ -1662,8 +1662,8 @@ class TdApi {
      *               Otherwise false
      * @ttl - Current message Time To Live setting (self-destruct timer) for the chat, in seconds
      * @keyHash - Hash of the currently used key for comparison with the hash of the chat partner's key
-     *            This is a string of 36 bytes, which must be used to make a 12x12 square image with a color depth of 4
-     *            The first 16 bytes should be used to make a central 8x8 square, while the remaining 20 bytes should be used to construct a 2-pixel-wide border around that square
+     *            This is a string of 36 little-endian bytes, which must be split into groups of 2 bits, each denoting a pixel of one of 4 colors
+     *            The pixels must be used to make a 12x12 square image filled from left to right, top to bottom
      *            Alternatively, the first 32 bytes of the hash can be converted to the hexadecimal format and printed as 32 2-digit hex numbers
      * @layer - Secret chat layer
      *          Determines features supported by the other client
@@ -7372,7 +7372,7 @@ class TdApi {
     }
 
     /**
-     * A PNG or TGV (gzipped subset of SVG with mime-type "application/x-tgwallpattern") pattern to be combined with the background fill chosen by the user
+     * A PNG or TGV (gzipped subset of SVG with MIME type "application/x-tgwallpattern") pattern to be combined with the background fill chosen by the user
      *
      * @fill - Description of the background fill
      * @intensity - Intensity of the pattern when it is shown above the filled background, 0-100
@@ -10418,7 +10418,7 @@ class TdApi {
 
     /**
      * Sets the phone number of the user and sends an authentication code to the user
-     * Works only when the current authorization state is authorizationStateWaitPhoneNumber, or if there is no pending authentication query and the current authorization state is authorizationStateWaitCode or authorizationStateWaitPassword
+     * Works only when the current authorization state is authorizationStateWaitPhoneNumber, or if there is no pending authentication query and the current authorization state is authorizationStateWaitCode, authorizationStateWaitRegistration, or authorizationStateWaitPassword
      *
      * @phoneNumber - The phone number of the user, in international format
      * @settings - Settings for the authentication of the user's phone number
@@ -13524,12 +13524,15 @@ class TdApi {
      *
      * @text - Text to search for
      * @exactMatch - True, if only emojis, which exactly match text needs to be returned
+     * @inputLanguageCode - IETF language tag of the user's input language
+     *                      Can be empty if unknown
      */
     class SearchEmojis(
         var text: String? = null,
-        var exactMatch: Boolean = false
+        var exactMatch: Boolean = false,
+        var inputLanguageCode: String? = null
     ) : Function() {
-        override val constructor: Int get() = 454272250
+        override val constructor: Int get() = 453292808
     }
 
     /**
