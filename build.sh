@@ -14,8 +14,8 @@ export CXXFLAGS="-stdlib=libc++"
 
 CC=/usr/bin/clang CXX=/usr/bin/clang++ cmake \
   -DCMAKE_BUILD_TYPE=Release \
-  -DCMAKE_INSTALL_PREFIX:PATH=. \
-  -DTD_ENABLE_JNI=ON . || exit
+  -DCMAKE_INSTALL_PREFIX:PATH=.. \
+  -DTD_ENABLE_JNI=ON .. || exit
 
 cmake --build . --target install || exit
 
@@ -25,7 +25,7 @@ mkdir build && cd build
 
 CC=/usr/bin/clang CXX=/usr/bin/clang++ cmake \
   -DCMAKE_BUILD_TYPE=Release \
-  -DCMAKE_INSTALL_PREFIX:PATH=td/tdlib \
-  -DTd_DIR:PATH=$(readlink -e td/lib/cmake/Td) .
+  -DCMAKE_INSTALL_PREFIX:PATH=../td/tdlib \
+  -DTd_DIR:PATH=$(readlink -e ../td/lib/cmake/Td) ..
 
 cmake --build . --target install
