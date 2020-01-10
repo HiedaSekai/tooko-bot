@@ -19,7 +19,7 @@ class WelcomeConfig : TdBotHandler() {
 
     private val cache = HashMap<Int, EditCache>()
 
-    val PERSISTD_ID = PERSIST_2
+    private val PERSISTD_ID = PERSIST_2
 
     override fun onLoad() {
 
@@ -53,7 +53,7 @@ class WelcomeConfig : TdBotHandler() {
 
         } else if ("set" == params[0]) {
 
-            set(L, userId, chatId, message, subParams)
+            set(L, userId, chatId, subParams)
 
         } else if ("del" == params[0]) {
 
@@ -62,7 +62,7 @@ class WelcomeConfig : TdBotHandler() {
         }
     }
 
-    fun set(L: Lang, userId: Int, chatId: Long, message: Message, params: Array<String>) {
+    fun set(L: Lang, userId: Int, chatId: Long, params: Array<String>) {
 
         val edit = EditCache()
 
