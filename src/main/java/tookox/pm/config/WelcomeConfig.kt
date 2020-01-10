@@ -21,7 +21,7 @@ class WelcomeConfig : TdBotHandler() {
 
     val PERSISTD_ID = PERSIST_2
 
-    override fun onLoad(client: TdClient) {
+    override fun onLoad() {
 
         initFunction("msg")
 
