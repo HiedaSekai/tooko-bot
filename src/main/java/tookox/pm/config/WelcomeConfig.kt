@@ -35,7 +35,7 @@ class WelcomeConfig : TdBotHandler() {
 
         if (params.isEmpty()) {
 
-            stat(L, userId, chatId, message)
+            stat(L, chatId)
 
             return
 
@@ -45,11 +45,11 @@ class WelcomeConfig : TdBotHandler() {
 
         if ("show" == params[0]) {
 
-            show(L, userId, chatId, message, subParams)
+            show(L, chatId, subParams)
 
         } else if ("notice" == params[0]) {
 
-            notice(L, userId, chatId, message, subParams)
+            notice(L, chatId, subParams)
 
         } else if ("set" == params[0]) {
 
@@ -57,7 +57,7 @@ class WelcomeConfig : TdBotHandler() {
 
         } else if ("del" == params[0]) {
 
-            del(L, userId, chatId, message, subParams)
+            del(L, chatId, subParams)
 
         }
     }
@@ -164,7 +164,7 @@ class WelcomeConfig : TdBotHandler() {
 
     }
 
-    fun del(L: Lang, userId: Int, chatId: Long, message: Message, params: Array<String>) {
+    fun del(L: Lang, chatId: Long, params: Array<String>) {
 
         if (params.isEmpty()) {
 
@@ -189,7 +189,7 @@ class WelcomeConfig : TdBotHandler() {
 
     }
 
-    fun notice(L: Lang, userId: Int, chatId: Long, message: Message, params: Array<String>) {
+    fun notice(L: Lang, chatId: Long, params: Array<String>) {
 
         val usage = "/msg notice <enable/disable> [payload]"
 
@@ -240,7 +240,7 @@ class WelcomeConfig : TdBotHandler() {
 
     }
 
-    suspend fun show(L: Lang, userId: Int, chatId: Long, message: Message, params: Array<String>) {
+    suspend fun show(L: Lang, chatId: Long, params: Array<String>) {
 
         val payload = if (params.size != 1) {
 
@@ -272,7 +272,7 @@ class WelcomeConfig : TdBotHandler() {
 
     }
 
-    fun stat(L: Lang, userId: Int, chatId: Long, message: Message) {
+    fun stat(L: Lang, chatId: Long) {
 
         val welcomeMessagesCount = if (sudo.data.welcome.messages == null) 0 else sudo.data.welcome.messages.size
 

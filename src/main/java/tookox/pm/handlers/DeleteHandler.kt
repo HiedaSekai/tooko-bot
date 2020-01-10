@@ -43,7 +43,7 @@ class DeleteHandler : TdBotHandler() {
 
                     session = data.getSessionByElement("received", targetMessageId)
 
-                    deleteReceivedMessage[session.chatId]!!.add(targetMessageId)
+                    deleteReceivedMessage[session.chatId].add(targetMessageId)
 
                     data.sessions.arrayReomve(session.chatId, "received", data.received.remove(messageIdStr))
 
@@ -53,7 +53,7 @@ class DeleteHandler : TdBotHandler() {
 
                     session = data.getSessionByElement("sended", targetMessageId)
 
-                    deleteSendedMessage[session.chatId]!!.add(targetMessageId)
+                    deleteSendedMessage[session.chatId].add(targetMessageId)
 
                     data.sessions.arrayReomve(session.chatId, "sended", data.sended.remove(messageIdStr
                     ))
@@ -73,7 +73,7 @@ class DeleteHandler : TdBotHandler() {
 
                     if (!CollectionUtil.isEmpty(session.sended)) {
 
-                        deleteSendedMessage[session.chatId]!!.addAll(session.sended)
+                        deleteSendedMessage[session.chatId].addAll(session.sended)
 
                         for (sended in session.sended) {
 
@@ -85,7 +85,7 @@ class DeleteHandler : TdBotHandler() {
 
                     if (!CollectionUtil.isEmpty(session.received)) {
 
-                        deleteReceivedMessage[session.chatId]!!.addAll(session.received)
+                        deleteReceivedMessage[session.chatId].addAll(session.received)
 
                         for (received in session.received) {
 

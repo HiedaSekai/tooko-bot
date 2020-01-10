@@ -20,7 +20,7 @@ import java.util.*
 class PmBot(val image: BotImage) : TdBot(image.data.botToken) {
 
     var bot = image.data
-    lateinit var data: PmData
+    var data: PmData
 
     var current = -1
     var chat = -1L
