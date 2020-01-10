@@ -1,7 +1,7 @@
 package tookox.core.client
 
 import td.TdApi.TdlibParameters
-import tooko.main.Env
+import tookox.core.env.Env
 
 class TdOptions {
 

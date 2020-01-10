@@ -9,7 +9,7 @@ import cn.hutool.crypto.digest.*;
 import cn.hutool.http.*;
 import cn.hutool.json.*;
 import cn.hutool.log.*;
-import tooko.main.*;
+import tookox.core.env.*;
 
 import java.io.*;
 import java.util.*;

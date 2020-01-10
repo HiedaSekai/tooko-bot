@@ -18,14 +18,14 @@ import org.bson.codecs.pojo.SubClassPropertyCodecProvider
 import org.slf4j.LoggerFactory
 import org.yaml.snakeyaml.Yaml
 import td.TdApi
-import td.TdLog.setVerbosityLevel
-import tooko.main.Env
+import tookox.core.env.Env
 import tooko.main.utils.nsfw.NSRC
 import tooko.main.utils.nsfw.TCRC
 import tookox.core.*
 import tookox.core.client.*
 import tookox.core.db.*
 import tookox.core.funs.*
+import tookox.core.raw.*
 import tookox.core.utils.*
 import java.io.File
 import java.lang.Thread.UncaughtExceptionHandler
@@ -95,7 +95,9 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
     override suspend fun onUndefinedFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
 
-        sudo make "function $function not found :(" sendTo chatId
+        val L = userId.langForUserId
+
+        sudo make L.CNF sendTo chatId
 
     }
 
@@ -115,7 +117,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
         val cachedTables = LinkedList<CacheTable<*, *>>()
 
-       // lateinit var twitter: TwitterBot
+        // lateinit var twitter: TwitterBot
 
         @Suppress("UNCHECKED_CAST")
         class TypedMap(map: Any) : HashMap<String, Any>(map as Map<String, Any>), OptNullBasicTypeFromObjectGetter<String> {
@@ -181,9 +183,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             }
 
-
-            @Suppress("DEPRECATION")
-            setVerbosityLevel(1)
+            setLogVerbosityLevel(1)
 
             val configFile = File(Env.ROOT_PATH, "config.yml")
 

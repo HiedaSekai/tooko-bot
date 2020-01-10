@@ -5,9 +5,9 @@ import cn.hutool.core.io.FileUtil
 import cn.hutool.core.util.ZipUtil
 import kotlinx.coroutines.*
 import td.TdApi.*
-import tooko.main.Env
-import tooko.main.Img
-import tooko.main.Lang
+import tookox.core.env.Env
+import tookox.core.env.Img
+import tookox.core.env.Lang
 import tookox.core.*
 import tookox.core.client.*
 import tookox.core.utils.*

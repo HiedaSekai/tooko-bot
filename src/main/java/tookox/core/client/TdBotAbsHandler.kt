@@ -1,7 +1,7 @@
 package tookox.core.client
 
 import td.TdApi.Message
-import tooko.main.Lang
+import tookox.core.env.Lang
 import tookox.core.*
 import tookox.core.utils.*
 import java.util.*

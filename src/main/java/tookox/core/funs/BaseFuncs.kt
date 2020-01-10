@@ -3,7 +3,7 @@ package tookox.core.funs
 import cn.hutool.core.util.NumberUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
-import tooko.main.Lang
+import tookox.core.env.Lang
 import td.TdApi.*
 import tookox.core.*
 import tookox.core.client.*

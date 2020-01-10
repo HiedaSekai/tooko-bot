@@ -5,8 +5,8 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.runBlocking
 import org.yaml.snakeyaml.Yaml
-import tooko.main.Env
-import tooko.main.Lang
+import tookox.core.env.Env
+import tookox.core.env.Lang
 import tookox.core.*
 import tookox.core.utils.*
 import java.util.*

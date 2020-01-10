@@ -178,9 +178,6 @@
                 </executions>
                 <configuration>
                     <jvmTarget>11</jvmTarget>
-                    <args>
-                        <arg>-Xuse-experimental=org.mylibrary.ExperimentalMarker</arg>
-                    </args>
                 </configuration>
             </plugin>
             <plugin>

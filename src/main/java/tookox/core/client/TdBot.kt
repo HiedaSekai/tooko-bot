@@ -4,8 +4,8 @@ import cn.hutool.core.util.RuntimeUtil
 import cn.hutool.core.util.StrUtil
 import cn.hutool.core.util.ZipUtil
 import kotlinx.coroutines.coroutineScope
-import tooko.main.Env
-import tooko.main.Fn
+import tookox.core.env.Env
+import tookox.core.env.Fn
 import td.TdApi.*
 import tookox.core.*
 import tookox.core.client.TdBotAbsHandler.*

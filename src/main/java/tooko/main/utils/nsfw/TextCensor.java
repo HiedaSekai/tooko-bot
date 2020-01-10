@@ -2,7 +2,7 @@ package tooko.main.utils.nsfw;
 
 import cn.hutool.json.*;
 import com.baidu.aip.contentcensor.*;
-import tooko.main.*;
+import tookox.core.env.*;
 
 public abstract class TextCensor {
 

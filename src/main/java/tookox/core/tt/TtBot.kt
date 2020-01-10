@@ -3,7 +3,7 @@ package tookox.core.tt
 import chat.tamtam.botapi.TamTamBotAPI
 import chat.tamtam.botapi.model.*
 import cn.hutool.core.thread.ThreadUtil
-import tooko.main.Env
+import tookox.core.env.Env
 import tookox.core.applyIf
 import tookox.core.mkLog
 import java.util.*

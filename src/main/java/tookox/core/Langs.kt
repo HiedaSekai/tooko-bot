@@ -3,7 +3,7 @@
 package tookox.core
 
 import td.TdApi.User
-import tooko.main.Lang
+import tookox.core.env.*
 
 val Number.langForUserId get() = Lang.get(this)
 val User.langForUser get() = Lang.get(this)

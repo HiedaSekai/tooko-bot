@@ -9,8 +9,8 @@ import cn.hutool.log.Log
 import cn.hutool.log.LogFactory
 import cn.hutool.log.dialect.console.ConsoleLog
 import cn.hutool.log.level.Level
-import tooko.main.Env
-import tooko.main.Fn
+import tookox.core.env.Env
+import tookox.core.env.Fn
 import tookox.Launcher
 import tookox.core.utils.*
 

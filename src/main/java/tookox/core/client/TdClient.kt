@@ -3,7 +3,7 @@ package tookox.core.client
 import kotlinx.coroutines.*
 import td.TdApi
 import td.TdNative
-import tooko.main.Env
+import tookox.core.env.Env
 import tookox.core.*
 import td.TdApi.*
 import java.util.*

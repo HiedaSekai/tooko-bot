@@ -6,8 +6,8 @@ import cn.hutool.core.builder.Builder
 import cn.hutool.core.util.ArrayUtil
 import kotlinx.coroutines.CoroutineScope
 import td.TdApi.*
-import tooko.main.Fn
-import tooko.main.Lang
+import tookox.core.env.Fn
+import tookox.core.env.Lang
 import tookox.core.*
 import tookox.core.client.*
 import twitter4j.TwitterException

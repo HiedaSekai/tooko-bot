@@ -1,4 +1,4 @@
-package tooko.main;
+package tookox.core.env;
 
 import cn.hutool.core.img.*;
 import cn.hutool.core.util.*;
