@@ -15,7 +15,7 @@ object TdLog {
      * value greater than 5 can be used to enable even more logging.
      * Default value of the log verbosity level is 5.
      */
-    @JvmStatic @Deprecated("As of TDLib 1.4.0 in favor of {@link TdApi.SetLogVerbosityLevel}, to be removed in the future.")
+    @Deprecated("As of TDLib 1.4.0 in favor of {@link TdApi.SetLogVerbosityLevel}, to be removed in the future.")
     external fun setVerbosityLevel(verbosityLevel: Int)
 
     /**
@@ -26,7 +26,7 @@ object TdLog {
      * switch back to logging to the System.err.
      * @return whether opening the log file succeeded.
      */
-    @JvmStatic @Deprecated("As of TDLib 1.4.0 in favor of {@link TdApi.SetLogStream}, to be removed in the future.\n" + "      ")
+    @Deprecated("As of TDLib 1.4.0 in favor of {@link TdApi.SetLogStream}, to be removed in the future.\n" + "      ")
     external fun setFilePath(filePath: String?): Boolean
 
     /**

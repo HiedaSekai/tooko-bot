@@ -126,7 +126,7 @@ static jint register_native(JavaVM *vm) {
                                     reinterpret_cast<void *>(function_ptr));
   };
 
-  auto client_class = td::jni::get_jclass(env, PACKAGE_NAME "/TdClient");
+  auto client_class = td::jni::get_jclass(env, PACKAGE_NAME "/TdNative");
   log_class = td::jni::get_jclass(env, PACKAGE_NAME "/TdLog");
   auto object_class = td::jni::get_jclass(env, PACKAGE_NAME "/TdApi$Object");
   auto function_class = td::jni::get_jclass(env, PACKAGE_NAME "/TdApi$Function");

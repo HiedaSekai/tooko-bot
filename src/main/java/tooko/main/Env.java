@@ -2,7 +2,6 @@ package tooko.main;
 
 import cn.hutool.core.util.*;
 import com.mongodb.client.*;
-import tooko.twitter.*;
 
 import java.io.*;
 import java.util.concurrent.atomic.*;
@@ -26,7 +25,7 @@ public class Env {
     public static String SERVICE;
     public static String TWITTER_BOT_TOKEN;
     public static boolean TWITTER_PUBLIC;
-    public static ApiToken[] TWITTER_API_TOKENS;
+  //  public static ApiToken[] TWITTER_API_TOKENS;
     public static int DEVELOPER = 896711046;
 
     public static String NSFW_SERVER;

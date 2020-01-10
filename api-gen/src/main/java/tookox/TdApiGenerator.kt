@@ -1,5 +1,6 @@
 package tookox
 
+import cn.hutool.http.HttpUtil
 import tookox.builder.buildApi
 import tookox.builder.groupFunctions
 import tookox.tl.TlAddition
@@ -16,7 +17,17 @@ object TdApiGenerator {
     @JvmStatic
     fun main(args: Array<String>) {
 
-        val api = generateApi(File("target/td_api.tl").readBytes())
+        val file = File("target/td_api.tl")
+
+        val url = "https://raw.githubusercontent.com/tdlib/td/master/td/generate/scheme/td_api.tl"
+
+        if (!file.isFile) {
+
+            HttpUtil.downloadFile(url, file)
+
+        }
+
+        val api = generateApi(file.readBytes())
 
         api.forEach { (path, src) ->
 
