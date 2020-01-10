@@ -1,12 +1,8 @@
 package tookox
 
 import cn.hutool.http.HttpUtil
-import tookox.builder.buildApi
-import tookox.builder.groupFunctions
-import tookox.tl.TlAddition
-import tookox.tl.TlFunction
-import tookox.tl.TlScheme
-import tookox.tl.extractMetadata
+import tookox.builder.*
+import tookox.tl.*
 import tookox.tl.parser.parseTlData
 import tookox.tl.parser.readTlScheme
 import java.io.File
@@ -17,21 +13,15 @@ object TdApiGenerator {
     @JvmStatic
     fun main(args: Array<String>) {
 
-        val file = File("target/td_api.tl")
+        val scheme = "https://raw.githubusercontent.com/tdlib/td/master/td/generate/scheme/td_api.tl"
 
-        val url = "https://raw.githubusercontent.com/tdlib/td/master/td/generate/scheme/td_api.tl"
-
-        if (!file.isFile) {
-
-            HttpUtil.downloadFile(url, file)
-
-        }
-
-        val api = generateApi(file.readBytes())
+        val api = generateApi(HttpUtil.createGet(scheme).execute().bodyBytes())
 
         api.forEach { (path, src) ->
 
             with(File("src/main/java/$path")) {
+
+                println("write $path")
 
                 parentFile.mkdirs()
 
@@ -62,40 +52,64 @@ object TdApiGenerator {
             map[nested] = buildString(block)
         }
 
-        val srcPath = "td"
-
-        with(srcPath) {
+        with("td") {
 
             file("TdApi") {
+
                 buildApi(tlScheme)
+
             }
 
         }
 
-        /*
+        with("tookox/core/raw") {
 
-        with("coroutines/$srcPath") {
             functionsMap.forEach { (type, functions) ->
-                nested(type.decapitalize()) {
-                    file("Raw") {
-                        buildRawFunctions(type, functions)
-                    }
-                    file("Parameterized") {
-                        buildFunctions(type, functions, metadata)
-                    }
-                }
-            }
-            nested("sync") {
-                file("Raw") {
-                    buildRawSyncFunctions(syncFunctions)
-                }
-                file("Parameterized") {
-                    buildSyncFunctions(syncFunctions, metadata)
-                }
-            }
-        }
 
-         */
+                file(type) {
+
+                    buildHeader()
+
+                    functions.forEach {
+
+                        append("\n")
+
+                        buildFunction(it, metadata[it])
+
+                        append("\n")
+
+                        buildNullaableFunction(it, metadata[it])
+
+                        append("\n")
+
+                        buildCallbackFunction(it, metadata[it])
+
+                    }
+
+                }
+
+
+            }
+
+            file("Static") {
+
+                buildHeader()
+
+                syncFunctions.forEach {
+
+                    append("\n")
+
+                    buildSyncFunction(it,metadata[it])
+
+                    append("\n")
+
+                    buildRawSyncFunction(it)
+
+                }
+
+            }
+
+        }
 
         return map
     }

@@ -4,7 +4,6 @@ import tookox.tl.TlAddition
 import tookox.tl.emptyToken
 import tookox.tl.spaceToken
 
-const val group = "td"
 const val tabIndent = "    "
 
 fun StringBuilder.suppress(vararg suppressed: String) {
@@ -16,14 +15,14 @@ fun StringBuilder.suppress(vararg suppressed: String) {
 }
 
 fun StringBuilder.buildImport(vararg packages: String) {
-    append("import ").append(group)
-    if (packages.isNotEmpty()) packages.joinTo(this, ".", ".", ".*\n", transform = String::trim)
+    append("import ")
+    if (packages.isNotEmpty()) packages.joinTo(this, ".", "", ".*\n", transform = String::trim)
     else append(".*\n")
 }
 
 fun StringBuilder.buildPackage(vararg packages: String) {
-    append("package ").append(group)
-    if (packages.isNotEmpty()) packages.joinTo(this, ".", ".", "\n", transform = String::trim).append(";")
+    append("package ")
+    if (packages.isNotEmpty()) packages.joinTo(this, ".", "", "\n", transform = String::trim)
     else append("\n")
 }
 

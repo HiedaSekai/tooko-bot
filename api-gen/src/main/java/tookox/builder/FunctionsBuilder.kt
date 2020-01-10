@@ -1,6 +1,8 @@
 package tookox.builder
 
 import tookox.tl.*
+import java.util.*
+import kotlin.Comparator
 
 private val customMapping = mapOf(
     "SetName" to "User",
@@ -75,24 +77,12 @@ fun List<TlData>.groupFunctions(): Map<String, List<TlFunction>> {
         .mapValues { (_, list) -> list.map { it.first } }
 }
 
-fun StringBuilder.buildRawFunction(rawType: String, function: TlFunction) {
-    buildDescription(function.descriptions())
-    buildAnnotations(function.metadata.additions)
-    append("suspend fun TelegramClient.").append(rawType.decapitalize())
-    withRoundBrackets {
-        append("f: ").append(function.type.capitalize())
-    }
-    val returnType = function.returnType.capitalize()
-    append(": ").append(returnType).append(" = exec(f) as ").append(returnType)
-    append("\n")
-}
-
-fun StringBuilder.buildFunction(rawType: String, function: TlFunction, metadata: TlDataMetadata) {
+fun StringBuilder.buildFunction(function: TlFunction, metadata: TlDataMetadata) {
     buildDescription(function.descriptionsWithProperties())
     buildAnnotations(function.metadata.additions)
-    append("suspend fun TelegramClient.").append(function.type.decapitalize())
+    append("suspend fun TdAbsHandler.").append(function.type.decapitalize())
     buildParameters(function.metadata.properties.map { it.toParameter(metadata) }, addEmptyBrackets = true)
-    append(": ").append(function.returnType.capitalize()).append(" = ").append(rawType.decapitalize())
+    append(" = sync<${function.returnType.capitalize()}>")
     withRoundBrackets {
         append(function.type.capitalize())
         if (function.metadata.properties.isNotEmpty()) withRoundBrackets {
@@ -102,29 +92,46 @@ fun StringBuilder.buildFunction(rawType: String, function: TlFunction, metadata:
     append("\n")
 }
 
-fun StringBuilder.buildHeader(type: String) {
+fun StringBuilder.buildNullaableFunction(function: TlFunction, metadata: TlDataMetadata) {
+    buildDescription(function.descriptionsWithProperties())
+    buildAnnotations(function.metadata.additions)
+    append("suspend fun TdAbsHandler.").append(function.type.decapitalize()).append("OrNull")
+    buildParameters(function.metadata.properties.map { it.toParameter(metadata) }, addEmptyBrackets = true)
+    append(" = syncOrNull<${function.returnType.capitalize()}>")
+    withRoundBrackets {
+        append(function.type.capitalize())
+        if (function.metadata.properties.isNotEmpty()) withRoundBrackets {
+            function.metadata.properties.joinTo(this, ",\n") { it.name.snakeToCamel() }
+        } else append("()")
+    }
+    append("\n")
+}
+
+fun StringBuilder.buildCallbackFunction(function: TlFunction, metadata: TlDataMetadata) {
+    buildDescription(function.descriptionsWithProperties())
+    buildAnnotations(function.metadata.additions)
+    append("fun TdAbsHandler.").append(function.type.decapitalize())
+    val params = LinkedList(function.metadata.properties.map { it.toParameter(metadata) })
+    params.add("block: (suspend CoroutineScope.(${function.returnType}) -> Unit)")
+    buildParameters(params, addEmptyBrackets = true)
+    append(" = send")
+    withRoundBrackets {
+        append(function.type.capitalize())
+        if (function.metadata.properties.isNotEmpty()) withRoundBrackets {
+            function.metadata.properties.joinTo(this, ",\n") { it.name.snakeToCamel() }
+        } else append("()")
+        append(",block = block")
+    }
+    append("\n")
+}
+
+fun StringBuilder.buildHeader() {
     suppress("unused")
     //useExperimentalAnnotationsForFile()
     append("\n")
-    buildPackage(type.toLowerCase())
+    buildPackage("tookox.core.raw")
     append("\n")
-    buildImport()
-    buildImport("TdApi")
-}
-
-fun StringBuilder.buildRawFunctions(type: String, functions: List<TlFunction>) {
-    buildHeader(type)
-    functions.forEach {
-        append("\n")
-        buildRawFunction(type, it)
-    }
-}
-
-
-fun StringBuilder.buildFunctions(type: String, functions: List<TlFunction>, metadata: TlSchemeMetadata) {
-    buildHeader(type)
-    functions.forEach {
-        append("\n")
-        buildFunction(type, it, metadata[it])
-    }
+    buildImport("kotlinx.coroutines")
+    buildImport("td.TdApi")
+    buildImport("tookox.core.client")
 }

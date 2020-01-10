@@ -1,0 +1,75 @@
+@file:Suppress(
+    "unused"
+)
+
+package tookox.core.raw
+
+import kotlinx.coroutines.*
+import td.TdApi.*
+import tookox.core.client.*
+
+/**
+ * Changes the database encryption key
+ * Usually the encryption key is never changed and is stored in some OS keychain
+ *
+ * @newEncryptionKey - New encryption key
+ */
+suspend fun TdAbsHandler.setDatabaseEncryptionKey(
+    newEncryptionKey: ByteArray = byteArrayOf()
+) = sync<Ok>(
+    SetDatabaseEncryptionKey(
+        newEncryptionKey
+    )
+)
+
+/**
+ * Changes the database encryption key
+ * Usually the encryption key is never changed and is stored in some OS keychain
+ *
+ * @newEncryptionKey - New encryption key
+ */
+suspend fun TdAbsHandler.setDatabaseEncryptionKeyOrNull(
+    newEncryptionKey: ByteArray = byteArrayOf()
+) = syncOrNull<Ok>(
+    SetDatabaseEncryptionKey(
+        newEncryptionKey
+    )
+)
+
+/**
+ * Changes the database encryption key
+ * Usually the encryption key is never changed and is stored in some OS keychain
+ *
+ * @newEncryptionKey - New encryption key
+ */
+fun TdAbsHandler.setDatabaseEncryptionKey(
+    newEncryptionKey: ByteArray = byteArrayOf(),
+    block: (suspend CoroutineScope.(Ok) -> Unit)
+) = send(
+    SetDatabaseEncryptionKey(
+        newEncryptionKey
+    ),block = block
+)
+
+/**
+ * Returns database statistics
+ */
+suspend fun TdAbsHandler.getDatabaseStatistics() = sync<DatabaseStatistics>(
+    GetDatabaseStatistics()
+)
+
+/**
+ * Returns database statistics
+ */
+suspend fun TdAbsHandler.getDatabaseStatisticsOrNull() = syncOrNull<DatabaseStatistics>(
+    GetDatabaseStatistics()
+)
+
+/**
+ * Returns database statistics
+ */
+fun TdAbsHandler.getDatabaseStatistics(
+    block: (suspend CoroutineScope.(DatabaseStatistics) -> Unit)
+) = send(
+    GetDatabaseStatistics(),block = block
+)

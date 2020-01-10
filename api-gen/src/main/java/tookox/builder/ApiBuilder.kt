@@ -8,7 +8,7 @@ fun StringBuilder.buildApi(scheme: TlScheme) {
     suppress("unused")
     // useExperimentalAnnotationsForFile()
     append("\n")
-    buildPackage()
+    buildPackage("td")
     append("\n")
     buildTypealias("TelegramObject", "TdApi.Object")
     buildTypealias("TelegramFunction", "TdApi.Function")

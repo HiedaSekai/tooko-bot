@@ -2,27 +2,25 @@ package tookox.builder
 
 import tookox.tl.TlDataMetadata
 import tookox.tl.TlFunction
-import tookox.tl.TlSchemeMetadata
-import tookox.tl.get
 
 fun StringBuilder.buildRawSyncFunction(function: TlFunction) {
     buildDescription(function.descriptions())
     buildAnnotations(function.metadata.additions)
-    append("fun TelegramClient.Companion.execute")
+    append("fun syncRaw")
     withRoundBrackets {
         append("f: ").append(function.type.capitalize())
     }
     val returnType = function.returnType.capitalize()
-    append(": ").append(returnType).append(" = exec(f) as ").append(returnType)
+    append(" = tookox.core.syncRaw<$returnType>(f)")
     append("\n")
 }
 
 fun StringBuilder.buildSyncFunction(function: TlFunction, metadata: TlDataMetadata) {
     buildDescription(function.descriptionsWithProperties())
     buildAnnotations(function.metadata.additions)
-    append("fun TelegramClient.Companion.").append(function.type.decapitalize())
+    append("fun ").append(function.type.decapitalize())
     buildParameters(function.metadata.properties.map { it.toParameter(metadata) }, addEmptyBrackets = true)
-    append(": ").append(function.returnType.capitalize()).append(" = execute")
+    /*append(": ").append(function.returnType.capitalize()).*/append(" = syncRaw")
     withRoundBrackets {
         append(function.type.capitalize())
         if (function.metadata.properties.isNotEmpty()) withRoundBrackets {
@@ -30,20 +28,4 @@ fun StringBuilder.buildSyncFunction(function: TlFunction, metadata: TlDataMetada
         } else append("()")
     }
     append("\n")
-}
-
-fun StringBuilder.buildRawSyncFunctions(functions: List<TlFunction>) {
-    buildHeader("sync")
-    functions.forEach {
-        append("\n")
-        buildRawSyncFunction(it)
-    }
-}
-
-fun StringBuilder.buildSyncFunctions(functions: List<TlFunction>, metadata: TlSchemeMetadata) {
-    buildHeader("sync")
-    functions.forEach {
-        append("\n")
-        buildSyncFunction(it, metadata[it])
-    }
 }
