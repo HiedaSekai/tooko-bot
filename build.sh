@@ -2,7 +2,7 @@
 
 BUILD_DIR="target/native"
 
-rm -rf $BUILD_DIR && mkdir $BUILD_DIR && cp src/main/jni/* $BUILD_DIR
+rm -rf $BUILD_DIR && mkdir -p $BUILD_DIR && cp src/main/jni/* $BUILD_DIR
 
 cd $BUILD_DIR
 
