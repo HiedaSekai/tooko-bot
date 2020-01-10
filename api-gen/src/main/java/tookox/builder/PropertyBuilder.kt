@@ -34,13 +34,7 @@ fun TlProperty.toField(metadata: TlDataMetadata,nullable: Boolean): String {
 
     val prefix: String
 
-    val default = if (nullable) {
-
-        prefix = "var"
-
-        questionToken + nullToken
-
-    } else if (type !is TlPrimitiveType) {
+    val default = if (type !is TlPrimitiveType) {
 
         if (type is TlRefType && (additions.any { it is TlAddition.Nullable } || withNullables)) {
 
@@ -50,9 +44,9 @@ fun TlProperty.toField(metadata: TlDataMetadata,nullable: Boolean): String {
 
         } else {
 
-            prefix = "var"
+            prefix = "lateinit var"
 
-            weakToken
+            emptyToken
 
         }
 
@@ -60,7 +54,7 @@ fun TlProperty.toField(metadata: TlDataMetadata,nullable: Boolean): String {
 
         prefix = "var"
 
-        weakToken
+        questionToken + nullToken
 
     }
 
