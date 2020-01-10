@@ -4,10 +4,10 @@ import cn.hutool.core.img.ImgUtil
 import cn.hutool.core.io.FileUtil
 import cn.hutool.core.util.ZipUtil
 import kotlinx.coroutines.*
+import td.TdApi.*
 import tooko.main.Env
 import tooko.main.Img
 import tooko.main.Lang
-import tooko.td.TdApi.*
 import tookox.core.*
 import tookox.core.client.*
 import tookox.core.utils.*
@@ -50,9 +50,9 @@ class StickerExport : TdBotHandler() {
 
             sudo make {
 
-                inputPhoto = stickerFile.local.path
+                inputPhoto = stickerFile.local.path!!
 
-                captionHtml = L.STICKER_CAPTION.input(stickerFile.remote.id, sticker.emoji, sticker.setId)
+                captionHtml = L.STICKER_CAPTION.input(stickerFile.remote.id!!, sticker.emoji, sticker.setId)
 
                 replyMarkup = inlineButton {
 

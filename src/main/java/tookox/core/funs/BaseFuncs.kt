@@ -4,7 +4,7 @@ import cn.hutool.core.util.NumberUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
 import tooko.main.Lang
-import tooko.td.TdApi.*
+import td.TdApi.*
 import tookox.core.*
 import tookox.core.client.*
 import tookox.core.utils.*

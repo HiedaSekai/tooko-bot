@@ -7,7 +7,11 @@
 
     <groupId>moe.wataru</groupId>
     <artifactId>tooko-bot</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>api-gen</module>
+    </modules>
 
     <repositories>
 
@@ -174,6 +178,9 @@
                 </executions>
                 <configuration>
                     <jvmTarget>11</jvmTarget>
+                    <args>
+                        <arg>-Xuse-experimental=org.mylibrary.ExperimentalMarker</arg>
+                    </args>
                 </configuration>
             </plugin>
             <plugin>

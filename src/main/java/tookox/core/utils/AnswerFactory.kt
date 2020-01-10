@@ -2,7 +2,7 @@
 
 package tookox.core.utils
 
-import tooko.td.TdApi
+import td.TdApi
 import tookox.core.client.*
 
 infix fun TdBotAbsHandler.makeAnswer(block: AnswerFactory.() -> Unit): AnswerFactory {

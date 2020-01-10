@@ -7,7 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="tooko" />
-        <module name="$project_name$" />
+        <module name="api-gen" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="11" />
@@ -16,6 +16,7 @@
     <option name="DEBUGGING_INFO" value="false" />
     <option name="ADDITIONAL_OPTIONS_STRING" value="-parameters" />
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="api-gen" options="" />
       <module name="$project_name$" options="" />
     </option>
   </component>

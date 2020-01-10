@@ -402,14 +402,14 @@ public class Fn {
 
     }
 
-    public static FormattedText plainText(String text, java.lang.Object... params) {
+    public static FormattedText plainText(String text, Object... params) {
 
         return new FormattedText(StrUtil.format(text, params), new TextEntity[0]);
 
     }
 
 
-    public static FormattedText parseHtml(String text, java.lang.Object... params) {
+    public static FormattedText parseHtml(String text, Object... params) {
 
         return MessageFactoryKt.getAsHtml(StrUtil.format(text, params));
 
@@ -961,35 +961,35 @@ public class Fn {
 
     }
 
-    public static AnswerCallbackQuery answerText(long queryId, String text, java.lang.Object... params) {
+    public static AnswerCallbackQuery answerText(long queryId, String text, Object... params) {
 
         return answerText(queryId, 0, text, params);
     }
 
-    public static AnswerCallbackQuery answerText(long queryId, int cacheTime, String text, java.lang.Object... params) {
+    public static AnswerCallbackQuery answerText(long queryId, int cacheTime, String text, Object... params) {
 
         return new AnswerCallbackQuery(queryId, StrUtil.format(text, params), false, null, cacheTime);
 
     }
 
-    public static AnswerCallbackQuery answerAlert(long queryId, String alert, java.lang.Object... params) {
+    public static AnswerCallbackQuery answerAlert(long queryId, String alert, Object... params) {
 
         return answerAlert(queryId, 0, alert, params);
     }
 
-    public static AnswerCallbackQuery answerAlert(long queryId, int cacheTime, String alert, java.lang.Object... params) {
+    public static AnswerCallbackQuery answerAlert(long queryId, int cacheTime, String alert, Object... params) {
 
         return new AnswerCallbackQuery(queryId, StrUtil.format(alert, params), true, null, cacheTime);
 
     }
 
-    public static AnswerCallbackQuery answerUrl(long queryId, String url, java.lang.Object... params) {
+    public static AnswerCallbackQuery answerUrl(long queryId, String url, Object... params) {
 
         return answerUrl(queryId, 0, url, params);
 
     }
 
-    public static AnswerCallbackQuery answerUrl(long queryId, int cacheTime, String url, java.lang.Object... params) {
+    public static AnswerCallbackQuery answerUrl(long queryId, int cacheTime, String url, Object... params) {
 
         return new AnswerCallbackQuery(queryId, null, false, StrUtil.format(url, params), cacheTime);
 
@@ -1169,13 +1169,13 @@ public class Fn {
 
     }
 
-    public static String b(java.lang.Object text) {
+    public static String b(Object text) {
 
         return "<b>" + HtmlUtil.escape(text == null ? "" : text.toString()) + "</b>";
 
     }
 
-    public static String i(java.lang.Object text) {
+    public static String i(Object text) {
 
         return "<i>" + HtmlUtil.escape(text == null ? "" : text.toString()) + "</i>";
 
@@ -1213,7 +1213,7 @@ public class Fn {
 
     }
 
-    public static String code(java.lang.Object code) {
+    public static String code(Object code) {
 
         return "<code>" + HtmlUtil.escape(code == null ? "null" : code.toString()) + "</code>";
 
@@ -1349,9 +1349,9 @@ public class Fn {
 
     }
 
-    public static LinkedList<twitter4j.User> fetchUsers(Twitter api, Collection<Long> ids) throws TwitterException {
+    public static LinkedList<User> fetchUsers(Twitter api, Collection<Long> ids) throws TwitterException {
 
-        LinkedList<twitter4j.User> users = new LinkedList<>();
+        LinkedList<User> users = new LinkedList<>();
 
         while (!ids.isEmpty()) {
 

@@ -1,6 +1,6 @@
 package tookox.core.client
 
-import tooko.td.TdApi.*
+import td.TdApi.*
 
 open class TdHandler : TdAbsHandler {
 
@@ -48,7 +48,7 @@ open class TdHandler : TdAbsHandler {
 
     override suspend fun onChatTitle(chatId: Long, title: String) = Unit
 
-    override suspend fun onChatPhoto(chatId: Long, photo: ChatPhoto) = Unit
+    override suspend fun onChatPhoto(chatId: Long, photo: ChatPhoto?) = Unit
 
     override suspend fun onChatPermissions(chatId: Long, permissions: ChatPermissions) = Unit
 
@@ -78,7 +78,7 @@ open class TdHandler : TdAbsHandler {
 
     override suspend fun onChatReplyMarkup(chatId: Long, replyMarkupMessageId: Long) = Unit
 
-    override suspend fun onChatDraftMessage(chatId: Long, draftMessage: DraftMessage, order: Long) = Unit
+    override suspend fun onChatDraftMessage(chatId: Long, draftMessage: DraftMessage?, order: Long) = Unit
 
     override suspend fun onChatOnlineMemberCount(chatId: Long, onlineMemberCount: Int) = Unit
 
@@ -114,7 +114,7 @@ open class TdHandler : TdAbsHandler {
 
     override suspend fun onFile(file: File) = Unit
 
-    override suspend fun onFileGenerationStart(generationId: Long, originalPath: String, destinationPath: String, conversion: String) = Unit
+    override suspend fun onFileGenerationStart(generationId: Long, originalPath: String?, destinationPath: String, conversion: String) = Unit
 
     override suspend fun onFileGenerationStop(generationId: Long) = Unit
 
@@ -146,13 +146,13 @@ open class TdHandler : TdAbsHandler {
 
     override suspend fun onTermsOfService(termsOfServiceId: String, termsOfService: TermsOfService) = Unit
 
-    override suspend fun onNewInlineQuery(id: Long, senderUserId: Int, userLocation: Location, query: String, offset: String) = Unit
+    override suspend fun onNewInlineQuery(id: Long, senderUserId: Int, userLocation: Location?, query: String, offset: String) = Unit
 
-    override suspend fun onNewChosenInlineResult(senderUserId: Int, userLocation: Location, query: String, resultId: String, inlineMessageId: String) = Unit
+    override suspend fun onNewChosenInlineResult(senderUserId: Int, userLocation: Location?, query: String, resultId: String, inlineMessageId: String) = Unit
 
     override suspend fun onNewShippingQuery(id: Long, senderUserId: Int, invoicePayload: String, shippingAddress: Address) = Unit
 
-    override suspend fun onNewPreCheckoutQuery(id: Long, senderUserId: Int, currency: String, totalAmount: Long, invoicePayload: ByteArray, shippingOptionId: String, orderInfo: OrderInfo) = Unit
+    override suspend fun onNewPreCheckoutQuery(id: Long, senderUserId: Int, currency: String, totalAmount: Long, invoicePayload: ByteArray, shippingOptionId: String?, orderInfo: OrderInfo?) = Unit
 
     override suspend fun onNewCustomEvent(event: String) = Unit
 

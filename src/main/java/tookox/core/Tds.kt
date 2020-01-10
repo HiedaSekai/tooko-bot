@@ -2,10 +2,10 @@
 
 package tookox.core
 
-import tooko.td.Client
-import tooko.td.TdApi
-import tooko.td.TdApi.*
-import tooko.td.client.TdException
+import td.TdApi
+import td.TdNative
+import tookox.core.client.*
+import td.TdApi.*
 
 val User.displayName get() = "$firstName $lastName".trim()
 
@@ -23,7 +23,7 @@ val Message.text
 
 fun <T : Object> syncRaw(function: TdApi.Function): T {
 
-    val result = Client.nativeClientExecute(function)
+    val result = TdNative.nativeClientExecute(function)
 
     if (result is Error) {
 

@@ -1,7 +1,7 @@
 package tookox.scripts
 
 import cn.hutool.http.HttpUtil
-import tooko.td.TdApi
+import td.TdApi
 import java.io.File
 import java.lang.reflect.Constructor
 
@@ -27,8 +27,6 @@ object RawGen {
     @JvmStatic
     fun main(args: Array<String>) {
 
-        val src = File("src/main/java/tooko/td/TdApi.java").readText()
-
         val target = "src/main/java/tookox/core/utils/RawTypes.kt"
 
         val raw = File(target).writer()
@@ -38,7 +36,7 @@ object RawGen {
 package tookox.core.utils
 
 import kotlinx.coroutines.CoroutineScope
-import tooko.td.TdApi.*
+import td.TdApi.*
 import tookox.core.*
 import tookox.core.client.*
 """)

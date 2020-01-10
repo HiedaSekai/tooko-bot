@@ -1,9 +1,8 @@
 package tookox.core.client
 
 import kotlinx.coroutines.CoroutineScope
-import tooko.td.TdApi
-import tooko.td.TdApi.*
-import tooko.td.client.TdException
+import td.TdApi
+import td.TdApi.*
 import tookox.core.utils.*
 import java.util.*
 import kotlin.collections.HashMap
@@ -68,7 +67,7 @@ interface TdAbsHandler {
 
     suspend fun onChatTitle(chatId: Long, title: String)
 
-    suspend fun onChatPhoto(chatId: Long, photo: ChatPhoto)
+    suspend fun onChatPhoto(chatId: Long, photo: ChatPhoto?)
 
     suspend fun onChatPermissions(chatId: Long, permissions: ChatPermissions)
 
@@ -98,7 +97,7 @@ interface TdAbsHandler {
 
     suspend fun onChatReplyMarkup(chatId: Long, replyMarkupMessageId: Long)
 
-    suspend fun onChatDraftMessage(chatId: Long, draftMessage: DraftMessage, order: Long)
+    suspend fun onChatDraftMessage(chatId: Long, draftMessage: DraftMessage?, order: Long)
 
     suspend fun onChatOnlineMemberCount(chatId: Long, onlineMemberCount: Int)
 
@@ -134,7 +133,7 @@ interface TdAbsHandler {
 
     suspend fun onFile(file: File)
 
-    suspend fun onFileGenerationStart(generationId: Long, originalPath: String, destinationPath: String, conversion: String)
+    suspend fun onFileGenerationStart(generationId: Long, originalPath: String?, destinationPath: String, conversion: String)
 
     suspend fun onFileGenerationStop(generationId: Long)
 
@@ -166,9 +165,9 @@ interface TdAbsHandler {
 
     suspend fun onTermsOfService(termsOfServiceId: String, termsOfService: TermsOfService)
 
-    suspend fun onNewInlineQuery(id: Long, senderUserId: Int, userLocation: Location, query: String, offset: String)
+    suspend fun onNewInlineQuery(id: Long, senderUserId: Int, userLocation: Location?, query: String, offset: String)
 
-    suspend fun onNewChosenInlineResult(senderUserId: Int, userLocation: Location, query: String, resultId: String, inlineMessageId: String)
+    suspend fun onNewChosenInlineResult(senderUserId: Int, userLocation: Location?, query: String, resultId: String, inlineMessageId: String)
 
     suspend fun handleNewCallbackQuery(id: Long, senderUserId: Int, chatId: Long, messageId: Long, chatInstance: Long, payload: CallbackQueryPayload) = Unit
 
@@ -176,7 +175,7 @@ interface TdAbsHandler {
 
     suspend fun onNewShippingQuery(id: Long, senderUserId: Int, invoicePayload: String, shippingAddress: Address)
 
-    suspend fun onNewPreCheckoutQuery(id: Long, senderUserId: Int, currency: String, totalAmount: Long, invoicePayload: ByteArray, shippingOptionId: String, orderInfo: OrderInfo)
+    suspend fun onNewPreCheckoutQuery(id: Long, senderUserId: Int, currency: String, totalAmount: Long, invoicePayload: ByteArray, shippingOptionId: String?, orderInfo: OrderInfo?)
 
     suspend fun onNewCustomEvent(event: String)
 

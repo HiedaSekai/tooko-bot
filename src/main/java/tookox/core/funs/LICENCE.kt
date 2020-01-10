@@ -1,7 +1,7 @@
 package tookox.core.funs
 
+import td.TdApi
 import tooko.main.Lang
-import tooko.td.TdApi
 import tookox.core.client.*
 import tookox.core.utils.*
 

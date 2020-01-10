@@ -17,21 +17,14 @@ import org.bson.codecs.pojo.PropertyCodecProvider
 import org.bson.codecs.pojo.SubClassPropertyCodecProvider
 import org.slf4j.LoggerFactory
 import org.yaml.snakeyaml.Yaml
+import td.TdApi
+import td.TdLog.setVerbosityLevel
 import tooko.main.Env
-import tooko.main.bots.BotData
-import tooko.main.bots.BotImage
 import tooko.main.utils.nsfw.NSRC
 import tooko.main.utils.nsfw.TCRC
-import tooko.td.Log
-import tooko.td.TdApi
-import tooko.td.client.TdClient.EventTask
-import tooko.td.client.TdException
-import tooko.td.core.CacheTable
-import tooko.twitter.ApiToken
-import tooko.twitter.TwitterBot
 import tookox.core.*
-import tookox.core.bots.*
 import tookox.core.client.*
+import tookox.core.db.*
 import tookox.core.funs.*
 import tookox.core.utils.*
 import java.io.File
@@ -56,15 +49,17 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
         addHandler(StickerExport())
 
-        addHandler(CreateBot())
+        //addHandler(CreateBot())
 
-        addHandler(BotPanel())
+        //addHandler(BotPanel())
 
         addHandler(LICENCE())
 
     }
 
     override suspend fun onLogin() {
+
+        /*
 
         twitter = TwitterBot().apply { start() }
 
@@ -77,6 +72,8 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
         }
 
         EventTask().start()
+
+         */
 
     }
 
@@ -118,7 +115,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
         val cachedTables = LinkedList<CacheTable<*, *>>()
 
-        lateinit var twitter: TwitterBot
+       // lateinit var twitter: TwitterBot
 
         @Suppress("UNCHECKED_CAST")
         class TypedMap(map: Any) : HashMap<String, Any>(map as Map<String, Any>), OptNullBasicTypeFromObjectGetter<String> {
@@ -184,7 +181,9 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             }
 
-            Log.setVerbosityLevel(1)
+
+            @Suppress("DEPRECATION")
+            setVerbosityLevel(1)
 
             val configFile = File(Env.ROOT_PATH, "config.yml")
 
@@ -279,6 +278,8 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
             Env.FUN_PREFIX = (config["fun_prefix"] as List<String>).toTypedArray()
 
             Env.ADMINS = (config["admins"] as List<*>).map { (it as Number).toInt() }.toIntArray()
+
+            /*
 
             val twitterObj = config["twitter"]!!.toTypedMap()
 
@@ -381,6 +382,8 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
                 }
 
             }
+
+             */
 
             INSTANCE = Launcher()
 

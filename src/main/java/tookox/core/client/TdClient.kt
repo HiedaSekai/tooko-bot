@@ -1,12 +1,11 @@
 package tookox.core.client
 
 import kotlinx.coroutines.*
+import td.TdApi
+import td.TdNative
 import tooko.main.Env
-import tooko.td.Client
-import tooko.td.TdApi
-import tooko.td.TdApi.*
-import tooko.td.client.TdException
 import tookox.core.*
+import td.TdApi.*
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicBoolean
@@ -30,7 +29,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
     var stopped by AtomicBoolean(false)
     var closed by AtomicBoolean(false)
 
-    private val clientId = Client.createNativeClient()
+    private val clientId = TdNative.createNativeClient()
     private val requestId = AtomicLong(1)
 
     private val callbacks = ConcurrentHashMap<Long, TdCallback<*>>()
@@ -104,7 +103,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         while (!closed) delay(100)
 
-        Client.destroyNativeClient(clientId)
+        TdNative.destroyNativeClient(clientId)
 
     }
 
@@ -294,7 +293,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     private fun sendRaw(requestId: Long, function: TdApi.Function) {
 
-        Client.nativeClientSend(clientId, requestId, function)
+        TdNative.nativeClientSend(clientId, requestId, function)
 
     }
 
@@ -366,7 +365,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
                     val eventIds = LongArray(MAX_EVENTS)
                     val eventObjs = arrayOfNulls<Object>(MAX_EVENTS)
 
-                    val resultCount = Client.nativeClientReceive(client.clientId, eventIds, eventObjs, 0.0)
+                    val resultCount = TdNative.nativeClientReceive(client.clientId, eventIds, eventObjs, 0.0)
 
                     if (resultCount == 0) continue
 
@@ -534,7 +533,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     override suspend fun onChatTitle(chatId: Long, title: String) = Unit
 
-    override suspend fun onChatPhoto(chatId: Long, photo: ChatPhoto) = Unit
+    override suspend fun onChatPhoto(chatId: Long, photo: ChatPhoto?) = Unit
 
     override suspend fun onChatPermissions(chatId: Long, permissions: ChatPermissions) = Unit
 
@@ -564,7 +563,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     override suspend fun onChatReplyMarkup(chatId: Long, replyMarkupMessageId: Long) = Unit
 
-    override suspend fun onChatDraftMessage(chatId: Long, draftMessage: DraftMessage, order: Long) = Unit
+    override suspend fun onChatDraftMessage(chatId: Long, draftMessage: DraftMessage?, order: Long) = Unit
 
     override suspend fun onChatOnlineMemberCount(chatId: Long, onlineMemberCount: Int) = Unit
 
@@ -600,7 +599,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     override suspend fun onFile(file: File) = Unit
 
-    override suspend fun onFileGenerationStart(generationId: Long, originalPath: String, destinationPath: String, conversion: String) = Unit
+    override suspend fun onFileGenerationStart(generationId: Long, originalPath: String?, destinationPath: String, conversion: String) = Unit
 
     override suspend fun onFileGenerationStop(generationId: Long) = Unit
 
@@ -632,20 +631,22 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     override suspend fun onTermsOfService(termsOfServiceId: String, termsOfService: TermsOfService) = Unit
 
-    override suspend fun onNewInlineQuery(id: Long, senderUserId: Int, userLocation: Location, query: String, offset: String) = Unit
+    override suspend fun onNewInlineQuery(id: Long, senderUserId: Int, userLocation: Location?, query: String, offset: String) = Unit
 
-    override suspend fun onNewChosenInlineResult(senderUserId: Int, userLocation: Location, query: String, resultId: String, inlineMessageId: String) = Unit
+    override suspend fun onNewChosenInlineResult(senderUserId: Int, userLocation: Location?, query: String, resultId: String, inlineMessageId: String) = Unit
 
     override suspend fun handleNewCallbackQuery(id: Long, senderUserId: Int, chatId: Long, messageId: Long, chatInstance: Long, payload: CallbackQueryPayload) = Unit
 
     override suspend fun onNewShippingQuery(id: Long, senderUserId: Int, invoicePayload: String, shippingAddress: Address) = Unit
 
-    override suspend fun onNewPreCheckoutQuery(id: Long, senderUserId: Int, currency: String, totalAmount: Long, invoicePayload: ByteArray, shippingOptionId: String, orderInfo: OrderInfo) = Unit
+    override suspend fun onNewPreCheckoutQuery(id: Long, senderUserId: Int, currency: String, totalAmount: Long, invoicePayload: ByteArray, shippingOptionId: String?, orderInfo: OrderInfo?) = Unit
 
     override suspend fun onNewCustomEvent(event: String) = Unit
 
     override suspend fun onNewCustomQuery(id: Long, data: String, timeout: Int) = Unit
 
     override suspend fun onPoll(poll: Poll) = Unit
+
+
 
 }

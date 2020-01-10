@@ -4,7 +4,6 @@ import cn.hutool.core.thread.ThreadUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
 import tooko.main.Fn
-import tooko.td.client.TdException
 import tookox.core.defaultLog
 
 class TdCallback<T>(stackIgnore: Int = 0, private var handler: (suspend CoroutineScope.(T) -> Unit)?) {

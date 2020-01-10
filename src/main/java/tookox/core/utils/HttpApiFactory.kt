@@ -7,8 +7,7 @@ import com.google.gson.Gson
 import com.pengrad.telegrambot.request.BaseRequest
 import com.pengrad.telegrambot.response.BaseResponse
 import kotlinx.coroutines.*
-import tooko.td.client.TdException
-import tookox.core.client.TdCallback
+import tookox.core.client.*
 import java.io.File
 
 private val GSON = Gson()
@@ -87,7 +86,7 @@ suspend fun <T : BaseRequest<T, R>, R : BaseResponse> httpSync(botToken: String,
 
     } catch (ex: Exception) {
 
-        throw TdException(ex.message)
+        throw TdException(ex.message ?: ex.toString())
 
     }
 

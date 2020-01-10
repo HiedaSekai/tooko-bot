@@ -6,7 +6,7 @@ import cn.hutool.core.util.ZipUtil
 import kotlinx.coroutines.coroutineScope
 import tooko.main.Env
 import tooko.main.Fn
-import tooko.td.TdApi.*
+import td.TdApi.*
 import tookox.core.*
 import tookox.core.client.TdBotAbsHandler.*
 import tookox.core.utils.*

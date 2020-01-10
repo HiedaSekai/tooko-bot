@@ -1,7 +1,7 @@
 package tookox.core.client
 
+import td.TdApi.TdlibParameters
 import tooko.main.Env
-import tooko.td.TdApi.TdlibParameters
 
 class TdOptions {
 
@@ -23,25 +23,8 @@ class TdOptions {
 
     fun build(): TdlibParameters {
 
-        return TdlibParameters().also {
+        return TdlibParameters(useTestDc, databaseDirectory, filesDirectory, useFileDatabase, useChatInfoDatabase, useMessageDatabase, useSecretChats, apiId, apiHash, systemLanguageCode, deviceModel, systemVersion, applicationVersion, enableStorageOptimizer, ignoreFileNames)
 
-            it.useTestDc = useTestDc
-            it.databaseDirectory = databaseDirectory
-            it.filesDirectory = filesDirectory
-            it.useFileDatabase = useFileDatabase
-            it.useChatInfoDatabase = useChatInfoDatabase
-            it.useMessageDatabase = useMessageDatabase
-            it.useSecretChats = useSecretChats
-            it.apiId = apiId
-            it.apiHash = apiHash
-            it.systemLanguageCode = systemLanguageCode
-            it.deviceModel = deviceModel
-            it.systemVersion = systemVersion
-            it.applicationVersion = applicationVersion
-            it.enableStorageOptimizer = enableStorageOptimizer
-            it.ignoreFileNames = ignoreFileNames
-
-        }
     }
 
     fun useTestDc(useTestDc: Boolean): TdOptions {

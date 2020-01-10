@@ -1,6 +1,6 @@
 package tookox.core.client
 
-import tooko.td.TdApi
+import td.TdApi
 import java.util.*
 
 open class TdBotHandler : TdHandler(), TdBotAbsHandler {

@@ -4,7 +4,7 @@ package tookox.core.utils
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
-import tooko.td.TdApi.*
+import td.TdApi.*
 import tookox.core.client.*
 
 infix fun TdAbsHandler.delete(message: Message) = delete(message.chatId, message.id)

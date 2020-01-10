@@ -5,10 +5,9 @@ package tookox.core.utils
 import cn.hutool.core.builder.Builder
 import cn.hutool.core.util.ArrayUtil
 import kotlinx.coroutines.CoroutineScope
+import td.TdApi.*
 import tooko.main.Fn
 import tooko.main.Lang
-import tooko.td.TdApi.*
-import tooko.td.client.TdException
 import tookox.core.*
 import tookox.core.client.*
 import twitter4j.TwitterException
@@ -16,7 +15,7 @@ import java.util.*
 import kotlin.properties.Delegates
 
 
-val String.asText: FormattedText get() = FormattedText(this, null)
+val String.asText: FormattedText get() = FormattedText(this, arrayOf())
 val String.asHtml: FormattedText get() = syncRaw(ParseTextEntities(this, TextParseModeHTML()))
 val String.asMarkdown: FormattedText get() = syncRaw(ParseTextEntities(this, TextParseModeMarkdown()))
 
@@ -314,7 +313,7 @@ class TextBuilder(var textFormatted: FormattedText? = null) : Builder<InputMessa
 
     override fun build(): InputMessageText {
 
-        return InputMessageText(textFormatted, !enableWebPagePreview, clearDraft)
+        return InputMessageText(textFormatted!!, !enableWebPagePreview, clearDraft)
 
     }
 
@@ -529,7 +528,7 @@ class MessageFactory(val context: TdAbsHandler) : CaptionInterface {
 
     inner class PhotoBuilder(val photo: InputMessagePhoto) : CaptionInterface {
 
-        var thumbnail: InputThumbnail? by photo::thumbnail
+        var thumbnail by photo::thumbnail
 
         var addedStickerFileIds: IntArray by photo::addedStickerFileIds
 
@@ -545,7 +544,7 @@ class MessageFactory(val context: TdAbsHandler) : CaptionInterface {
 
     fun photo(path: String, block: (PhotoBuilder.() -> Unit)? = null): InputMessagePhoto {
 
-        return InputMessagePhoto(InputFileLocal(path), null, null, 0, 0, null, 0).apply {
+        return InputMessagePhoto(InputFileLocal(path)).apply {
 
             block?.invoke(PhotoBuilder((this)))
 
@@ -555,7 +554,7 @@ class MessageFactory(val context: TdAbsHandler) : CaptionInterface {
 
     fun photoId(fileId: String, block: (PhotoBuilder.() -> Unit)? = null): InputMessagePhoto {
 
-        return InputMessagePhoto(InputFileRemote(fileId), null, null, 0, 0, null, 0).apply {
+        return InputMessagePhoto(InputFileRemote(fileId)).apply {
 
             block?.invoke(PhotoBuilder((this)))
 
@@ -683,13 +682,9 @@ class MessageFactory(val context: TdAbsHandler) : CaptionInterface {
 
 operator fun FormattedText.plus(text: FormattedText): FormattedText {
 
-    val result = FormattedText()
+    val result = FormattedText(this.text + text.text,entities.takeIf { it.isNotEmpty() } ?: arrayOf())
 
-    result.text = this.text + text.text
-
-    result.entities = entities?.takeIf { it.isNotEmpty() } ?: arrayOfNulls(0)
-
-    if (text.entities != null && text.entities.isEmpty()) {
+    if (text.entities.isNotEmpty()) {
 
         text.entities.forEach {
 
