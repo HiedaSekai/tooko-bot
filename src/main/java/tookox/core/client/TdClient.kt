@@ -2,10 +2,10 @@ package tookox.core.client
 
 import kotlinx.coroutines.*
 import td.TdApi
-import td.TdNative
-import tookox.core.env.Env
-import tookox.core.*
 import td.TdApi.*
+import td.TdNative
+import tookox.core.*
+import tookox.core.env.*
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicBoolean
@@ -95,7 +95,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         check(started) { "未启动." }
 
-        check(!stop) { "已静止过." }
+        check(!stop) { "重复停止." }
 
         handlers.forEach { it.onDestroy() }
 
@@ -104,6 +104,16 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
         while (!closed) delay(100)
 
         TdNative.destroyNativeClient(clientId)
+
+    }
+
+    fun postStop() {
+
+        GlobalScope.launch {
+
+            stop()
+
+        }
 
     }
 

@@ -24,12 +24,6 @@ suspend fun TdAbsHandler.searchHashtags(
     )
 )
 
-/**
- * Searches for recently used hashtags by their prefix
- *
- * @prefix - Hashtag prefix to search for
- * @limit - The maximum number of hashtags to be returned
- */
 suspend fun TdAbsHandler.searchHashtagsOrNull(
     prefix: String? = null,
     limit: Int = 0
@@ -40,12 +34,6 @@ suspend fun TdAbsHandler.searchHashtagsOrNull(
     )
 )
 
-/**
- * Searches for recently used hashtags by their prefix
- *
- * @prefix - Hashtag prefix to search for
- * @limit - The maximum number of hashtags to be returned
- */
 fun TdAbsHandler.searchHashtags(
     prefix: String? = null,
     limit: Int = 0,
@@ -70,11 +58,6 @@ suspend fun TdAbsHandler.removeRecentHashtag(
     )
 )
 
-/**
- * Removes a hashtag from the list of recently used hashtags
- *
- * @hashtag - Hashtag to delete
- */
 suspend fun TdAbsHandler.removeRecentHashtagOrNull(
     hashtag: String? = null
 ) = syncOrNull<Ok>(
@@ -83,11 +66,6 @@ suspend fun TdAbsHandler.removeRecentHashtagOrNull(
     )
 )
 
-/**
- * Removes a hashtag from the list of recently used hashtags
- *
- * @hashtag - Hashtag to delete
- */
 fun TdAbsHandler.removeRecentHashtag(
     hashtag: String? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)

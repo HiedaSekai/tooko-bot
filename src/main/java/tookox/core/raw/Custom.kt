@@ -23,13 +23,6 @@ suspend fun TdAbsHandler.addCustomServerLanguagePack(
     )
 )
 
-/**
- * Adds a custom server language pack to the list of installed language packs in current localization target
- * Can be called before authorization
- *
- * @languagePackId - Identifier of a language pack to be added
- *                   May be different from a name that is used in an "https://t.me/setlanguage/" link
- */
 suspend fun TdAbsHandler.addCustomServerLanguagePackOrNull(
     languagePackId: String? = null
 ) = syncOrNull<Ok>(
@@ -38,13 +31,6 @@ suspend fun TdAbsHandler.addCustomServerLanguagePackOrNull(
     )
 )
 
-/**
- * Adds a custom server language pack to the list of installed language packs in current localization target
- * Can be called before authorization
- *
- * @languagePackId - Identifier of a language pack to be added
- *                   May be different from a name that is used in an "https://t.me/setlanguage/" link
- */
 fun TdAbsHandler.addCustomServerLanguagePack(
     languagePackId: String? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -72,14 +58,6 @@ suspend fun TdAbsHandler.setCustomLanguagePack(
     )
 )
 
-/**
- * Adds or changes a custom local language pack to the current localization target
- *
- * @info - Information about the language pack
- *         Language pack ID must start with 'X', consist only of English letters, digits and hyphens, and must not exceed 64 characters
- *         Can be called before authorization
- * @strings - Strings of the new language pack
- */
 suspend fun TdAbsHandler.setCustomLanguagePackOrNull(
     info: LanguagePackInfo? = null,
     strings: Array<LanguagePackString> = emptyArray()
@@ -90,14 +68,6 @@ suspend fun TdAbsHandler.setCustomLanguagePackOrNull(
     )
 )
 
-/**
- * Adds or changes a custom local language pack to the current localization target
- *
- * @info - Information about the language pack
- *         Language pack ID must start with 'X', consist only of English letters, digits and hyphens, and must not exceed 64 characters
- *         Can be called before authorization
- * @strings - Strings of the new language pack
- */
 fun TdAbsHandler.setCustomLanguagePack(
     info: LanguagePackInfo? = null,
     strings: Array<LanguagePackString> = emptyArray(),
@@ -123,12 +93,6 @@ suspend fun TdAbsHandler.editCustomLanguagePackInfo(
     )
 )
 
-/**
- * Edits information about a custom local language pack in the current localization target
- * Can be called before authorization
- *
- * @info - New information about the custom local language pack
- */
 suspend fun TdAbsHandler.editCustomLanguagePackInfoOrNull(
     info: LanguagePackInfo? = null
 ) = syncOrNull<Ok>(
@@ -137,12 +101,6 @@ suspend fun TdAbsHandler.editCustomLanguagePackInfoOrNull(
     )
 )
 
-/**
- * Edits information about a custom local language pack in the current localization target
- * Can be called before authorization
- *
- * @info - New information about the custom local language pack
- */
 fun TdAbsHandler.editCustomLanguagePackInfo(
     info: LanguagePackInfo? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -169,13 +127,6 @@ suspend fun TdAbsHandler.setCustomLanguagePackString(
     )
 )
 
-/**
- * Adds, edits or deletes a string in a custom local language pack
- * Can be called before authorization
- *
- * @languagePackId - Identifier of a previously added custom local language pack in the current localization target
- * @newString - New language pack string
- */
 suspend fun TdAbsHandler.setCustomLanguagePackStringOrNull(
     languagePackId: String? = null,
     newString: LanguagePackString? = null
@@ -186,13 +137,6 @@ suspend fun TdAbsHandler.setCustomLanguagePackStringOrNull(
     )
 )
 
-/**
- * Adds, edits or deletes a string in a custom local language pack
- * Can be called before authorization
- *
- * @languagePackId - Identifier of a previously added custom local language pack in the current localization target
- * @newString - New language pack string
- */
 fun TdAbsHandler.setCustomLanguagePackString(
     languagePackId: String? = null,
     newString: LanguagePackString? = null,
@@ -221,13 +165,6 @@ suspend fun TdAbsHandler.sendCustomRequest(
     )
 )
 
-/**
- * Sends a custom request
- * For bots only
- *
- * @method - The method name
- * @parameters - JSON-serialized method parameters
- */
 suspend fun TdAbsHandler.sendCustomRequestOrNull(
     method: String? = null,
     parameters: String? = null
@@ -238,13 +175,6 @@ suspend fun TdAbsHandler.sendCustomRequestOrNull(
     )
 )
 
-/**
- * Sends a custom request
- * For bots only
- *
- * @method - The method name
- * @parameters - JSON-serialized method parameters
- */
 fun TdAbsHandler.sendCustomRequest(
     method: String? = null,
     parameters: String? = null,
@@ -273,13 +203,6 @@ suspend fun TdAbsHandler.answerCustomQuery(
     )
 )
 
-/**
- * Answers a custom query
- * For bots only
- *
- * @customQueryId - Identifier of a custom query
- * @data - JSON-serialized answer to the query
- */
 suspend fun TdAbsHandler.answerCustomQueryOrNull(
     customQueryId: Long = 0L,
     data: String? = null
@@ -290,13 +213,6 @@ suspend fun TdAbsHandler.answerCustomQueryOrNull(
     )
 )
 
-/**
- * Answers a custom query
- * For bots only
- *
- * @customQueryId - Identifier of a custom query
- * @data - JSON-serialized answer to the query
- */
 fun TdAbsHandler.answerCustomQuery(
     customQueryId: Long = 0L,
     data: String? = null,

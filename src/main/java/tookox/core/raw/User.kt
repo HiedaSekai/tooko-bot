@@ -4,7 +4,7 @@
 
 package tookox.core.raw
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
 import td.TdApi.*
 import tookox.core.client.*
 
@@ -25,13 +25,6 @@ suspend fun TdAbsHandler.registerUser(
     )
 )
 
-/**
- * Finishes user registration
- * Works only when the current authorization state is authorizationStateWaitRegistration
- *
- * @firstName - The first name of the user
- * @lastName - The last name of the user
- */
 suspend fun TdAbsHandler.registerUserOrNull(
     firstName: String? = null,
     lastName: String? = null
@@ -42,13 +35,6 @@ suspend fun TdAbsHandler.registerUserOrNull(
     )
 )
 
-/**
- * Finishes user registration
- * Works only when the current authorization state is authorizationStateWaitRegistration
- *
- * @firstName - The first name of the user
- * @lastName - The last name of the user
- */
 fun TdAbsHandler.registerUser(
     firstName: String? = null,
     lastName: String? = null,
@@ -67,16 +53,10 @@ suspend fun TdAbsHandler.getMe() = sync<User>(
     GetMe()
 )
 
-/**
- * Returns the current user
- */
 suspend fun TdAbsHandler.getMeOrNull() = syncOrNull<User>(
     GetMe()
 )
 
-/**
- * Returns the current user
- */
 fun TdAbsHandler.getMe(
     block: (suspend CoroutineScope.(User) -> Unit)
 ) = send(
@@ -97,12 +77,6 @@ suspend fun TdAbsHandler.getUser(
     )
 )
 
-/**
- * Returns information about a user by their identifier
- * This is an offline request if the current user is not a bot
- *
- * @userId - User identifier
- */
 suspend fun TdAbsHandler.getUserOrNull(
     userId: Int = 0
 ) = syncOrNull<User>(
@@ -111,12 +85,6 @@ suspend fun TdAbsHandler.getUserOrNull(
     )
 )
 
-/**
- * Returns information about a user by their identifier
- * This is an offline request if the current user is not a bot
- *
- * @userId - User identifier
- */
 fun TdAbsHandler.getUser(
     userId: Int = 0,
     block: (suspend CoroutineScope.(User) -> Unit)
@@ -139,11 +107,6 @@ suspend fun TdAbsHandler.getUserFullInfo(
     )
 )
 
-/**
- * Returns full information about a user by their identifier
- *
- * @userId - User identifier
- */
 suspend fun TdAbsHandler.getUserFullInfoOrNull(
     userId: Int = 0
 ) = syncOrNull<UserFullInfo>(
@@ -152,11 +115,6 @@ suspend fun TdAbsHandler.getUserFullInfoOrNull(
     )
 )
 
-/**
- * Returns full information about a user by their identifier
- *
- * @userId - User identifier
- */
 fun TdAbsHandler.getUserFullInfo(
     userId: Int = 0,
     block: (suspend CoroutineScope.(UserFullInfo) -> Unit)
@@ -179,11 +137,6 @@ suspend fun TdAbsHandler.blockUser(
     )
 )
 
-/**
- * Adds a user to the blacklist
- *
- * @userId - User identifier
- */
 suspend fun TdAbsHandler.blockUserOrNull(
     userId: Int = 0
 ) = syncOrNull<Ok>(
@@ -192,11 +145,6 @@ suspend fun TdAbsHandler.blockUserOrNull(
     )
 )
 
-/**
- * Adds a user to the blacklist
- *
- * @userId - User identifier
- */
 fun TdAbsHandler.blockUser(
     userId: Int = 0,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -219,11 +167,6 @@ suspend fun TdAbsHandler.unblockUser(
     )
 )
 
-/**
- * Removes a user from the blacklist
- *
- * @userId - User identifier
- */
 suspend fun TdAbsHandler.unblockUserOrNull(
     userId: Int = 0
 ) = syncOrNull<Ok>(
@@ -232,11 +175,6 @@ suspend fun TdAbsHandler.unblockUserOrNull(
     )
 )
 
-/**
- * Removes a user from the blacklist
- *
- * @userId - User identifier
- */
 fun TdAbsHandler.unblockUser(
     userId: Int = 0,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -262,12 +200,6 @@ suspend fun TdAbsHandler.getBlockedUsers(
     )
 )
 
-/**
- * Returns users that were blocked by the current user
- *
- * @offset - Number of users to skip in the result
- * @limit - The maximum number of users to return
- */
 suspend fun TdAbsHandler.getBlockedUsersOrNull(
     offset: Int = 0,
     limit: Int = 0
@@ -278,12 +210,6 @@ suspend fun TdAbsHandler.getBlockedUsersOrNull(
     )
 )
 
-/**
- * Returns users that were blocked by the current user
- *
- * @offset - Number of users to skip in the result
- * @limit - The maximum number of users to return
- */
 fun TdAbsHandler.getBlockedUsers(
     offset: Int = 0,
     limit: Int = 0,
@@ -302,16 +228,10 @@ suspend fun TdAbsHandler.getContacts() = sync<Users>(
     GetContacts()
 )
 
-/**
- * Returns all user contacts
- */
 suspend fun TdAbsHandler.getContactsOrNull() = syncOrNull<Users>(
     GetContacts()
 )
 
-/**
- * Returns all user contacts
- */
 fun TdAbsHandler.getContacts(
     block: (suspend CoroutineScope.(Users) -> Unit)
 ) = send(
@@ -335,13 +255,6 @@ suspend fun TdAbsHandler.searchContacts(
     )
 )
 
-/**
- * Searches for the specified query in the first names, last names and usernames of the known user contacts
- *
- * @query - Query to search for
- *          May be empty to return all contacts
- * @limit - The maximum number of users to be returned
- */
 suspend fun TdAbsHandler.searchContactsOrNull(
     query: String? = null,
     limit: Int = 0
@@ -352,13 +265,6 @@ suspend fun TdAbsHandler.searchContactsOrNull(
     )
 )
 
-/**
- * Searches for the specified query in the first names, last names and usernames of the known user contacts
- *
- * @query - Query to search for
- *          May be empty to return all contacts
- * @limit - The maximum number of users to be returned
- */
 fun TdAbsHandler.searchContacts(
     query: String? = null,
     limit: Int = 0,
@@ -390,14 +296,6 @@ suspend fun TdAbsHandler.getUserProfilePhotos(
     )
 )
 
-/**
- * Returns the profile photos of a user
- * The result of this query may be outdated: some photos might have been deleted already
- *
- * @userId - User identifier
- * @offset - The number of photos to skip
- * @limit - The maximum number of photos to be returned
- */
 suspend fun TdAbsHandler.getUserProfilePhotosOrNull(
     userId: Int = 0,
     offset: Int = 0,
@@ -410,14 +308,6 @@ suspend fun TdAbsHandler.getUserProfilePhotosOrNull(
     )
 )
 
-/**
- * Returns the profile photos of a user
- * The result of this query may be outdated: some photos might have been deleted already
- *
- * @userId - User identifier
- * @offset - The number of photos to skip
- * @limit - The maximum number of photos to be returned
- */
 fun TdAbsHandler.getUserProfilePhotos(
     userId: Int = 0,
     offset: Int = 0,
@@ -438,16 +328,10 @@ suspend fun TdAbsHandler.getRecentInlineBots() = sync<Users>(
     GetRecentInlineBots()
 )
 
-/**
- * Returns up to 20 recently used inline bots in the order of their last usage
- */
 suspend fun TdAbsHandler.getRecentInlineBotsOrNull() = syncOrNull<Users>(
     GetRecentInlineBots()
 )
 
-/**
- * Returns up to 20 recently used inline bots in the order of their last usage
- */
 fun TdAbsHandler.getRecentInlineBots(
     block: (suspend CoroutineScope.(Users) -> Unit)
 ) = send(
@@ -471,13 +355,6 @@ suspend fun TdAbsHandler.setName(
     )
 )
 
-/**
- * Changes the first and last name of the current user
- * If something changes, updateUser will be sent
- *
- * @firstName - The new value of the first name for the user
- * @lastName - The new value of the optional last name for the user
- */
 suspend fun TdAbsHandler.setNameOrNull(
     firstName: String? = null,
     lastName: String? = null
@@ -488,13 +365,6 @@ suspend fun TdAbsHandler.setNameOrNull(
     )
 )
 
-/**
- * Changes the first and last name of the current user
- * If something changes, updateUser will be sent
- *
- * @firstName - The new value of the first name for the user
- * @lastName - The new value of the optional last name for the user
- */
 fun TdAbsHandler.setName(
     firstName: String? = null,
     lastName: String? = null,
@@ -519,11 +389,6 @@ suspend fun TdAbsHandler.setBio(
     )
 )
 
-/**
- * Changes the bio of the current user
- *
- * @bio - The new value of the user bio
- */
 suspend fun TdAbsHandler.setBioOrNull(
     bio: String? = null
 ) = syncOrNull<Ok>(
@@ -532,11 +397,6 @@ suspend fun TdAbsHandler.setBioOrNull(
     )
 )
 
-/**
- * Changes the bio of the current user
- *
- * @bio - The new value of the user bio
- */
 fun TdAbsHandler.setBio(
     bio: String? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -561,13 +421,6 @@ suspend fun TdAbsHandler.setUsername(
     )
 )
 
-/**
- * Changes the username of the current user
- * If something changes, updateUser will be sent
- *
- * @username - The new value of the username
- *             Use an empty string to remove the username
- */
 suspend fun TdAbsHandler.setUsernameOrNull(
     username: String? = null
 ) = syncOrNull<Ok>(
@@ -576,13 +429,6 @@ suspend fun TdAbsHandler.setUsernameOrNull(
     )
 )
 
-/**
- * Changes the username of the current user
- * If something changes, updateUser will be sent
- *
- * @username - The new value of the username
- *             Use an empty string to remove the username
- */
 fun TdAbsHandler.setUsername(
     username: String? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -599,16 +445,10 @@ suspend fun TdAbsHandler.getSupportUser() = sync<User>(
     GetSupportUser()
 )
 
-/**
- * Returns a user that can be contacted to get support
- */
 suspend fun TdAbsHandler.getSupportUserOrNull() = syncOrNull<User>(
     GetSupportUser()
 )
 
-/**
- * Returns a user that can be contacted to get support
- */
 fun TdAbsHandler.getSupportUser(
     block: (suspend CoroutineScope.(User) -> Unit)
 ) = send(
@@ -631,12 +471,6 @@ suspend fun TdAbsHandler.setUserPrivacySettingRules(
     )
 )
 
-/**
- * Changes user privacy settings
- *
- * @setting - The privacy setting
- * @rules - The new privacy rules
- */
 suspend fun TdAbsHandler.setUserPrivacySettingRulesOrNull(
     setting: UserPrivacySetting? = null,
     rules: UserPrivacySettingRules? = null
@@ -647,12 +481,6 @@ suspend fun TdAbsHandler.setUserPrivacySettingRulesOrNull(
     )
 )
 
-/**
- * Changes user privacy settings
- *
- * @setting - The privacy setting
- * @rules - The new privacy rules
- */
 fun TdAbsHandler.setUserPrivacySettingRules(
     setting: UserPrivacySetting? = null,
     rules: UserPrivacySettingRules? = null,
@@ -677,11 +505,6 @@ suspend fun TdAbsHandler.getUserPrivacySettingRules(
     )
 )
 
-/**
- * Returns the current privacy settings
- *
- * @setting - The privacy setting
- */
 suspend fun TdAbsHandler.getUserPrivacySettingRulesOrNull(
     setting: UserPrivacySetting? = null
 ) = syncOrNull<UserPrivacySettingRules>(
@@ -690,11 +513,6 @@ suspend fun TdAbsHandler.getUserPrivacySettingRulesOrNull(
     )
 )
 
-/**
- * Returns the current privacy settings
- *
- * @setting - The privacy setting
- */
 fun TdAbsHandler.getUserPrivacySettingRules(
     setting: UserPrivacySetting? = null,
     block: (suspend CoroutineScope.(UserPrivacySettingRules) -> Unit)

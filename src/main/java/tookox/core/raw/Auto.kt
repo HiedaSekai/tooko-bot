@@ -15,16 +15,10 @@ suspend fun TdAbsHandler.getAutoDownloadSettingsPresets() = sync<AutoDownloadSet
     GetAutoDownloadSettingsPresets()
 )
 
-/**
- * Returns auto-download settings presets for the currently logged in user
- */
 suspend fun TdAbsHandler.getAutoDownloadSettingsPresetsOrNull() = syncOrNull<AutoDownloadSettingsPresets>(
     GetAutoDownloadSettingsPresets()
 )
 
-/**
- * Returns auto-download settings presets for the currently logged in user
- */
 fun TdAbsHandler.getAutoDownloadSettingsPresets(
     block: (suspend CoroutineScope.(AutoDownloadSettingsPresets) -> Unit)
 ) = send(
@@ -47,12 +41,6 @@ suspend fun TdAbsHandler.setAutoDownloadSettings(
     )
 )
 
-/**
- * Sets auto-download settings
- *
- * @settings - New user auto-download settings
- * @type - Type of the network for which the new settings are applied
- */
 suspend fun TdAbsHandler.setAutoDownloadSettingsOrNull(
     settings: AutoDownloadSettings? = null,
     type: NetworkType? = null
@@ -63,12 +51,6 @@ suspend fun TdAbsHandler.setAutoDownloadSettingsOrNull(
     )
 )
 
-/**
- * Sets auto-download settings
- *
- * @settings - New user auto-download settings
- * @type - Type of the network for which the new settings are applied
- */
 fun TdAbsHandler.setAutoDownloadSettings(
     settings: AutoDownloadSettings? = null,
     type: NetworkType? = null,

@@ -23,13 +23,6 @@ suspend fun TdAbsHandler.sharePhoneNumber(
     )
 )
 
-/**
- * Shares the phone number of the current user with a mutual contact
- * Supposed to be called when the user clicks on chatActionBarSharePhoneNumber
- *
- * @userId - Identifier of the user with whom to share the phone number
- *           The user must be a mutual contact
- */
 suspend fun TdAbsHandler.sharePhoneNumberOrNull(
     userId: Int = 0
 ) = syncOrNull<Ok>(
@@ -38,13 +31,6 @@ suspend fun TdAbsHandler.sharePhoneNumberOrNull(
     )
 )
 
-/**
- * Shares the phone number of the current user with a mutual contact
- * Supposed to be called when the user clicks on chatActionBarSharePhoneNumber
- *
- * @userId - Identifier of the user with whom to share the phone number
- *           The user must be a mutual contact
- */
 fun TdAbsHandler.sharePhoneNumber(
     userId: Int = 0,
     block: (suspend CoroutineScope.(Ok) -> Unit)

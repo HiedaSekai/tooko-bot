@@ -93,7 +93,7 @@ fun StringBuilder.buildFunction(function: TlFunction, metadata: TlDataMetadata) 
 }
 
 fun StringBuilder.buildNullaableFunction(function: TlFunction, metadata: TlDataMetadata) {
-    buildDescription(function.descriptionsWithProperties())
+    //buildDescription(function.descriptionsWithProperties())
     buildAnnotations(function.metadata.additions)
     append("suspend fun TdAbsHandler.").append(function.type.decapitalize()).append("OrNull")
     buildParameters(function.metadata.properties.map { it.toParameter(metadata) }, addEmptyBrackets = true)
@@ -108,7 +108,7 @@ fun StringBuilder.buildNullaableFunction(function: TlFunction, metadata: TlDataM
 }
 
 fun StringBuilder.buildCallbackFunction(function: TlFunction, metadata: TlDataMetadata) {
-    buildDescription(function.descriptionsWithProperties())
+    //buildDescription(function.descriptionsWithProperties())
     buildAnnotations(function.metadata.additions)
     append("fun TdAbsHandler.").append(function.type.decapitalize())
     val params = LinkedList(function.metadata.properties.map { it.toParameter(metadata) })

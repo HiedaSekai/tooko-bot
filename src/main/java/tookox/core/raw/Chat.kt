@@ -21,11 +21,6 @@ suspend fun TdAbsHandler.getChat(
     )
 )
 
-/**
- * Returns information about a chat by its identifier, this is an offline request if the current user is not a bot
- *
- * @chatId - Chat identifier
- */
 suspend fun TdAbsHandler.getChatOrNull(
     chatId: Long = 0L
 ) = syncOrNull<Chat>(
@@ -34,11 +29,6 @@ suspend fun TdAbsHandler.getChatOrNull(
     )
 )
 
-/**
- * Returns information about a chat by its identifier, this is an offline request if the current user is not a bot
- *
- * @chatId - Chat identifier
- */
 fun TdAbsHandler.getChat(
     chatId: Long = 0L,
     block: (suspend CoroutineScope.(Chat) -> Unit)
@@ -74,18 +64,6 @@ suspend fun TdAbsHandler.getChats(
     )
 )
 
-/**
- * Returns an ordered list of chats in a chat list
- * Chats are sorted by the pair (order, chat_id) in decreasing order
- * (For example, to get a list of chats from the beginning, the offset_order should be equal to a biggest signed 64-bit number 9223372036854775807 == 2^63 - 1)
- * For optimal performance the number of returned chats is chosen by the library
- *
- * @chatList - The chat list in which to return chats
- * @offsetOrder - Chat order to return chats from
- * @offsetChatId - Chat identifier to return chats from
- * @limit - The maximum number of chats to be returned
- *          It is possible that fewer chats than the limit are returned even if the end of the list is not reached
- */
 suspend fun TdAbsHandler.getChatsOrNull(
     chatList: ChatList? = null,
     offsetOrder: Long = 0L,
@@ -100,18 +78,6 @@ suspend fun TdAbsHandler.getChatsOrNull(
     )
 )
 
-/**
- * Returns an ordered list of chats in a chat list
- * Chats are sorted by the pair (order, chat_id) in decreasing order
- * (For example, to get a list of chats from the beginning, the offset_order should be equal to a biggest signed 64-bit number 9223372036854775807 == 2^63 - 1)
- * For optimal performance the number of returned chats is chosen by the library
- *
- * @chatList - The chat list in which to return chats
- * @offsetOrder - Chat order to return chats from
- * @offsetChatId - Chat identifier to return chats from
- * @limit - The maximum number of chats to be returned
- *          It is possible that fewer chats than the limit are returned even if the end of the list is not reached
- */
 fun TdAbsHandler.getChats(
     chatList: ChatList? = null,
     offsetOrder: Long = 0L,
@@ -143,14 +109,6 @@ suspend fun TdAbsHandler.searchPublicChat(
     )
 )
 
-/**
- * Searches a public chat by its username
- * Currently only private chats, supergroups and channels can be public
- * Returns the chat if found
- * Otherwise an error is returned
- *
- * @username - Username to be resolved
- */
 suspend fun TdAbsHandler.searchPublicChatOrNull(
     username: String? = null
 ) = syncOrNull<Chat>(
@@ -159,14 +117,6 @@ suspend fun TdAbsHandler.searchPublicChatOrNull(
     )
 )
 
-/**
- * Searches a public chat by its username
- * Currently only private chats, supergroups and channels can be public
- * Returns the chat if found
- * Otherwise an error is returned
- *
- * @username - Username to be resolved
- */
 fun TdAbsHandler.searchPublicChat(
     username: String? = null,
     block: (suspend CoroutineScope.(Chat) -> Unit)
@@ -193,15 +143,6 @@ suspend fun TdAbsHandler.searchPublicChats(
     )
 )
 
-/**
- * Searches public chats by looking for specified query in their username and title
- * Currently only private chats, supergroups and channels can be public
- * Returns a meaningful number of results
- * Returns nothing if the length of the searched username prefix is less than 5
- * Excludes private chats with contacts and chats from the chat list from the results
- *
- * @query - Query to search for
- */
 suspend fun TdAbsHandler.searchPublicChatsOrNull(
     query: String? = null
 ) = syncOrNull<Chats>(
@@ -210,15 +151,6 @@ suspend fun TdAbsHandler.searchPublicChatsOrNull(
     )
 )
 
-/**
- * Searches public chats by looking for specified query in their username and title
- * Currently only private chats, supergroups and channels can be public
- * Returns a meaningful number of results
- * Returns nothing if the length of the searched username prefix is less than 5
- * Excludes private chats with contacts and chats from the chat list from the results
- *
- * @query - Query to search for
- */
 fun TdAbsHandler.searchPublicChats(
     query: String? = null,
     block: (suspend CoroutineScope.(Chats) -> Unit)
@@ -246,14 +178,6 @@ suspend fun TdAbsHandler.searchChats(
     )
 )
 
-/**
- * Searches for the specified query in the title and username of already known chats, this is an offline request
- * Returns chats in the order seen in the chat list
- *
- * @query - Query to search for
- *          If the query is empty, returns up to 20 recently found chats
- * @limit - The maximum number of chats to be returned
- */
 suspend fun TdAbsHandler.searchChatsOrNull(
     query: String? = null,
     limit: Int = 0
@@ -264,14 +188,6 @@ suspend fun TdAbsHandler.searchChatsOrNull(
     )
 )
 
-/**
- * Searches for the specified query in the title and username of already known chats, this is an offline request
- * Returns chats in the order seen in the chat list
- *
- * @query - Query to search for
- *          If the query is empty, returns up to 20 recently found chats
- * @limit - The maximum number of chats to be returned
- */
 fun TdAbsHandler.searchChats(
     query: String? = null,
     limit: Int = 0,
@@ -300,13 +216,6 @@ suspend fun TdAbsHandler.searchChatsOnServer(
     )
 )
 
-/**
- * Searches for the specified query in the title and username of already known chats via request to the server
- * Returns chats in the order seen in the chat list
- *
- * @query - Query to search for
- * @limit - The maximum number of chats to be returned
- */
 suspend fun TdAbsHandler.searchChatsOnServerOrNull(
     query: String? = null,
     limit: Int = 0
@@ -317,13 +226,6 @@ suspend fun TdAbsHandler.searchChatsOnServerOrNull(
     )
 )
 
-/**
- * Searches for the specified query in the title and username of already known chats via request to the server
- * Returns chats in the order seen in the chat list
- *
- * @query - Query to search for
- * @limit - The maximum number of chats to be returned
- */
 fun TdAbsHandler.searchChatsOnServer(
     query: String? = null,
     limit: Int = 0,
@@ -350,13 +252,6 @@ suspend fun TdAbsHandler.searchChatsNearby(
     )
 )
 
-/**
- * Returns a list of users and location-based supergroups nearby
- * The list of users nearby will be updated for 60 seconds after the request by the updates updateUsersNearby
- * The request should be sent again every 25 seconds with adjusted location to not miss new chats
- *
- * @location - Current user location
- */
 suspend fun TdAbsHandler.searchChatsNearbyOrNull(
     location: Location? = null
 ) = syncOrNull<ChatsNearby>(
@@ -365,13 +260,6 @@ suspend fun TdAbsHandler.searchChatsNearbyOrNull(
     )
 )
 
-/**
- * Returns a list of users and location-based supergroups nearby
- * The list of users nearby will be updated for 60 seconds after the request by the updates updateUsersNearby
- * The request should be sent again every 25 seconds with adjusted location to not miss new chats
- *
- * @location - Current user location
- */
 fun TdAbsHandler.searchChatsNearby(
     location: Location? = null,
     block: (suspend CoroutineScope.(ChatsNearby) -> Unit)
@@ -399,14 +287,6 @@ suspend fun TdAbsHandler.getTopChats(
     )
 )
 
-/**
- * Returns a list of frequently used chats
- * Supported only if the chat info database is enabled
- *
- * @category - Category of chats to be returned
- * @limit - The maximum number of chats to be returned
- *          Up to 30
- */
 suspend fun TdAbsHandler.getTopChatsOrNull(
     category: TopChatCategory? = null,
     limit: Int = 0
@@ -417,14 +297,6 @@ suspend fun TdAbsHandler.getTopChatsOrNull(
     )
 )
 
-/**
- * Returns a list of frequently used chats
- * Supported only if the chat info database is enabled
- *
- * @category - Category of chats to be returned
- * @limit - The maximum number of chats to be returned
- *          Up to 30
- */
 fun TdAbsHandler.getTopChats(
     category: TopChatCategory? = null,
     limit: Int = 0,
@@ -453,13 +325,6 @@ suspend fun TdAbsHandler.removeTopChat(
     )
 )
 
-/**
- * Removes a chat from the list of frequently used chats
- * Supported only if the chat info database is enabled
- *
- * @category - Category of frequently used chats
- * @chatId - Chat identifier
- */
 suspend fun TdAbsHandler.removeTopChatOrNull(
     category: TopChatCategory? = null,
     chatId: Long = 0L
@@ -470,13 +335,6 @@ suspend fun TdAbsHandler.removeTopChatOrNull(
     )
 )
 
-/**
- * Removes a chat from the list of frequently used chats
- * Supported only if the chat info database is enabled
- *
- * @category - Category of frequently used chats
- * @chatId - Chat identifier
- */
 fun TdAbsHandler.removeTopChat(
     category: TopChatCategory? = null,
     chatId: Long = 0L,
@@ -503,13 +361,6 @@ suspend fun TdAbsHandler.addRecentlyFoundChat(
     )
 )
 
-/**
- * Adds a chat to the list of recently found chats
- * The chat is added to the beginning of the list
- * If the chat is already in the list, it will be removed from the list first
- *
- * @chatId - Identifier of the chat to add
- */
 suspend fun TdAbsHandler.addRecentlyFoundChatOrNull(
     chatId: Long = 0L
 ) = syncOrNull<Ok>(
@@ -518,13 +369,6 @@ suspend fun TdAbsHandler.addRecentlyFoundChatOrNull(
     )
 )
 
-/**
- * Adds a chat to the list of recently found chats
- * The chat is added to the beginning of the list
- * If the chat is already in the list, it will be removed from the list first
- *
- * @chatId - Identifier of the chat to add
- */
 fun TdAbsHandler.addRecentlyFoundChat(
     chatId: Long = 0L,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -547,11 +391,6 @@ suspend fun TdAbsHandler.removeRecentlyFoundChat(
     )
 )
 
-/**
- * Removes a chat from the list of recently found chats
- *
- * @chatId - Identifier of the chat to be removed
- */
 suspend fun TdAbsHandler.removeRecentlyFoundChatOrNull(
     chatId: Long = 0L
 ) = syncOrNull<Ok>(
@@ -560,11 +399,6 @@ suspend fun TdAbsHandler.removeRecentlyFoundChatOrNull(
     )
 )
 
-/**
- * Removes a chat from the list of recently found chats
- *
- * @chatId - Identifier of the chat to be removed
- */
 fun TdAbsHandler.removeRecentlyFoundChat(
     chatId: Long = 0L,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -581,16 +415,10 @@ suspend fun TdAbsHandler.clearRecentlyFoundChats() = sync<Ok>(
     ClearRecentlyFoundChats()
 )
 
-/**
- * Clears the list of recently found chats
- */
 suspend fun TdAbsHandler.clearRecentlyFoundChatsOrNull() = syncOrNull<Ok>(
     ClearRecentlyFoundChats()
 )
 
-/**
- * Clears the list of recently found chats
- */
 fun TdAbsHandler.clearRecentlyFoundChats(
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
@@ -610,11 +438,6 @@ suspend fun TdAbsHandler.getCreatedPublicChats(
     )
 )
 
-/**
- * Returns a list of public chats of the specified type, owned by the user
- *
- * @type - Type of the public chats to return
- */
 suspend fun TdAbsHandler.getCreatedPublicChatsOrNull(
     type: PublicChatType? = null
 ) = syncOrNull<Chats>(
@@ -623,11 +446,6 @@ suspend fun TdAbsHandler.getCreatedPublicChatsOrNull(
     )
 )
 
-/**
- * Returns a list of public chats of the specified type, owned by the user
- *
- * @type - Type of the public chats to return
- */
 fun TdAbsHandler.getCreatedPublicChats(
     type: PublicChatType? = null,
     block: (suspend CoroutineScope.(Chats) -> Unit)
@@ -645,18 +463,10 @@ suspend fun TdAbsHandler.getSuitableDiscussionChats() = sync<Chats>(
     GetSuitableDiscussionChats()
 )
 
-/**
- * Returns a list of basic group and supergroup chats, which can be used as a discussion group for a channel
- * Basic group chats need to be first upgraded to supergroups before they can be set as a discussion group
- */
 suspend fun TdAbsHandler.getSuitableDiscussionChatsOrNull() = syncOrNull<Chats>(
     GetSuitableDiscussionChats()
 )
 
-/**
- * Returns a list of basic group and supergroup chats, which can be used as a discussion group for a channel
- * Basic group chats need to be first upgraded to supergroups before they can be set as a discussion group
- */
 fun TdAbsHandler.getSuitableDiscussionChats(
     block: (suspend CoroutineScope.(Chats) -> Unit)
 ) = send(
@@ -671,18 +481,10 @@ suspend fun TdAbsHandler.getInactiveSupergroupChats() = sync<Chats>(
     GetInactiveSupergroupChats()
 )
 
-/**
- * Returns a list of recently inactive supergroups and channels
- * Can be used when user reaches limit on the number of joined supergroups and channels and receives CHANNELS_TOO_MUCH error
- */
 suspend fun TdAbsHandler.getInactiveSupergroupChatsOrNull() = syncOrNull<Chats>(
     GetInactiveSupergroupChats()
 )
 
-/**
- * Returns a list of recently inactive supergroups and channels
- * Can be used when user reaches limit on the number of joined supergroups and channels and receives CHANNELS_TOO_MUCH error
- */
 fun TdAbsHandler.getInactiveSupergroupChats(
     block: (suspend CoroutineScope.(Chats) -> Unit)
 ) = send(
@@ -710,15 +512,6 @@ suspend fun TdAbsHandler.getGroupsInCommon(
     )
 )
 
-/**
- * Returns a list of common group chats with a given user
- * Chats are sorted by their type and creation date
- *
- * @userId - User identifier
- * @offsetChatId - Chat identifier starting from which to return chats
- *                 Use 0 for the first request
- * @limit - The maximum number of chats to be returned
- */
 suspend fun TdAbsHandler.getGroupsInCommonOrNull(
     userId: Int = 0,
     offsetChatId: Long = 0L,
@@ -731,15 +524,6 @@ suspend fun TdAbsHandler.getGroupsInCommonOrNull(
     )
 )
 
-/**
- * Returns a list of common group chats with a given user
- * Chats are sorted by their type and creation date
- *
- * @userId - User identifier
- * @offsetChatId - Chat identifier starting from which to return chats
- *                 Use 0 for the first request
- * @limit - The maximum number of chats to be returned
- */
 fun TdAbsHandler.getGroupsInCommon(
     userId: Int = 0,
     offsetChatId: Long = 0L,
@@ -773,14 +557,6 @@ suspend fun TdAbsHandler.deleteChatHistory(
     )
 )
 
-/**
- * Deletes all messages in the chat
- * Use Chat.can_be_deleted_only_for_self and Chat.can_be_deleted_for_all_users fields to find whether and how the method can be applied to the chat
- *
- * @chatId - Chat identifier
- * @removeFromChatList - Pass true if the chat should be removed from the chat list
- * @revoke - Pass true to try to delete chat history for all users
- */
 suspend fun TdAbsHandler.deleteChatHistoryOrNull(
     chatId: Long = 0L,
     removeFromChatList: Boolean = false,
@@ -793,14 +569,6 @@ suspend fun TdAbsHandler.deleteChatHistoryOrNull(
     )
 )
 
-/**
- * Deletes all messages in the chat
- * Use Chat.can_be_deleted_only_for_self and Chat.can_be_deleted_for_all_users fields to find whether and how the method can be applied to the chat
- *
- * @chatId - Chat identifier
- * @removeFromChatList - Pass true if the chat should be removed from the chat list
- * @revoke - Pass true to try to delete chat history for all users
- */
 fun TdAbsHandler.deleteChatHistory(
     chatId: Long = 0L,
     removeFromChatList: Boolean = false,
@@ -834,14 +602,6 @@ suspend fun TdAbsHandler.getChatMessageCount(
     )
 )
 
-/**
- * Returns approximate number of messages of the specified type in the chat
- *
- * @chatId - Identifier of the chat in which to count messages
- * @filter - Filter for message content
- *           SearchMessagesFilterEmpty is unsupported in this function
- * @returnLocal - If true, returns count that is available locally without sending network requests, returning -1 if the number of messages is unknown
- */
 suspend fun TdAbsHandler.getChatMessageCountOrNull(
     chatId: Long = 0L,
     filter: SearchMessagesFilter? = null,
@@ -854,14 +614,6 @@ suspend fun TdAbsHandler.getChatMessageCountOrNull(
     )
 )
 
-/**
- * Returns approximate number of messages of the specified type in the chat
- *
- * @chatId - Identifier of the chat in which to count messages
- * @filter - Filter for message content
- *           SearchMessagesFilterEmpty is unsupported in this function
- * @returnLocal - If true, returns count that is available locally without sending network requests, returning -1 if the number of messages is unknown
- */
 fun TdAbsHandler.getChatMessageCount(
     chatId: Long = 0L,
     filter: SearchMessagesFilter? = null,
@@ -893,14 +645,6 @@ suspend fun TdAbsHandler.deleteChatMessagesFromUser(
     )
 )
 
-/**
- * Deletes all messages sent by the specified user to a chat
- * Supported only for supergroups
- * Requires can_delete_messages administrator privileges
- *
- * @chatId - Chat identifier
- * @userId - User identifier
- */
 suspend fun TdAbsHandler.deleteChatMessagesFromUserOrNull(
     chatId: Long = 0L,
     userId: Int = 0
@@ -911,14 +655,6 @@ suspend fun TdAbsHandler.deleteChatMessagesFromUserOrNull(
     )
 )
 
-/**
- * Deletes all messages sent by the specified user to a chat
- * Supported only for supergroups
- * Requires can_delete_messages administrator privileges
- *
- * @chatId - Chat identifier
- * @userId - User identifier
- */
 fun TdAbsHandler.deleteChatMessagesFromUser(
     chatId: Long = 0L,
     userId: Int = 0,
@@ -948,14 +684,6 @@ suspend fun TdAbsHandler.deleteChatReplyMarkup(
     )
 )
 
-/**
- * Deletes the default reply markup from a chat
- * Must be called after a one-time keyboard or a ForceReply reply markup has been used
- * UpdateChatReplyMarkup will be sent if the reply markup will be changed
- *
- * @chatId - Chat identifier
- * @messageId - The message identifier of the used keyboard
- */
 suspend fun TdAbsHandler.deleteChatReplyMarkupOrNull(
     chatId: Long = 0L,
     messageId: Long = 0L
@@ -966,14 +694,6 @@ suspend fun TdAbsHandler.deleteChatReplyMarkupOrNull(
     )
 )
 
-/**
- * Deletes the default reply markup from a chat
- * Must be called after a one-time keyboard or a ForceReply reply markup has been used
- * UpdateChatReplyMarkup will be sent if the reply markup will be changed
- *
- * @chatId - Chat identifier
- * @messageId - The message identifier of the used keyboard
- */
 fun TdAbsHandler.deleteChatReplyMarkup(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -999,12 +719,6 @@ suspend fun TdAbsHandler.openChat(
     )
 )
 
-/**
- * Informs TDLib that the chat is opened by the user
- * Many useful activities depend on the chat being opened or closed (e.g., in supergroups and channels all updates are received only for opened chats)
- *
- * @chatId - Chat identifier
- */
 suspend fun TdAbsHandler.openChatOrNull(
     chatId: Long = 0L
 ) = syncOrNull<Ok>(
@@ -1013,12 +727,6 @@ suspend fun TdAbsHandler.openChatOrNull(
     )
 )
 
-/**
- * Informs TDLib that the chat is opened by the user
- * Many useful activities depend on the chat being opened or closed (e.g., in supergroups and channels all updates are received only for opened chats)
- *
- * @chatId - Chat identifier
- */
 fun TdAbsHandler.openChat(
     chatId: Long = 0L,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -1042,12 +750,6 @@ suspend fun TdAbsHandler.closeChat(
     )
 )
 
-/**
- * Informs TDLib that the chat is closed by the user
- * Many useful activities depend on the chat being opened or closed
- *
- * @chatId - Chat identifier
- */
 suspend fun TdAbsHandler.closeChatOrNull(
     chatId: Long = 0L
 ) = syncOrNull<Ok>(
@@ -1056,12 +758,6 @@ suspend fun TdAbsHandler.closeChatOrNull(
     )
 )
 
-/**
- * Informs TDLib that the chat is closed by the user
- * Many useful activities depend on the chat being opened or closed
- *
- * @chatId - Chat identifier
- */
 fun TdAbsHandler.closeChat(
     chatId: Long = 0L,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -1084,11 +780,6 @@ suspend fun TdAbsHandler.readAllChatMentions(
     )
 )
 
-/**
- * Marks all mentions in a chat as read
- *
- * @chatId - Chat identifier
- */
 suspend fun TdAbsHandler.readAllChatMentionsOrNull(
     chatId: Long = 0L
 ) = syncOrNull<Ok>(
@@ -1097,11 +788,6 @@ suspend fun TdAbsHandler.readAllChatMentionsOrNull(
     )
 )
 
-/**
- * Marks all mentions in a chat as read
- *
- * @chatId - Chat identifier
- */
 fun TdAbsHandler.readAllChatMentions(
     chatId: Long = 0L,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -1128,13 +814,6 @@ suspend fun TdAbsHandler.createPrivateChat(
     )
 )
 
-/**
- * Returns an existing chat corresponding to a given user
- *
- * @userId - User identifier
- * @force - If true, the chat will be created without network request
- *          In this case all information about the chat except its type, title and photo can be incorrect
- */
 suspend fun TdAbsHandler.createPrivateChatOrNull(
     userId: Int = 0,
     force: Boolean = false
@@ -1145,13 +824,6 @@ suspend fun TdAbsHandler.createPrivateChatOrNull(
     )
 )
 
-/**
- * Returns an existing chat corresponding to a given user
- *
- * @userId - User identifier
- * @force - If true, the chat will be created without network request
- *          In this case all information about the chat except its type, title and photo can be incorrect
- */
 fun TdAbsHandler.createPrivateChat(
     userId: Int = 0,
     force: Boolean = false,
@@ -1180,13 +852,6 @@ suspend fun TdAbsHandler.createBasicGroupChat(
     )
 )
 
-/**
- * Returns an existing chat corresponding to a known basic group
- *
- * @basicGroupId - Basic group identifier
- * @force - If true, the chat will be created without network request
- *          In this case all information about the chat except its type, title and photo can be incorrect
- */
 suspend fun TdAbsHandler.createBasicGroupChatOrNull(
     basicGroupId: Int = 0,
     force: Boolean = false
@@ -1197,13 +862,6 @@ suspend fun TdAbsHandler.createBasicGroupChatOrNull(
     )
 )
 
-/**
- * Returns an existing chat corresponding to a known basic group
- *
- * @basicGroupId - Basic group identifier
- * @force - If true, the chat will be created without network request
- *          In this case all information about the chat except its type, title and photo can be incorrect
- */
 fun TdAbsHandler.createBasicGroupChat(
     basicGroupId: Int = 0,
     force: Boolean = false,
@@ -1232,13 +890,6 @@ suspend fun TdAbsHandler.createSupergroupChat(
     )
 )
 
-/**
- * Returns an existing chat corresponding to a known supergroup or channel
- *
- * @supergroupId - Supergroup or channel identifier
- * @force - If true, the chat will be created without network request
- *          In this case all information about the chat except its type, title and photo can be incorrect
- */
 suspend fun TdAbsHandler.createSupergroupChatOrNull(
     supergroupId: Int = 0,
     force: Boolean = false
@@ -1249,13 +900,6 @@ suspend fun TdAbsHandler.createSupergroupChatOrNull(
     )
 )
 
-/**
- * Returns an existing chat corresponding to a known supergroup or channel
- *
- * @supergroupId - Supergroup or channel identifier
- * @force - If true, the chat will be created without network request
- *          In this case all information about the chat except its type, title and photo can be incorrect
- */
 fun TdAbsHandler.createSupergroupChat(
     supergroupId: Int = 0,
     force: Boolean = false,
@@ -1280,11 +924,6 @@ suspend fun TdAbsHandler.createSecretChat(
     )
 )
 
-/**
- * Returns an existing chat corresponding to a known secret chat
- *
- * @secretChatId - Secret chat identifier
- */
 suspend fun TdAbsHandler.createSecretChatOrNull(
     secretChatId: Int = 0
 ) = syncOrNull<Chat>(
@@ -1293,11 +932,6 @@ suspend fun TdAbsHandler.createSecretChatOrNull(
     )
 )
 
-/**
- * Returns an existing chat corresponding to a known secret chat
- *
- * @secretChatId - Secret chat identifier
- */
 fun TdAbsHandler.createSecretChat(
     secretChatId: Int = 0,
     block: (suspend CoroutineScope.(Chat) -> Unit)
@@ -1324,13 +958,6 @@ suspend fun TdAbsHandler.createNewBasicGroupChat(
     )
 )
 
-/**
- * Creates a new basic group and sends a corresponding messageBasicGroupChatCreate
- * Returns the newly created chat
- *
- * @userIds - Identifiers of users to be added to the basic group
- * @title - Title of the new basic group
- */
 suspend fun TdAbsHandler.createNewBasicGroupChatOrNull(
     userIds: IntArray = intArrayOf(),
     title: String? = null
@@ -1341,13 +968,6 @@ suspend fun TdAbsHandler.createNewBasicGroupChatOrNull(
     )
 )
 
-/**
- * Creates a new basic group and sends a corresponding messageBasicGroupChatCreate
- * Returns the newly created chat
- *
- * @userIds - Identifiers of users to be added to the basic group
- * @title - Title of the new basic group
- */
 fun TdAbsHandler.createNewBasicGroupChat(
     userIds: IntArray = intArrayOf(),
     title: String? = null,
@@ -1382,15 +1002,6 @@ suspend fun TdAbsHandler.createNewSupergroupChat(
     )
 )
 
-/**
- * Creates a new supergroup or channel and sends a corresponding messageSupergroupChatCreate
- * Returns the newly created chat
- *
- * @title - Title of the new chat
- * @isChannel - True, if a channel chat should be created
- * @description - Chat description
- * @location - Chat location if a location-based supergroup is being created
- */
 suspend fun TdAbsHandler.createNewSupergroupChatOrNull(
     title: String? = null,
     isChannel: Boolean = false,
@@ -1405,15 +1016,6 @@ suspend fun TdAbsHandler.createNewSupergroupChatOrNull(
     )
 )
 
-/**
- * Creates a new supergroup or channel and sends a corresponding messageSupergroupChatCreate
- * Returns the newly created chat
- *
- * @title - Title of the new chat
- * @isChannel - True, if a channel chat should be created
- * @description - Chat description
- * @location - Chat location if a location-based supergroup is being created
- */
 fun TdAbsHandler.createNewSupergroupChat(
     title: String? = null,
     isChannel: Boolean = false,
@@ -1443,12 +1045,6 @@ suspend fun TdAbsHandler.createNewSecretChat(
     )
 )
 
-/**
- * Creates a new secret chat
- * Returns the newly created chat
- *
- * @userId - Identifier of the target user
- */
 suspend fun TdAbsHandler.createNewSecretChatOrNull(
     userId: Int = 0
 ) = syncOrNull<Chat>(
@@ -1457,12 +1053,6 @@ suspend fun TdAbsHandler.createNewSecretChatOrNull(
     )
 )
 
-/**
- * Creates a new secret chat
- * Returns the newly created chat
- *
- * @userId - Identifier of the target user
- */
 fun TdAbsHandler.createNewSecretChat(
     userId: Int = 0,
     block: (suspend CoroutineScope.(Chat) -> Unit)
@@ -1487,13 +1077,6 @@ suspend fun TdAbsHandler.upgradeBasicGroupChatToSupergroupChat(
     )
 )
 
-/**
- * Creates a new supergroup from an existing basic group and sends a corresponding messageChatUpgradeTo and messageChatUpgradeFrom
- * Requires creator privileges
- * Deactivates the original basic group
- *
- * @chatId - Identifier of the chat to upgrade
- */
 suspend fun TdAbsHandler.upgradeBasicGroupChatToSupergroupChatOrNull(
     chatId: Long = 0L
 ) = syncOrNull<Chat>(
@@ -1502,13 +1085,6 @@ suspend fun TdAbsHandler.upgradeBasicGroupChatToSupergroupChatOrNull(
     )
 )
 
-/**
- * Creates a new supergroup from an existing basic group and sends a corresponding messageChatUpgradeTo and messageChatUpgradeFrom
- * Requires creator privileges
- * Deactivates the original basic group
- *
- * @chatId - Identifier of the chat to upgrade
- */
 fun TdAbsHandler.upgradeBasicGroupChatToSupergroupChat(
     chatId: Long = 0L,
     block: (suspend CoroutineScope.(Chat) -> Unit)
@@ -1535,13 +1111,6 @@ suspend fun TdAbsHandler.setChatChatList(
     )
 )
 
-/**
- * Moves a chat to a different chat list
- * Current chat list of the chat must ne non-null
- *
- * @chatId - Chat identifier
- * @chatList - New chat list of the chat
- */
 suspend fun TdAbsHandler.setChatChatListOrNull(
     chatId: Long = 0L,
     chatList: ChatList? = null
@@ -1552,13 +1121,6 @@ suspend fun TdAbsHandler.setChatChatListOrNull(
     )
 )
 
-/**
- * Moves a chat to a different chat list
- * Current chat list of the chat must ne non-null
- *
- * @chatId - Chat identifier
- * @chatList - New chat list of the chat
- */
 fun TdAbsHandler.setChatChatList(
     chatId: Long = 0L,
     chatList: ChatList? = null,
@@ -1589,15 +1151,6 @@ suspend fun TdAbsHandler.setChatTitle(
     )
 )
 
-/**
- * Changes the chat title
- * Supported only for basic groups, supergroups and channels
- * Requires can_change_info rights
- * The title will not be changed until the request to the server has been completed
- *
- * @chatId - Chat identifier
- * @title - New title of the chat
- */
 suspend fun TdAbsHandler.setChatTitleOrNull(
     chatId: Long = 0L,
     title: String? = null
@@ -1608,15 +1161,6 @@ suspend fun TdAbsHandler.setChatTitleOrNull(
     )
 )
 
-/**
- * Changes the chat title
- * Supported only for basic groups, supergroups and channels
- * Requires can_change_info rights
- * The title will not be changed until the request to the server has been completed
- *
- * @chatId - Chat identifier
- * @title - New title of the chat
- */
 fun TdAbsHandler.setChatTitle(
     chatId: Long = 0L,
     title: String? = null,
@@ -1649,17 +1193,6 @@ suspend fun TdAbsHandler.setChatPhoto(
     )
 )
 
-/**
- * Changes the photo of a chat
- * Supported only for basic groups, supergroups and channels
- * Requires can_change_info rights
- * The photo will not be changed before request to the server has been completed
- *
- * @chatId - Chat identifier
- * @photo - New chat photo
- *          You can use a zero InputFileId to delete the chat photo
- *          Files that are accessible only by HTTP URL are not acceptable
- */
 suspend fun TdAbsHandler.setChatPhotoOrNull(
     chatId: Long = 0L,
     photo: InputFile? = null
@@ -1670,17 +1203,6 @@ suspend fun TdAbsHandler.setChatPhotoOrNull(
     )
 )
 
-/**
- * Changes the photo of a chat
- * Supported only for basic groups, supergroups and channels
- * Requires can_change_info rights
- * The photo will not be changed before request to the server has been completed
- *
- * @chatId - Chat identifier
- * @photo - New chat photo
- *          You can use a zero InputFileId to delete the chat photo
- *          Files that are accessible only by HTTP URL are not acceptable
- */
 fun TdAbsHandler.setChatPhoto(
     chatId: Long = 0L,
     photo: InputFile? = null,
@@ -1710,14 +1232,6 @@ suspend fun TdAbsHandler.setChatPermissions(
     )
 )
 
-/**
- * Changes the chat members permissions
- * Supported only for basic groups and supergroups
- * Requires can_restrict_members administrator right
- *
- * @chatId - Chat identifier
- * @permissions - New non-administrator members permissions in the chat
- */
 suspend fun TdAbsHandler.setChatPermissionsOrNull(
     chatId: Long = 0L,
     permissions: ChatPermissions? = null
@@ -1728,14 +1242,6 @@ suspend fun TdAbsHandler.setChatPermissionsOrNull(
     )
 )
 
-/**
- * Changes the chat members permissions
- * Supported only for basic groups and supergroups
- * Requires can_restrict_members administrator right
- *
- * @chatId - Chat identifier
- * @permissions - New non-administrator members permissions in the chat
- */
 fun TdAbsHandler.setChatPermissions(
     chatId: Long = 0L,
     permissions: ChatPermissions? = null,
@@ -1763,12 +1269,6 @@ suspend fun TdAbsHandler.setChatDraftMessage(
     )
 )
 
-/**
- * Changes the draft message in a chat
- *
- * @chatId - Chat identifier
- * @draftMessage - New draft message
- */
 suspend fun TdAbsHandler.setChatDraftMessageOrNull(
     chatId: Long = 0L,
     draftMessage: DraftMessage? = null
@@ -1779,12 +1279,6 @@ suspend fun TdAbsHandler.setChatDraftMessageOrNull(
     )
 )
 
-/**
- * Changes the draft message in a chat
- *
- * @chatId - Chat identifier
- * @draftMessage - New draft message
- */
 fun TdAbsHandler.setChatDraftMessage(
     chatId: Long = 0L,
     draftMessage: DraftMessage? = null,
@@ -1814,14 +1308,6 @@ suspend fun TdAbsHandler.setChatNotificationSettings(
     )
 )
 
-/**
- * Changes the notification settings of a chat
- * Notification settings of a chat with the current user (Saved Messages) can't be changed
- *
- * @chatId - Chat identifier
- * @notificationSettings - New notification settings for the chat
- *                         If the chat is muted for more than 1 week, it is considered to be muted forever
- */
 suspend fun TdAbsHandler.setChatNotificationSettingsOrNull(
     chatId: Long = 0L,
     notificationSettings: ChatNotificationSettings? = null
@@ -1832,14 +1318,6 @@ suspend fun TdAbsHandler.setChatNotificationSettingsOrNull(
     )
 )
 
-/**
- * Changes the notification settings of a chat
- * Notification settings of a chat with the current user (Saved Messages) can't be changed
- *
- * @chatId - Chat identifier
- * @notificationSettings - New notification settings for the chat
- *                         If the chat is muted for more than 1 week, it is considered to be muted forever
- */
 fun TdAbsHandler.setChatNotificationSettings(
     chatId: Long = 0L,
     notificationSettings: ChatNotificationSettings? = null,
@@ -1868,13 +1346,6 @@ suspend fun TdAbsHandler.toggleChatIsPinned(
     )
 )
 
-/**
- * Changes the pinned state of a chat
- * You can pin up to GetOption("pinned_chat_count_max")/GetOption("pinned_archived_chat_count_max") non-secret chats and the same number of secret chats in the main/archive chat list
- *
- * @chatId - Chat identifier
- * @isPinned - New value of is_pinned
- */
 suspend fun TdAbsHandler.toggleChatIsPinnedOrNull(
     chatId: Long = 0L,
     isPinned: Boolean = false
@@ -1885,13 +1356,6 @@ suspend fun TdAbsHandler.toggleChatIsPinnedOrNull(
     )
 )
 
-/**
- * Changes the pinned state of a chat
- * You can pin up to GetOption("pinned_chat_count_max")/GetOption("pinned_archived_chat_count_max") non-secret chats and the same number of secret chats in the main/archive chat list
- *
- * @chatId - Chat identifier
- * @isPinned - New value of is_pinned
- */
 fun TdAbsHandler.toggleChatIsPinned(
     chatId: Long = 0L,
     isPinned: Boolean = false,
@@ -1919,12 +1383,6 @@ suspend fun TdAbsHandler.toggleChatIsMarkedAsUnread(
     )
 )
 
-/**
- * Changes the marked as unread state of a chat
- *
- * @chatId - Chat identifier
- * @isMarkedAsUnread - New value of is_marked_as_unread
- */
 suspend fun TdAbsHandler.toggleChatIsMarkedAsUnreadOrNull(
     chatId: Long = 0L,
     isMarkedAsUnread: Boolean = false
@@ -1935,12 +1393,6 @@ suspend fun TdAbsHandler.toggleChatIsMarkedAsUnreadOrNull(
     )
 )
 
-/**
- * Changes the marked as unread state of a chat
- *
- * @chatId - Chat identifier
- * @isMarkedAsUnread - New value of is_marked_as_unread
- */
 fun TdAbsHandler.toggleChatIsMarkedAsUnread(
     chatId: Long = 0L,
     isMarkedAsUnread: Boolean = false,
@@ -1968,12 +1420,6 @@ suspend fun TdAbsHandler.toggleChatDefaultDisableNotification(
     )
 )
 
-/**
- * Changes the value of the default disable_notification parameter, used when a message is sent to a chat
- *
- * @chatId - Chat identifier
- * @defaultDisableNotification - New value of default_disable_notification
- */
 suspend fun TdAbsHandler.toggleChatDefaultDisableNotificationOrNull(
     chatId: Long = 0L,
     defaultDisableNotification: Boolean = false
@@ -1984,12 +1430,6 @@ suspend fun TdAbsHandler.toggleChatDefaultDisableNotificationOrNull(
     )
 )
 
-/**
- * Changes the value of the default disable_notification parameter, used when a message is sent to a chat
- *
- * @chatId - Chat identifier
- * @defaultDisableNotification - New value of default_disable_notification
- */
 fun TdAbsHandler.toggleChatDefaultDisableNotification(
     chatId: Long = 0L,
     defaultDisableNotification: Boolean = false,
@@ -2017,12 +1457,6 @@ suspend fun TdAbsHandler.setChatClientData(
     )
 )
 
-/**
- * Changes client data associated with a chat
- *
- * @chatId - Chat identifier
- * @clientData - New value of client_data
- */
 suspend fun TdAbsHandler.setChatClientDataOrNull(
     chatId: Long = 0L,
     clientData: String? = null
@@ -2033,12 +1467,6 @@ suspend fun TdAbsHandler.setChatClientDataOrNull(
     )
 )
 
-/**
- * Changes client data associated with a chat
- *
- * @chatId - Chat identifier
- * @clientData - New value of client_data
- */
 fun TdAbsHandler.setChatClientData(
     chatId: Long = 0L,
     clientData: String? = null,
@@ -2068,14 +1496,6 @@ suspend fun TdAbsHandler.setChatDescription(
     )
 )
 
-/**
- * Changes information about a chat
- * Available for basic groups, supergroups, and channels
- * Requires can_change_info rights
- *
- * @chatId - Identifier of the chat
- * @description - New chat description
- */
 suspend fun TdAbsHandler.setChatDescriptionOrNull(
     chatId: Long = 0L,
     description: String? = null
@@ -2086,14 +1506,6 @@ suspend fun TdAbsHandler.setChatDescriptionOrNull(
     )
 )
 
-/**
- * Changes information about a chat
- * Available for basic groups, supergroups, and channels
- * Requires can_change_info rights
- *
- * @chatId - Identifier of the chat
- * @description - New chat description
- */
 fun TdAbsHandler.setChatDescription(
     chatId: Long = 0L,
     description: String? = null,
@@ -2127,18 +1539,6 @@ suspend fun TdAbsHandler.setChatDiscussionGroup(
     )
 )
 
-/**
- * Changes the discussion group of a channel chat
- * Requires can_change_info rights in the channel if it is specified
- *
- * @chatId - Identifier of the channel chat
- *           Pass 0 to remove a link from the supergroup passed in the second argument to a linked channel chat (requires can_pin_messages rights in the supergroup)
- * @discussionChatId - Identifier of a new channel's discussion group
- *                     Use 0 to remove the discussion group
- *                     Use the method getSuitableDiscussionChats to find all suitable groups
- *                     Basic group chats needs to be first upgraded to supergroup chats
- *                     If new chat members don't have access to old messages in the supergroup, then toggleSupergroupIsAllHistoryAvailable needs to be used first to change that
- */
 suspend fun TdAbsHandler.setChatDiscussionGroupOrNull(
     chatId: Long = 0L,
     discussionChatId: Long = 0L
@@ -2149,18 +1549,6 @@ suspend fun TdAbsHandler.setChatDiscussionGroupOrNull(
     )
 )
 
-/**
- * Changes the discussion group of a channel chat
- * Requires can_change_info rights in the channel if it is specified
- *
- * @chatId - Identifier of the channel chat
- *           Pass 0 to remove a link from the supergroup passed in the second argument to a linked channel chat (requires can_pin_messages rights in the supergroup)
- * @discussionChatId - Identifier of a new channel's discussion group
- *                     Use 0 to remove the discussion group
- *                     Use the method getSuitableDiscussionChats to find all suitable groups
- *                     Basic group chats needs to be first upgraded to supergroup chats
- *                     If new chat members don't have access to old messages in the supergroup, then toggleSupergroupIsAllHistoryAvailable needs to be used first to change that
- */
 fun TdAbsHandler.setChatDiscussionGroup(
     chatId: Long = 0L,
     discussionChatId: Long = 0L,
@@ -2190,14 +1578,6 @@ suspend fun TdAbsHandler.setChatLocation(
     )
 )
 
-/**
- * Changes the location of a chat
- * Available only for some location-based supergroups, use supergroupFullInfo.can_set_location to check whether the method is allowed to use
- *
- * @chatId - Chat identifier
- * @location - New location for the chat
- *             Must be valid and not null
- */
 suspend fun TdAbsHandler.setChatLocationOrNull(
     chatId: Long = 0L,
     location: ChatLocation? = null
@@ -2208,14 +1588,6 @@ suspend fun TdAbsHandler.setChatLocationOrNull(
     )
 )
 
-/**
- * Changes the location of a chat
- * Available only for some location-based supergroups, use supergroupFullInfo.can_set_location to check whether the method is allowed to use
- *
- * @chatId - Chat identifier
- * @location - New location for the chat
- *             Must be valid and not null
- */
 fun TdAbsHandler.setChatLocation(
     chatId: Long = 0L,
     location: ChatLocation? = null,
@@ -2246,15 +1618,6 @@ suspend fun TdAbsHandler.setChatSlowModeDelay(
     )
 )
 
-/**
- * Changes the slow mode delay of a chat
- * Available only for supergroups
- * Requires can_restrict_members rights
- *
- * @chatId - Chat identifier
- * @slowModeDelay - New slow mode delay for the chat
- *                  Must be one of 0, 10, 30, 60, 300, 900, 3600
- */
 suspend fun TdAbsHandler.setChatSlowModeDelayOrNull(
     chatId: Long = 0L,
     slowModeDelay: Int = 0
@@ -2265,15 +1628,6 @@ suspend fun TdAbsHandler.setChatSlowModeDelayOrNull(
     )
 )
 
-/**
- * Changes the slow mode delay of a chat
- * Available only for supergroups
- * Requires can_restrict_members rights
- *
- * @chatId - Chat identifier
- * @slowModeDelay - New slow mode delay for the chat
- *                  Must be one of 0, 10, 30, 60, 300, 900, 3600
- */
 fun TdAbsHandler.setChatSlowModeDelay(
     chatId: Long = 0L,
     slowModeDelay: Int = 0,
@@ -2305,14 +1659,6 @@ suspend fun TdAbsHandler.pinChatMessage(
     )
 )
 
-/**
- * Pins a message in a chat
- * Requires can_pin_messages rights
- *
- * @chatId - Identifier of the chat
- * @messageId - Identifier of the new pinned message
- * @disableNotification - True, if there should be no notification about the pinned message
- */
 suspend fun TdAbsHandler.pinChatMessageOrNull(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -2325,14 +1671,6 @@ suspend fun TdAbsHandler.pinChatMessageOrNull(
     )
 )
 
-/**
- * Pins a message in a chat
- * Requires can_pin_messages rights
- *
- * @chatId - Identifier of the chat
- * @messageId - Identifier of the new pinned message
- * @disableNotification - True, if there should be no notification about the pinned message
- */
 fun TdAbsHandler.pinChatMessage(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -2360,12 +1698,6 @@ suspend fun TdAbsHandler.unpinChatMessage(
     )
 )
 
-/**
- * Removes the pinned message from a chat
- * Requires can_pin_messages rights in the group or channel
- *
- * @chatId - Identifier of the chat
- */
 suspend fun TdAbsHandler.unpinChatMessageOrNull(
     chatId: Long = 0L
 ) = syncOrNull<Ok>(
@@ -2374,12 +1706,6 @@ suspend fun TdAbsHandler.unpinChatMessageOrNull(
     )
 )
 
-/**
- * Removes the pinned message from a chat
- * Requires can_pin_messages rights in the group or channel
- *
- * @chatId - Identifier of the chat
- */
 fun TdAbsHandler.unpinChatMessage(
     chatId: Long = 0L,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -2403,12 +1729,6 @@ suspend fun TdAbsHandler.joinChat(
     )
 )
 
-/**
- * Adds current user as a new member to a chat
- * Private and secret chats can't be joined using this method
- *
- * @chatId - Chat identifier
- */
 suspend fun TdAbsHandler.joinChatOrNull(
     chatId: Long = 0L
 ) = syncOrNull<Ok>(
@@ -2417,12 +1737,6 @@ suspend fun TdAbsHandler.joinChatOrNull(
     )
 )
 
-/**
- * Adds current user as a new member to a chat
- * Private and secret chats can't be joined using this method
- *
- * @chatId - Chat identifier
- */
 fun TdAbsHandler.joinChat(
     chatId: Long = 0L,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -2446,12 +1760,6 @@ suspend fun TdAbsHandler.leaveChat(
     )
 )
 
-/**
- * Removes current user from chat members
- * Private and secret chats can't be left using this method
- *
- * @chatId - Chat identifier
- */
 suspend fun TdAbsHandler.leaveChatOrNull(
     chatId: Long = 0L
 ) = syncOrNull<Ok>(
@@ -2460,12 +1768,6 @@ suspend fun TdAbsHandler.leaveChatOrNull(
     )
 )
 
-/**
- * Removes current user from chat members
- * Private and secret chats can't be left using this method
- *
- * @chatId - Chat identifier
- */
 fun TdAbsHandler.leaveChat(
     chatId: Long = 0L,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -2497,16 +1799,6 @@ suspend fun TdAbsHandler.addChatMember(
     )
 )
 
-/**
- * Adds a new member to a chat
- * Members can't be added to private or secret chats
- * Members will not be added until the chat state has been synchronized with the server
- *
- * @chatId - Chat identifier
- * @userId - Identifier of the user
- * @forwardLimit - The number of earlier messages from the chat to be forwarded to the new member
- *                 Ignored for supergroups and channels
- */
 suspend fun TdAbsHandler.addChatMemberOrNull(
     chatId: Long = 0L,
     userId: Int = 0,
@@ -2519,16 +1811,6 @@ suspend fun TdAbsHandler.addChatMemberOrNull(
     )
 )
 
-/**
- * Adds a new member to a chat
- * Members can't be added to private or secret chats
- * Members will not be added until the chat state has been synchronized with the server
- *
- * @chatId - Chat identifier
- * @userId - Identifier of the user
- * @forwardLimit - The number of earlier messages from the chat to be forwarded to the new member
- *                 Ignored for supergroups and channels
- */
 fun TdAbsHandler.addChatMember(
     chatId: Long = 0L,
     userId: Int = 0,
@@ -2562,16 +1844,6 @@ suspend fun TdAbsHandler.addChatMembers(
     )
 )
 
-/**
- * Adds multiple new members to a chat
- * Currently this option is only available for supergroups and channels
- * This option can't be used to join a chat
- * Members can't be added to a channel if it has more than 200 members
- * Members will not be added until the chat state has been synchronized with the server
- *
- * @chatId - Chat identifier
- * @userIds - Identifiers of the users to be added to the chat
- */
 suspend fun TdAbsHandler.addChatMembersOrNull(
     chatId: Long = 0L,
     userIds: IntArray = intArrayOf()
@@ -2582,16 +1854,6 @@ suspend fun TdAbsHandler.addChatMembersOrNull(
     )
 )
 
-/**
- * Adds multiple new members to a chat
- * Currently this option is only available for supergroups and channels
- * This option can't be used to join a chat
- * Members can't be added to a channel if it has more than 200 members
- * Members will not be added until the chat state has been synchronized with the server
- *
- * @chatId - Chat identifier
- * @userIds - Identifiers of the users to be added to the chat
- */
 fun TdAbsHandler.addChatMembers(
     chatId: Long = 0L,
     userIds: IntArray = intArrayOf(),
@@ -2625,16 +1887,6 @@ suspend fun TdAbsHandler.setChatMemberStatus(
     )
 )
 
-/**
- * Changes the status of a chat member, needs appropriate privileges
- * This function is currently not suitable for adding new members to the chat and transferring chat ownership
- * Instead, use addChatMember or transferChatOwnership
- * The chat member status will not be changed until it has been synchronized with the server
- *
- * @chatId - Chat identifier
- * @userId - User identifier
- * @status - The new status of the member in the chat
- */
 suspend fun TdAbsHandler.setChatMemberStatusOrNull(
     chatId: Long = 0L,
     userId: Int = 0,
@@ -2647,16 +1899,6 @@ suspend fun TdAbsHandler.setChatMemberStatusOrNull(
     )
 )
 
-/**
- * Changes the status of a chat member, needs appropriate privileges
- * This function is currently not suitable for adding new members to the chat and transferring chat ownership
- * Instead, use addChatMember or transferChatOwnership
- * The chat member status will not be changed until it has been synchronized with the server
- *
- * @chatId - Chat identifier
- * @userId - User identifier
- * @status - The new status of the member in the chat
- */
 fun TdAbsHandler.setChatMemberStatus(
     chatId: Long = 0L,
     userId: Int = 0,
@@ -2693,17 +1935,6 @@ suspend fun TdAbsHandler.transferChatOwnership(
     )
 )
 
-/**
- * Changes the owner of a chat
- * The current user must be a current owner of the chat
- * Use the method canTransferOwnership to check whether the ownership can be transferred from the current session
- * Available only for supergroups and channel chats
- *
- * @chatId - Chat identifier
- * @userId - Identifier of the user to which transfer the ownership
- *           The ownership can't be transferred to a bot or to a deleted user
- * @password - The password of the current user
- */
 suspend fun TdAbsHandler.transferChatOwnershipOrNull(
     chatId: Long = 0L,
     userId: Int = 0,
@@ -2716,17 +1947,6 @@ suspend fun TdAbsHandler.transferChatOwnershipOrNull(
     )
 )
 
-/**
- * Changes the owner of a chat
- * The current user must be a current owner of the chat
- * Use the method canTransferOwnership to check whether the ownership can be transferred from the current session
- * Available only for supergroups and channel chats
- *
- * @chatId - Chat identifier
- * @userId - Identifier of the user to which transfer the ownership
- *           The ownership can't be transferred to a bot or to a deleted user
- * @password - The password of the current user
- */
 fun TdAbsHandler.transferChatOwnership(
     chatId: Long = 0L,
     userId: Int = 0,
@@ -2756,12 +1976,6 @@ suspend fun TdAbsHandler.getChatMember(
     )
 )
 
-/**
- * Returns information about a single member of a chat
- *
- * @chatId - Chat identifier
- * @userId - User identifier
- */
 suspend fun TdAbsHandler.getChatMemberOrNull(
     chatId: Long = 0L,
     userId: Int = 0
@@ -2772,12 +1986,6 @@ suspend fun TdAbsHandler.getChatMemberOrNull(
     )
 )
 
-/**
- * Returns information about a single member of a chat
- *
- * @chatId - Chat identifier
- * @userId - User identifier
- */
 fun TdAbsHandler.getChatMember(
     chatId: Long = 0L,
     userId: Int = 0,
@@ -2813,16 +2021,6 @@ suspend fun TdAbsHandler.searchChatMembers(
     )
 )
 
-/**
- * Searches for a specified query in the first name, last name and username of the members of a specified chat
- * Requires administrator rights in channels
- *
- * @chatId - Chat identifier
- * @query - Query to search for
- * @limit - The maximum number of users to be returned
- * @filter - The type of users to return
- *           By default, chatMembersFilterMembers
- */
 suspend fun TdAbsHandler.searchChatMembersOrNull(
     chatId: Long = 0L,
     query: String? = null,
@@ -2837,16 +2035,6 @@ suspend fun TdAbsHandler.searchChatMembersOrNull(
     )
 )
 
-/**
- * Searches for a specified query in the first name, last name and username of the members of a specified chat
- * Requires administrator rights in channels
- *
- * @chatId - Chat identifier
- * @query - Query to search for
- * @limit - The maximum number of users to be returned
- * @filter - The type of users to return
- *           By default, chatMembersFilterMembers
- */
 fun TdAbsHandler.searchChatMembers(
     chatId: Long = 0L,
     query: String? = null,
@@ -2875,11 +2063,6 @@ suspend fun TdAbsHandler.getChatAdministrators(
     )
 )
 
-/**
- * Returns a list of administrators of the chat with their custom titles
- *
- * @chatId - Chat identifier
- */
 suspend fun TdAbsHandler.getChatAdministratorsOrNull(
     chatId: Long = 0L
 ) = syncOrNull<ChatAdministrators>(
@@ -2888,11 +2071,6 @@ suspend fun TdAbsHandler.getChatAdministratorsOrNull(
     )
 )
 
-/**
- * Returns a list of administrators of the chat with their custom titles
- *
- * @chatId - Chat identifier
- */
 fun TdAbsHandler.getChatAdministrators(
     chatId: Long = 0L,
     block: (suspend CoroutineScope.(ChatAdministrators) -> Unit)
@@ -2918,12 +2096,6 @@ suspend fun TdAbsHandler.getChatNotificationSettingsExceptions(
     )
 )
 
-/**
- * Returns list of chats with non-default notification settings
- *
- * @scope - If specified, only chats from the specified scope will be returned
- * @compareSound - If true, also chats with non-default sound will be returned
- */
 suspend fun TdAbsHandler.getChatNotificationSettingsExceptionsOrNull(
     scope: NotificationSettingsScope? = null,
     compareSound: Boolean = false
@@ -2934,12 +2106,6 @@ suspend fun TdAbsHandler.getChatNotificationSettingsExceptionsOrNull(
     )
 )
 
-/**
- * Returns list of chats with non-default notification settings
- *
- * @scope - If specified, only chats from the specified scope will be returned
- * @compareSound - If true, also chats with non-default sound will be returned
- */
 fun TdAbsHandler.getChatNotificationSettingsExceptions(
     scope: NotificationSettingsScope? = null,
     compareSound: Boolean = false,
@@ -2967,12 +2133,6 @@ suspend fun TdAbsHandler.setPinnedChats(
     )
 )
 
-/**
- * Changes the order of pinned chats
- *
- * @chatList - Chat list in which to change the order of pinned chats
- * @chatIds - The new list of pinned chats
- */
 suspend fun TdAbsHandler.setPinnedChatsOrNull(
     chatList: ChatList? = null,
     chatIds: LongArray = longArrayOf()
@@ -2983,12 +2143,6 @@ suspend fun TdAbsHandler.setPinnedChatsOrNull(
     )
 )
 
-/**
- * Changes the order of pinned chats
- *
- * @chatList - Chat list in which to change the order of pinned chats
- * @chatIds - The new list of pinned chats
- */
 fun TdAbsHandler.setPinnedChats(
     chatList: ChatList? = null,
     chatIds: LongArray = longArrayOf(),
@@ -3016,14 +2170,6 @@ suspend fun TdAbsHandler.generateChatInviteLink(
     )
 )
 
-/**
- * Generates a new invite link for a chat
- * The previously generated link is revoked
- * Available for basic groups, supergroups, and channels
- * Requires administrator privileges and can_invite_users right
- *
- * @chatId - Chat identifier
- */
 suspend fun TdAbsHandler.generateChatInviteLinkOrNull(
     chatId: Long = 0L
 ) = syncOrNull<ChatInviteLink>(
@@ -3032,14 +2178,6 @@ suspend fun TdAbsHandler.generateChatInviteLinkOrNull(
     )
 )
 
-/**
- * Generates a new invite link for a chat
- * The previously generated link is revoked
- * Available for basic groups, supergroups, and channels
- * Requires administrator privileges and can_invite_users right
- *
- * @chatId - Chat identifier
- */
 fun TdAbsHandler.generateChatInviteLink(
     chatId: Long = 0L,
     block: (suspend CoroutineScope.(ChatInviteLink) -> Unit)
@@ -3062,11 +2200,6 @@ suspend fun TdAbsHandler.checkChatInviteLink(
     )
 )
 
-/**
- * Checks the validity of an invite link for a chat and returns information about the corresponding chat
- *
- * @inviteLink - Invite link to be checked
- */
 suspend fun TdAbsHandler.checkChatInviteLinkOrNull(
     inviteLink: String? = null
 ) = syncOrNull<ChatInviteLinkInfo>(
@@ -3075,11 +2208,6 @@ suspend fun TdAbsHandler.checkChatInviteLinkOrNull(
     )
 )
 
-/**
- * Checks the validity of an invite link for a chat and returns information about the corresponding chat
- *
- * @inviteLink - Invite link to be checked
- */
 fun TdAbsHandler.checkChatInviteLink(
     inviteLink: String? = null,
     block: (suspend CoroutineScope.(ChatInviteLinkInfo) -> Unit)
@@ -3103,12 +2231,6 @@ suspend fun TdAbsHandler.joinChatByInviteLink(
     )
 )
 
-/**
- * Uses an invite link to add the current user to the chat if possible
- * The new member will not be added until the chat state has been synchronized with the server
- *
- * @inviteLink - Invite link to import
- */
 suspend fun TdAbsHandler.joinChatByInviteLinkOrNull(
     inviteLink: String? = null
 ) = syncOrNull<Chat>(
@@ -3117,12 +2239,6 @@ suspend fun TdAbsHandler.joinChatByInviteLinkOrNull(
     )
 )
 
-/**
- * Uses an invite link to add the current user to the chat if possible
- * The new member will not be added until the chat state has been synchronized with the server
- *
- * @inviteLink - Invite link to import
- */
 fun TdAbsHandler.joinChatByInviteLink(
     inviteLink: String? = null,
     block: (suspend CoroutineScope.(Chat) -> Unit)
@@ -3158,18 +2274,6 @@ suspend fun TdAbsHandler.getSupergroupMembers(
     )
 )
 
-/**
- * Returns information about members or banned users in a supergroup or channel
- * Can be used only if SupergroupFullInfo.can_get_members == true
- * Additionally, administrator privileges may be required for some filters
- *
- * @supergroupId - Identifier of the supergroup or channel
- * @filter - The type of users to return
- *           By default, supergroupMembersRecent
- * @offset - Number of users to skip
- * @limit - The maximum number of users be returned
- *          Up to 200
- */
 suspend fun TdAbsHandler.getSupergroupMembersOrNull(
     supergroupId: Int = 0,
     filter: SupergroupMembersFilter? = null,
@@ -3184,18 +2288,6 @@ suspend fun TdAbsHandler.getSupergroupMembersOrNull(
     )
 )
 
-/**
- * Returns information about members or banned users in a supergroup or channel
- * Can be used only if SupergroupFullInfo.can_get_members == true
- * Additionally, administrator privileges may be required for some filters
- *
- * @supergroupId - Identifier of the supergroup or channel
- * @filter - The type of users to return
- *           By default, supergroupMembersRecent
- * @offset - Number of users to skip
- * @limit - The maximum number of users be returned
- *          Up to 200
- */
 fun TdAbsHandler.getSupergroupMembers(
     supergroupId: Int = 0,
     filter: SupergroupMembersFilter? = null,
@@ -3246,23 +2338,6 @@ suspend fun TdAbsHandler.getChatEventLog(
     )
 )
 
-/**
- * Returns a list of service actions taken by chat members and administrators in the last 48 hours
- * Available only for supergroups and channels
- * Requires administrator rights
- * Returns results in reverse chronological order (i
- * E., in order of decreasing event_id)
- *
- * @chatId - Chat identifier
- * @query - Search query by which to filter events
- * @fromEventId - Identifier of an event from which to return results
- *                Use 0 to get results from the latest events
- * @limit - The maximum number of events to return
- * @filters - The types of events to return
- *            By default, all types will be returned
- * @userIds - User identifiers by which to filter events
- *            By default, events relating to all users will be returned
- */
 suspend fun TdAbsHandler.getChatEventLogOrNull(
     chatId: Long = 0L,
     query: String? = null,
@@ -3281,23 +2356,6 @@ suspend fun TdAbsHandler.getChatEventLogOrNull(
     )
 )
 
-/**
- * Returns a list of service actions taken by chat members and administrators in the last 48 hours
- * Available only for supergroups and channels
- * Requires administrator rights
- * Returns results in reverse chronological order (i
- * E., in order of decreasing event_id)
- *
- * @chatId - Chat identifier
- * @query - Search query by which to filter events
- * @fromEventId - Identifier of an event from which to return results
- *                Use 0 to get results from the latest events
- * @limit - The maximum number of events to return
- * @filters - The types of events to return
- *            By default, all types will be returned
- * @userIds - User identifiers by which to filter events
- *            By default, events relating to all users will be returned
- */
 fun TdAbsHandler.getChatEventLog(
     chatId: Long = 0L,
     query: String? = null,
@@ -3330,11 +2388,6 @@ suspend fun TdAbsHandler.removeChatActionBar(
     )
 )
 
-/**
- * Removes a chat action bar without any other action
- *
- * @chatId - Chat identifier
- */
 suspend fun TdAbsHandler.removeChatActionBarOrNull(
     chatId: Long = 0L
 ) = syncOrNull<Ok>(
@@ -3343,11 +2396,6 @@ suspend fun TdAbsHandler.removeChatActionBarOrNull(
     )
 )
 
-/**
- * Removes a chat action bar without any other action
- *
- * @chatId - Chat identifier
- */
 fun TdAbsHandler.removeChatActionBar(
     chatId: Long = 0L,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -3377,14 +2425,6 @@ suspend fun TdAbsHandler.reportChat(
     )
 )
 
-/**
- * Reports a chat to the Telegram moderators
- * Supported only for supergroups, channels, or private chats with bots, since other chats can't be checked by moderators, or when the report is done from the chat action bar
- *
- * @chatId - Chat identifier
- * @reason - The reason for reporting the chat
- * @messageIds - Identifiers of reported messages, if any
- */
 suspend fun TdAbsHandler.reportChatOrNull(
     chatId: Long = 0L,
     reason: ChatReportReason? = null,
@@ -3397,14 +2437,6 @@ suspend fun TdAbsHandler.reportChatOrNull(
     )
 )
 
-/**
- * Reports a chat to the Telegram moderators
- * Supported only for supergroups, channels, or private chats with bots, since other chats can't be checked by moderators, or when the report is done from the chat action bar
- *
- * @chatId - Chat identifier
- * @reason - The reason for reporting the chat
- * @messageIds - Identifiers of reported messages, if any
- */
 fun TdAbsHandler.reportChat(
     chatId: Long = 0L,
     reason: ChatReportReason? = null,
@@ -3439,15 +2471,6 @@ suspend fun TdAbsHandler.getChatStatisticsUrl(
     )
 )
 
-/**
- * Returns an HTTP URL with the chat statistics
- * Currently this method can be used only for channels
- * Can be used only if SupergroupFullInfo.can_view_statistics == true
- *
- * @chatId - Chat identifier
- * @parameters - Parameters from "tg://statsrefresh?params=******" link
- * @isDark - Pass true if a URL with the dark theme must be returned
- */
 suspend fun TdAbsHandler.getChatStatisticsUrlOrNull(
     chatId: Long = 0L,
     parameters: String? = null,
@@ -3460,15 +2483,6 @@ suspend fun TdAbsHandler.getChatStatisticsUrlOrNull(
     )
 )
 
-/**
- * Returns an HTTP URL with the chat statistics
- * Currently this method can be used only for channels
- * Can be used only if SupergroupFullInfo.can_view_statistics == true
- *
- * @chatId - Chat identifier
- * @parameters - Parameters from "tg://statsrefresh?params=******" link
- * @isDark - Pass true if a URL with the dark theme must be returned
- */
 fun TdAbsHandler.getChatStatisticsUrl(
     chatId: Long = 0L,
     parameters: String? = null,

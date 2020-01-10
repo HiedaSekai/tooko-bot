@@ -1,16 +1,16 @@
-package tooko.main.utils.nsfw;
+package tookox.core.nsfw;
 
 import org.bson.*;
 import org.bson.codecs.*;
 
-public enum TCRC {
+public enum NSRC {
 
-    POLITICS, SPAM, PORN, AD;
+    DRAWINGS, HENTAI, PORN, SEXY;
 
-    public static class CODEC implements Codec<TCRC> {
+    public static class CODEC implements Codec<NSRC> {
 
         @Override
-        public TCRC decode(BsonReader bsonReader, DecoderContext decoderContext) {
+        public NSRC decode(BsonReader bsonReader, DecoderContext decoderContext) {
 
             if (bsonReader.getCurrentBsonType() == BsonType.STRING) {
 
@@ -28,13 +28,13 @@ public enum TCRC {
                 switch (bsonReader.readInt32()) {
 
                     case 0:
-                        return POLITICS;
+                        return DRAWINGS;
                     case 1:
-                        return SPAM;
+                        return HENTAI;
                     case 2:
                         return PORN;
                     case 3:
-                        return AD;
+                        return SEXY;
 
                 }
 
@@ -45,20 +45,20 @@ public enum TCRC {
         }
 
         @Override
-        public void encode(BsonWriter bsonWriter, TCRC tcrc, EncoderContext encoderContext) {
+        public void encode(BsonWriter bsonWriter, NSRC nsrc, EncoderContext encoderContext) {
 
-            switch (tcrc) {
+            switch (nsrc) {
 
-                case POLITICS:
+                case DRAWINGS:
                     bsonWriter.writeInt32(0);
                     break;
-                case SPAM:
+                case HENTAI:
                     bsonWriter.writeInt32(1);
                     break;
                 case PORN:
                     bsonWriter.writeInt32(2);
                     break;
-                case AD:
+                case SEXY:
                     bsonWriter.writeInt32(3);
                     break;
 
@@ -67,9 +67,9 @@ public enum TCRC {
         }
 
         @Override
-        public Class<TCRC> getEncoderClass() {
+        public Class<NSRC> getEncoderClass() {
 
-            return TCRC.class;
+            return NSRC.class;
 
         }
 

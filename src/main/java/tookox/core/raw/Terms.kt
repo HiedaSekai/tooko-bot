@@ -21,11 +21,6 @@ suspend fun TdAbsHandler.acceptTermsOfService(
     )
 )
 
-/**
- * Accepts Telegram terms of services
- *
- * @termsOfServiceId - Terms of service identifier
- */
 suspend fun TdAbsHandler.acceptTermsOfServiceOrNull(
     termsOfServiceId: String? = null
 ) = syncOrNull<Ok>(
@@ -34,11 +29,6 @@ suspend fun TdAbsHandler.acceptTermsOfServiceOrNull(
     )
 )
 
-/**
- * Accepts Telegram terms of services
- *
- * @termsOfServiceId - Terms of service identifier
- */
 fun TdAbsHandler.acceptTermsOfService(
     termsOfServiceId: String? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)

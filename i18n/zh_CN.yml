@@ -131,6 +131,7 @@ PM_PAYLOADS: 子欢迎消息列表
 PM_PAYLOAD: 子欢迎消息
 PM_PAYLOAD_INVALID: |-
   无效的 Payload: 仅允许 [a-zA-Z_-] 且最多64字.
+PM_PAYLOAD_UNDEFINED: 该子欢迎消息未设定.
 USER_ID: 用户ID
 USER_ID_NOT_FOUND: 找不到 ID {} 对应的用户.
 USER_NAME: 用户名称

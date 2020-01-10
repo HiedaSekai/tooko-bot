@@ -30,14 +30,6 @@ suspend fun TdAbsHandler.validateOrderInfo(
     )
 )
 
-/**
- * Validates the order information provided by a user and returns the available shipping options for a flexible invoice
- *
- * @chatId - Chat identifier of the Invoice message
- * @messageId - Message identifier
- * @orderInfo - The order information, provided by the user
- * @allowSave - True, if the order information can be saved
- */
 suspend fun TdAbsHandler.validateOrderInfoOrNull(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -52,14 +44,6 @@ suspend fun TdAbsHandler.validateOrderInfoOrNull(
     )
 )
 
-/**
- * Validates the order information provided by a user and returns the available shipping options for a flexible invoice
- *
- * @chatId - Chat identifier of the Invoice message
- * @messageId - Message identifier
- * @orderInfo - The order information, provided by the user
- * @allowSave - True, if the order information can be saved
- */
 fun TdAbsHandler.validateOrderInfo(
     chatId: Long = 0L,
     messageId: Long = 0L,

@@ -18,13 +18,13 @@ import org.bson.codecs.pojo.SubClassPropertyCodecProvider
 import org.slf4j.LoggerFactory
 import org.yaml.snakeyaml.Yaml
 import td.TdApi
-import tookox.core.env.Env
-import tooko.main.utils.nsfw.NSRC
-import tooko.main.utils.nsfw.TCRC
 import tookox.core.*
+import tookox.core.bots.*
 import tookox.core.client.*
 import tookox.core.db.*
+import tookox.core.env.*
 import tookox.core.funs.*
+import tookox.core.nsfw.*
 import tookox.core.raw.*
 import tookox.core.utils.*
 import java.io.File
@@ -49,9 +49,9 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
         addHandler(StickerExport())
 
-        //addHandler(CreateBot())
+        addHandler(CreateBot())
 
-        //addHandler(BotPanel())
+        addHandler(BotPanel())
 
         addHandler(LICENCE())
 
@@ -63,17 +63,9 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
         twitter = TwitterBot().apply { start() }
 
-        val allBots = BotData.DATA.all
-
-        if (allBots.isNotEmpty()) {
-
-            for (data in allBots) BotImage.start(data)
-
-        }
-
-        EventTask().start()
-
          */
+
+        BotData.DATA.all.forEach { BotImage.start(it) }
 
     }
 
@@ -87,7 +79,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
     override suspend fun onLaunch(userId: Int, chatId: Long, message: TdApi.Message) {
 
-        val L = userId.langForUserId
+        val L = userId.langFor
 
         sudo makeHtml (if (Env.isAdmin(userId)) L.HELP else "${L.HELP}\n\n${L.PUBLIC_WARN}") sendTo chatId
 
@@ -95,7 +87,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
     override suspend fun onUndefinedFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
 
-        val L = userId.langForUserId
+        val L = userId.langFor
 
         sudo make L.CNF sendTo chatId
 

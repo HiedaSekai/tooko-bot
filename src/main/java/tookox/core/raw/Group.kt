@@ -22,12 +22,6 @@ suspend fun TdAbsHandler.getBasicGroup(
     )
 )
 
-/**
- * Returns information about a basic group by its identifier
- * This is an offline request if the current user is not a bot
- *
- * @basicGroupId - Basic group identifier
- */
 suspend fun TdAbsHandler.getBasicGroupOrNull(
     basicGroupId: Int = 0
 ) = syncOrNull<BasicGroup>(
@@ -36,12 +30,6 @@ suspend fun TdAbsHandler.getBasicGroupOrNull(
     )
 )
 
-/**
- * Returns information about a basic group by its identifier
- * This is an offline request if the current user is not a bot
- *
- * @basicGroupId - Basic group identifier
- */
 fun TdAbsHandler.getBasicGroup(
     basicGroupId: Int = 0,
     block: (suspend CoroutineScope.(BasicGroup) -> Unit)
@@ -64,11 +52,6 @@ suspend fun TdAbsHandler.getBasicGroupFullInfo(
     )
 )
 
-/**
- * Returns full information about a basic group by its identifier
- *
- * @basicGroupId - Basic group identifier
- */
 suspend fun TdAbsHandler.getBasicGroupFullInfoOrNull(
     basicGroupId: Int = 0
 ) = syncOrNull<BasicGroupFullInfo>(
@@ -77,11 +60,6 @@ suspend fun TdAbsHandler.getBasicGroupFullInfoOrNull(
     )
 )
 
-/**
- * Returns full information about a basic group by its identifier
- *
- * @basicGroupId - Basic group identifier
- */
 fun TdAbsHandler.getBasicGroupFullInfo(
     basicGroupId: Int = 0,
     block: (suspend CoroutineScope.(BasicGroupFullInfo) -> Unit)

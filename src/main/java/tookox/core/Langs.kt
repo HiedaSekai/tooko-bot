@@ -5,8 +5,8 @@ package tookox.core
 import td.TdApi.User
 import tookox.core.env.*
 
-val Number.langForUserId get() = Lang.get(this)
-val User.langForUser get() = Lang.get(this)
+val Number.langFor get() = Lang.get(this)
+val User.langFor get() = Lang.get(this)
 
 fun String.containsChinese(): Boolean {
 

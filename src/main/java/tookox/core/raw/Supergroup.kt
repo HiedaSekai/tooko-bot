@@ -22,12 +22,6 @@ suspend fun TdAbsHandler.getSupergroup(
     )
 )
 
-/**
- * Returns information about a supergroup or a channel by its identifier
- * This is an offline request if the current user is not a bot
- *
- * @supergroupId - Supergroup or channel identifier
- */
 suspend fun TdAbsHandler.getSupergroupOrNull(
     supergroupId: Int = 0
 ) = syncOrNull<Supergroup>(
@@ -36,12 +30,6 @@ suspend fun TdAbsHandler.getSupergroupOrNull(
     )
 )
 
-/**
- * Returns information about a supergroup or a channel by its identifier
- * This is an offline request if the current user is not a bot
- *
- * @supergroupId - Supergroup or channel identifier
- */
 fun TdAbsHandler.getSupergroup(
     supergroupId: Int = 0,
     block: (suspend CoroutineScope.(Supergroup) -> Unit)
@@ -64,11 +52,6 @@ suspend fun TdAbsHandler.getSupergroupFullInfo(
     )
 )
 
-/**
- * Returns full information about a supergroup or a channel by its identifier, cached for up to 1 minute
- *
- * @supergroupId - Supergroup or channel identifier
- */
 suspend fun TdAbsHandler.getSupergroupFullInfoOrNull(
     supergroupId: Int = 0
 ) = syncOrNull<SupergroupFullInfo>(
@@ -77,11 +60,6 @@ suspend fun TdAbsHandler.getSupergroupFullInfoOrNull(
     )
 )
 
-/**
- * Returns full information about a supergroup or a channel by its identifier, cached for up to 1 minute
- *
- * @supergroupId - Supergroup or channel identifier
- */
 fun TdAbsHandler.getSupergroupFullInfo(
     supergroupId: Int = 0,
     block: (suspend CoroutineScope.(SupergroupFullInfo) -> Unit)
@@ -108,13 +86,6 @@ suspend fun TdAbsHandler.setSupergroupUsername(
     )
 )
 
-/**
- * Changes the username of a supergroup or channel, requires owner privileges in the supergroup or channel
- *
- * @supergroupId - Identifier of the supergroup or channel
- * @username - New value of the username
- *             Use an empty string to remove the username
- */
 suspend fun TdAbsHandler.setSupergroupUsernameOrNull(
     supergroupId: Int = 0,
     username: String? = null
@@ -125,13 +96,6 @@ suspend fun TdAbsHandler.setSupergroupUsernameOrNull(
     )
 )
 
-/**
- * Changes the username of a supergroup or channel, requires owner privileges in the supergroup or channel
- *
- * @supergroupId - Identifier of the supergroup or channel
- * @username - New value of the username
- *             Use an empty string to remove the username
- */
 fun TdAbsHandler.setSupergroupUsername(
     supergroupId: Int = 0,
     username: String? = null,
@@ -161,14 +125,6 @@ suspend fun TdAbsHandler.setSupergroupStickerSet(
     )
 )
 
-/**
- * Changes the sticker set of a supergroup
- * Requires can_change_info rights
- *
- * @supergroupId - Identifier of the supergroup
- * @stickerSetId - New value of the supergroup sticker set identifier
- *                 Use 0 to remove the supergroup sticker set
- */
 suspend fun TdAbsHandler.setSupergroupStickerSetOrNull(
     supergroupId: Int = 0,
     stickerSetId: Long = 0L
@@ -179,14 +135,6 @@ suspend fun TdAbsHandler.setSupergroupStickerSetOrNull(
     )
 )
 
-/**
- * Changes the sticker set of a supergroup
- * Requires can_change_info rights
- *
- * @supergroupId - Identifier of the supergroup
- * @stickerSetId - New value of the supergroup sticker set identifier
- *                 Use 0 to remove the supergroup sticker set
- */
 fun TdAbsHandler.setSupergroupStickerSet(
     supergroupId: Int = 0,
     stickerSetId: Long = 0L,
@@ -215,13 +163,6 @@ suspend fun TdAbsHandler.toggleSupergroupSignMessages(
     )
 )
 
-/**
- * Toggles sender signatures messages sent in a channel
- * Requires can_change_info rights
- *
- * @supergroupId - Identifier of the channel
- * @signMessages - New value of sign_messages
- */
 suspend fun TdAbsHandler.toggleSupergroupSignMessagesOrNull(
     supergroupId: Int = 0,
     signMessages: Boolean = false
@@ -232,13 +173,6 @@ suspend fun TdAbsHandler.toggleSupergroupSignMessagesOrNull(
     )
 )
 
-/**
- * Toggles sender signatures messages sent in a channel
- * Requires can_change_info rights
- *
- * @supergroupId - Identifier of the channel
- * @signMessages - New value of sign_messages
- */
 fun TdAbsHandler.toggleSupergroupSignMessages(
     supergroupId: Int = 0,
     signMessages: Boolean = false,
@@ -267,13 +201,6 @@ suspend fun TdAbsHandler.toggleSupergroupIsAllHistoryAvailable(
     )
 )
 
-/**
- * Toggles whether the message history of a supergroup is available to new members
- * Requires can_change_info rights
- *
- * @supergroupId - The identifier of the supergroup
- * @isAllHistoryAvailable - The new value of is_all_history_available
- */
 suspend fun TdAbsHandler.toggleSupergroupIsAllHistoryAvailableOrNull(
     supergroupId: Int = 0,
     isAllHistoryAvailable: Boolean = false
@@ -284,13 +211,6 @@ suspend fun TdAbsHandler.toggleSupergroupIsAllHistoryAvailableOrNull(
     )
 )
 
-/**
- * Toggles whether the message history of a supergroup is available to new members
- * Requires can_change_info rights
- *
- * @supergroupId - The identifier of the supergroup
- * @isAllHistoryAvailable - The new value of is_all_history_available
- */
 fun TdAbsHandler.toggleSupergroupIsAllHistoryAvailable(
     supergroupId: Int = 0,
     isAllHistoryAvailable: Boolean = false,
@@ -323,15 +243,6 @@ suspend fun TdAbsHandler.reportSupergroupSpam(
     )
 )
 
-/**
- * Reports some messages from a user in a supergroup as spam
- * Requires administrator rights in the supergroup
- *
- * @supergroupId - Supergroup identifier
- * @userId - User identifier
- * @messageIds - Identifiers of messages sent in the supergroup by the user
- *               This list must be non-empty
- */
 suspend fun TdAbsHandler.reportSupergroupSpamOrNull(
     supergroupId: Int = 0,
     userId: Int = 0,
@@ -344,15 +255,6 @@ suspend fun TdAbsHandler.reportSupergroupSpamOrNull(
     )
 )
 
-/**
- * Reports some messages from a user in a supergroup as spam
- * Requires administrator rights in the supergroup
- *
- * @supergroupId - Supergroup identifier
- * @userId - User identifier
- * @messageIds - Identifiers of messages sent in the supergroup by the user
- *               This list must be non-empty
- */
 fun TdAbsHandler.reportSupergroupSpam(
     supergroupId: Int = 0,
     userId: Int = 0,
@@ -382,14 +284,6 @@ suspend fun TdAbsHandler.deleteSupergroup(
     )
 )
 
-/**
- * Deletes a supergroup or channel along with all messages in the corresponding chat
- * This will release the supergroup or channel username and remove all members
- * Requires owner privileges in the supergroup or channel
- * Chats with more than 1000 members can't be deleted using this method
- *
- * @supergroupId - Identifier of the supergroup or channel
- */
 suspend fun TdAbsHandler.deleteSupergroupOrNull(
     supergroupId: Int = 0
 ) = syncOrNull<Ok>(
@@ -398,14 +292,6 @@ suspend fun TdAbsHandler.deleteSupergroupOrNull(
     )
 )
 
-/**
- * Deletes a supergroup or channel along with all messages in the corresponding chat
- * This will release the supergroup or channel username and remove all members
- * Requires owner privileges in the supergroup or channel
- * Chats with more than 1000 members can't be deleted using this method
- *
- * @supergroupId - Identifier of the supergroup or channel
- */
 fun TdAbsHandler.deleteSupergroup(
     supergroupId: Int = 0,
     block: (suspend CoroutineScope.(Ok) -> Unit)

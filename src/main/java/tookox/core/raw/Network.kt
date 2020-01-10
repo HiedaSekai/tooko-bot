@@ -25,15 +25,6 @@ suspend fun TdAbsHandler.setNetworkType(
     )
 )
 
-/**
- * Sets the current network type
- * Can be called before authorization
- * Calling this method forces all network connections to reopen, mitigating the delay in switching between different networks, so it should be called whenever the network is changed, even if the network type remains the same
- * Network type is used to check whether the library can use the network at all and also for collecting detailed network data usage statistics
- *
- * @type - The new network type
- *         By default, networkTypeOther
- */
 suspend fun TdAbsHandler.setNetworkTypeOrNull(
     type: NetworkType? = null
 ) = syncOrNull<Ok>(
@@ -42,15 +33,6 @@ suspend fun TdAbsHandler.setNetworkTypeOrNull(
     )
 )
 
-/**
- * Sets the current network type
- * Can be called before authorization
- * Calling this method forces all network connections to reopen, mitigating the delay in switching between different networks, so it should be called whenever the network is changed, even if the network type remains the same
- * Network type is used to check whether the library can use the network at all and also for collecting detailed network data usage statistics
- *
- * @type - The new network type
- *         By default, networkTypeOther
- */
 fun TdAbsHandler.setNetworkType(
     type: NetworkType? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -74,12 +56,6 @@ suspend fun TdAbsHandler.getNetworkStatistics(
     )
 )
 
-/**
- * Returns network data usage statistics
- * Can be called before authorization
- *
- * @onlyCurrent - If true, returns only data for the current library launch
- */
 suspend fun TdAbsHandler.getNetworkStatisticsOrNull(
     onlyCurrent: Boolean = false
 ) = syncOrNull<NetworkStatistics>(
@@ -88,12 +64,6 @@ suspend fun TdAbsHandler.getNetworkStatisticsOrNull(
     )
 )
 
-/**
- * Returns network data usage statistics
- * Can be called before authorization
- *
- * @onlyCurrent - If true, returns only data for the current library launch
- */
 fun TdAbsHandler.getNetworkStatistics(
     onlyCurrent: Boolean = false,
     block: (suspend CoroutineScope.(NetworkStatistics) -> Unit)
@@ -117,12 +87,6 @@ suspend fun TdAbsHandler.addNetworkStatistics(
     )
 )
 
-/**
- * Adds the specified data to data usage statistics
- * Can be called before authorization
- *
- * @entry - The network statistics entry with the data to be added to statistics
- */
 suspend fun TdAbsHandler.addNetworkStatisticsOrNull(
     entry: NetworkStatisticsEntry? = null
 ) = syncOrNull<Ok>(
@@ -131,12 +95,6 @@ suspend fun TdAbsHandler.addNetworkStatisticsOrNull(
     )
 )
 
-/**
- * Adds the specified data to data usage statistics
- * Can be called before authorization
- *
- * @entry - The network statistics entry with the data to be added to statistics
- */
 fun TdAbsHandler.addNetworkStatistics(
     entry: NetworkStatisticsEntry? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -154,18 +112,10 @@ suspend fun TdAbsHandler.resetNetworkStatistics() = sync<Ok>(
     ResetNetworkStatistics()
 )
 
-/**
- * Resets all network data usage statistics to zero
- * Can be called before authorization
- */
 suspend fun TdAbsHandler.resetNetworkStatisticsOrNull() = syncOrNull<Ok>(
     ResetNetworkStatistics()
 )
 
-/**
- * Resets all network data usage statistics to zero
- * Can be called before authorization
- */
 fun TdAbsHandler.resetNetworkStatistics(
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(

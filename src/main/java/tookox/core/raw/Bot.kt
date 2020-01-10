@@ -25,13 +25,6 @@ suspend fun TdAbsHandler.setBotUpdatesStatus(
     )
 )
 
-/**
- * Informs the server about the number of pending bot updates if they haven't been processed for a long time
- * For bots only
- *
- * @pendingUpdateCount - The number of pending updates
- * @errorMessage - The last error message
- */
 suspend fun TdAbsHandler.setBotUpdatesStatusOrNull(
     pendingUpdateCount: Int = 0,
     errorMessage: String? = null
@@ -42,13 +35,6 @@ suspend fun TdAbsHandler.setBotUpdatesStatusOrNull(
     )
 )
 
-/**
- * Informs the server about the number of pending bot updates if they haven't been processed for a long time
- * For bots only
- *
- * @pendingUpdateCount - The number of pending updates
- * @errorMessage - The last error message
- */
 fun TdAbsHandler.setBotUpdatesStatus(
     pendingUpdateCount: Int = 0,
     errorMessage: String? = null,

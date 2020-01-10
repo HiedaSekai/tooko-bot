@@ -26,14 +26,6 @@ suspend fun TdAbsHandler.getStickers(
     )
 )
 
-/**
- * Returns stickers from the installed sticker sets that correspond to a given emoji
- * If the emoji is not empty, favorite and recently used stickers may also be returned
- *
- * @emoji - String representation of emoji
- *          If empty, returns all known installed stickers
- * @limit - The maximum number of stickers to be returned
- */
 suspend fun TdAbsHandler.getStickersOrNull(
     emoji: String? = null,
     limit: Int = 0
@@ -44,14 +36,6 @@ suspend fun TdAbsHandler.getStickersOrNull(
     )
 )
 
-/**
- * Returns stickers from the installed sticker sets that correspond to a given emoji
- * If the emoji is not empty, favorite and recently used stickers may also be returned
- *
- * @emoji - String representation of emoji
- *          If empty, returns all known installed stickers
- * @limit - The maximum number of stickers to be returned
- */
 fun TdAbsHandler.getStickers(
     emoji: String? = null,
     limit: Int = 0,
@@ -79,12 +63,6 @@ suspend fun TdAbsHandler.searchStickers(
     )
 )
 
-/**
- * Searches for stickers from public sticker sets that correspond to a given emoji
- *
- * @emoji - String representation of emoji
- * @limit - The maximum number of stickers to be returned
- */
 suspend fun TdAbsHandler.searchStickersOrNull(
     emoji: String? = null,
     limit: Int = 0
@@ -95,12 +73,6 @@ suspend fun TdAbsHandler.searchStickersOrNull(
     )
 )
 
-/**
- * Searches for stickers from public sticker sets that correspond to a given emoji
- *
- * @emoji - String representation of emoji
- * @limit - The maximum number of stickers to be returned
- */
 fun TdAbsHandler.searchStickers(
     emoji: String? = null,
     limit: Int = 0,
@@ -126,12 +98,6 @@ suspend fun TdAbsHandler.getInstalledStickerSets(
     )
 )
 
-/**
- * Returns a list of installed sticker sets
- *
- * @isMasks - Pass true to return mask sticker sets
- *            Pass false to return ordinary sticker sets
- */
 suspend fun TdAbsHandler.getInstalledStickerSetsOrNull(
     isMasks: Boolean = false
 ) = syncOrNull<StickerSets>(
@@ -140,12 +106,6 @@ suspend fun TdAbsHandler.getInstalledStickerSetsOrNull(
     )
 )
 
-/**
- * Returns a list of installed sticker sets
- *
- * @isMasks - Pass true to return mask sticker sets
- *            Pass false to return ordinary sticker sets
- */
 fun TdAbsHandler.getInstalledStickerSets(
     isMasks: Boolean = false,
     block: (suspend CoroutineScope.(StickerSets) -> Unit)
@@ -175,14 +135,6 @@ suspend fun TdAbsHandler.getArchivedStickerSets(
     )
 )
 
-/**
- * Returns a list of archived sticker sets
- *
- * @isMasks - Pass true to return mask stickers sets
- *            Pass false to return ordinary sticker sets
- * @offsetStickerSetId - Identifier of the sticker set from which to return the result
- * @limit - The maximum number of sticker sets to return
- */
 suspend fun TdAbsHandler.getArchivedStickerSetsOrNull(
     isMasks: Boolean = false,
     offsetStickerSetId: Long = 0L,
@@ -195,14 +147,6 @@ suspend fun TdAbsHandler.getArchivedStickerSetsOrNull(
     )
 )
 
-/**
- * Returns a list of archived sticker sets
- *
- * @isMasks - Pass true to return mask stickers sets
- *            Pass false to return ordinary sticker sets
- * @offsetStickerSetId - Identifier of the sticker set from which to return the result
- * @limit - The maximum number of sticker sets to return
- */
 fun TdAbsHandler.getArchivedStickerSets(
     isMasks: Boolean = false,
     offsetStickerSetId: Long = 0L,
@@ -223,16 +167,10 @@ suspend fun TdAbsHandler.getTrendingStickerSets() = sync<StickerSets>(
     GetTrendingStickerSets()
 )
 
-/**
- * Returns a list of trending sticker sets
- */
 suspend fun TdAbsHandler.getTrendingStickerSetsOrNull() = syncOrNull<StickerSets>(
     GetTrendingStickerSets()
 )
 
-/**
- * Returns a list of trending sticker sets
- */
 fun TdAbsHandler.getTrendingStickerSets(
     block: (suspend CoroutineScope.(StickerSets) -> Unit)
 ) = send(
@@ -253,12 +191,6 @@ suspend fun TdAbsHandler.getAttachedStickerSets(
     )
 )
 
-/**
- * Returns a list of sticker sets attached to a file
- * Currently only photos and videos can have attached sticker sets
- *
- * @fileId - File identifier
- */
 suspend fun TdAbsHandler.getAttachedStickerSetsOrNull(
     fileId: Int = 0
 ) = syncOrNull<StickerSets>(
@@ -267,12 +199,6 @@ suspend fun TdAbsHandler.getAttachedStickerSetsOrNull(
     )
 )
 
-/**
- * Returns a list of sticker sets attached to a file
- * Currently only photos and videos can have attached sticker sets
- *
- * @fileId - File identifier
- */
 fun TdAbsHandler.getAttachedStickerSets(
     fileId: Int = 0,
     block: (suspend CoroutineScope.(StickerSets) -> Unit)
@@ -295,11 +221,6 @@ suspend fun TdAbsHandler.getStickerSet(
     )
 )
 
-/**
- * Returns information about a sticker set by its identifier
- *
- * @setId - Identifier of the sticker set
- */
 suspend fun TdAbsHandler.getStickerSetOrNull(
     setId: Long = 0L
 ) = syncOrNull<StickerSet>(
@@ -308,11 +229,6 @@ suspend fun TdAbsHandler.getStickerSetOrNull(
     )
 )
 
-/**
- * Returns information about a sticker set by its identifier
- *
- * @setId - Identifier of the sticker set
- */
 fun TdAbsHandler.getStickerSet(
     setId: Long = 0L,
     block: (suspend CoroutineScope.(StickerSet) -> Unit)
@@ -335,11 +251,6 @@ suspend fun TdAbsHandler.searchStickerSet(
     )
 )
 
-/**
- * Searches for a sticker set by its name
- *
- * @name - Name of the sticker set
- */
 suspend fun TdAbsHandler.searchStickerSetOrNull(
     name: String? = null
 ) = syncOrNull<StickerSet>(
@@ -348,11 +259,6 @@ suspend fun TdAbsHandler.searchStickerSetOrNull(
     )
 )
 
-/**
- * Searches for a sticker set by its name
- *
- * @name - Name of the sticker set
- */
 fun TdAbsHandler.searchStickerSet(
     name: String? = null,
     block: (suspend CoroutineScope.(StickerSet) -> Unit)
@@ -382,14 +288,6 @@ suspend fun TdAbsHandler.searchInstalledStickerSets(
     )
 )
 
-/**
- * Searches for installed sticker sets by looking for specified query in their title and name
- *
- * @isMasks - Pass true to return mask sticker sets
- *            Pass false to return ordinary sticker sets
- * @query - Query to search for
- * @limit - The maximum number of sticker sets to return
- */
 suspend fun TdAbsHandler.searchInstalledStickerSetsOrNull(
     isMasks: Boolean = false,
     query: String? = null,
@@ -402,14 +300,6 @@ suspend fun TdAbsHandler.searchInstalledStickerSetsOrNull(
     )
 )
 
-/**
- * Searches for installed sticker sets by looking for specified query in their title and name
- *
- * @isMasks - Pass true to return mask sticker sets
- *            Pass false to return ordinary sticker sets
- * @query - Query to search for
- * @limit - The maximum number of sticker sets to return
- */
 fun TdAbsHandler.searchInstalledStickerSets(
     isMasks: Boolean = false,
     query: String? = null,
@@ -437,12 +327,6 @@ suspend fun TdAbsHandler.searchStickerSets(
     )
 )
 
-/**
- * Searches for ordinary sticker sets by looking for specified query in their title and name
- * Excludes installed sticker sets from the results
- *
- * @query - Query to search for
- */
 suspend fun TdAbsHandler.searchStickerSetsOrNull(
     query: String? = null
 ) = syncOrNull<StickerSets>(
@@ -451,12 +335,6 @@ suspend fun TdAbsHandler.searchStickerSetsOrNull(
     )
 )
 
-/**
- * Searches for ordinary sticker sets by looking for specified query in their title and name
- * Excludes installed sticker sets from the results
- *
- * @query - Query to search for
- */
 fun TdAbsHandler.searchStickerSets(
     query: String? = null,
     block: (suspend CoroutineScope.(StickerSets) -> Unit)
@@ -486,14 +364,6 @@ suspend fun TdAbsHandler.changeStickerSet(
     )
 )
 
-/**
- * Installs/uninstalls or activates/archives a sticker set
- *
- * @setId - Identifier of the sticker set
- * @isInstalled - The new value of is_installed
- * @isArchived - The new value of is_archived
- *               A sticker set can't be installed and archived simultaneously
- */
 suspend fun TdAbsHandler.changeStickerSetOrNull(
     setId: Long = 0L,
     isInstalled: Boolean = false,
@@ -506,14 +376,6 @@ suspend fun TdAbsHandler.changeStickerSetOrNull(
     )
 )
 
-/**
- * Installs/uninstalls or activates/archives a sticker set
- *
- * @setId - Identifier of the sticker set
- * @isInstalled - The new value of is_installed
- * @isArchived - The new value of is_archived
- *               A sticker set can't be installed and archived simultaneously
- */
 fun TdAbsHandler.changeStickerSet(
     setId: Long = 0L,
     isInstalled: Boolean = false,
@@ -540,11 +402,6 @@ suspend fun TdAbsHandler.viewTrendingStickerSets(
     )
 )
 
-/**
- * Informs the server that some trending sticker sets have been viewed by the user
- *
- * @stickerSetIds - Identifiers of viewed trending sticker sets
- */
 suspend fun TdAbsHandler.viewTrendingStickerSetsOrNull(
     stickerSetIds: LongArray = longArrayOf()
 ) = syncOrNull<Ok>(
@@ -553,11 +410,6 @@ suspend fun TdAbsHandler.viewTrendingStickerSetsOrNull(
     )
 )
 
-/**
- * Informs the server that some trending sticker sets have been viewed by the user
- *
- * @stickerSetIds - Identifiers of viewed trending sticker sets
- */
 fun TdAbsHandler.viewTrendingStickerSets(
     stickerSetIds: LongArray = longArrayOf(),
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -584,13 +436,6 @@ suspend fun TdAbsHandler.reorderInstalledStickerSets(
     )
 )
 
-/**
- * Changes the order of installed sticker sets
- *
- * @isMasks - Pass true to change the order of mask sticker sets
- *            Pass false to change the order of ordinary sticker sets
- * @stickerSetIds - Identifiers of installed sticker sets in the new correct order
- */
 suspend fun TdAbsHandler.reorderInstalledStickerSetsOrNull(
     isMasks: Boolean = false,
     stickerSetIds: LongArray = longArrayOf()
@@ -601,13 +446,6 @@ suspend fun TdAbsHandler.reorderInstalledStickerSetsOrNull(
     )
 )
 
-/**
- * Changes the order of installed sticker sets
- *
- * @isMasks - Pass true to change the order of mask sticker sets
- *            Pass false to change the order of ordinary sticker sets
- * @stickerSetIds - Identifiers of installed sticker sets in the new correct order
- */
 fun TdAbsHandler.reorderInstalledStickerSets(
     isMasks: Boolean = false,
     stickerSetIds: LongArray = longArrayOf(),
@@ -633,12 +471,6 @@ suspend fun TdAbsHandler.getRecentStickers(
     )
 )
 
-/**
- * Returns a list of recently used stickers
- *
- * @isAttached - Pass true to return stickers and masks that were recently attached to photos or video files
- *               Pass false to return recently sent stickers
- */
 suspend fun TdAbsHandler.getRecentStickersOrNull(
     isAttached: Boolean = false
 ) = syncOrNull<Stickers>(
@@ -647,12 +479,6 @@ suspend fun TdAbsHandler.getRecentStickersOrNull(
     )
 )
 
-/**
- * Returns a list of recently used stickers
- *
- * @isAttached - Pass true to return stickers and masks that were recently attached to photos or video files
- *               Pass false to return recently sent stickers
- */
 fun TdAbsHandler.getRecentStickers(
     isAttached: Boolean = false,
     block: (suspend CoroutineScope.(Stickers) -> Unit)
@@ -682,16 +508,6 @@ suspend fun TdAbsHandler.addRecentSticker(
     )
 )
 
-/**
- * Manually adds a new sticker to the list of recently used stickers
- * The new sticker is added to the top of the list
- * If the sticker was already in the list, it is removed from the list first
- * Only stickers belonging to a sticker set can be added to this list
- *
- * @isAttached - Pass true to add the sticker to the list of stickers recently attached to photo or video files
- *               Pass false to add the sticker to the list of recently sent stickers
- * @sticker - Sticker file to add
- */
 suspend fun TdAbsHandler.addRecentStickerOrNull(
     isAttached: Boolean = false,
     sticker: InputFile? = null
@@ -702,16 +518,6 @@ suspend fun TdAbsHandler.addRecentStickerOrNull(
     )
 )
 
-/**
- * Manually adds a new sticker to the list of recently used stickers
- * The new sticker is added to the top of the list
- * If the sticker was already in the list, it is removed from the list first
- * Only stickers belonging to a sticker set can be added to this list
- *
- * @isAttached - Pass true to add the sticker to the list of stickers recently attached to photo or video files
- *               Pass false to add the sticker to the list of recently sent stickers
- * @sticker - Sticker file to add
- */
 fun TdAbsHandler.addRecentSticker(
     isAttached: Boolean = false,
     sticker: InputFile? = null,
@@ -740,13 +546,6 @@ suspend fun TdAbsHandler.removeRecentSticker(
     )
 )
 
-/**
- * Removes a sticker from the list of recently used stickers
- *
- * @isAttached - Pass true to remove the sticker from the list of stickers recently attached to photo or video files
- *               Pass false to remove the sticker from the list of recently sent stickers
- * @sticker - Sticker file to delete
- */
 suspend fun TdAbsHandler.removeRecentStickerOrNull(
     isAttached: Boolean = false,
     sticker: InputFile? = null
@@ -757,13 +556,6 @@ suspend fun TdAbsHandler.removeRecentStickerOrNull(
     )
 )
 
-/**
- * Removes a sticker from the list of recently used stickers
- *
- * @isAttached - Pass true to remove the sticker from the list of stickers recently attached to photo or video files
- *               Pass false to remove the sticker from the list of recently sent stickers
- * @sticker - Sticker file to delete
- */
 fun TdAbsHandler.removeRecentSticker(
     isAttached: Boolean = false,
     sticker: InputFile? = null,
@@ -789,12 +581,6 @@ suspend fun TdAbsHandler.clearRecentStickers(
     )
 )
 
-/**
- * Clears the list of recently used stickers
- *
- * @isAttached - Pass true to clear the list of stickers recently attached to photo or video files
- *               Pass false to clear the list of recently sent stickers
- */
 suspend fun TdAbsHandler.clearRecentStickersOrNull(
     isAttached: Boolean = false
 ) = syncOrNull<Ok>(
@@ -803,12 +589,6 @@ suspend fun TdAbsHandler.clearRecentStickersOrNull(
     )
 )
 
-/**
- * Clears the list of recently used stickers
- *
- * @isAttached - Pass true to clear the list of stickers recently attached to photo or video files
- *               Pass false to clear the list of recently sent stickers
- */
 fun TdAbsHandler.clearRecentStickers(
     isAttached: Boolean = false,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -825,16 +605,10 @@ suspend fun TdAbsHandler.getFavoriteStickers() = sync<Stickers>(
     GetFavoriteStickers()
 )
 
-/**
- * Returns favorite stickers
- */
 suspend fun TdAbsHandler.getFavoriteStickersOrNull() = syncOrNull<Stickers>(
     GetFavoriteStickers()
 )
 
-/**
- * Returns favorite stickers
- */
 fun TdAbsHandler.getFavoriteStickers(
     block: (suspend CoroutineScope.(Stickers) -> Unit)
 ) = send(
@@ -857,14 +631,6 @@ suspend fun TdAbsHandler.addFavoriteSticker(
     )
 )
 
-/**
- * Adds a new sticker to the list of favorite stickers
- * The new sticker is added to the top of the list
- * If the sticker was already in the list, it is removed from the list first
- * Only stickers belonging to a sticker set can be added to this list
- *
- * @sticker - Sticker file to add
- */
 suspend fun TdAbsHandler.addFavoriteStickerOrNull(
     sticker: InputFile? = null
 ) = syncOrNull<Ok>(
@@ -873,14 +639,6 @@ suspend fun TdAbsHandler.addFavoriteStickerOrNull(
     )
 )
 
-/**
- * Adds a new sticker to the list of favorite stickers
- * The new sticker is added to the top of the list
- * If the sticker was already in the list, it is removed from the list first
- * Only stickers belonging to a sticker set can be added to this list
- *
- * @sticker - Sticker file to add
- */
 fun TdAbsHandler.addFavoriteSticker(
     sticker: InputFile? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -903,11 +661,6 @@ suspend fun TdAbsHandler.removeFavoriteSticker(
     )
 )
 
-/**
- * Removes a sticker from the list of favorite stickers
- *
- * @sticker - Sticker file to delete from the list
- */
 suspend fun TdAbsHandler.removeFavoriteStickerOrNull(
     sticker: InputFile? = null
 ) = syncOrNull<Ok>(
@@ -916,11 +669,6 @@ suspend fun TdAbsHandler.removeFavoriteStickerOrNull(
     )
 )
 
-/**
- * Removes a sticker from the list of favorite stickers
- *
- * @sticker - Sticker file to delete from the list
- */
 fun TdAbsHandler.removeFavoriteSticker(
     sticker: InputFile? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -959,19 +707,6 @@ suspend fun TdAbsHandler.createNewStickerSet(
     )
 )
 
-/**
- * Creates a new sticker set
- * For bots only
- * Returns the newly created sticker set
- *
- * @userId - Sticker set owner
- * @title - Sticker set title
- * @name - Sticker set name
- *         Can contain only English letters, digits and underscores
- *         Must end with *"_by_<bot username>"* (*<bot_username>* is case insensitive)
- * @isMasks - True, if stickers are masks
- * @stickers - List of stickers to be added to the set
- */
 suspend fun TdAbsHandler.createNewStickerSetOrNull(
     userId: Int = 0,
     title: String? = null,
@@ -988,19 +723,6 @@ suspend fun TdAbsHandler.createNewStickerSetOrNull(
     )
 )
 
-/**
- * Creates a new sticker set
- * For bots only
- * Returns the newly created sticker set
- *
- * @userId - Sticker set owner
- * @title - Sticker set title
- * @name - Sticker set name
- *         Can contain only English letters, digits and underscores
- *         Must end with *"_by_<bot username>"* (*<bot_username>* is case insensitive)
- * @isMasks - True, if stickers are masks
- * @stickers - List of stickers to be added to the set
- */
 fun TdAbsHandler.createNewStickerSet(
     userId: Int = 0,
     title: String? = null,
@@ -1039,15 +761,6 @@ suspend fun TdAbsHandler.addStickerToSet(
     )
 )
 
-/**
- * Adds a new sticker to a set
- * For bots only
- * Returns the sticker set
- *
- * @userId - Sticker set owner
- * @name - Sticker set name
- * @sticker - Sticker to add to the set
- */
 suspend fun TdAbsHandler.addStickerToSetOrNull(
     userId: Int = 0,
     name: String? = null,
@@ -1060,15 +773,6 @@ suspend fun TdAbsHandler.addStickerToSetOrNull(
     )
 )
 
-/**
- * Adds a new sticker to a set
- * For bots only
- * Returns the sticker set
- *
- * @userId - Sticker set owner
- * @name - Sticker set name
- * @sticker - Sticker to add to the set
- */
 fun TdAbsHandler.addStickerToSet(
     userId: Int = 0,
     name: String? = null,
@@ -1100,14 +804,6 @@ suspend fun TdAbsHandler.setStickerPositionInSet(
     )
 )
 
-/**
- * Changes the position of a sticker in the set to which it belongs
- * For bots only
- * The sticker set must have been created by the bot
- *
- * @sticker - Sticker
- * @position - New position of the sticker in the set, zero-based
- */
 suspend fun TdAbsHandler.setStickerPositionInSetOrNull(
     sticker: InputFile? = null,
     position: Int = 0
@@ -1118,14 +814,6 @@ suspend fun TdAbsHandler.setStickerPositionInSetOrNull(
     )
 )
 
-/**
- * Changes the position of a sticker in the set to which it belongs
- * For bots only
- * The sticker set must have been created by the bot
- *
- * @sticker - Sticker
- * @position - New position of the sticker in the set, zero-based
- */
 fun TdAbsHandler.setStickerPositionInSet(
     sticker: InputFile? = null,
     position: Int = 0,
@@ -1152,13 +840,6 @@ suspend fun TdAbsHandler.removeStickerFromSet(
     )
 )
 
-/**
- * Removes a sticker from the set to which it belongs
- * For bots only
- * The sticker set must have been created by the bot
- *
- * @sticker - Sticker
- */
 suspend fun TdAbsHandler.removeStickerFromSetOrNull(
     sticker: InputFile? = null
 ) = syncOrNull<Ok>(
@@ -1167,13 +848,6 @@ suspend fun TdAbsHandler.removeStickerFromSetOrNull(
     )
 )
 
-/**
- * Removes a sticker from the set to which it belongs
- * For bots only
- * The sticker set must have been created by the bot
- *
- * @sticker - Sticker
- */
 fun TdAbsHandler.removeStickerFromSet(
     sticker: InputFile? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)

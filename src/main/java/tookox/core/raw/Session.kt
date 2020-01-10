@@ -23,13 +23,6 @@ suspend fun TdAbsHandler.confirmQrCodeAuthentication(
     )
 )
 
-/**
- * Confirms QR code authentication on another device
- * Returns created session on success
- *
- * @link - A link from a QR code
- *         The link must be scanned by the in-app camera
- */
 suspend fun TdAbsHandler.confirmQrCodeAuthenticationOrNull(
     link: String? = null
 ) = syncOrNull<Session>(
@@ -38,13 +31,6 @@ suspend fun TdAbsHandler.confirmQrCodeAuthenticationOrNull(
     )
 )
 
-/**
- * Confirms QR code authentication on another device
- * Returns created session on success
- *
- * @link - A link from a QR code
- *         The link must be scanned by the in-app camera
- */
 fun TdAbsHandler.confirmQrCodeAuthentication(
     link: String? = null,
     block: (suspend CoroutineScope.(Session) -> Unit)
@@ -61,16 +47,10 @@ suspend fun TdAbsHandler.getActiveSessions() = sync<Sessions>(
     GetActiveSessions()
 )
 
-/**
- * Returns all active sessions of the current user
- */
 suspend fun TdAbsHandler.getActiveSessionsOrNull() = syncOrNull<Sessions>(
     GetActiveSessions()
 )
 
-/**
- * Returns all active sessions of the current user
- */
 fun TdAbsHandler.getActiveSessions(
     block: (suspend CoroutineScope.(Sessions) -> Unit)
 ) = send(
@@ -90,11 +70,6 @@ suspend fun TdAbsHandler.terminateSession(
     )
 )
 
-/**
- * Terminates a session of the current user
- *
- * @sessionId - Session identifier
- */
 suspend fun TdAbsHandler.terminateSessionOrNull(
     sessionId: Long = 0L
 ) = syncOrNull<Ok>(
@@ -103,11 +78,6 @@ suspend fun TdAbsHandler.terminateSessionOrNull(
     )
 )
 
-/**
- * Terminates a session of the current user
- *
- * @sessionId - Session identifier
- */
 fun TdAbsHandler.terminateSession(
     sessionId: Long = 0L,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -124,16 +94,10 @@ suspend fun TdAbsHandler.terminateAllOtherSessions() = sync<Ok>(
     TerminateAllOtherSessions()
 )
 
-/**
- * Terminates all other sessions of the current user
- */
 suspend fun TdAbsHandler.terminateAllOtherSessionsOrNull() = syncOrNull<Ok>(
     TerminateAllOtherSessions()
 )
 
-/**
- * Terminates all other sessions of the current user
- */
 fun TdAbsHandler.terminateAllOtherSessions(
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(

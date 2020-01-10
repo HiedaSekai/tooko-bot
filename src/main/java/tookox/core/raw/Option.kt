@@ -22,12 +22,6 @@ suspend fun TdAbsHandler.getOption(
     )
 )
 
-/**
- * Returns the value of an option by its name
- * (Check the list of available options on https://core.telegram.org/tdlib/options.) Can be called before authorization
- *
- * @name - The name of the option
- */
 suspend fun TdAbsHandler.getOptionOrNull(
     name: String? = null
 ) = syncOrNull<OptionValue>(
@@ -36,12 +30,6 @@ suspend fun TdAbsHandler.getOptionOrNull(
     )
 )
 
-/**
- * Returns the value of an option by its name
- * (Check the list of available options on https://core.telegram.org/tdlib/options.) Can be called before authorization
- *
- * @name - The name of the option
- */
 fun TdAbsHandler.getOption(
     name: String? = null,
     block: (suspend CoroutineScope.(OptionValue) -> Unit)
@@ -69,14 +57,6 @@ suspend fun TdAbsHandler.setOption(
     )
 )
 
-/**
- * Sets the value of an option
- * (Check the list of available options on https://core.telegram.org/tdlib/options.) Only writable options can be set
- * Can be called before authorization
- *
- * @name - The name of the option
- * @value - The new value of the option
- */
 suspend fun TdAbsHandler.setOptionOrNull(
     name: String? = null,
     value: OptionValue? = null
@@ -87,14 +67,6 @@ suspend fun TdAbsHandler.setOptionOrNull(
     )
 )
 
-/**
- * Sets the value of an option
- * (Check the list of available options on https://core.telegram.org/tdlib/options.) Only writable options can be set
- * Can be called before authorization
- *
- * @name - The name of the option
- * @value - The new value of the option
- */
 fun TdAbsHandler.setOption(
     name: String? = null,
     value: OptionValue? = null,

@@ -19,24 +19,10 @@ suspend fun TdAbsHandler.getCurrentState() = sync<Updates>(
     GetCurrentState()
 )
 
-/**
- * Returns all updates needed to restore current TDLib state, i.e
- * All actual UpdateAuthorizationState/UpdateUser/UpdateNewChat and others
- * This is especially usefull if TDLib is run in a separate process
- * This is an offline method
- * Can be called before authorization
- */
 suspend fun TdAbsHandler.getCurrentStateOrNull() = syncOrNull<Updates>(
     GetCurrentState()
 )
 
-/**
- * Returns all updates needed to restore current TDLib state, i.e
- * All actual UpdateAuthorizationState/UpdateUser/UpdateNewChat and others
- * This is especially usefull if TDLib is run in a separate process
- * This is an offline method
- * Can be called before authorization
- */
 fun TdAbsHandler.getCurrentState(
     block: (suspend CoroutineScope.(Updates) -> Unit)
 ) = send(

@@ -22,12 +22,6 @@ suspend fun TdAbsHandler.getRecoveryEmailAddress(
     )
 )
 
-/**
- * Returns a 2-step verification recovery email address that was previously set up
- * This method can be used to verify a password provided by the user
- *
- * @password - The password for the current user
- */
 suspend fun TdAbsHandler.getRecoveryEmailAddressOrNull(
     password: String? = null
 ) = syncOrNull<RecoveryEmailAddress>(
@@ -36,12 +30,6 @@ suspend fun TdAbsHandler.getRecoveryEmailAddressOrNull(
     )
 )
 
-/**
- * Returns a 2-step verification recovery email address that was previously set up
- * This method can be used to verify a password provided by the user
- *
- * @password - The password for the current user
- */
 fun TdAbsHandler.getRecoveryEmailAddress(
     password: String? = null,
     block: (suspend CoroutineScope.(RecoveryEmailAddress) -> Unit)
@@ -58,16 +46,10 @@ suspend fun TdAbsHandler.requestPasswordRecovery() = sync<EmailAddressAuthentica
     RequestPasswordRecovery()
 )
 
-/**
- * Requests to send a password recovery code to an email address that was previously set up
- */
 suspend fun TdAbsHandler.requestPasswordRecoveryOrNull() = syncOrNull<EmailAddressAuthenticationCodeInfo>(
     RequestPasswordRecovery()
 )
 
-/**
- * Requests to send a password recovery code to an email address that was previously set up
- */
 fun TdAbsHandler.requestPasswordRecovery(
     block: (suspend CoroutineScope.(EmailAddressAuthenticationCodeInfo) -> Unit)
 ) = send(
@@ -87,11 +69,6 @@ suspend fun TdAbsHandler.sendEmailAddressVerificationCode(
     )
 )
 
-/**
- * Sends a code to verify an email address to be added to a user's Telegram Passport
- *
- * @emailAddress - Email address
- */
 suspend fun TdAbsHandler.sendEmailAddressVerificationCodeOrNull(
     emailAddress: String? = null
 ) = syncOrNull<EmailAddressAuthenticationCodeInfo>(
@@ -100,11 +77,6 @@ suspend fun TdAbsHandler.sendEmailAddressVerificationCodeOrNull(
     )
 )
 
-/**
- * Sends a code to verify an email address to be added to a user's Telegram Passport
- *
- * @emailAddress - Email address
- */
 fun TdAbsHandler.sendEmailAddressVerificationCode(
     emailAddress: String? = null,
     block: (suspend CoroutineScope.(EmailAddressAuthenticationCodeInfo) -> Unit)
@@ -121,16 +93,10 @@ suspend fun TdAbsHandler.resendEmailAddressVerificationCode() = sync<EmailAddres
     ResendEmailAddressVerificationCode()
 )
 
-/**
- * Re-sends the code to verify an email address to be added to a user's Telegram Passport
- */
 suspend fun TdAbsHandler.resendEmailAddressVerificationCodeOrNull() = syncOrNull<EmailAddressAuthenticationCodeInfo>(
     ResendEmailAddressVerificationCode()
 )
 
-/**
- * Re-sends the code to verify an email address to be added to a user's Telegram Passport
- */
 fun TdAbsHandler.resendEmailAddressVerificationCode(
     block: (suspend CoroutineScope.(EmailAddressAuthenticationCodeInfo) -> Unit)
 ) = send(

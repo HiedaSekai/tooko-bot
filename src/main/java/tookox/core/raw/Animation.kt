@@ -15,16 +15,10 @@ suspend fun TdAbsHandler.getSavedAnimations() = sync<Animations>(
     GetSavedAnimations()
 )
 
-/**
- * Returns saved animations
- */
 suspend fun TdAbsHandler.getSavedAnimationsOrNull() = syncOrNull<Animations>(
     GetSavedAnimations()
 )
 
-/**
- * Returns saved animations
- */
 fun TdAbsHandler.getSavedAnimations(
     block: (suspend CoroutineScope.(Animations) -> Unit)
 ) = send(
@@ -49,16 +43,6 @@ suspend fun TdAbsHandler.addSavedAnimation(
     )
 )
 
-/**
- * Manually adds a new animation to the list of saved animations
- * The new animation is added to the beginning of the list
- * If the animation was already in the list, it is removed first
- * Only non-secret video animations with MIME type "video/mp4" can be added to the list
- *
- * @animation - The animation file to be added
- *              Only animations known to the server (i.e
- *              Successfully sent via a message) can be added to the list
- */
 suspend fun TdAbsHandler.addSavedAnimationOrNull(
     animation: InputFile? = null
 ) = syncOrNull<Ok>(
@@ -67,16 +51,6 @@ suspend fun TdAbsHandler.addSavedAnimationOrNull(
     )
 )
 
-/**
- * Manually adds a new animation to the list of saved animations
- * The new animation is added to the beginning of the list
- * If the animation was already in the list, it is removed first
- * Only non-secret video animations with MIME type "video/mp4" can be added to the list
- *
- * @animation - The animation file to be added
- *              Only animations known to the server (i.e
- *              Successfully sent via a message) can be added to the list
- */
 fun TdAbsHandler.addSavedAnimation(
     animation: InputFile? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -99,11 +73,6 @@ suspend fun TdAbsHandler.removeSavedAnimation(
     )
 )
 
-/**
- * Removes an animation from the list of saved animations
- *
- * @animation - Animation file to be removed
- */
 suspend fun TdAbsHandler.removeSavedAnimationOrNull(
     animation: InputFile? = null
 ) = syncOrNull<Ok>(
@@ -112,11 +81,6 @@ suspend fun TdAbsHandler.removeSavedAnimationOrNull(
     )
 )
 
-/**
- * Removes an animation from the list of saved animations
- *
- * @animation - Animation file to be removed
- */
 fun TdAbsHandler.removeSavedAnimation(
     animation: InputFile? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)

@@ -4,7 +4,7 @@
 
 package tookox.core.raw
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
 import td.TdApi.*
 import tookox.core.client.*
 
@@ -31,15 +31,6 @@ suspend fun TdAbsHandler.addProxy(
     )
 )
 
-/**
- * Adds a proxy server for network requests
- * Can be called before authorization
- *
- * @server - Proxy server IP address
- * @port - Proxy server port
- * @enable - True, if the proxy should be enabled
- * @type - Proxy type
- */
 suspend fun TdAbsHandler.addProxyOrNull(
     server: String? = null,
     port: Int = 0,
@@ -54,15 +45,6 @@ suspend fun TdAbsHandler.addProxyOrNull(
     )
 )
 
-/**
- * Adds a proxy server for network requests
- * Can be called before authorization
- *
- * @server - Proxy server IP address
- * @port - Proxy server port
- * @enable - True, if the proxy should be enabled
- * @type - Proxy type
- */
 fun TdAbsHandler.addProxy(
     server: String? = null,
     port: Int = 0,
@@ -104,16 +86,6 @@ suspend fun TdAbsHandler.editProxy(
     )
 )
 
-/**
- * Edits an existing proxy server for network requests
- * Can be called before authorization
- *
- * @proxyId - Proxy identifier
- * @server - Proxy server IP address
- * @port - Proxy server port
- * @enable - True, if the proxy should be enabled
- * @type - Proxy type
- */
 suspend fun TdAbsHandler.editProxyOrNull(
     proxyId: Int = 0,
     server: String? = null,
@@ -130,16 +102,6 @@ suspend fun TdAbsHandler.editProxyOrNull(
     )
 )
 
-/**
- * Edits an existing proxy server for network requests
- * Can be called before authorization
- *
- * @proxyId - Proxy identifier
- * @server - Proxy server IP address
- * @port - Proxy server port
- * @enable - True, if the proxy should be enabled
- * @type - Proxy type
- */
 fun TdAbsHandler.editProxy(
     proxyId: Int = 0,
     server: String? = null,
@@ -172,13 +134,6 @@ suspend fun TdAbsHandler.enableProxy(
     )
 )
 
-/**
- * Enables a proxy
- * Only one proxy can be enabled at a time
- * Can be called before authorization
- *
- * @proxyId - Proxy identifier
- */
 suspend fun TdAbsHandler.enableProxyOrNull(
     proxyId: Int = 0
 ) = syncOrNull<Ok>(
@@ -187,13 +142,6 @@ suspend fun TdAbsHandler.enableProxyOrNull(
     )
 )
 
-/**
- * Enables a proxy
- * Only one proxy can be enabled at a time
- * Can be called before authorization
- *
- * @proxyId - Proxy identifier
- */
 fun TdAbsHandler.enableProxy(
     proxyId: Int = 0,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -211,18 +159,10 @@ suspend fun TdAbsHandler.disableProxy() = sync<Ok>(
     DisableProxy()
 )
 
-/**
- * Disables the currently enabled proxy
- * Can be called before authorization
- */
 suspend fun TdAbsHandler.disableProxyOrNull() = syncOrNull<Ok>(
     DisableProxy()
 )
 
-/**
- * Disables the currently enabled proxy
- * Can be called before authorization
- */
 fun TdAbsHandler.disableProxy(
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
@@ -243,12 +183,6 @@ suspend fun TdAbsHandler.removeProxy(
     )
 )
 
-/**
- * Removes a proxy server
- * Can be called before authorization
- *
- * @proxyId - Proxy identifier
- */
 suspend fun TdAbsHandler.removeProxyOrNull(
     proxyId: Int = 0
 ) = syncOrNull<Ok>(
@@ -257,12 +191,6 @@ suspend fun TdAbsHandler.removeProxyOrNull(
     )
 )
 
-/**
- * Removes a proxy server
- * Can be called before authorization
- *
- * @proxyId - Proxy identifier
- */
 fun TdAbsHandler.removeProxy(
     proxyId: Int = 0,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -287,13 +215,6 @@ suspend fun TdAbsHandler.pingProxy(
     )
 )
 
-/**
- * Computes time needed to receive a response from a Telegram server through a proxy
- * Can be called before authorization
- *
- * @proxyId - Proxy identifier
- *            Use 0 to ping a Telegram server without a proxy
- */
 suspend fun TdAbsHandler.pingProxyOrNull(
     proxyId: Int = 0
 ) = syncOrNull<Seconds>(
@@ -302,13 +223,6 @@ suspend fun TdAbsHandler.pingProxyOrNull(
     )
 )
 
-/**
- * Computes time needed to receive a response from a Telegram server through a proxy
- * Can be called before authorization
- *
- * @proxyId - Proxy identifier
- *            Use 0 to ping a Telegram server without a proxy
- */
 fun TdAbsHandler.pingProxy(
     proxyId: Int = 0,
     block: (suspend CoroutineScope.(Seconds) -> Unit)

@@ -28,14 +28,6 @@ suspend fun TdAbsHandler.getLoginUrlInfo(
     )
 )
 
-/**
- * Returns information about a button of type inlineKeyboardButtonTypeLoginUrl
- * The method needs to be called when the user presses the button
- *
- * @chatId - Chat identifier of the message with the button
- * @messageId - Message identifier of the message with the button
- * @buttonId - Button identifier
- */
 suspend fun TdAbsHandler.getLoginUrlInfoOrNull(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -48,14 +40,6 @@ suspend fun TdAbsHandler.getLoginUrlInfoOrNull(
     )
 )
 
-/**
- * Returns information about a button of type inlineKeyboardButtonTypeLoginUrl
- * The method needs to be called when the user presses the button
- *
- * @chatId - Chat identifier of the message with the button
- * @messageId - Message identifier of the message with the button
- * @buttonId - Button identifier
- */
 fun TdAbsHandler.getLoginUrlInfo(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -93,16 +77,6 @@ suspend fun TdAbsHandler.getLoginUrl(
     )
 )
 
-/**
- * Returns an HTTP URL which can be used to automatically authorize the user on a website after clicking an inline button of type inlineKeyboardButtonTypeLoginUrl
- * Use the method getLoginUrlInfo to find whether a prior user confirmation is needed
- * If an error is returned, then the button must be handled as an ordinary URL button
- *
- * @chatId - Chat identifier of the message with the button
- * @messageId - Message identifier of the message with the button
- * @buttonId - Button identifier
- * @allowWriteAccess - True, if the user allowed the bot to send them messages
- */
 suspend fun TdAbsHandler.getLoginUrlOrNull(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -117,16 +91,6 @@ suspend fun TdAbsHandler.getLoginUrlOrNull(
     )
 )
 
-/**
- * Returns an HTTP URL which can be used to automatically authorize the user on a website after clicking an inline button of type inlineKeyboardButtonTypeLoginUrl
- * Use the method getLoginUrlInfo to find whether a prior user confirmation is needed
- * If an error is returned, then the button must be handled as an ordinary URL button
- *
- * @chatId - Chat identifier of the message with the button
- * @messageId - Message identifier of the message with the button
- * @buttonId - Button identifier
- * @allowWriteAccess - True, if the user allowed the bot to send them messages
- */
 fun TdAbsHandler.getLoginUrl(
     chatId: Long = 0L,
     messageId: Long = 0L,

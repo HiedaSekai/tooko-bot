@@ -25,13 +25,6 @@ suspend fun TdAbsHandler.getPaymentForm(
     )
 )
 
-/**
- * Returns an invoice payment form
- * This method should be called when the user presses inlineKeyboardButtonBuy
- *
- * @chatId - Chat identifier of the Invoice message
- * @messageId - Message identifier
- */
 suspend fun TdAbsHandler.getPaymentFormOrNull(
     chatId: Long = 0L,
     messageId: Long = 0L
@@ -42,13 +35,6 @@ suspend fun TdAbsHandler.getPaymentFormOrNull(
     )
 )
 
-/**
- * Returns an invoice payment form
- * This method should be called when the user presses inlineKeyboardButtonBuy
- *
- * @chatId - Chat identifier of the Invoice message
- * @messageId - Message identifier
- */
 fun TdAbsHandler.getPaymentForm(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -85,15 +71,6 @@ suspend fun TdAbsHandler.sendPaymentForm(
     )
 )
 
-/**
- * Sends a filled-out payment form to the bot for final verification
- *
- * @chatId - Chat identifier of the Invoice message
- * @messageId - Message identifier
- * @orderInfoId - Identifier returned by ValidateOrderInfo, or an empty string
- * @shippingOptionId - Identifier of a chosen shipping option, if applicable
- * @credentials - The credentials chosen by user for payment
- */
 suspend fun TdAbsHandler.sendPaymentFormOrNull(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -110,15 +87,6 @@ suspend fun TdAbsHandler.sendPaymentFormOrNull(
     )
 )
 
-/**
- * Sends a filled-out payment form to the bot for final verification
- *
- * @chatId - Chat identifier of the Invoice message
- * @messageId - Message identifier
- * @orderInfoId - Identifier returned by ValidateOrderInfo, or an empty string
- * @shippingOptionId - Identifier of a chosen shipping option, if applicable
- * @credentials - The credentials chosen by user for payment
- */
 fun TdAbsHandler.sendPaymentForm(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -152,12 +120,6 @@ suspend fun TdAbsHandler.getPaymentReceipt(
     )
 )
 
-/**
- * Returns information about a successful payment
- *
- * @chatId - Chat identifier of the PaymentSuccessful message
- * @messageId - Message identifier
- */
 suspend fun TdAbsHandler.getPaymentReceiptOrNull(
     chatId: Long = 0L,
     messageId: Long = 0L
@@ -168,12 +130,6 @@ suspend fun TdAbsHandler.getPaymentReceiptOrNull(
     )
 )
 
-/**
- * Returns information about a successful payment
- *
- * @chatId - Chat identifier of the PaymentSuccessful message
- * @messageId - Message identifier
- */
 fun TdAbsHandler.getPaymentReceipt(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -192,16 +148,10 @@ suspend fun TdAbsHandler.deleteSavedCredentials() = sync<Ok>(
     DeleteSavedCredentials()
 )
 
-/**
- * Deletes saved credentials for all payment provider bots
- */
 suspend fun TdAbsHandler.deleteSavedCredentialsOrNull() = syncOrNull<Ok>(
     DeleteSavedCredentials()
 )
 
-/**
- * Deletes saved credentials for all payment provider bots
- */
 fun TdAbsHandler.deleteSavedCredentials(
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(

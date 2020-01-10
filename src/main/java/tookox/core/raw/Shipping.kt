@@ -28,14 +28,6 @@ suspend fun TdAbsHandler.answerShippingQuery(
     )
 )
 
-/**
- * Sets the result of a shipping query
- * For bots only
- *
- * @shippingQueryId - Identifier of the shipping query
- * @shippingOptions - Available shipping options
- * @errorMessage - An error message, empty on success
- */
 suspend fun TdAbsHandler.answerShippingQueryOrNull(
     shippingQueryId: Long = 0L,
     shippingOptions: Array<ShippingOption> = emptyArray(),
@@ -48,14 +40,6 @@ suspend fun TdAbsHandler.answerShippingQueryOrNull(
     )
 )
 
-/**
- * Sets the result of a shipping query
- * For bots only
- *
- * @shippingQueryId - Identifier of the shipping query
- * @shippingOptions - Available shipping options
- * @errorMessage - An error message, empty on success
- */
 fun TdAbsHandler.answerShippingQuery(
     shippingQueryId: Long = 0L,
     shippingOptions: Array<ShippingOption> = emptyArray(),

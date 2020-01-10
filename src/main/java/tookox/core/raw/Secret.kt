@@ -22,12 +22,6 @@ suspend fun TdAbsHandler.getSecretChat(
     )
 )
 
-/**
- * Returns information about a secret chat by its identifier
- * This is an offline request
- *
- * @secretChatId - Secret chat identifier
- */
 suspend fun TdAbsHandler.getSecretChatOrNull(
     secretChatId: Int = 0
 ) = syncOrNull<SecretChat>(
@@ -36,12 +30,6 @@ suspend fun TdAbsHandler.getSecretChatOrNull(
     )
 )
 
-/**
- * Returns information about a secret chat by its identifier
- * This is an offline request
- *
- * @secretChatId - Secret chat identifier
- */
 fun TdAbsHandler.getSecretChat(
     secretChatId: Int = 0,
     block: (suspend CoroutineScope.(SecretChat) -> Unit)
@@ -64,11 +52,6 @@ suspend fun TdAbsHandler.closeSecretChat(
     )
 )
 
-/**
- * Closes a secret chat, effectively transfering its state to secretChatStateClosed
- *
- * @secretChatId - Secret chat identifier
- */
 suspend fun TdAbsHandler.closeSecretChatOrNull(
     secretChatId: Int = 0
 ) = syncOrNull<Ok>(
@@ -77,11 +60,6 @@ suspend fun TdAbsHandler.closeSecretChatOrNull(
     )
 )
 
-/**
- * Closes a secret chat, effectively transfering its state to secretChatStateClosed
- *
- * @secretChatId - Secret chat identifier
- */
 fun TdAbsHandler.closeSecretChat(
     secretChatId: Int = 0,
     block: (suspend CoroutineScope.(Ok) -> Unit)

@@ -24,12 +24,6 @@ suspend fun TdAbsHandler.createCall(
     )
 )
 
-/**
- * Creates a new call
- *
- * @userId - Identifier of the user to be called
- * @protocol - Description of the call protocols supported by the client
- */
 suspend fun TdAbsHandler.createCallOrNull(
     userId: Int = 0,
     protocol: CallProtocol? = null
@@ -40,12 +34,6 @@ suspend fun TdAbsHandler.createCallOrNull(
     )
 )
 
-/**
- * Creates a new call
- *
- * @userId - Identifier of the user to be called
- * @protocol - Description of the call protocols supported by the client
- */
 fun TdAbsHandler.createCall(
     userId: Int = 0,
     protocol: CallProtocol? = null,
@@ -73,12 +61,6 @@ suspend fun TdAbsHandler.acceptCall(
     )
 )
 
-/**
- * Accepts an incoming call
- *
- * @callId - Call identifier
- * @protocol - Description of the call protocols supported by the client
- */
 suspend fun TdAbsHandler.acceptCallOrNull(
     callId: Int = 0,
     protocol: CallProtocol? = null
@@ -89,12 +71,6 @@ suspend fun TdAbsHandler.acceptCallOrNull(
     )
 )
 
-/**
- * Accepts an incoming call
- *
- * @callId - Call identifier
- * @protocol - Description of the call protocols supported by the client
- */
 fun TdAbsHandler.acceptCall(
     callId: Int = 0,
     protocol: CallProtocol? = null,
@@ -128,14 +104,6 @@ suspend fun TdAbsHandler.discardCall(
     )
 )
 
-/**
- * Discards a call
- *
- * @callId - Call identifier
- * @isDisconnected - True, if the user was disconnected
- * @duration - The call duration, in seconds
- * @connectionId - Identifier of the connection used during the call
- */
 suspend fun TdAbsHandler.discardCallOrNull(
     callId: Int = 0,
     isDisconnected: Boolean = false,
@@ -150,14 +118,6 @@ suspend fun TdAbsHandler.discardCallOrNull(
     )
 )
 
-/**
- * Discards a call
- *
- * @callId - Call identifier
- * @isDisconnected - True, if the user was disconnected
- * @duration - The call duration, in seconds
- * @connectionId - Identifier of the connection used during the call
- */
 fun TdAbsHandler.discardCall(
     callId: Int = 0,
     isDisconnected: Boolean = false,

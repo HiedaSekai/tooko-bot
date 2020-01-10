@@ -24,12 +24,6 @@ suspend fun TdAbsHandler.getMessage(
     )
 )
 
-/**
- * Returns information about a message
- *
- * @chatId - Identifier of the chat the message belongs to
- * @messageId - Identifier of the message to get
- */
 suspend fun TdAbsHandler.getMessageOrNull(
     chatId: Long = 0L,
     messageId: Long = 0L
@@ -40,12 +34,6 @@ suspend fun TdAbsHandler.getMessageOrNull(
     )
 )
 
-/**
- * Returns information about a message
- *
- * @chatId - Identifier of the chat the message belongs to
- * @messageId - Identifier of the message to get
- */
 fun TdAbsHandler.getMessage(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -74,13 +62,6 @@ suspend fun TdAbsHandler.getMessageLocally(
     )
 )
 
-/**
- * Returns information about a message, if it is available locally without sending network request
- * This is an offline request
- *
- * @chatId - Identifier of the chat the message belongs to
- * @messageId - Identifier of the message to get
- */
 suspend fun TdAbsHandler.getMessageLocallyOrNull(
     chatId: Long = 0L,
     messageId: Long = 0L
@@ -91,13 +72,6 @@ suspend fun TdAbsHandler.getMessageLocallyOrNull(
     )
 )
 
-/**
- * Returns information about a message, if it is available locally without sending network request
- * This is an offline request
- *
- * @chatId - Identifier of the chat the message belongs to
- * @messageId - Identifier of the message to get
- */
 fun TdAbsHandler.getMessageLocally(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -125,12 +99,6 @@ suspend fun TdAbsHandler.getRepliedMessage(
     )
 )
 
-/**
- * Returns information about a message that is replied by given message
- *
- * @chatId - Identifier of the chat the message belongs to
- * @messageId - Identifier of the message reply to which get
- */
 suspend fun TdAbsHandler.getRepliedMessageOrNull(
     chatId: Long = 0L,
     messageId: Long = 0L
@@ -141,12 +109,6 @@ suspend fun TdAbsHandler.getRepliedMessageOrNull(
     )
 )
 
-/**
- * Returns information about a message that is replied by given message
- *
- * @chatId - Identifier of the chat the message belongs to
- * @messageId - Identifier of the message reply to which get
- */
 fun TdAbsHandler.getRepliedMessage(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -171,11 +133,6 @@ suspend fun TdAbsHandler.getChatPinnedMessage(
     )
 )
 
-/**
- * Returns information about a pinned chat message
- *
- * @chatId - Identifier of the chat the message belongs to
- */
 suspend fun TdAbsHandler.getChatPinnedMessageOrNull(
     chatId: Long = 0L
 ) = syncOrNull<Message>(
@@ -184,11 +141,6 @@ suspend fun TdAbsHandler.getChatPinnedMessageOrNull(
     )
 )
 
-/**
- * Returns information about a pinned chat message
- *
- * @chatId - Identifier of the chat the message belongs to
- */
 fun TdAbsHandler.getChatPinnedMessage(
     chatId: Long = 0L,
     block: (suspend CoroutineScope.(Message) -> Unit)
@@ -215,13 +167,6 @@ suspend fun TdAbsHandler.getMessages(
     )
 )
 
-/**
- * Returns information about messages
- * If a message is not found, returns null on the corresponding position of the result
- *
- * @chatId - Identifier of the chat the messages belong to
- * @messageIds - Identifiers of the messages to get
- */
 suspend fun TdAbsHandler.getMessagesOrNull(
     chatId: Long = 0L,
     messageIds: LongArray = longArrayOf()
@@ -232,13 +177,6 @@ suspend fun TdAbsHandler.getMessagesOrNull(
     )
 )
 
-/**
- * Returns information about messages
- * If a message is not found, returns null on the corresponding position of the result
- *
- * @chatId - Identifier of the chat the messages belong to
- * @messageIds - Identifiers of the messages to get
- */
 fun TdAbsHandler.getMessages(
     chatId: Long = 0L,
     messageIds: LongArray = longArrayOf(),
@@ -282,22 +220,6 @@ suspend fun TdAbsHandler.getChatHistory(
     )
 )
 
-/**
- * Returns messages in a chat
- * The messages are returned in a reverse chronological order (i.e., in order of decreasing message_id)
- * For optimal performance the number of returned messages is chosen by the library
- * This is an offline request if only_local is true
- *
- * @chatId - Chat identifier
- * @fromMessageId - Identifier of the message starting from which history must be fetched
- *                  Use 0 to get results from the last message
- * @offset - Specify 0 to get results from exactly the from_message_id or a negative offset up to 99 to get additionally some newer messages
- * @limit - The maximum number of messages to be returned
- *          Must be positive and can't be greater than 100
- *          If the offset is negative, the limit must be greater or equal to -offset
- *          Fewer messages may be returned than specified by the limit, even if the end of the message history has not been reached
- * @onlyLocal - If true, returns only messages that are available locally without sending network requests
- */
 suspend fun TdAbsHandler.getChatHistoryOrNull(
     chatId: Long = 0L,
     fromMessageId: Long = 0L,
@@ -314,22 +236,6 @@ suspend fun TdAbsHandler.getChatHistoryOrNull(
     )
 )
 
-/**
- * Returns messages in a chat
- * The messages are returned in a reverse chronological order (i.e., in order of decreasing message_id)
- * For optimal performance the number of returned messages is chosen by the library
- * This is an offline request if only_local is true
- *
- * @chatId - Chat identifier
- * @fromMessageId - Identifier of the message starting from which history must be fetched
- *                  Use 0 to get results from the last message
- * @offset - Specify 0 to get results from exactly the from_message_id or a negative offset up to 99 to get additionally some newer messages
- * @limit - The maximum number of messages to be returned
- *          Must be positive and can't be greater than 100
- *          If the offset is negative, the limit must be greater or equal to -offset
- *          Fewer messages may be returned than specified by the limit, even if the end of the message history has not been reached
- * @onlyLocal - If true, returns only messages that are available locally without sending network requests
- */
 fun TdAbsHandler.getChatHistory(
     chatId: Long = 0L,
     fromMessageId: Long = 0L,
@@ -387,26 +293,6 @@ suspend fun TdAbsHandler.searchChatMessages(
     )
 )
 
-/**
- * Searches for messages with given words in the chat
- * Returns the results in reverse chronological order, i.e
- * In order of decreasing message_id
- * Cannot be used in secret chats with a non-empty query (searchSecretMessages should be used instead), or without an enabled message database
- * For optimal performance the number of returned messages is chosen by the library
- *
- * @chatId - Identifier of the chat in which to search messages
- * @query - Query to search for
- * @senderUserId - If not 0, only messages sent by the specified user will be returned
- *                 Not supported in secret chats
- * @fromMessageId - Identifier of the message starting from which history must be fetched
- *                  Use 0 to get results from the last message
- * @offset - Specify 0 to get results from exactly the from_message_id or a negative offset to get the specified message and some newer messages
- * @limit - The maximum number of messages to be returned
- *          Must be positive and can't be greater than 100
- *          If the offset is negative, the limit must be greater than -offset
- *          Fewer messages may be returned than specified by the limit, even if the end of the message history has not been reached
- * @filter - Filter for message content in the search results
- */
 suspend fun TdAbsHandler.searchChatMessagesOrNull(
     chatId: Long = 0L,
     query: String? = null,
@@ -427,26 +313,6 @@ suspend fun TdAbsHandler.searchChatMessagesOrNull(
     )
 )
 
-/**
- * Searches for messages with given words in the chat
- * Returns the results in reverse chronological order, i.e
- * In order of decreasing message_id
- * Cannot be used in secret chats with a non-empty query (searchSecretMessages should be used instead), or without an enabled message database
- * For optimal performance the number of returned messages is chosen by the library
- *
- * @chatId - Identifier of the chat in which to search messages
- * @query - Query to search for
- * @senderUserId - If not 0, only messages sent by the specified user will be returned
- *                 Not supported in secret chats
- * @fromMessageId - Identifier of the message starting from which history must be fetched
- *                  Use 0 to get results from the last message
- * @offset - Specify 0 to get results from exactly the from_message_id or a negative offset to get the specified message and some newer messages
- * @limit - The maximum number of messages to be returned
- *          Must be positive and can't be greater than 100
- *          If the offset is negative, the limit must be greater than -offset
- *          Fewer messages may be returned than specified by the limit, even if the end of the message history has not been reached
- * @filter - Filter for message content in the search results
- */
 fun TdAbsHandler.searchChatMessages(
     chatId: Long = 0L,
     query: String? = null,
@@ -501,21 +367,6 @@ suspend fun TdAbsHandler.searchMessages(
     )
 )
 
-/**
- * Searches for messages in all chats except secret chats
- * Returns the results in reverse chronological order (i.e., in order of decreasing (date, chat_id, message_id))
- * For optimal performance the number of returned messages is chosen by the library
- *
- * @chatList - Chat list in which to search messages
- *             Pass null to search in all chats regardless of their chat list
- * @query - Query to search for
- * @offsetDate - The date of the message starting from which the results should be fetched
- *               Use 0 or any date in the future to get results from the last message
- * @offsetChatId - The chat identifier of the last found message, or 0 for the first request
- * @offsetMessageId - The message identifier of the last found message, or 0 for the first request
- * @limit - The maximum number of messages to be returned, up to 100
- *          Fewer messages may be returned than specified by the limit, even if the end of the message history has not been reached
- */
 suspend fun TdAbsHandler.searchMessagesOrNull(
     chatList: ChatList? = null,
     query: String? = null,
@@ -534,21 +385,6 @@ suspend fun TdAbsHandler.searchMessagesOrNull(
     )
 )
 
-/**
- * Searches for messages in all chats except secret chats
- * Returns the results in reverse chronological order (i.e., in order of decreasing (date, chat_id, message_id))
- * For optimal performance the number of returned messages is chosen by the library
- *
- * @chatList - Chat list in which to search messages
- *             Pass null to search in all chats regardless of their chat list
- * @query - Query to search for
- * @offsetDate - The date of the message starting from which the results should be fetched
- *               Use 0 or any date in the future to get results from the last message
- * @offsetChatId - The chat identifier of the last found message, or 0 for the first request
- * @offsetMessageId - The message identifier of the last found message, or 0 for the first request
- * @limit - The maximum number of messages to be returned, up to 100
- *          Fewer messages may be returned than specified by the limit, even if the end of the message history has not been reached
- */
 fun TdAbsHandler.searchMessages(
     chatList: ChatList? = null,
     query: String? = null,
@@ -598,20 +434,6 @@ suspend fun TdAbsHandler.searchSecretMessages(
     )
 )
 
-/**
- * Searches for messages in secret chats
- * Returns the results in reverse chronological order
- * For optimal performance the number of returned messages is chosen by the library
- *
- * @chatId - Identifier of the chat in which to search
- *           Specify 0 to search in all secret chats
- * @query - Query to search for
- *          If empty, searchChatMessages should be used instead
- * @fromSearchId - The identifier from the result of a previous request, use 0 to get results from the last message
- * @limit - The maximum number of messages to be returned
- *          Fewer messages may be returned than specified by the limit, even if the end of the message history has not been reached
- * @filter - A filter for the content of messages in the search results
- */
 suspend fun TdAbsHandler.searchSecretMessagesOrNull(
     chatId: Long = 0L,
     query: String? = null,
@@ -628,20 +450,6 @@ suspend fun TdAbsHandler.searchSecretMessagesOrNull(
     )
 )
 
-/**
- * Searches for messages in secret chats
- * Returns the results in reverse chronological order
- * For optimal performance the number of returned messages is chosen by the library
- *
- * @chatId - Identifier of the chat in which to search
- *           Specify 0 to search in all secret chats
- * @query - Query to search for
- *          If empty, searchChatMessages should be used instead
- * @fromSearchId - The identifier from the result of a previous request, use 0 to get results from the last message
- * @limit - The maximum number of messages to be returned
- *          Fewer messages may be returned than specified by the limit, even if the end of the message history has not been reached
- * @filter - A filter for the content of messages in the search results
- */
 fun TdAbsHandler.searchSecretMessages(
     chatId: Long = 0L,
     query: String? = null,
@@ -683,18 +491,6 @@ suspend fun TdAbsHandler.searchCallMessages(
     )
 )
 
-/**
- * Searches for call messages
- * Returns the results in reverse chronological order (i
- * E., in order of decreasing message_id)
- * For optimal performance the number of returned messages is chosen by the library
- *
- * @fromMessageId - Identifier of the message from which to search
- *                  Use 0 to get results from the last message
- * @limit - The maximum number of messages to be returned
- *          Fewer messages may be returned than specified by the limit, even if the end of the message history has not been reached
- * @onlyMissed - If true, returns only messages with missed calls
- */
 suspend fun TdAbsHandler.searchCallMessagesOrNull(
     fromMessageId: Long = 0L,
     limit: Int = 0,
@@ -707,18 +503,6 @@ suspend fun TdAbsHandler.searchCallMessagesOrNull(
     )
 )
 
-/**
- * Searches for call messages
- * Returns the results in reverse chronological order (i
- * E., in order of decreasing message_id)
- * For optimal performance the number of returned messages is chosen by the library
- *
- * @fromMessageId - Identifier of the message from which to search
- *                  Use 0 to get results from the last message
- * @limit - The maximum number of messages to be returned
- *          Fewer messages may be returned than specified by the limit, even if the end of the message history has not been reached
- * @onlyMissed - If true, returns only messages with missed calls
- */
 fun TdAbsHandler.searchCallMessages(
     fromMessageId: Long = 0L,
     limit: Int = 0,
@@ -749,13 +533,6 @@ suspend fun TdAbsHandler.searchChatRecentLocationMessages(
     )
 )
 
-/**
- * Returns information about the recent locations of chat members that were sent to the chat
- * Returns up to 1 location message per user
- *
- * @chatId - Chat identifier
- * @limit - The maximum number of messages to be returned
- */
 suspend fun TdAbsHandler.searchChatRecentLocationMessagesOrNull(
     chatId: Long = 0L,
     limit: Int = 0
@@ -766,13 +543,6 @@ suspend fun TdAbsHandler.searchChatRecentLocationMessagesOrNull(
     )
 )
 
-/**
- * Returns information about the recent locations of chat members that were sent to the chat
- * Returns up to 1 location message per user
- *
- * @chatId - Chat identifier
- * @limit - The maximum number of messages to be returned
- */
 fun TdAbsHandler.searchChatRecentLocationMessages(
     chatId: Long = 0L,
     limit: Int = 0,
@@ -792,18 +562,10 @@ suspend fun TdAbsHandler.getActiveLiveLocationMessages() = sync<Messages>(
     GetActiveLiveLocationMessages()
 )
 
-/**
- * Returns all active live locations that should be updated by the client
- * The list is persistent across application restarts only if the message database is used
- */
 suspend fun TdAbsHandler.getActiveLiveLocationMessagesOrNull() = syncOrNull<Messages>(
     GetActiveLiveLocationMessages()
 )
 
-/**
- * Returns all active live locations that should be updated by the client
- * The list is persistent across application restarts only if the message database is used
- */
 fun TdAbsHandler.getActiveLiveLocationMessages(
     block: (suspend CoroutineScope.(Messages) -> Unit)
 ) = send(
@@ -826,12 +588,6 @@ suspend fun TdAbsHandler.getChatMessageByDate(
     )
 )
 
-/**
- * Returns the last message sent in a chat no later than the specified date
- *
- * @chatId - Chat identifier
- * @date - Point in time (Unix timestamp) relative to which to search for messages
- */
 suspend fun TdAbsHandler.getChatMessageByDateOrNull(
     chatId: Long = 0L,
     date: Int = 0
@@ -842,12 +598,6 @@ suspend fun TdAbsHandler.getChatMessageByDateOrNull(
     )
 )
 
-/**
- * Returns the last message sent in a chat no later than the specified date
- *
- * @chatId - Chat identifier
- * @date - Point in time (Unix timestamp) relative to which to search for messages
- */
 fun TdAbsHandler.getChatMessageByDate(
     chatId: Long = 0L,
     date: Int = 0,
@@ -873,12 +623,6 @@ suspend fun TdAbsHandler.getChatScheduledMessages(
     )
 )
 
-/**
- * Returns all scheduled messages in a chat
- * The messages are returned in a reverse chronological order (i.e., in order of decreasing message_id)
- *
- * @chatId - Chat identifier
- */
 suspend fun TdAbsHandler.getChatScheduledMessagesOrNull(
     chatId: Long = 0L
 ) = syncOrNull<Messages>(
@@ -887,12 +631,6 @@ suspend fun TdAbsHandler.getChatScheduledMessagesOrNull(
     )
 )
 
-/**
- * Returns all scheduled messages in a chat
- * The messages are returned in a reverse chronological order (i.e., in order of decreasing message_id)
- *
- * @chatId - Chat identifier
- */
 fun TdAbsHandler.getChatScheduledMessages(
     chatId: Long = 0L,
     block: (suspend CoroutineScope.(Messages) -> Unit)
@@ -922,14 +660,6 @@ suspend fun TdAbsHandler.getPublicMessageLink(
     )
 )
 
-/**
- * Returns a public HTTPS link to a message
- * Available only for messages in supergroups and channels with a username
- *
- * @chatId - Identifier of the chat to which the message belongs
- * @messageId - Identifier of the message
- * @forAlbum - Pass true if a link for a whole media album should be returned
- */
 suspend fun TdAbsHandler.getPublicMessageLinkOrNull(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -942,14 +672,6 @@ suspend fun TdAbsHandler.getPublicMessageLinkOrNull(
     )
 )
 
-/**
- * Returns a public HTTPS link to a message
- * Available only for messages in supergroups and channels with a username
- *
- * @chatId - Identifier of the chat to which the message belongs
- * @messageId - Identifier of the message
- * @forAlbum - Pass true if a link for a whole media album should be returned
- */
 fun TdAbsHandler.getPublicMessageLink(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -981,14 +703,6 @@ suspend fun TdAbsHandler.getMessageLink(
     )
 )
 
-/**
- * Returns a private HTTPS link to a message in a chat
- * Available only for already sent messages in supergroups and channels
- * The link will work only for members of the chat
- *
- * @chatId - Identifier of the chat to which the message belongs
- * @messageId - Identifier of the message
- */
 suspend fun TdAbsHandler.getMessageLinkOrNull(
     chatId: Long = 0L,
     messageId: Long = 0L
@@ -999,14 +713,6 @@ suspend fun TdAbsHandler.getMessageLinkOrNull(
     )
 )
 
-/**
- * Returns a private HTTPS link to a message in a chat
- * Available only for already sent messages in supergroups and channels
- * The link will work only for members of the chat
- *
- * @chatId - Identifier of the chat to which the message belongs
- * @messageId - Identifier of the message
- */
 fun TdAbsHandler.getMessageLink(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -1031,11 +737,6 @@ suspend fun TdAbsHandler.getMessageLinkInfo(
     )
 )
 
-/**
- * Returns information about a public or private message link
- *
- * @url - The message link in the format "https://t.me/c/...", or "tg://privatepost?...", or "https://t.me/username/...", or "tg://resolve?..."
- */
 suspend fun TdAbsHandler.getMessageLinkInfoOrNull(
     url: String? = null
 ) = syncOrNull<MessageLinkInfo>(
@@ -1044,11 +745,6 @@ suspend fun TdAbsHandler.getMessageLinkInfoOrNull(
     )
 )
 
-/**
- * Returns information about a public or private message link
- *
- * @url - The message link in the format "https://t.me/c/...", or "tg://privatepost?...", or "https://t.me/username/...", or "tg://resolve?..."
- */
 fun TdAbsHandler.getMessageLinkInfo(
     url: String? = null,
     block: (suspend CoroutineScope.(MessageLinkInfo) -> Unit)
@@ -1085,17 +781,6 @@ suspend fun TdAbsHandler.sendMessage(
     )
 )
 
-/**
- * Sends a message
- * Returns the sent message
- *
- * @chatId - Target chat
- * @replyToMessageId - Identifier of the message to reply to or 0
- * @options - Options to be used to send the message
- * @replyMarkup - Markup for replying to the message
- *                For bots only
- * @inputMessageContent - The content of the message to be sent
- */
 suspend fun TdAbsHandler.sendMessageOrNull(
     chatId: Long = 0L,
     replyToMessageId: Long = 0L,
@@ -1112,17 +797,6 @@ suspend fun TdAbsHandler.sendMessageOrNull(
     )
 )
 
-/**
- * Sends a message
- * Returns the sent message
- *
- * @chatId - Target chat
- * @replyToMessageId - Identifier of the message to reply to or 0
- * @options - Options to be used to send the message
- * @replyMarkup - Markup for replying to the message
- *                For bots only
- * @inputMessageContent - The content of the message to be sent
- */
 fun TdAbsHandler.sendMessage(
     chatId: Long = 0L,
     replyToMessageId: Long = 0L,
@@ -1164,16 +838,6 @@ suspend fun TdAbsHandler.sendMessageAlbum(
     )
 )
 
-/**
- * Sends messages grouped together into an album
- * Currently only photo and video messages can be grouped into an album
- * Returns sent messages
- *
- * @chatId - Target chat
- * @replyToMessageId - Identifier of a message to reply to or 0
- * @options - Options to be used to send the messages
- * @inputMessageContents - Contents of messages to be sent
- */
 suspend fun TdAbsHandler.sendMessageAlbumOrNull(
     chatId: Long = 0L,
     replyToMessageId: Long = 0L,
@@ -1188,16 +852,6 @@ suspend fun TdAbsHandler.sendMessageAlbumOrNull(
     )
 )
 
-/**
- * Sends messages grouped together into an album
- * Currently only photo and video messages can be grouped into an album
- * Returns sent messages
- *
- * @chatId - Target chat
- * @replyToMessageId - Identifier of a message to reply to or 0
- * @options - Options to be used to send the messages
- * @inputMessageContents - Contents of messages to be sent
- */
 fun TdAbsHandler.sendMessageAlbum(
     chatId: Long = 0L,
     replyToMessageId: Long = 0L,
@@ -1235,16 +889,6 @@ suspend fun TdAbsHandler.sendBotStartMessage(
     )
 )
 
-/**
- * Invites a bot to a chat (if it is not yet a member) and sends it the /start command
- * Bots can't be invited to a private chat other than the chat with the bot
- * Bots can't be invited to channels (although they can be added as admins) and secret chats
- * Returns the sent message
- *
- * @botUserId - Identifier of the bot
- * @chatId - Identifier of the target chat
- * @parameter - A hidden parameter sent to the bot for deep linking purposes (https://core.telegram.org/bots#deep-linking)
- */
 suspend fun TdAbsHandler.sendBotStartMessageOrNull(
     botUserId: Int = 0,
     chatId: Long = 0L,
@@ -1257,16 +901,6 @@ suspend fun TdAbsHandler.sendBotStartMessageOrNull(
     )
 )
 
-/**
- * Invites a bot to a chat (if it is not yet a member) and sends it the /start command
- * Bots can't be invited to a private chat other than the chat with the bot
- * Bots can't be invited to channels (although they can be added as admins) and secret chats
- * Returns the sent message
- *
- * @botUserId - Identifier of the bot
- * @chatId - Identifier of the target chat
- * @parameter - A hidden parameter sent to the bot for deep linking purposes (https://core.telegram.org/bots#deep-linking)
- */
 fun TdAbsHandler.sendBotStartMessage(
     botUserId: Int = 0,
     chatId: Long = 0L,
@@ -1311,19 +945,6 @@ suspend fun TdAbsHandler.sendInlineQueryResultMessage(
     )
 )
 
-/**
- * Sends the result of an inline query as a message
- * Returns the sent message
- * Always clears a chat draft message
- *
- * @chatId - Target chat
- * @replyToMessageId - Identifier of a message to reply to or 0
- * @options - Options to be used to send the message
- * @queryId - Identifier of the inline query
- * @resultId - Identifier of the inline result
- * @hideViaBot - If true, there will be no mention of a bot, via which the message is sent
- *               Can be used only for bots GetOption("animation_search_bot_username"), GetOption("photo_search_bot_username") and GetOption("venue_search_bot_username")
- */
 suspend fun TdAbsHandler.sendInlineQueryResultMessageOrNull(
     chatId: Long = 0L,
     replyToMessageId: Long = 0L,
@@ -1342,19 +963,6 @@ suspend fun TdAbsHandler.sendInlineQueryResultMessageOrNull(
     )
 )
 
-/**
- * Sends the result of an inline query as a message
- * Returns the sent message
- * Always clears a chat draft message
- *
- * @chatId - Target chat
- * @replyToMessageId - Identifier of a message to reply to or 0
- * @options - Options to be used to send the message
- * @queryId - Identifier of the inline query
- * @resultId - Identifier of the inline result
- * @hideViaBot - If true, there will be no mention of a bot, via which the message is sent
- *               Can be used only for bots GetOption("animation_search_bot_username"), GetOption("photo_search_bot_username") and GetOption("venue_search_bot_username")
- */
 fun TdAbsHandler.sendInlineQueryResultMessage(
     chatId: Long = 0L,
     replyToMessageId: Long = 0L,
@@ -1410,22 +1018,6 @@ suspend fun TdAbsHandler.forwardMessages(
     )
 )
 
-/**
- * Forwards previously sent messages
- * Returns the forwarded messages in the same order as the message identifiers passed in message_ids
- * If a message can't be forwarded, null will be returned instead of the message
- *
- * @chatId - Identifier of the chat to which to forward messages
- * @fromChatId - Identifier of the chat from which to forward messages
- * @messageIds - Identifiers of the messages to forward
- * @options - Options to be used to send the messages
- * @asAlbum - True, if the messages should be grouped into an album after forwarding
- *            For this to work, no more than 10 messages may be forwarded, and all of them must be photo or video messages
- * @sendCopy - True, if content of the messages needs to be copied without links to the original messages
- *             Always true if the messages are forwarded to a secret chat
- * @removeCaption - True, if media captions of message copies needs to be removed
- *                  Ignored if send_copy is false
- */
 suspend fun TdAbsHandler.forwardMessagesOrNull(
     chatId: Long = 0L,
     fromChatId: Long = 0L,
@@ -1446,22 +1038,6 @@ suspend fun TdAbsHandler.forwardMessagesOrNull(
     )
 )
 
-/**
- * Forwards previously sent messages
- * Returns the forwarded messages in the same order as the message identifiers passed in message_ids
- * If a message can't be forwarded, null will be returned instead of the message
- *
- * @chatId - Identifier of the chat to which to forward messages
- * @fromChatId - Identifier of the chat from which to forward messages
- * @messageIds - Identifiers of the messages to forward
- * @options - Options to be used to send the messages
- * @asAlbum - True, if the messages should be grouped into an album after forwarding
- *            For this to work, no more than 10 messages may be forwarded, and all of them must be photo or video messages
- * @sendCopy - True, if content of the messages needs to be copied without links to the original messages
- *             Always true if the messages are forwarded to a secret chat
- * @removeCaption - True, if media captions of message copies needs to be removed
- *                  Ignored if send_copy is false
- */
 fun TdAbsHandler.forwardMessages(
     chatId: Long = 0L,
     fromChatId: Long = 0L,
@@ -1504,17 +1080,6 @@ suspend fun TdAbsHandler.resendMessages(
     )
 )
 
-/**
- * Resends messages which failed to send
- * Can be called only for messages for which messageSendingStateFailed.can_retry is true and after specified in messageSendingStateFailed.retry_after time passed
- * If a message is re-sent, the corresponding failed to send message is deleted
- * Returns the sent messages in the same order as the message identifiers passed in message_ids
- * If a message can't be re-sent, null will be returned instead of the message
- *
- * @chatId - Identifier of the chat to send messages
- * @messageIds - Identifiers of the messages to resend
- *               Message identifiers must be in a strictly increasing order
- */
 suspend fun TdAbsHandler.resendMessagesOrNull(
     chatId: Long = 0L,
     messageIds: LongArray = longArrayOf()
@@ -1525,17 +1090,6 @@ suspend fun TdAbsHandler.resendMessagesOrNull(
     )
 )
 
-/**
- * Resends messages which failed to send
- * Can be called only for messages for which messageSendingStateFailed.can_retry is true and after specified in messageSendingStateFailed.retry_after time passed
- * If a message is re-sent, the corresponding failed to send message is deleted
- * Returns the sent messages in the same order as the message identifiers passed in message_ids
- * If a message can't be re-sent, null will be returned instead of the message
- *
- * @chatId - Identifier of the chat to send messages
- * @messageIds - Identifiers of the messages to resend
- *               Message identifiers must be in a strictly increasing order
- */
 fun TdAbsHandler.resendMessages(
     chatId: Long = 0L,
     messageIds: LongArray = longArrayOf(),
@@ -1563,12 +1117,6 @@ suspend fun TdAbsHandler.sendChatSetTtlMessage(
     )
 )
 
-/**
- * Changes the current TTL setting (sets a new self-destruct timer) in a secret chat and sends the corresponding message
- *
- * @chatId - Chat identifier
- * @ttl - New TTL value, in seconds
- */
 suspend fun TdAbsHandler.sendChatSetTtlMessageOrNull(
     chatId: Long = 0L,
     ttl: Int = 0
@@ -1579,12 +1127,6 @@ suspend fun TdAbsHandler.sendChatSetTtlMessageOrNull(
     )
 )
 
-/**
- * Changes the current TTL setting (sets a new self-destruct timer) in a secret chat and sends the corresponding message
- *
- * @chatId - Chat identifier
- * @ttl - New TTL value, in seconds
- */
 fun TdAbsHandler.sendChatSetTtlMessage(
     chatId: Long = 0L,
     ttl: Int = 0,
@@ -1624,18 +1166,6 @@ suspend fun TdAbsHandler.addLocalMessage(
     )
 )
 
-/**
- * Adds a local message to a chat
- * The message is persistent across application restarts only if the message database is used
- * Returns the added message
- *
- * @chatId - Target chat
- * @senderUserId - Identifier of the user who will be shown as the sender of the message
- *                 May be 0 for channel posts
- * @replyToMessageId - Identifier of the message to reply to or 0
- * @disableNotification - Pass true to disable notification for the message
- * @inputMessageContent - The content of the message to be added
- */
 suspend fun TdAbsHandler.addLocalMessageOrNull(
     chatId: Long = 0L,
     senderUserId: Int = 0,
@@ -1652,18 +1182,6 @@ suspend fun TdAbsHandler.addLocalMessageOrNull(
     )
 )
 
-/**
- * Adds a local message to a chat
- * The message is persistent across application restarts only if the message database is used
- * Returns the added message
- *
- * @chatId - Target chat
- * @senderUserId - Identifier of the user who will be shown as the sender of the message
- *                 May be 0 for channel posts
- * @replyToMessageId - Identifier of the message to reply to or 0
- * @disableNotification - Pass true to disable notification for the message
- * @inputMessageContent - The content of the message to be added
- */
 fun TdAbsHandler.addLocalMessage(
     chatId: Long = 0L,
     senderUserId: Int = 0,
@@ -1701,14 +1219,6 @@ suspend fun TdAbsHandler.deleteMessages(
     )
 )
 
-/**
- * Deletes messages
- *
- * @chatId - Chat identifier
- * @messageIds - Identifiers of the messages to be deleted
- * @revoke - Pass true to try to delete messages for all chat members
- *           Always true for supergroups, channels and secret chats
- */
 suspend fun TdAbsHandler.deleteMessagesOrNull(
     chatId: Long = 0L,
     messageIds: LongArray = longArrayOf(),
@@ -1721,14 +1231,6 @@ suspend fun TdAbsHandler.deleteMessagesOrNull(
     )
 )
 
-/**
- * Deletes messages
- *
- * @chatId - Chat identifier
- * @messageIds - Identifiers of the messages to be deleted
- * @revoke - Pass true to try to delete messages for all chat members
- *           Always true for supergroups, channels and secret chats
- */
 fun TdAbsHandler.deleteMessages(
     chatId: Long = 0L,
     messageIds: LongArray = longArrayOf(),
@@ -1767,17 +1269,6 @@ suspend fun TdAbsHandler.editMessageText(
     )
 )
 
-/**
- * Edits the text of a message (or a text of a game message)
- * Returns the edited message after the edit is completed on the server side
- *
- * @chatId - The chat the message belongs to
- * @messageId - Identifier of the message
- * @replyMarkup - The new message reply markup
- *                For bots only
- * @inputMessageContent - New text content of the message
- *                        Should be of type InputMessageText
- */
 suspend fun TdAbsHandler.editMessageTextOrNull(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -1792,17 +1283,6 @@ suspend fun TdAbsHandler.editMessageTextOrNull(
     )
 )
 
-/**
- * Edits the text of a message (or a text of a game message)
- * Returns the edited message after the edit is completed on the server side
- *
- * @chatId - The chat the message belongs to
- * @messageId - Identifier of the message
- * @replyMarkup - The new message reply markup
- *                For bots only
- * @inputMessageContent - New text content of the message
- *                        Should be of type InputMessageText
- */
 fun TdAbsHandler.editMessageText(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -1844,18 +1324,6 @@ suspend fun TdAbsHandler.editMessageLiveLocation(
     )
 )
 
-/**
- * Edits the message content of a live location
- * Messages can be edited for a limited period of time specified in the live location
- * Returns the edited message after the edit is completed on the server side
- *
- * @chatId - The chat the message belongs to
- * @messageId - Identifier of the message
- * @replyMarkup - The new message reply markup
- *                For bots only
- * @location - New location content of the message
- *             Pass null to stop sharing the live location
- */
 suspend fun TdAbsHandler.editMessageLiveLocationOrNull(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -1870,18 +1338,6 @@ suspend fun TdAbsHandler.editMessageLiveLocationOrNull(
     )
 )
 
-/**
- * Edits the message content of a live location
- * Messages can be edited for a limited period of time specified in the live location
- * Returns the edited message after the edit is completed on the server side
- *
- * @chatId - The chat the message belongs to
- * @messageId - Identifier of the message
- * @replyMarkup - The new message reply markup
- *                For bots only
- * @location - New location content of the message
- *             Pass null to stop sharing the live location
- */
 fun TdAbsHandler.editMessageLiveLocation(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -1925,20 +1381,6 @@ suspend fun TdAbsHandler.editMessageMedia(
     )
 )
 
-/**
- * Edits the content of a message with an animation, an audio, a document, a photo or a video
- * The media in the message can't be replaced if the message was set to self-destruct
- * Media can't be replaced by self-destructing media
- * Media in an album can be edited only to contain a photo or a video
- * Returns the edited message after the edit is completed on the server side
- *
- * @chatId - The chat the message belongs to
- * @messageId - Identifier of the message
- * @replyMarkup - The new message reply markup
- *                For bots only
- * @inputMessageContent - New content of the message
- *                        Must be one of the following types: InputMessageAnimation, InputMessageAudio, InputMessageDocument, InputMessagePhoto or InputMessageVideo
- */
 suspend fun TdAbsHandler.editMessageMediaOrNull(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -1953,20 +1395,6 @@ suspend fun TdAbsHandler.editMessageMediaOrNull(
     )
 )
 
-/**
- * Edits the content of a message with an animation, an audio, a document, a photo or a video
- * The media in the message can't be replaced if the message was set to self-destruct
- * Media can't be replaced by self-destructing media
- * Media in an album can be edited only to contain a photo or a video
- * Returns the edited message after the edit is completed on the server side
- *
- * @chatId - The chat the message belongs to
- * @messageId - Identifier of the message
- * @replyMarkup - The new message reply markup
- *                For bots only
- * @inputMessageContent - New content of the message
- *                        Must be one of the following types: InputMessageAnimation, InputMessageAudio, InputMessageDocument, InputMessagePhoto or InputMessageVideo
- */
 fun TdAbsHandler.editMessageMedia(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -2007,17 +1435,6 @@ suspend fun TdAbsHandler.editMessageCaption(
     )
 )
 
-/**
- * Edits the message content caption
- * Returns the edited message after the edit is completed on the server side
- *
- * @chatId - The chat the message belongs to
- * @messageId - Identifier of the message
- * @replyMarkup - The new message reply markup
- *                For bots only
- * @caption - New message content caption
- *            0-GetOption("message_caption_length_max") characters
- */
 suspend fun TdAbsHandler.editMessageCaptionOrNull(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -2032,17 +1449,6 @@ suspend fun TdAbsHandler.editMessageCaptionOrNull(
     )
 )
 
-/**
- * Edits the message content caption
- * Returns the edited message after the edit is completed on the server side
- *
- * @chatId - The chat the message belongs to
- * @messageId - Identifier of the message
- * @replyMarkup - The new message reply markup
- *                For bots only
- * @caption - New message content caption
- *            0-GetOption("message_caption_length_max") characters
- */
 fun TdAbsHandler.editMessageCaption(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -2079,15 +1485,6 @@ suspend fun TdAbsHandler.editMessageReplyMarkup(
     )
 )
 
-/**
- * Edits the message reply markup
- * For bots only
- * Returns the edited message after the edit is completed on the server side
- *
- * @chatId - The chat the message belongs to
- * @messageId - Identifier of the message
- * @replyMarkup - The new message reply markup
- */
 suspend fun TdAbsHandler.editMessageReplyMarkupOrNull(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -2100,15 +1497,6 @@ suspend fun TdAbsHandler.editMessageReplyMarkupOrNull(
     )
 )
 
-/**
- * Edits the message reply markup
- * For bots only
- * Returns the edited message after the edit is completed on the server side
- *
- * @chatId - The chat the message belongs to
- * @messageId - Identifier of the message
- * @replyMarkup - The new message reply markup
- */
 fun TdAbsHandler.editMessageReplyMarkup(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -2143,15 +1531,6 @@ suspend fun TdAbsHandler.editMessageSchedulingState(
     )
 )
 
-/**
- * Edits the time when a scheduled message will be sent
- * Scheduling state of all messages in the same album or forwarded together with the message will be also changed
- *
- * @chatId - The chat the message belongs to
- * @messageId - Identifier of the message
- * @schedulingState - The new message scheduling state
- *                    Pass null to send the message immediately
- */
 suspend fun TdAbsHandler.editMessageSchedulingStateOrNull(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -2164,15 +1543,6 @@ suspend fun TdAbsHandler.editMessageSchedulingStateOrNull(
     )
 )
 
-/**
- * Edits the time when a scheduled message will be sent
- * Scheduling state of all messages in the same album or forwarded together with the message will be also changed
- *
- * @chatId - The chat the message belongs to
- * @messageId - Identifier of the message
- * @schedulingState - The new message scheduling state
- *                    Pass null to send the message immediately
- */
 fun TdAbsHandler.editMessageSchedulingState(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -2216,18 +1586,6 @@ suspend fun TdAbsHandler.setGameScore(
     )
 )
 
-/**
- * Updates the game score of the specified user in the game
- * For bots only
- *
- * @chatId - The chat to which the message with the game belongs
- * @messageId - Identifier of the message
- * @editMessage - True, if the message should be edited
- * @userId - User identifier
- * @score - The new score
- * @force - Pass true to update the score even if it decreases
- *          If the score is 0, the user will be deleted from the high score table
- */
 suspend fun TdAbsHandler.setGameScoreOrNull(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -2246,18 +1604,6 @@ suspend fun TdAbsHandler.setGameScoreOrNull(
     )
 )
 
-/**
- * Updates the game score of the specified user in the game
- * For bots only
- *
- * @chatId - The chat to which the message with the game belongs
- * @messageId - Identifier of the message
- * @editMessage - True, if the message should be edited
- * @userId - User identifier
- * @score - The new score
- * @force - Pass true to update the score even if it decreases
- *          If the score is 0, the user will be deleted from the high score table
- */
 fun TdAbsHandler.setGameScore(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -2297,14 +1643,6 @@ suspend fun TdAbsHandler.viewMessages(
     )
 )
 
-/**
- * Informs TDLib that messages are being viewed by the user
- * Many useful activities depend on whether the messages are currently being viewed or not (e.g., marking messages as read, incrementing a view counter, updating a view counter, removing deleted messages in supergroups and channels)
- *
- * @chatId - Chat identifier
- * @messageIds - The identifiers of the messages being viewed
- * @forceRead - True, if messages in closed chats should be marked as read
- */
 suspend fun TdAbsHandler.viewMessagesOrNull(
     chatId: Long = 0L,
     messageIds: LongArray = longArrayOf(),
@@ -2317,14 +1655,6 @@ suspend fun TdAbsHandler.viewMessagesOrNull(
     )
 )
 
-/**
- * Informs TDLib that messages are being viewed by the user
- * Many useful activities depend on whether the messages are currently being viewed or not (e.g., marking messages as read, incrementing a view counter, updating a view counter, removing deleted messages in supergroups and channels)
- *
- * @chatId - Chat identifier
- * @messageIds - The identifiers of the messages being viewed
- * @forceRead - True, if messages in closed chats should be marked as read
- */
 fun TdAbsHandler.viewMessages(
     chatId: Long = 0L,
     messageIds: LongArray = longArrayOf(),
@@ -2355,13 +1685,6 @@ suspend fun TdAbsHandler.openMessageContent(
     )
 )
 
-/**
- * Informs TDLib that the message content has been opened (e.g., the user has opened a photo, video, document, location or venue, or has listened to an audio file or voice note message)
- * An updateMessageContentOpened update will be generated if something has changed
- *
- * @chatId - Chat identifier of the message
- * @messageId - Identifier of the message with the opened content
- */
 suspend fun TdAbsHandler.openMessageContentOrNull(
     chatId: Long = 0L,
     messageId: Long = 0L
@@ -2372,13 +1695,6 @@ suspend fun TdAbsHandler.openMessageContentOrNull(
     )
 )
 
-/**
- * Informs TDLib that the message content has been opened (e.g., the user has opened a photo, video, document, location or venue, or has listened to an audio file or voice note message)
- * An updateMessageContentOpened update will be generated if something has changed
- *
- * @chatId - Chat identifier of the message
- * @messageId - Identifier of the message with the opened content
- */
 fun TdAbsHandler.openMessageContent(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -2403,11 +1719,6 @@ suspend fun TdAbsHandler.clearAllDraftMessages(
     )
 )
 
-/**
- * Clears draft messages in all chats
- *
- * @excludeSecretChats - If true, local draft messages in secret chats will not be cleared
- */
 suspend fun TdAbsHandler.clearAllDraftMessagesOrNull(
     excludeSecretChats: Boolean = false
 ) = syncOrNull<Ok>(
@@ -2416,11 +1727,6 @@ suspend fun TdAbsHandler.clearAllDraftMessagesOrNull(
     )
 )
 
-/**
- * Clears draft messages in all chats
- *
- * @excludeSecretChats - If true, local draft messages in secret chats will not be cleared
- */
 fun TdAbsHandler.clearAllDraftMessages(
     excludeSecretChats: Boolean = false,
     block: (suspend CoroutineScope.(Ok) -> Unit)

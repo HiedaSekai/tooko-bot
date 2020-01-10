@@ -2,11 +2,10 @@ package tookox.pm.handlers
 
 import cn.hutool.core.util.NumberUtil
 import cn.hutool.core.util.StrUtil
-import tooko.main.Fn
 import td.TdApi.*
-import tookox.core.client.TdException
 import tookox.core.*
 import tookox.core.client.*
+import tookox.core.raw.*
 import tookox.core.utils.*
 import tookox.pm.PmBot
 import tookox.pm.PmData
@@ -33,7 +32,7 @@ class ChatPanel : TdBotHandler() {
 
         if (userId != bot.owner) rejectFunction()
 
-        val L = userId.langForUserId
+        val L = userId.langFor
         
         if ("enter" == function) {
             
@@ -127,7 +126,7 @@ class ChatPanel : TdBotHandler() {
 
                 }
 
-            } else if (params.size != 0) {
+            } else if (params.isNotEmpty()) {
 
                 val targetUser = findUser(message, param, params)
 
@@ -239,7 +238,7 @@ class ChatPanel : TdBotHandler() {
 
         if (bot.owner != userId) return sudo.onLaunch(userId, chatId, message)
         
-        val L = userId.langForUserId
+        val L = userId.langFor
         
         sudo delete message
 
@@ -264,17 +263,17 @@ class ChatPanel : TdBotHandler() {
 
     suspend fun sessionStat(session: PmData.Session): String {
         
-        val L = bot.owner.langForUserId
+        val L = bot.owner.langFor
         
         var stat: String = L.CHAT_MANAGE_HELP
         
-        stat += "\n\n" + L.USER_NAME.toString() + " : " + Fn.mention(getUser(session.chatId.toInt()))
+        stat += "\n\n" + L.USER_NAME.toString() + " : " + getUser(session.chatId.toInt()).asInlineMention
 
         if (data.blocked.contains(session.chatId)) {
             stat += " " + L.CHAT_IS_BLOCKED
         }
 
-        stat += "\n" + L.USER_ID.toString() + " : " + Fn.code(session.chatId)
+        stat += "\n" + L.USER_ID.toString() + " : " + session.chatId.asCode
         stat += "\n" + L.CHAT_MSG_RECEIVED
         stat += "\n" + L.CHAT_MSG_SENDED
 
@@ -284,7 +283,7 @@ class ChatPanel : TdBotHandler() {
 
     fun sessionActions(session: PmData.Session) = inlineButton {
 
-        val L = bot.owner.langForUserId
+        val L = bot.owner.langFor
 
         val sessionId = session.chatId.asByteArray
 

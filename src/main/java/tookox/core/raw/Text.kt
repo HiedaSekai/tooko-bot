@@ -24,14 +24,6 @@ suspend fun TdAbsHandler.getTextEntities(
     )
 )
 
-/**
- * Returns all entities (mentions, hashtags, cashtags, bot commands, URLs, and email addresses) contained in the text
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- *
- * @text - The text in which to look for entites
- */
 suspend fun TdAbsHandler.getTextEntitiesOrNull(
     text: String? = null
 ) = syncOrNull<TextEntities>(
@@ -40,14 +32,6 @@ suspend fun TdAbsHandler.getTextEntitiesOrNull(
     )
 )
 
-/**
- * Returns all entities (mentions, hashtags, cashtags, bot commands, URLs, and email addresses) contained in the text
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- *
- * @text - The text in which to look for entites
- */
 fun TdAbsHandler.getTextEntities(
     text: String? = null,
     block: (suspend CoroutineScope.(TextEntities) -> Unit)
@@ -76,15 +60,6 @@ suspend fun TdAbsHandler.parseTextEntities(
     )
 )
 
-/**
- * Parses Bold, Italic, Underline, Strikethrough, Code, Pre, PreCode, TextUrl and MentionName entities contained in the text
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- *
- * @text - The text which should be parsed
- * @parseMode - Text parse mode
- */
 suspend fun TdAbsHandler.parseTextEntitiesOrNull(
     text: String? = null,
     parseMode: TextParseMode? = null
@@ -95,15 +70,6 @@ suspend fun TdAbsHandler.parseTextEntitiesOrNull(
     )
 )
 
-/**
- * Parses Bold, Italic, Underline, Strikethrough, Code, Pre, PreCode, TextUrl and MentionName entities contained in the text
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- *
- * @text - The text which should be parsed
- * @parseMode - Text parse mode
- */
 fun TdAbsHandler.parseTextEntities(
     text: String? = null,
     parseMode: TextParseMode? = null,
@@ -132,15 +98,6 @@ suspend fun TdAbsHandler.getFileMimeType(
     )
 )
 
-/**
- * Returns the MIME type of a file, guessed by its extension
- * Returns an empty string on failure
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- *
- * @fileName - The name of the file or path to the file
- */
 suspend fun TdAbsHandler.getFileMimeTypeOrNull(
     fileName: String? = null
 ) = syncOrNull<Text>(
@@ -149,15 +106,6 @@ suspend fun TdAbsHandler.getFileMimeTypeOrNull(
     )
 )
 
-/**
- * Returns the MIME type of a file, guessed by its extension
- * Returns an empty string on failure
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- *
- * @fileName - The name of the file or path to the file
- */
 fun TdAbsHandler.getFileMimeType(
     fileName: String? = null,
     block: (suspend CoroutineScope.(Text) -> Unit)
@@ -184,15 +132,6 @@ suspend fun TdAbsHandler.getFileExtension(
     )
 )
 
-/**
- * Returns the extension of a file, guessed by its MIME type
- * Returns an empty string on failure
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- *
- * @mimeType - The MIME type of the file
- */
 suspend fun TdAbsHandler.getFileExtensionOrNull(
     mimeType: String? = null
 ) = syncOrNull<Text>(
@@ -201,15 +140,6 @@ suspend fun TdAbsHandler.getFileExtensionOrNull(
     )
 )
 
-/**
- * Returns the extension of a file, guessed by its MIME type
- * Returns an empty string on failure
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- *
- * @mimeType - The MIME type of the file
- */
 fun TdAbsHandler.getFileExtension(
     mimeType: String? = null,
     block: (suspend CoroutineScope.(Text) -> Unit)
@@ -237,16 +167,6 @@ suspend fun TdAbsHandler.cleanFileName(
     )
 )
 
-/**
- * Removes potentially dangerous characters from the name of a file
- * The encoding of the file name is supposed to be UTF-8
- * Returns an empty string on failure
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- *
- * @fileName - File name or path to the file
- */
 suspend fun TdAbsHandler.cleanFileNameOrNull(
     fileName: String? = null
 ) = syncOrNull<Text>(
@@ -255,16 +175,6 @@ suspend fun TdAbsHandler.cleanFileNameOrNull(
     )
 )
 
-/**
- * Removes potentially dangerous characters from the name of a file
- * The encoding of the file name is supposed to be UTF-8
- * Returns an empty string on failure
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- *
- * @fileName - File name or path to the file
- */
 fun TdAbsHandler.cleanFileName(
     fileName: String? = null,
     block: (suspend CoroutineScope.(Text) -> Unit)
@@ -290,14 +200,6 @@ suspend fun TdAbsHandler.getJsonString(
     )
 )
 
-/**
- * Converts a JsonValue object to corresponding JSON-serialized string
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- *
- * @jsonValue - The JsonValue object
- */
 suspend fun TdAbsHandler.getJsonStringOrNull(
     jsonValue: JsonValue? = null
 ) = syncOrNull<Text>(
@@ -306,14 +208,6 @@ suspend fun TdAbsHandler.getJsonStringOrNull(
     )
 )
 
-/**
- * Converts a JsonValue object to corresponding JSON-serialized string
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- *
- * @jsonValue - The JsonValue object
- */
 fun TdAbsHandler.getJsonString(
     jsonValue: JsonValue? = null,
     block: (suspend CoroutineScope.(Text) -> Unit)
@@ -337,12 +231,6 @@ suspend fun TdAbsHandler.getPreferredCountryLanguage(
     )
 )
 
-/**
- * Returns an IETF language tag of the language preferred in the country, which should be used to fill native fields in Telegram Passport personal details
- * Returns a 404 error if unknown
- *
- * @countryCode - A two-letter ISO 3166-1 alpha-2 country code
- */
 suspend fun TdAbsHandler.getPreferredCountryLanguageOrNull(
     countryCode: String? = null
 ) = syncOrNull<Text>(
@@ -351,12 +239,6 @@ suspend fun TdAbsHandler.getPreferredCountryLanguageOrNull(
     )
 )
 
-/**
- * Returns an IETF language tag of the language preferred in the country, which should be used to fill native fields in Telegram Passport personal details
- * Returns a 404 error if unknown
- *
- * @countryCode - A two-letter ISO 3166-1 alpha-2 country code
- */
 fun TdAbsHandler.getPreferredCountryLanguage(
     countryCode: String? = null,
     block: (suspend CoroutineScope.(Text) -> Unit)
@@ -375,20 +257,10 @@ suspend fun TdAbsHandler.getCountryCode() = sync<Text>(
     GetCountryCode()
 )
 
-/**
- * Uses current user IP to found their country
- * Returns two-letter ISO 3166-1 alpha-2 country code
- * Can be called before authorization
- */
 suspend fun TdAbsHandler.getCountryCodeOrNull() = syncOrNull<Text>(
     GetCountryCode()
 )
 
-/**
- * Uses current user IP to found their country
- * Returns two-letter ISO 3166-1 alpha-2 country code
- * Can be called before authorization
- */
 fun TdAbsHandler.getCountryCode(
     block: (suspend CoroutineScope.(Text) -> Unit)
 ) = send(
@@ -402,16 +274,10 @@ suspend fun TdAbsHandler.getInviteText() = sync<Text>(
     GetInviteText()
 )
 
-/**
- * Returns the default text for invitation messages to be used as a placeholder when the current user invites friends to Telegram
- */
 suspend fun TdAbsHandler.getInviteTextOrNull() = syncOrNull<Text>(
     GetInviteText()
 )
 
-/**
- * Returns the default text for invitation messages to be used as a placeholder when the current user invites friends to Telegram
- */
 fun TdAbsHandler.getInviteText(
     block: (suspend CoroutineScope.(Text) -> Unit)
 ) = send(
@@ -433,13 +299,6 @@ suspend fun TdAbsHandler.getProxyLink(
     )
 )
 
-/**
- * Returns an HTTPS link, which can be used to add a proxy
- * Available only for SOCKS5 and MTProto proxies
- * Can be called before authorization
- *
- * @proxyId - Proxy identifier
- */
 suspend fun TdAbsHandler.getProxyLinkOrNull(
     proxyId: Int = 0
 ) = syncOrNull<Text>(
@@ -448,13 +307,6 @@ suspend fun TdAbsHandler.getProxyLinkOrNull(
     )
 )
 
-/**
- * Returns an HTTPS link, which can be used to add a proxy
- * Available only for SOCKS5 and MTProto proxies
- * Can be called before authorization
- *
- * @proxyId - Proxy identifier
- */
 fun TdAbsHandler.getProxyLink(
     proxyId: Int = 0,
     block: (suspend CoroutineScope.(Text) -> Unit)

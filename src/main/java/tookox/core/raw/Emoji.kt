@@ -22,12 +22,6 @@ suspend fun TdAbsHandler.getStickerEmojis(
     )
 )
 
-/**
- * Returns emoji corresponding to a sticker
- * The list is only for informational purposes, because a sticker is always sent with a fixed emoji from the corresponding Sticker object
- *
- * @sticker - Sticker file identifier
- */
 suspend fun TdAbsHandler.getStickerEmojisOrNull(
     sticker: InputFile? = null
 ) = syncOrNull<Emojis>(
@@ -36,12 +30,6 @@ suspend fun TdAbsHandler.getStickerEmojisOrNull(
     )
 )
 
-/**
- * Returns emoji corresponding to a sticker
- * The list is only for informational purposes, because a sticker is always sent with a fixed emoji from the corresponding Sticker object
- *
- * @sticker - Sticker file identifier
- */
 fun TdAbsHandler.getStickerEmojis(
     sticker: InputFile? = null,
     block: (suspend CoroutineScope.(Emojis) -> Unit)
@@ -72,15 +60,6 @@ suspend fun TdAbsHandler.searchEmojis(
     )
 )
 
-/**
- * Searches for emojis by keywords
- * Supported only if the file database is enabled
- *
- * @text - Text to search for
- * @exactMatch - True, if only emojis, which exactly match text needs to be returned
- * @inputLanguageCode - IETF language tag of the user's input language
- *                      Can be empty if unknown
- */
 suspend fun TdAbsHandler.searchEmojisOrNull(
     text: String? = null,
     exactMatch: Boolean = false,
@@ -93,15 +72,6 @@ suspend fun TdAbsHandler.searchEmojisOrNull(
     )
 )
 
-/**
- * Searches for emojis by keywords
- * Supported only if the file database is enabled
- *
- * @text - Text to search for
- * @exactMatch - True, if only emojis, which exactly match text needs to be returned
- * @inputLanguageCode - IETF language tag of the user's input language
- *                      Can be empty if unknown
- */
 fun TdAbsHandler.searchEmojis(
     text: String? = null,
     exactMatch: Boolean = false,
@@ -129,12 +99,6 @@ suspend fun TdAbsHandler.getEmojiSuggestionsUrl(
     )
 )
 
-/**
- * Returns an HTTP URL which can be used to automatically log in to the translation platform and suggest new emoji replacements
- * The URL will be valid for 30 seconds after generation
- *
- * @languageCode - Language code for which the emoji replacements will be suggested
- */
 suspend fun TdAbsHandler.getEmojiSuggestionsUrlOrNull(
     languageCode: String? = null
 ) = syncOrNull<HttpUrl>(
@@ -143,12 +107,6 @@ suspend fun TdAbsHandler.getEmojiSuggestionsUrlOrNull(
     )
 )
 
-/**
- * Returns an HTTP URL which can be used to automatically log in to the translation platform and suggest new emoji replacements
- * The URL will be valid for 30 seconds after generation
- *
- * @languageCode - Language code for which the emoji replacements will be suggested
- */
 fun TdAbsHandler.getEmojiSuggestionsUrl(
     languageCode: String? = null,
     block: (suspend CoroutineScope.(HttpUrl) -> Unit)

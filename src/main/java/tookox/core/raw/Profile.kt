@@ -23,13 +23,6 @@ suspend fun TdAbsHandler.setProfilePhoto(
     )
 )
 
-/**
- * Uploads a new profile photo for the current user
- * If something changes, updateUser will be sent
- *
- * @photo - Profile photo to set
- *          InputFileId and inputFileRemote may still be unsupported
- */
 suspend fun TdAbsHandler.setProfilePhotoOrNull(
     photo: InputFile? = null
 ) = syncOrNull<Ok>(
@@ -38,13 +31,6 @@ suspend fun TdAbsHandler.setProfilePhotoOrNull(
     )
 )
 
-/**
- * Uploads a new profile photo for the current user
- * If something changes, updateUser will be sent
- *
- * @photo - Profile photo to set
- *          InputFileId and inputFileRemote may still be unsupported
- */
 fun TdAbsHandler.setProfilePhoto(
     photo: InputFile? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -68,12 +54,6 @@ suspend fun TdAbsHandler.deleteProfilePhoto(
     )
 )
 
-/**
- * Deletes a profile photo
- * If something changes, updateUser will be sent
- *
- * @profilePhotoId - Identifier of the profile photo to delete
- */
 suspend fun TdAbsHandler.deleteProfilePhotoOrNull(
     profilePhotoId: Long = 0L
 ) = syncOrNull<Ok>(
@@ -82,12 +62,6 @@ suspend fun TdAbsHandler.deleteProfilePhotoOrNull(
     )
 )
 
-/**
- * Deletes a profile photo
- * If something changes, updateUser will be sent
- *
- * @profilePhotoId - Identifier of the profile photo to delete
- */
 fun TdAbsHandler.deleteProfilePhoto(
     profilePhotoId: Long = 0L,
     block: (suspend CoroutineScope.(Ok) -> Unit)

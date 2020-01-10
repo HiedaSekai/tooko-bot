@@ -4,7 +4,7 @@
 
 package tookox.core.raw
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
 import td.TdApi.*
 import tookox.core.client.*
 
@@ -24,14 +24,6 @@ suspend fun TdAbsHandler.getJsonValue(
     )
 )
 
-/**
- * Converts a JSON-serialized string to corresponding JsonValue object
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- *
- * @json - The JSON-serialized string
- */
 suspend fun TdAbsHandler.getJsonValueOrNull(
     json: String? = null
 ) = syncOrNull<JsonValue>(
@@ -40,14 +32,6 @@ suspend fun TdAbsHandler.getJsonValueOrNull(
     )
 )
 
-/**
- * Converts a JSON-serialized string to corresponding JsonValue object
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- *
- * @json - The JSON-serialized string
- */
 fun TdAbsHandler.getJsonValue(
     json: String? = null,
     block: (suspend CoroutineScope.(JsonValue) -> Unit)
@@ -65,18 +49,10 @@ suspend fun TdAbsHandler.getApplicationConfig() = sync<JsonValue>(
     GetApplicationConfig()
 )
 
-/**
- * Returns application config, provided by the server
- * Can be called before authorization
- */
 suspend fun TdAbsHandler.getApplicationConfigOrNull() = syncOrNull<JsonValue>(
     GetApplicationConfig()
 )
 
-/**
- * Returns application config, provided by the server
- * Can be called before authorization
- */
 fun TdAbsHandler.getApplicationConfig(
     block: (suspend CoroutineScope.(JsonValue) -> Unit)
 ) = send(

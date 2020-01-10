@@ -22,12 +22,6 @@ suspend fun TdAbsHandler.sendChatScreenshotTakenNotification(
     )
 )
 
-/**
- * Sends a notification about a screenshot taken in a chat
- * Supported only in private and secret chats
- *
- * @chatId - Chat identifier
- */
 suspend fun TdAbsHandler.sendChatScreenshotTakenNotificationOrNull(
     chatId: Long = 0L
 ) = syncOrNull<Ok>(
@@ -36,12 +30,6 @@ suspend fun TdAbsHandler.sendChatScreenshotTakenNotificationOrNull(
     )
 )
 
-/**
- * Sends a notification about a screenshot taken in a chat
- * Supported only in private and secret chats
- *
- * @chatId - Chat identifier
- */
 fun TdAbsHandler.sendChatScreenshotTakenNotification(
     chatId: Long = 0L,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -67,12 +55,6 @@ suspend fun TdAbsHandler.sendChatAction(
     )
 )
 
-/**
- * Sends a notification about user activity in a chat
- *
- * @chatId - Chat identifier
- * @action - The action description
- */
 suspend fun TdAbsHandler.sendChatActionOrNull(
     chatId: Long = 0L,
     action: ChatAction? = null
@@ -83,12 +65,6 @@ suspend fun TdAbsHandler.sendChatActionOrNull(
     )
 )
 
-/**
- * Sends a notification about user activity in a chat
- *
- * @chatId - Chat identifier
- * @action - The action description
- */
 fun TdAbsHandler.sendChatAction(
     chatId: Long = 0L,
     action: ChatAction? = null,
@@ -122,14 +98,6 @@ suspend fun TdAbsHandler.sendCallRating(
     )
 )
 
-/**
- * Sends a call rating
- *
- * @callId - Call identifier
- * @rating - Call rating
- * @comment - An optional user comment if the rating is less than 5
- * @problems - List of the exact types of problems with the call, specified by the user
- */
 suspend fun TdAbsHandler.sendCallRatingOrNull(
     callId: Int = 0,
     rating: Int = 0,
@@ -144,14 +112,6 @@ suspend fun TdAbsHandler.sendCallRatingOrNull(
     )
 )
 
-/**
- * Sends a call rating
- *
- * @callId - Call identifier
- * @rating - Call rating
- * @comment - An optional user comment if the rating is less than 5
- * @problems - List of the exact types of problems with the call, specified by the user
- */
 fun TdAbsHandler.sendCallRating(
     callId: Int = 0,
     rating: Int = 0,
@@ -183,12 +143,6 @@ suspend fun TdAbsHandler.sendCallDebugInformation(
     )
 )
 
-/**
- * Sends debug information for a call
- *
- * @callId - Call identifier
- * @debugInformation - Debug information in application-specific format
- */
 suspend fun TdAbsHandler.sendCallDebugInformationOrNull(
     callId: Int = 0,
     debugInformation: String? = null
@@ -199,12 +153,6 @@ suspend fun TdAbsHandler.sendCallDebugInformationOrNull(
     )
 )
 
-/**
- * Sends debug information for a call
- *
- * @callId - Call identifier
- * @debugInformation - Debug information in application-specific format
- */
 fun TdAbsHandler.sendCallDebugInformation(
     callId: Int = 0,
     debugInformation: String? = null,
@@ -233,13 +181,6 @@ suspend fun TdAbsHandler.sendPassportAuthorizationForm(
     )
 )
 
-/**
- * Sends a Telegram Passport authorization form, effectively sharing data with the service
- * This method must be called after getPassportAuthorizationFormAvailableElements if some previously available elements need to be used
- *
- * @autorizationFormId - Authorization form identifier
- * @types - Types of Telegram Passport elements chosen by user to complete the authorization form
- */
 suspend fun TdAbsHandler.sendPassportAuthorizationFormOrNull(
     autorizationFormId: Int = 0,
     types: Array<PassportElementType> = emptyArray()
@@ -250,13 +191,6 @@ suspend fun TdAbsHandler.sendPassportAuthorizationFormOrNull(
     )
 )
 
-/**
- * Sends a Telegram Passport authorization form, effectively sharing data with the service
- * This method must be called after getPassportAuthorizationFormAvailableElements if some previously available elements need to be used
- *
- * @autorizationFormId - Authorization form identifier
- * @types - Types of Telegram Passport elements chosen by user to complete the authorization form
- */
 fun TdAbsHandler.sendPassportAuthorizationForm(
     autorizationFormId: Int = 0,
     types: Array<PassportElementType> = emptyArray(),

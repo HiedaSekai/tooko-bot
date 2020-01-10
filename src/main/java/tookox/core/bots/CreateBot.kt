@@ -1,13 +1,9 @@
 package tookox.core.bots
 
-import tooko.main.Env
-import tooko.main.Fn
-import tooko.main.Lang
-import tooko.main.bots.BotData
-import tooko.main.bots.BotImage
 import td.TdApi
 import tookox.core.*
 import tookox.core.client.*
+import tookox.core.env.*
 import tookox.core.utils.*
 import com.pengrad.telegrambot.request.GetMe as HttpGetMe
 
@@ -27,7 +23,7 @@ class CreateBot : TdBotHandler() {
 
         if (message.fromPrivateOrdelete) {
 
-            val L: Lang = Lang.get(userId)
+            val L = userId.langFor
 
             if (!Env.isAdmin(userId)) {
 
@@ -122,7 +118,7 @@ class CreateBot : TdBotHandler() {
 
         } else if (subId == 1) {
 
-            val type = Fn.getText(message)
+            val type = message.text
 
             val data = createCache.remove(userId)!!
 

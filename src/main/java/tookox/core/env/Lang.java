@@ -153,6 +153,7 @@ public class Lang {
     public String PM_PAYLOADS;
     public String PM_PAYLOAD;
     public String PM_PAYLOAD_INVALID;
+    public String PM_PAYLOAD_UNDEFINED;
     public String USER_ID;
     public String USER_ID_NOT_FOUND;
     public String USER_NAME;

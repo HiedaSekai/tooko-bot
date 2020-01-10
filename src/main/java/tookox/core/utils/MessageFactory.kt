@@ -6,10 +6,11 @@ import cn.hutool.core.builder.Builder
 import cn.hutool.core.util.ArrayUtil
 import kotlinx.coroutines.CoroutineScope
 import td.TdApi.*
-import tookox.core.env.Fn
-import tookox.core.env.Lang
 import tookox.core.*
 import tookox.core.client.*
+import tookox.core.env.*
+import tookox.core.raw.*
+import tookox.core.syncRaw
 import twitter4j.TwitterException
 import java.util.*
 import kotlin.properties.Delegates
@@ -319,6 +320,7 @@ class TextBuilder(var textFormatted: FormattedText? = null) : Builder<InputMessa
 
 }
 
+fun inputForward(message: Message, block: (ForwardBuilder.() -> Unit)? = null) = inputForward(message.chatId,message.id,block)
 
 fun inputForward(chatId: Number, messageId: Long, block: (ForwardBuilder.() -> Unit)? = null): InputMessageForwarded {
 

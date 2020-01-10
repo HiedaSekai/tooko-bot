@@ -24,14 +24,6 @@ suspend fun TdAbsHandler.getDeepLinkInfo(
     )
 )
 
-/**
- * Returns information about a tg:// deep link
- * Use "tg://need_update_for_some_feature" or "tg:some_unsupported_feature" for testing
- * Returns a 404 error for unknown links
- * Can be called before authorization
- *
- * @link - The link
- */
 suspend fun TdAbsHandler.getDeepLinkInfoOrNull(
     link: String? = null
 ) = syncOrNull<DeepLinkInfo>(
@@ -40,14 +32,6 @@ suspend fun TdAbsHandler.getDeepLinkInfoOrNull(
     )
 )
 
-/**
- * Returns information about a tg:// deep link
- * Use "tg://need_update_for_some_feature" or "tg:some_unsupported_feature" for testing
- * Returns a 404 error for unknown links
- * Can be called before authorization
- *
- * @link - The link
- */
 fun TdAbsHandler.getDeepLinkInfo(
     link: String? = null,
     block: (suspend CoroutineScope.(DeepLinkInfo) -> Unit)

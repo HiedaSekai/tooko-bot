@@ -22,12 +22,6 @@ suspend fun TdAbsHandler.setTdlibParameters(
     )
 )
 
-/**
- * Sets the parameters for TDLib initialization
- * Works only when the current authorization state is authorizationStateWaitTdlibParameters
- *
- * @parameters - Parameters
- */
 suspend fun TdAbsHandler.setTdlibParametersOrNull(
     parameters: TdlibParameters? = null
 ) = syncOrNull<Ok>(
@@ -36,12 +30,6 @@ suspend fun TdAbsHandler.setTdlibParametersOrNull(
     )
 )
 
-/**
- * Sets the parameters for TDLib initialization
- * Works only when the current authorization state is authorizationStateWaitTdlibParameters
- *
- * @parameters - Parameters
- */
 fun TdAbsHandler.setTdlibParameters(
     parameters: TdlibParameters? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)

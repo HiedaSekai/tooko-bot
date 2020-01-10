@@ -15,16 +15,10 @@ suspend fun TdAbsHandler.canTransferOwnership() = sync<CanTransferOwnershipResul
     CanTransferOwnership()
 )
 
-/**
- * Checks whether the current session can be used to transfer a chat ownership to another user
- */
 suspend fun TdAbsHandler.canTransferOwnershipOrNull() = syncOrNull<CanTransferOwnershipResult>(
     CanTransferOwnership()
 )
 
-/**
- * Checks whether the current session can be used to transfer a chat ownership to another user
- */
 fun TdAbsHandler.canTransferOwnership(
     block: (suspend CoroutineScope.(CanTransferOwnershipResult) -> Unit)
 ) = send(
@@ -49,14 +43,6 @@ suspend fun TdAbsHandler.cancelDownloadFile(
     )
 )
 
-/**
- * Stops the downloading of a file
- * If a file has already been downloaded, does nothing
- *
- * @fileId - Identifier of a file to stop downloading
- * @onlyIfPending - Pass true to stop downloading only if it hasn't been started, i.e
- *                  Request hasn't been sent to server
- */
 suspend fun TdAbsHandler.cancelDownloadFileOrNull(
     fileId: Int = 0,
     onlyIfPending: Boolean = false
@@ -67,14 +53,6 @@ suspend fun TdAbsHandler.cancelDownloadFileOrNull(
     )
 )
 
-/**
- * Stops the downloading of a file
- * If a file has already been downloaded, does nothing
- *
- * @fileId - Identifier of a file to stop downloading
- * @onlyIfPending - Pass true to stop downloading only if it hasn't been started, i.e
- *                  Request hasn't been sent to server
- */
 fun TdAbsHandler.cancelDownloadFile(
     fileId: Int = 0,
     onlyIfPending: Boolean = false,
@@ -101,13 +79,6 @@ suspend fun TdAbsHandler.cancelUploadFile(
     )
 )
 
-/**
- * Stops the uploading of a file
- * Supported only for files uploaded by using uploadFile
- * For other files the behavior is undefined
- *
- * @fileId - Identifier of the file to stop uploading
- */
 suspend fun TdAbsHandler.cancelUploadFileOrNull(
     fileId: Int = 0
 ) = syncOrNull<Ok>(
@@ -116,13 +87,6 @@ suspend fun TdAbsHandler.cancelUploadFileOrNull(
     )
 )
 
-/**
- * Stops the uploading of a file
- * Supported only for files uploaded by using uploadFile
- * For other files the behavior is undefined
- *
- * @fileId - Identifier of the file to stop uploading
- */
 fun TdAbsHandler.cancelUploadFile(
     fileId: Int = 0,
     block: (suspend CoroutineScope.(Ok) -> Unit)

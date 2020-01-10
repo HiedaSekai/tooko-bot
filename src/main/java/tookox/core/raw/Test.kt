@@ -18,22 +18,10 @@ suspend fun TdAbsHandler.testCallEmpty() = sync<Ok>(
     TestCallEmpty()
 )
 
-/**
- * Does nothing
- * For testing only
- * This is an offline method
- * Can be called before authorization
- */
 suspend fun TdAbsHandler.testCallEmptyOrNull() = syncOrNull<Ok>(
     TestCallEmpty()
 )
 
-/**
- * Does nothing
- * For testing only
- * This is an offline method
- * Can be called before authorization
- */
 fun TdAbsHandler.testCallEmpty(
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
@@ -56,14 +44,6 @@ suspend fun TdAbsHandler.testCallString(
     )
 )
 
-/**
- * Returns the received string
- * For testing only
- * This is an offline method
- * Can be called before authorization
- *
- * @x - String to return
- */
 suspend fun TdAbsHandler.testCallStringOrNull(
     x: String? = null
 ) = syncOrNull<TestString>(
@@ -72,14 +52,6 @@ suspend fun TdAbsHandler.testCallStringOrNull(
     )
 )
 
-/**
- * Returns the received string
- * For testing only
- * This is an offline method
- * Can be called before authorization
- *
- * @x - String to return
- */
 fun TdAbsHandler.testCallString(
     x: String? = null,
     block: (suspend CoroutineScope.(TestString) -> Unit)
@@ -105,14 +77,6 @@ suspend fun TdAbsHandler.testCallBytes(
     )
 )
 
-/**
- * Returns the received bytes
- * For testing only
- * This is an offline method
- * Can be called before authorization
- *
- * @x - Bytes to return
- */
 suspend fun TdAbsHandler.testCallBytesOrNull(
     x: ByteArray = byteArrayOf()
 ) = syncOrNull<TestBytes>(
@@ -121,14 +85,6 @@ suspend fun TdAbsHandler.testCallBytesOrNull(
     )
 )
 
-/**
- * Returns the received bytes
- * For testing only
- * This is an offline method
- * Can be called before authorization
- *
- * @x - Bytes to return
- */
 fun TdAbsHandler.testCallBytes(
     x: ByteArray = byteArrayOf(),
     block: (suspend CoroutineScope.(TestBytes) -> Unit)
@@ -154,14 +110,6 @@ suspend fun TdAbsHandler.testCallVectorInt(
     )
 )
 
-/**
- * Returns the received vector of numbers
- * For testing only
- * This is an offline method
- * Can be called before authorization
- *
- * @x - Vector of numbers to return
- */
 suspend fun TdAbsHandler.testCallVectorIntOrNull(
     x: IntArray = intArrayOf()
 ) = syncOrNull<TestVectorInt>(
@@ -170,14 +118,6 @@ suspend fun TdAbsHandler.testCallVectorIntOrNull(
     )
 )
 
-/**
- * Returns the received vector of numbers
- * For testing only
- * This is an offline method
- * Can be called before authorization
- *
- * @x - Vector of numbers to return
- */
 fun TdAbsHandler.testCallVectorInt(
     x: IntArray = intArrayOf(),
     block: (suspend CoroutineScope.(TestVectorInt) -> Unit)
@@ -203,14 +143,6 @@ suspend fun TdAbsHandler.testCallVectorIntObject(
     )
 )
 
-/**
- * Returns the received vector of objects containing a number
- * For testing only
- * This is an offline method
- * Can be called before authorization
- *
- * @x - Vector of objects to return
- */
 suspend fun TdAbsHandler.testCallVectorIntObjectOrNull(
     x: Array<TestInt> = emptyArray()
 ) = syncOrNull<TestVectorIntObject>(
@@ -219,14 +151,6 @@ suspend fun TdAbsHandler.testCallVectorIntObjectOrNull(
     )
 )
 
-/**
- * Returns the received vector of objects containing a number
- * For testing only
- * This is an offline method
- * Can be called before authorization
- *
- * @x - Vector of objects to return
- */
 fun TdAbsHandler.testCallVectorIntObject(
     x: Array<TestInt> = emptyArray(),
     block: (suspend CoroutineScope.(TestVectorIntObject) -> Unit)
@@ -252,14 +176,6 @@ suspend fun TdAbsHandler.testCallVectorString(
     )
 )
 
-/**
- * Returns the received vector of strings
- * For testing only
- * This is an offline method
- * Can be called before authorization
- *
- * @x - Vector of strings to return
- */
 suspend fun TdAbsHandler.testCallVectorStringOrNull(
     x: Array<String> = emptyArray()
 ) = syncOrNull<TestVectorString>(
@@ -268,14 +184,6 @@ suspend fun TdAbsHandler.testCallVectorStringOrNull(
     )
 )
 
-/**
- * Returns the received vector of strings
- * For testing only
- * This is an offline method
- * Can be called before authorization
- *
- * @x - Vector of strings to return
- */
 fun TdAbsHandler.testCallVectorString(
     x: Array<String> = emptyArray(),
     block: (suspend CoroutineScope.(TestVectorString) -> Unit)
@@ -301,14 +209,6 @@ suspend fun TdAbsHandler.testCallVectorStringObject(
     )
 )
 
-/**
- * Returns the received vector of objects containing a string
- * For testing only
- * This is an offline method
- * Can be called before authorization
- *
- * @x - Vector of objects to return
- */
 suspend fun TdAbsHandler.testCallVectorStringObjectOrNull(
     x: Array<TestString> = emptyArray()
 ) = syncOrNull<TestVectorStringObject>(
@@ -317,14 +217,6 @@ suspend fun TdAbsHandler.testCallVectorStringObjectOrNull(
     )
 )
 
-/**
- * Returns the received vector of objects containing a string
- * For testing only
- * This is an offline method
- * Can be called before authorization
- *
- * @x - Vector of objects to return
- */
 fun TdAbsHandler.testCallVectorStringObject(
     x: Array<TestString> = emptyArray(),
     block: (suspend CoroutineScope.(TestVectorStringObject) -> Unit)
@@ -350,14 +242,6 @@ suspend fun TdAbsHandler.testSquareInt(
     )
 )
 
-/**
- * Returns the squared received number
- * For testing only
- * This is an offline method
- * Can be called before authorization
- *
- * @x - Number to square
- */
 suspend fun TdAbsHandler.testSquareIntOrNull(
     x: Int = 0
 ) = syncOrNull<TestInt>(
@@ -366,14 +250,6 @@ suspend fun TdAbsHandler.testSquareIntOrNull(
     )
 )
 
-/**
- * Returns the squared received number
- * For testing only
- * This is an offline method
- * Can be called before authorization
- *
- * @x - Number to square
- */
 fun TdAbsHandler.testSquareInt(
     x: Int = 0,
     block: (suspend CoroutineScope.(TestInt) -> Unit)
@@ -392,20 +268,10 @@ suspend fun TdAbsHandler.testNetwork() = sync<Ok>(
     TestNetwork()
 )
 
-/**
- * Sends a simple network request to the Telegram servers
- * For testing only
- * Can be called before authorization
- */
 suspend fun TdAbsHandler.testNetworkOrNull() = syncOrNull<Ok>(
     TestNetwork()
 )
 
-/**
- * Sends a simple network request to the Telegram servers
- * For testing only
- * Can be called before authorization
- */
 fun TdAbsHandler.testNetwork(
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
@@ -439,17 +305,6 @@ suspend fun TdAbsHandler.testProxy(
     )
 )
 
-/**
- * Sends a simple network request to the Telegram servers via proxy
- * For testing only
- * Can be called before authorization
- *
- * @server - Proxy server IP address
- * @port - Proxy server port
- * @type - Proxy type
- * @dcId - Identifier of a datacenter, with which to test connection
- * @timeout - The maximum overall timeout for the request
- */
 suspend fun TdAbsHandler.testProxyOrNull(
     server: String? = null,
     port: Int = 0,
@@ -466,17 +321,6 @@ suspend fun TdAbsHandler.testProxyOrNull(
     )
 )
 
-/**
- * Sends a simple network request to the Telegram servers via proxy
- * For testing only
- * Can be called before authorization
- *
- * @server - Proxy server IP address
- * @port - Proxy server port
- * @type - Proxy type
- * @dcId - Identifier of a datacenter, with which to test connection
- * @timeout - The maximum overall timeout for the request
- */
 fun TdAbsHandler.testProxy(
     server: String? = null,
     port: Int = 0,
@@ -502,18 +346,10 @@ suspend fun TdAbsHandler.testGetDifference() = sync<Ok>(
     TestGetDifference()
 )
 
-/**
- * Forces an updates.getDifference call to the Telegram servers
- * For testing only
- */
 suspend fun TdAbsHandler.testGetDifferenceOrNull() = syncOrNull<Ok>(
     TestGetDifference()
 )
 
-/**
- * Forces an updates.getDifference call to the Telegram servers
- * For testing only
- */
 fun TdAbsHandler.testGetDifference(
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
@@ -530,22 +366,10 @@ suspend fun TdAbsHandler.testUseUpdate() = sync<Update>(
     TestUseUpdate()
 )
 
-/**
- * Does nothing and ensures that the Update object is used
- * For testing only
- * This is an offline method
- * Can be called before authorization
- */
 suspend fun TdAbsHandler.testUseUpdateOrNull() = syncOrNull<Update>(
     TestUseUpdate()
 )
 
-/**
- * Does nothing and ensures that the Update object is used
- * For testing only
- * This is an offline method
- * Can be called before authorization
- */
 fun TdAbsHandler.testUseUpdate(
     block: (suspend CoroutineScope.(Update) -> Unit)
 ) = send(
@@ -569,15 +393,6 @@ suspend fun TdAbsHandler.testReturnError(
     )
 )
 
-/**
- * Returns the specified error and ensures that the Error object is used
- * For testing only
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- *
- * @error - The error to be returned
- */
 suspend fun TdAbsHandler.testReturnErrorOrNull(
     error: Error? = null
 ) = syncOrNull<Error>(
@@ -586,15 +401,6 @@ suspend fun TdAbsHandler.testReturnErrorOrNull(
     )
 )
 
-/**
- * Returns the specified error and ensures that the Error object is used
- * For testing only
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- *
- * @error - The error to be returned
- */
 fun TdAbsHandler.testReturnError(
     error: Error? = null,
     block: (suspend CoroutineScope.(Error) -> Unit)

@@ -34,18 +34,6 @@ suspend fun TdAbsHandler.getLanguagePackString(
     )
 )
 
-/**
- * Returns a string stored in the local database from the specified localization target and language pack by its key
- * Returns a 404 error if the string is not found
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- *
- * @languagePackDatabasePath - Path to the language pack database in which strings are stored
- * @localizationTarget - Localization target to which the language pack belongs
- * @languagePackId - Language pack identifier
- * @key - Language pack key of the string to be returned
- */
 suspend fun TdAbsHandler.getLanguagePackStringOrNull(
     languagePackDatabasePath: String? = null,
     localizationTarget: String? = null,
@@ -60,18 +48,6 @@ suspend fun TdAbsHandler.getLanguagePackStringOrNull(
     )
 )
 
-/**
- * Returns a string stored in the local database from the specified localization target and language pack by its key
- * Returns a 404 error if the string is not found
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- *
- * @languagePackDatabasePath - Path to the language pack database in which strings are stored
- * @localizationTarget - Localization target to which the language pack belongs
- * @languagePackId - Language pack identifier
- * @key - Language pack key of the string to be returned
- */
 fun TdAbsHandler.getLanguagePackString(
     languagePackDatabasePath: String? = null,
     localizationTarget: String? = null,
@@ -102,13 +78,6 @@ suspend fun TdAbsHandler.getLanguagePackInfo(
     )
 )
 
-/**
- * Returns information about a language pack
- * Returned language pack identifier may be different from a provided one
- * Can be called before authorization
- *
- * @languagePackId - Language pack identifier
- */
 suspend fun TdAbsHandler.getLanguagePackInfoOrNull(
     languagePackId: String? = null
 ) = syncOrNull<LanguagePackInfo>(
@@ -117,13 +86,6 @@ suspend fun TdAbsHandler.getLanguagePackInfoOrNull(
     )
 )
 
-/**
- * Returns information about a language pack
- * Returned language pack identifier may be different from a provided one
- * Can be called before authorization
- *
- * @languagePackId - Language pack identifier
- */
 fun TdAbsHandler.getLanguagePackInfo(
     languagePackId: String? = null,
     block: (suspend CoroutineScope.(LanguagePackInfo) -> Unit)
@@ -151,14 +113,6 @@ suspend fun TdAbsHandler.getLanguagePackStrings(
     )
 )
 
-/**
- * Returns strings from a language pack in the current localization target by their keys
- * Can be called before authorization
- *
- * @languagePackId - Language pack identifier of the strings to be returned
- * @keys - Language pack keys of the strings to be returned
- *         Leave empty to request all available strings
- */
 suspend fun TdAbsHandler.getLanguagePackStringsOrNull(
     languagePackId: String? = null,
     keys: Array<String> = emptyArray()
@@ -169,14 +123,6 @@ suspend fun TdAbsHandler.getLanguagePackStringsOrNull(
     )
 )
 
-/**
- * Returns strings from a language pack in the current localization target by their keys
- * Can be called before authorization
- *
- * @languagePackId - Language pack identifier of the strings to be returned
- * @keys - Language pack keys of the strings to be returned
- *         Leave empty to request all available strings
- */
 fun TdAbsHandler.getLanguagePackStrings(
     languagePackId: String? = null,
     keys: Array<String> = emptyArray(),
@@ -203,13 +149,6 @@ suspend fun TdAbsHandler.synchronizeLanguagePack(
     )
 )
 
-/**
- * Fetches the latest versions of all strings from a language pack in the current localization target from the server
- * This method doesn't need to be called explicitly for the current used/base language packs
- * Can be called before authorization
- *
- * @languagePackId - Language pack identifier
- */
 suspend fun TdAbsHandler.synchronizeLanguagePackOrNull(
     languagePackId: String? = null
 ) = syncOrNull<Ok>(
@@ -218,13 +157,6 @@ suspend fun TdAbsHandler.synchronizeLanguagePackOrNull(
     )
 )
 
-/**
- * Fetches the latest versions of all strings from a language pack in the current localization target from the server
- * This method doesn't need to be called explicitly for the current used/base language packs
- * Can be called before authorization
- *
- * @languagePackId - Language pack identifier
- */
 fun TdAbsHandler.synchronizeLanguagePack(
     languagePackId: String? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -249,13 +181,6 @@ suspend fun TdAbsHandler.deleteLanguagePack(
     )
 )
 
-/**
- * Deletes all information about a language pack in the current localization target
- * The language pack which is currently in use (including base language pack) or is being synchronized can't be deleted
- * Can be called before authorization
- *
- * @languagePackId - Identifier of the language pack to delete
- */
 suspend fun TdAbsHandler.deleteLanguagePackOrNull(
     languagePackId: String? = null
 ) = syncOrNull<Ok>(
@@ -264,13 +189,6 @@ suspend fun TdAbsHandler.deleteLanguagePackOrNull(
     )
 )
 
-/**
- * Deletes all information about a language pack in the current localization target
- * The language pack which is currently in use (including base language pack) or is being synchronized can't be deleted
- * Can be called before authorization
- *
- * @languagePackId - Identifier of the language pack to delete
- */
 fun TdAbsHandler.deleteLanguagePack(
     languagePackId: String? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)

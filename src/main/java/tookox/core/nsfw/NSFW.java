@@ -1,4 +1,4 @@
-package tooko.main.utils.nsfw;
+package tookox.core.nsfw;
 
 
 import cn.hutool.core.codec.Base64;

@@ -22,12 +22,6 @@ suspend fun TdAbsHandler.checkDatabaseEncryptionKey(
     )
 )
 
-/**
- * Checks the database encryption key for correctness
- * Works only when the current authorization state is authorizationStateWaitEncryptionKey
- *
- * @encryptionKey - Encryption key to check or set up
- */
 suspend fun TdAbsHandler.checkDatabaseEncryptionKeyOrNull(
     encryptionKey: ByteArray = byteArrayOf()
 ) = syncOrNull<Ok>(
@@ -36,12 +30,6 @@ suspend fun TdAbsHandler.checkDatabaseEncryptionKeyOrNull(
     )
 )
 
-/**
- * Checks the database encryption key for correctness
- * Works only when the current authorization state is authorizationStateWaitEncryptionKey
- *
- * @encryptionKey - Encryption key to check or set up
- */
 fun TdAbsHandler.checkDatabaseEncryptionKey(
     encryptionKey: ByteArray = byteArrayOf(),
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -65,12 +53,6 @@ suspend fun TdAbsHandler.checkAuthenticationCode(
     )
 )
 
-/**
- * Checks the authentication code
- * Works only when the current authorization state is authorizationStateWaitCode
- *
- * @code - The verification code received via SMS, Telegram message, phone call, or flash call
- */
 suspend fun TdAbsHandler.checkAuthenticationCodeOrNull(
     code: String? = null
 ) = syncOrNull<Ok>(
@@ -79,12 +61,6 @@ suspend fun TdAbsHandler.checkAuthenticationCodeOrNull(
     )
 )
 
-/**
- * Checks the authentication code
- * Works only when the current authorization state is authorizationStateWaitCode
- *
- * @code - The verification code received via SMS, Telegram message, phone call, or flash call
- */
 fun TdAbsHandler.checkAuthenticationCode(
     code: String? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -108,12 +84,6 @@ suspend fun TdAbsHandler.checkAuthenticationPassword(
     )
 )
 
-/**
- * Checks the authentication password for correctness
- * Works only when the current authorization state is authorizationStateWaitPassword
- *
- * @password - The password to check
- */
 suspend fun TdAbsHandler.checkAuthenticationPasswordOrNull(
     password: String? = null
 ) = syncOrNull<Ok>(
@@ -122,12 +92,6 @@ suspend fun TdAbsHandler.checkAuthenticationPasswordOrNull(
     )
 )
 
-/**
- * Checks the authentication password for correctness
- * Works only when the current authorization state is authorizationStateWaitPassword
- *
- * @password - The password to check
- */
 fun TdAbsHandler.checkAuthenticationPassword(
     password: String? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -153,14 +117,6 @@ suspend fun TdAbsHandler.checkAuthenticationBotToken(
     )
 )
 
-/**
- * Checks the authentication token of a bot
- * To log in as a bot
- * Works only when the current authorization state is authorizationStateWaitPhoneNumber
- * Can be used instead of setAuthenticationPhoneNumber and checkAuthenticationCode to log in
- *
- * @token - The bot token
- */
 suspend fun TdAbsHandler.checkAuthenticationBotTokenOrNull(
     token: String? = null
 ) = syncOrNull<Ok>(
@@ -169,14 +125,6 @@ suspend fun TdAbsHandler.checkAuthenticationBotTokenOrNull(
     )
 )
 
-/**
- * Checks the authentication token of a bot
- * To log in as a bot
- * Works only when the current authorization state is authorizationStateWaitPhoneNumber
- * Can be used instead of setAuthenticationPhoneNumber and checkAuthenticationCode to log in
- *
- * @token - The bot token
- */
 fun TdAbsHandler.checkAuthenticationBotToken(
     token: String? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -203,13 +151,6 @@ suspend fun TdAbsHandler.checkChatUsername(
     )
 )
 
-/**
- * Checks whether a username can be set for a chat
- *
- * @chatId - Chat identifier
- *           Should be identifier of a supergroup chat, or a channel chat, or a private chat with self, or zero if chat is being created
- * @username - Username to be checked
- */
 suspend fun TdAbsHandler.checkChatUsernameOrNull(
     chatId: Long = 0L,
     username: String? = null
@@ -220,13 +161,6 @@ suspend fun TdAbsHandler.checkChatUsernameOrNull(
     )
 )
 
-/**
- * Checks whether a username can be set for a chat
- *
- * @chatId - Chat identifier
- *           Should be identifier of a supergroup chat, or a channel chat, or a private chat with self, or zero if chat is being created
- * @username - Username to be checked
- */
 fun TdAbsHandler.checkChatUsername(
     chatId: Long = 0L,
     username: String? = null,
@@ -252,12 +186,6 @@ suspend fun TdAbsHandler.checkCreatedPublicChatsLimit(
     )
 )
 
-/**
- * Checks whether the maximum number of owned public chats has been reached
- * Returns corresponding error if the limit was reached
- *
- * @type - Type of the public chats, for which to check the limit
- */
 suspend fun TdAbsHandler.checkCreatedPublicChatsLimitOrNull(
     type: PublicChatType? = null
 ) = syncOrNull<Ok>(
@@ -266,12 +194,6 @@ suspend fun TdAbsHandler.checkCreatedPublicChatsLimitOrNull(
     )
 )
 
-/**
- * Checks whether the maximum number of owned public chats has been reached
- * Returns corresponding error if the limit was reached
- *
- * @type - Type of the public chats, for which to check the limit
- */
 fun TdAbsHandler.checkCreatedPublicChatsLimit(
     type: PublicChatType? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -298,13 +220,6 @@ suspend fun TdAbsHandler.answerPreCheckoutQuery(
     )
 )
 
-/**
- * Sets the result of a pre-checkout query
- * For bots only
- *
- * @preCheckoutQueryId - Identifier of the pre-checkout query
- * @errorMessage - An error message, empty on success
- */
 suspend fun TdAbsHandler.answerPreCheckoutQueryOrNull(
     preCheckoutQueryId: Long = 0L,
     errorMessage: String? = null
@@ -315,13 +230,6 @@ suspend fun TdAbsHandler.answerPreCheckoutQueryOrNull(
     )
 )
 
-/**
- * Sets the result of a pre-checkout query
- * For bots only
- *
- * @preCheckoutQueryId - Identifier of the pre-checkout query
- * @errorMessage - An error message, empty on success
- */
 fun TdAbsHandler.answerPreCheckoutQuery(
     preCheckoutQueryId: Long = 0L,
     errorMessage: String? = null,
@@ -346,11 +254,6 @@ suspend fun TdAbsHandler.checkChangePhoneNumberCode(
     )
 )
 
-/**
- * Checks the authentication code sent to confirm a new phone number of the user
- *
- * @code - Verification code received by SMS, phone call or flash call
- */
 suspend fun TdAbsHandler.checkChangePhoneNumberCodeOrNull(
     code: String? = null
 ) = syncOrNull<Ok>(
@@ -359,11 +262,6 @@ suspend fun TdAbsHandler.checkChangePhoneNumberCodeOrNull(
     )
 )
 
-/**
- * Checks the authentication code sent to confirm a new phone number of the user
- *
- * @code - Verification code received by SMS, phone call or flash call
- */
 fun TdAbsHandler.checkChangePhoneNumberCode(
     code: String? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -386,11 +284,6 @@ suspend fun TdAbsHandler.checkPhoneNumberVerificationCode(
     )
 )
 
-/**
- * Checks the phone number verification code for Telegram Passport
- *
- * @code - Verification code
- */
 suspend fun TdAbsHandler.checkPhoneNumberVerificationCodeOrNull(
     code: String? = null
 ) = syncOrNull<Ok>(
@@ -399,11 +292,6 @@ suspend fun TdAbsHandler.checkPhoneNumberVerificationCodeOrNull(
     )
 )
 
-/**
- * Checks the phone number verification code for Telegram Passport
- *
- * @code - Verification code
- */
 fun TdAbsHandler.checkPhoneNumberVerificationCode(
     code: String? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -426,11 +314,6 @@ suspend fun TdAbsHandler.checkEmailAddressVerificationCode(
     )
 )
 
-/**
- * Checks the email address verification code for Telegram Passport
- *
- * @code - Verification code
- */
 suspend fun TdAbsHandler.checkEmailAddressVerificationCodeOrNull(
     code: String? = null
 ) = syncOrNull<Ok>(
@@ -439,11 +322,6 @@ suspend fun TdAbsHandler.checkEmailAddressVerificationCodeOrNull(
     )
 )
 
-/**
- * Checks the email address verification code for Telegram Passport
- *
- * @code - Verification code
- */
 fun TdAbsHandler.checkEmailAddressVerificationCode(
     code: String? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -466,11 +344,6 @@ suspend fun TdAbsHandler.checkPhoneNumberConfirmationCode(
     )
 )
 
-/**
- * Checks phone number confirmation code
- *
- * @code - The phone number confirmation code
- */
 suspend fun TdAbsHandler.checkPhoneNumberConfirmationCodeOrNull(
     code: String? = null
 ) = syncOrNull<Ok>(
@@ -479,11 +352,6 @@ suspend fun TdAbsHandler.checkPhoneNumberConfirmationCodeOrNull(
     )
 )
 
-/**
- * Checks phone number confirmation code
- *
- * @code - The phone number confirmation code
- */
 fun TdAbsHandler.checkPhoneNumberConfirmationCode(
     code: String? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)

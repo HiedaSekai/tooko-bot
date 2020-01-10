@@ -4,7 +4,7 @@
 
 package tookox.core.raw
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
 import td.TdApi.*
 import tookox.core.client.*
 
@@ -25,13 +25,6 @@ suspend fun TdAbsHandler.registerDevice(
     )
 )
 
-/**
- * Registers the currently used device for receiving push notifications
- * Returns a globally unique identifier of the push notification subscription
- *
- * @deviceToken - Device token
- * @otherUserIds - List of user identifiers of other users currently using the client
- */
 suspend fun TdAbsHandler.registerDeviceOrNull(
     deviceToken: DeviceToken? = null,
     otherUserIds: IntArray = intArrayOf()
@@ -42,13 +35,6 @@ suspend fun TdAbsHandler.registerDeviceOrNull(
     )
 )
 
-/**
- * Registers the currently used device for receiving push notifications
- * Returns a globally unique identifier of the push notification subscription
- *
- * @deviceToken - Device token
- * @otherUserIds - List of user identifiers of other users currently using the client
- */
 fun TdAbsHandler.registerDevice(
     deviceToken: DeviceToken? = null,
     otherUserIds: IntArray = intArrayOf(),

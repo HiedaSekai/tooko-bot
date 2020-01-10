@@ -28,14 +28,6 @@ suspend fun TdAbsHandler.getGameHighScores(
     )
 )
 
-/**
- * Returns the high scores for a game and some part of the high score table in the range of the specified user
- * For bots only
- *
- * @chatId - The chat that contains the message with the game
- * @messageId - Identifier of the message
- * @userId - User identifier
- */
 suspend fun TdAbsHandler.getGameHighScoresOrNull(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -48,14 +40,6 @@ suspend fun TdAbsHandler.getGameHighScoresOrNull(
     )
 )
 
-/**
- * Returns the high scores for a game and some part of the high score table in the range of the specified user
- * For bots only
- *
- * @chatId - The chat that contains the message with the game
- * @messageId - Identifier of the message
- * @userId - User identifier
- */
 fun TdAbsHandler.getGameHighScores(
     chatId: Long = 0L,
     messageId: Long = 0L,
@@ -86,13 +70,6 @@ suspend fun TdAbsHandler.getInlineGameHighScores(
     )
 )
 
-/**
- * Returns game high scores and some part of the high score table in the range of the specified user
- * For bots only
- *
- * @inlineMessageId - Inline message identifier
- * @userId - User identifier
- */
 suspend fun TdAbsHandler.getInlineGameHighScoresOrNull(
     inlineMessageId: String? = null,
     userId: Int = 0
@@ -103,13 +80,6 @@ suspend fun TdAbsHandler.getInlineGameHighScoresOrNull(
     )
 )
 
-/**
- * Returns game high scores and some part of the high score table in the range of the specified user
- * For bots only
- *
- * @inlineMessageId - Inline message identifier
- * @userId - User identifier
- */
 fun TdAbsHandler.getInlineGameHighScores(
     inlineMessageId: String? = null,
     userId: Int = 0,

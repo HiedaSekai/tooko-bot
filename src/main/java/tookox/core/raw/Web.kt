@@ -23,13 +23,6 @@ suspend fun TdAbsHandler.getWebPagePreview(
     )
 )
 
-/**
- * Returns a web page preview by the text of the message
- * Do not call this function too often
- * Returns a 404 error if the web page has no preview
- *
- * @text - Message text with formatting
- */
 suspend fun TdAbsHandler.getWebPagePreviewOrNull(
     text: FormattedText? = null
 ) = syncOrNull<WebPage>(
@@ -38,13 +31,6 @@ suspend fun TdAbsHandler.getWebPagePreviewOrNull(
     )
 )
 
-/**
- * Returns a web page preview by the text of the message
- * Do not call this function too often
- * Returns a 404 error if the web page has no preview
- *
- * @text - Message text with formatting
- */
 fun TdAbsHandler.getWebPagePreview(
     text: FormattedText? = null,
     block: (suspend CoroutineScope.(WebPage) -> Unit)
@@ -71,13 +57,6 @@ suspend fun TdAbsHandler.getWebPageInstantView(
     )
 )
 
-/**
- * Returns an instant view version of a web page if available
- * Returns a 404 error if the web page has no instant view page
- *
- * @url - The web page URL
- * @forceFull - If true, the full instant view for the web page will be returned
- */
 suspend fun TdAbsHandler.getWebPageInstantViewOrNull(
     url: String? = null,
     forceFull: Boolean = false
@@ -88,13 +67,6 @@ suspend fun TdAbsHandler.getWebPageInstantViewOrNull(
     )
 )
 
-/**
- * Returns an instant view version of a web page if available
- * Returns a 404 error if the web page has no instant view page
- *
- * @url - The web page URL
- * @forceFull - If true, the full instant view for the web page will be returned
- */
 fun TdAbsHandler.getWebPageInstantView(
     url: String? = null,
     forceFull: Boolean = false,
@@ -119,11 +91,6 @@ suspend fun TdAbsHandler.disconnectWebsite(
     )
 )
 
-/**
- * Disconnects website from the current user's Telegram account
- *
- * @websiteId - Website identifier
- */
 suspend fun TdAbsHandler.disconnectWebsiteOrNull(
     websiteId: Long = 0L
 ) = syncOrNull<Ok>(
@@ -132,11 +99,6 @@ suspend fun TdAbsHandler.disconnectWebsiteOrNull(
     )
 )
 
-/**
- * Disconnects website from the current user's Telegram account
- *
- * @websiteId - Website identifier
- */
 fun TdAbsHandler.disconnectWebsite(
     websiteId: Long = 0L,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -153,16 +115,10 @@ suspend fun TdAbsHandler.disconnectAllWebsites() = sync<Ok>(
     DisconnectAllWebsites()
 )
 
-/**
- * Disconnects all websites from the current user's Telegram account
- */
 suspend fun TdAbsHandler.disconnectAllWebsitesOrNull() = syncOrNull<Ok>(
     DisconnectAllWebsites()
 )
 
-/**
- * Disconnects all websites from the current user's Telegram account
- */
 fun TdAbsHandler.disconnectAllWebsites(
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(

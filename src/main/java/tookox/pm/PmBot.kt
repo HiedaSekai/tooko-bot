@@ -2,14 +2,16 @@ package tookox.pm
 
 import kotlinx.coroutines.coroutineScope
 import org.apache.commons.collections4.bidimap.DualHashBidiMap
-import tooko.main.Lang
-import tooko.main.bots.BotImage
 import td.TdApi
-import tookox.core.client.TdException
 import tookox.Launcher
+import tookox.core.*
+import tookox.core.bots.*
 import tookox.core.client.*
+import tookox.core.env.*
 import tookox.core.funs.*
+import tookox.core.raw.*
 import tookox.core.utils.*
+import tookox.pm.config.WelcomeConfig
 import tookox.pm.handlers.ChatPanel
 import tookox.pm.handlers.DeleteHandler
 import tookox.pm.handlers.EditHandler
@@ -59,6 +61,8 @@ class PmBot(val image: BotImage) : TdBot(image.data.botToken) {
 
         addHandler(ChatPanel())
 
+        addHandler(WelcomeConfig())
+
         addHandler(LICENCE())
 
     }
@@ -74,7 +78,7 @@ class PmBot(val image: BotImage) : TdBot(image.data.botToken) {
         image.error = ex
         image.status = BotImage.STATUS_ERROR
 
-        Launcher.INSTANCE make Lang.get(bot.owner).ERR_LOGGING_OUT sendTo bot.owner
+        Launcher.INSTANCE make bot.owner.langFor.ERR_LOGGING_OUT sendTo bot.owner
 
         stop()
 

@@ -18,22 +18,10 @@ suspend fun TdAbsHandler.logOut() = sync<Ok>(
     LogOut()
 )
 
-/**
- * Closes the TDLib instance after a proper logout
- * Requires an available network connection
- * All local data will be destroyed
- * After the logout completes, updateAuthorizationState with authorizationStateClosed will be sent
- */
 suspend fun TdAbsHandler.logOutOrNull() = syncOrNull<Ok>(
     LogOut()
 )
 
-/**
- * Closes the TDLib instance after a proper logout
- * Requires an available network connection
- * All local data will be destroyed
- * After the logout completes, updateAuthorizationState with authorizationStateClosed will be sent
- */
 fun TdAbsHandler.logOut(
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
@@ -60,14 +48,6 @@ suspend fun TdAbsHandler.saveApplicationLogEvent(
     )
 )
 
-/**
- * Saves application log event on the server
- * Can be called before authorization
- *
- * @type - Event type
- * @chatId - Optional chat identifier, associated with the event
- * @data - The log event data
- */
 suspend fun TdAbsHandler.saveApplicationLogEventOrNull(
     type: String? = null,
     chatId: Long = 0L,
@@ -80,14 +60,6 @@ suspend fun TdAbsHandler.saveApplicationLogEventOrNull(
     )
 )
 
-/**
- * Saves application log event on the server
- * Can be called before authorization
- *
- * @type - Event type
- * @chatId - Optional chat identifier, associated with the event
- * @data - The log event data
- */
 fun TdAbsHandler.saveApplicationLogEvent(
     type: String? = null,
     chatId: Long = 0L,
@@ -117,14 +89,6 @@ suspend fun TdAbsHandler.setLogStream(
     )
 )
 
-/**
- * Sets new log stream for internal logging of TDLib
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- *
- * @logStream - New log stream
- */
 suspend fun TdAbsHandler.setLogStreamOrNull(
     logStream: LogStream? = null
 ) = syncOrNull<Ok>(
@@ -133,14 +97,6 @@ suspend fun TdAbsHandler.setLogStreamOrNull(
     )
 )
 
-/**
- * Sets new log stream for internal logging of TDLib
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- *
- * @logStream - New log stream
- */
 fun TdAbsHandler.setLogStream(
     logStream: LogStream? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -160,22 +116,10 @@ suspend fun TdAbsHandler.getLogStream() = sync<LogStream>(
     GetLogStream()
 )
 
-/**
- * Returns information about currently used log stream for internal logging of TDLib
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- */
 suspend fun TdAbsHandler.getLogStreamOrNull() = syncOrNull<LogStream>(
     GetLogStream()
 )
 
-/**
- * Returns information about currently used log stream for internal logging of TDLib
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- */
 fun TdAbsHandler.getLogStream(
     block: (suspend CoroutineScope.(LogStream) -> Unit)
 ) = send(
@@ -199,15 +143,6 @@ suspend fun TdAbsHandler.setLogVerbosityLevel(
     )
 )
 
-/**
- * Sets the verbosity level of the internal logging of TDLib
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- *
- * @newVerbosityLevel - New value of the verbosity level for logging
- *                      Value 0 corresponds to fatal errors, value 1 corresponds to errors, value 2 corresponds to warnings and debug warnings, value 3 corresponds to informational, value 4 corresponds to debug, value 5 corresponds to verbose debug, value greater than 5 and up to 1023 can be used to enable even more logging
- */
 suspend fun TdAbsHandler.setLogVerbosityLevelOrNull(
     newVerbosityLevel: Int = 0
 ) = syncOrNull<Ok>(
@@ -216,15 +151,6 @@ suspend fun TdAbsHandler.setLogVerbosityLevelOrNull(
     )
 )
 
-/**
- * Sets the verbosity level of the internal logging of TDLib
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- *
- * @newVerbosityLevel - New value of the verbosity level for logging
- *                      Value 0 corresponds to fatal errors, value 1 corresponds to errors, value 2 corresponds to warnings and debug warnings, value 3 corresponds to informational, value 4 corresponds to debug, value 5 corresponds to verbose debug, value greater than 5 and up to 1023 can be used to enable even more logging
- */
 fun TdAbsHandler.setLogVerbosityLevel(
     newVerbosityLevel: Int = 0,
     block: (suspend CoroutineScope.(Ok) -> Unit)
@@ -244,22 +170,10 @@ suspend fun TdAbsHandler.getLogVerbosityLevel() = sync<LogVerbosityLevel>(
     GetLogVerbosityLevel()
 )
 
-/**
- * Returns current verbosity level of the internal logging of TDLib
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- */
 suspend fun TdAbsHandler.getLogVerbosityLevelOrNull() = syncOrNull<LogVerbosityLevel>(
     GetLogVerbosityLevel()
 )
 
-/**
- * Returns current verbosity level of the internal logging of TDLib
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- */
 fun TdAbsHandler.getLogVerbosityLevel(
     block: (suspend CoroutineScope.(LogVerbosityLevel) -> Unit)
 ) = send(
@@ -276,22 +190,10 @@ suspend fun TdAbsHandler.getLogTags() = sync<LogTags>(
     GetLogTags()
 )
 
-/**
- * Returns list of available TDLib internal log tags, for example, ["actor", "binlog", "connections", "notifications", "proxy"]
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- */
 suspend fun TdAbsHandler.getLogTagsOrNull() = syncOrNull<LogTags>(
     GetLogTags()
 )
 
-/**
- * Returns list of available TDLib internal log tags, for example, ["actor", "binlog", "connections", "notifications", "proxy"]
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- */
 fun TdAbsHandler.getLogTags(
     block: (suspend CoroutineScope.(LogTags) -> Unit)
 ) = send(
@@ -317,15 +219,6 @@ suspend fun TdAbsHandler.setLogTagVerbosityLevel(
     )
 )
 
-/**
- * Sets the verbosity level for a specified TDLib internal log tag
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- *
- * @tag - Logging tag to change verbosity level
- * @newVerbosityLevel - New verbosity level
- */
 suspend fun TdAbsHandler.setLogTagVerbosityLevelOrNull(
     tag: String? = null,
     newVerbosityLevel: Int = 0
@@ -336,15 +229,6 @@ suspend fun TdAbsHandler.setLogTagVerbosityLevelOrNull(
     )
 )
 
-/**
- * Sets the verbosity level for a specified TDLib internal log tag
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- *
- * @tag - Logging tag to change verbosity level
- * @newVerbosityLevel - New verbosity level
- */
 fun TdAbsHandler.setLogTagVerbosityLevel(
     tag: String? = null,
     newVerbosityLevel: Int = 0,
@@ -372,14 +256,6 @@ suspend fun TdAbsHandler.getLogTagVerbosityLevel(
     )
 )
 
-/**
- * Returns current verbosity level for a specified TDLib internal log tag
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- *
- * @tag - Logging tag to change verbosity level
- */
 suspend fun TdAbsHandler.getLogTagVerbosityLevelOrNull(
     tag: String? = null
 ) = syncOrNull<LogVerbosityLevel>(
@@ -388,14 +264,6 @@ suspend fun TdAbsHandler.getLogTagVerbosityLevelOrNull(
     )
 )
 
-/**
- * Returns current verbosity level for a specified TDLib internal log tag
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- *
- * @tag - Logging tag to change verbosity level
- */
 fun TdAbsHandler.getLogTagVerbosityLevel(
     tag: String? = null,
     block: (suspend CoroutineScope.(LogVerbosityLevel) -> Unit)
@@ -424,15 +292,6 @@ suspend fun TdAbsHandler.addLogMessage(
     )
 )
 
-/**
- * Adds a message to TDLib internal log
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- *
- * @verbosityLevel - The minimum verbosity level needed for the message to be logged, 0-1023
- * @text - Text of a message to log
- */
 suspend fun TdAbsHandler.addLogMessageOrNull(
     verbosityLevel: Int = 0,
     text: String? = null
@@ -443,15 +302,6 @@ suspend fun TdAbsHandler.addLogMessageOrNull(
     )
 )
 
-/**
- * Adds a message to TDLib internal log
- * This is an offline method
- * Can be called before authorization
- * Can be called synchronously
- *
- * @verbosityLevel - The minimum verbosity level needed for the message to be logged, 0-1023
- * @text - Text of a message to log
- */
 fun TdAbsHandler.addLogMessage(
     verbosityLevel: Int = 0,
     text: String? = null,

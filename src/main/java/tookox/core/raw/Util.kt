@@ -17,20 +17,10 @@ suspend fun TdAbsHandler.close() = sync<Ok>(
     Close()
 )
 
-/**
- * Closes the TDLib instance
- * All databases will be flushed to disk and properly closed
- * After the close completes, updateAuthorizationState with authorizationStateClosed will be sent
- */
 suspend fun TdAbsHandler.closeOrNull() = syncOrNull<Ok>(
     Close()
 )
 
-/**
- * Closes the TDLib instance
- * All databases will be flushed to disk and properly closed
- * After the close completes, updateAuthorizationState with authorizationStateClosed will be sent
- */
 fun TdAbsHandler.close(
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
@@ -47,22 +37,10 @@ suspend fun TdAbsHandler.destroy() = sync<Ok>(
     Destroy()
 )
 
-/**
- * Closes the TDLib instance, destroying all local data without a proper logout
- * The current user session will remain in the list of all active sessions
- * All local data will be destroyed
- * After the destruction completes updateAuthorizationState with authorizationStateClosed will be sent
- */
 suspend fun TdAbsHandler.destroyOrNull() = syncOrNull<Ok>(
     Destroy()
 )
 
-/**
- * Closes the TDLib instance, destroying all local data without a proper logout
- * The current user session will remain in the list of all active sessions
- * All local data will be destroyed
- * After the destruction completes updateAuthorizationState with authorizationStateClosed will be sent
- */
 fun TdAbsHandler.destroy(
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
@@ -82,11 +60,6 @@ suspend fun TdAbsHandler.getRecentlyVisitedTMeUrls(
     )
 )
 
-/**
- * Returns t.me URLs recently visited by a newly registered user
- *
- * @referrer - Google Play referrer to identify the user
- */
 suspend fun TdAbsHandler.getRecentlyVisitedTMeUrlsOrNull(
     referrer: String? = null
 ) = syncOrNull<TMeUrls>(
@@ -95,11 +68,6 @@ suspend fun TdAbsHandler.getRecentlyVisitedTMeUrlsOrNull(
     )
 )
 
-/**
- * Returns t.me URLs recently visited by a newly registered user
- *
- * @referrer - Google Play referrer to identify the user
- */
 fun TdAbsHandler.getRecentlyVisitedTMeUrls(
     referrer: String? = null,
     block: (suspend CoroutineScope.(TMeUrls) -> Unit)
@@ -124,13 +92,6 @@ suspend fun TdAbsHandler.setAlarm(
     )
 )
 
-/**
- * Succeeds after a specified amount of time has passed
- * Can be called before authorization
- * Can be called before initialization
- *
- * @seconds - Number of seconds before the function returns
- */
 suspend fun TdAbsHandler.setAlarmOrNull(
     seconds: Double = 0.0
 ) = syncOrNull<Ok>(
@@ -139,13 +100,6 @@ suspend fun TdAbsHandler.setAlarmOrNull(
     )
 )
 
-/**
- * Succeeds after a specified amount of time has passed
- * Can be called before authorization
- * Can be called before initialization
- *
- * @seconds - Number of seconds before the function returns
- */
 fun TdAbsHandler.setAlarm(
     seconds: Double = 0.0,
     block: (suspend CoroutineScope.(Ok) -> Unit)

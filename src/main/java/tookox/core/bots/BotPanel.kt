@@ -1,12 +1,10 @@
 package tookox.core.bots
 
-import tooko.main.Fn
-import tooko.main.Lang
-import tooko.main.bots.BotData
-import tooko.main.bots.BotImage
 import td.TdApi
 import tookox.core.*
 import tookox.core.client.*
+import tookox.core.env.*
+import tookox.core.raw.*
 import tookox.core.utils.*
 
 class BotPanel : TdBotHandler() {
@@ -93,8 +91,8 @@ class BotPanel : TdBotHandler() {
 
         var stat = L.SPLIT
 
-        stat += "\n\n" + L.BOT_MANAGE + " : " + Fn.a("@" + botData.userName, "https://t.me/" + botData.userName)
-        stat += "\n" + L.BOT_ID + " : " + Fn.code(botData.botId)
+        stat += "\n\n" + L.BOT_MANAGE + " : " + ("@" + botData.userName).toLink("https://t.me/" + botData.userName)
+        stat += "\n" + L.BOT_ID + " : " + botData.botId.asCode
         stat += "\n" + L.BOT_STATUS + " : "
 
         stat += if (!BotImage.images.containsKey(botData.botId)) {

@@ -22,12 +22,6 @@ suspend fun TdAbsHandler.sendTonLiteServerRequest(
     )
 )
 
-/**
- * Sends a request to TON lite server through Telegram servers
- * Can be called before authorization
- *
- * @request - The request
- */
 suspend fun TdAbsHandler.sendTonLiteServerRequestOrNull(
     request: ByteArray = byteArrayOf()
 ) = syncOrNull<TonLiteServerResponse>(
@@ -36,12 +30,6 @@ suspend fun TdAbsHandler.sendTonLiteServerRequestOrNull(
     )
 )
 
-/**
- * Sends a request to TON lite server through Telegram servers
- * Can be called before authorization
- *
- * @request - The request
- */
 fun TdAbsHandler.sendTonLiteServerRequest(
     request: ByteArray = byteArrayOf(),
     block: (suspend CoroutineScope.(TonLiteServerResponse) -> Unit)
@@ -58,16 +46,10 @@ suspend fun TdAbsHandler.getTonWalletPasswordSalt() = sync<TonWalletPasswordSalt
     GetTonWalletPasswordSalt()
 )
 
-/**
- * Returns a salt to be used with locally stored password to access a local TON-based wallet
- */
 suspend fun TdAbsHandler.getTonWalletPasswordSaltOrNull() = syncOrNull<TonWalletPasswordSalt>(
     GetTonWalletPasswordSalt()
 )
 
-/**
- * Returns a salt to be used with locally stored password to access a local TON-based wallet
- */
 fun TdAbsHandler.getTonWalletPasswordSalt(
     block: (suspend CoroutineScope.(TonWalletPasswordSalt) -> Unit)
 ) = send(
