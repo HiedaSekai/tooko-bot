@@ -67,6 +67,12 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
         BotData.DATA.all.forEach { BotImage.start(it) }
 
+        defaultLog.info("远子 基于 Apache License 2.0 协议发行")
+
+        val time = (System.currentTimeMillis() - startAt).toDouble() / 1000
+
+        defaultLog.info("启动完成! 用时 ${time}s.")
+
     }
 
     override suspend fun onDestroy() {
@@ -107,6 +113,8 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
     companion object {
 
+        val startAt = System.currentTimeMillis()
+
         val cachedTables = LinkedList<CacheTable<*, *>>()
 
         // lateinit var twitter: TwitterBot
@@ -125,9 +133,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
         val isInitialized get() = ::INSTANCE.isInitialized
 
         @JvmStatic
-        fun main(args: Array<String>) = runBlocking {
-
-            val startAt = System.currentTimeMillis()
+        fun main(args: Array<String>) = runBlocking<Unit> {
 
             Logger.getLogger("org.mongodb.driver").apply {
 
@@ -379,15 +385,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             INSTANCE = Launcher()
 
-            if (INSTANCE.start()) {
-
-                defaultLog.info("远子 基于 Apache License 2.0 协议发行")
-
-                val time = (System.currentTimeMillis() - startAt).toDouble() / 1000
-
-                defaultLog.info("启动完成! 用时 ${time}s.")
-
-            }
+            INSTANCE.start()
 
         }
 
