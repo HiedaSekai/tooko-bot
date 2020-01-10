@@ -1,11 +1,10 @@
 package tookox.pm.handlers
 
-import tooko.main.Fn
-import tooko.main.Lang
 import td.TdApi
 import td.TdApi.*
-import tookox.core.client.TdException
+import tookox.core.*
 import tookox.core.client.*
+import tookox.core.raw.*
 import tookox.core.utils.*
 import tookox.pm.PmBot
 import tookox.pm.PmData
@@ -19,7 +18,7 @@ class EditHandler : TdBotHandler() {
 
     override suspend fun onMessageContent(chatId: Long, messageId: Long, newContent: TdApi.MessageContent) {
 
-        val L = Lang.get(bot.owner)
+        val L = bot.owner.langFor
 
         if (chatId == bot.owner.toLong()) {
 
@@ -50,7 +49,7 @@ class EditHandler : TdBotHandler() {
 
                 } else if (newContent is MessageAnimation || newContent is MessageAudio || newContent is MessageDocument || newContent is MessagePhoto || newContent is MessageVideo) {
 
-                    edit = EditMessageMedia(targetChat, targetMessage, null, Fn.convertToInput(newContent))
+                    edit = EditMessageMedia(targetChat, targetMessage, null, newContent.asInput)
 
                 } else if (newContent is MessageVoiceNote) {
 

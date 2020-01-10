@@ -14,6 +14,10 @@ val Message.fromBasicGroup get() = chatId > -1000000000000L
 val Message.fromSuperGroup get() = chatId < -1000000000000L && !isChannelPost
 val Message.fromChannel get() = isChannelPost
 
+val Long.fromPrivate get() = this > 0L
+val Long.fromBasicGroup get() = this > -1000000000000L && this < 0
+val Long.fromSuperGroupOrChannel get() = this < -1000000000000L
+
 val Message.text
     get() = if (content is MessageText) {
 

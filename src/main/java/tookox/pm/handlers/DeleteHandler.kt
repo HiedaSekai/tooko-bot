@@ -3,11 +3,11 @@ package tookox.pm.handlers
 import cn.hutool.core.collection.CollectionUtil
 import cn.hutool.core.util.NumberUtil
 import cn.hutool.core.util.StrUtil
-import tooko.main.Fn
-import tooko.main.Lang
-import tooko.td.core.LongLongArrayMap
+import tookox.core.*
 import tookox.core.client.*
+import tookox.core.raw.*
 import tookox.core.utils.*
+import tookox.pm.LongLongArrayMap
 import tookox.pm.PmBot
 import tookox.pm.PmData
 import java.util.*
@@ -21,9 +21,9 @@ class DeleteHandler : TdBotHandler() {
 
     override suspend fun onDeleteMessages(chatId: Long, messageIds: LongArray, isPermanent: Boolean, fromCache: Boolean) {
 
-        if (!Fn.isPrivate(chatId) || !isPermanent || fromCache) return
+        if (!chatId.fromPrivate || !isPermanent || fromCache) return
 
-        val L = Lang.get(bot.owner)
+        val L = bot.owner.langFor
 
         if (chatId == bot.owner.toLong()) {
 
@@ -38,7 +38,7 @@ class DeleteHandler : TdBotHandler() {
                 var session: PmData.Session
 
                 if (data.received.containsKey(messageIdStr)) {
-                    
+
                     val targetMessageId = data.received.get(messageIdStr)!!
 
                     session = data.getSessionByElement("received", targetMessageId)
@@ -106,7 +106,7 @@ class DeleteHandler : TdBotHandler() {
 
             if (deleteReports.isNotEmpty()) {
 
-                delete(bot.owner.toLong(),* deleteReports.toLongArray())
+                delete(bot.owner.toLong(), * deleteReports.toLongArray())
 
             }
 
@@ -132,11 +132,11 @@ class DeleteHandler : TdBotHandler() {
 
                     if (targetUsersMention == null) {
 
-                        targetUsersMention = Fn.mention(getUser(userId.toInt()))
+                        targetUsersMention = getUser(userId.toInt()).asInlineMention
 
                     } else {
 
-                        targetUsersMention += ", " + Fn.mention(getUser(userId.toInt()))
+                        targetUsersMention += ", " + getUser(userId.toInt()).asInlineMention
 
                     }
 
@@ -156,11 +156,11 @@ class DeleteHandler : TdBotHandler() {
 
                     if (targetUsersMention == null) {
 
-                        targetUsersMention = Fn.mention(getUser(userId.toInt()))
+                        targetUsersMention = getUser(userId.toInt()).asInlineMention
 
                     } else {
 
-                        targetUsersMention += ", " + Fn.mention(getUser(userId.toInt()))
+                        targetUsersMention += ", " + getUser(userId.toInt()).asInlineMention
 
                     }
 

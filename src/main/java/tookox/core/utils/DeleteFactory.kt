@@ -4,8 +4,10 @@ package tookox.core.utils
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
-import td.TdApi.*
+import td.TdApi.DeleteMessages
+import td.TdApi.Message
 import tookox.core.client.*
+import tookox.core.raw.*
 
 infix fun TdAbsHandler.delete(message: Message) = delete(message.chatId, message.id)
 
@@ -25,7 +27,7 @@ suspend fun TdAbsHandler.syncDeleteForSelf(chatId: Number, vararg messageIds: Lo
 
 fun TdAbsHandler.fetchAndDelete(chatId: Number, messageId: Long) {
 
-   getMessage(chatId, messageId) {
+    getMessage(chatId.toLong(), messageId) {
 
         delete(chatId, messageId)
 
