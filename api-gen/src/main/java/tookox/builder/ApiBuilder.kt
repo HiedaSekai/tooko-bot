@@ -5,26 +5,27 @@ import tookox.tl.TlScheme
 import tookox.tl.get
 
 fun StringBuilder.buildApi(scheme: TlScheme) {
-    suppress("unused")
+   // suppress("unused")
     // useExperimentalAnnotationsForFile()
+    //append("\n")
+    buildJavaPackage("td")
     append("\n")
-    buildPackage("td")
+    buildJavaImport("org.jetbrains.annotations")
+    buildJavaImport("org.bson.codecs.pojo.annotations")
     append("\n")
-    buildImport("tookox.core")
-    buildImport("org.bson.codecs.pojo.annotations")
-    append("\n")
-    append("class TdApi ")
+    append("@SuppressWarnings(\"NotNullFieldNotInitialized\")\n")
+    append("public class TdApi ")
     withCurlyBrackets {
         append("\n")
-        append("abstract class Object ")
+        append("public static abstract class Object ")
         withCurlyBrackets {
-            append("external override fun toString(): String\n")
-            append("abstract val constructor: Int")
+            append("\npublic native String toString();\n\n")
+            append("public abstract int getConstructor();\n")
         }
         append("\n")
-        append("abstract class Function : Object() ")
+        append("public static abstract class Function extends Object")
         withCurlyBrackets {
-            append("external override fun toString(): String")
+            append("\npublic native String toString();\n")
         }
         scheme.data.forEach {
             append("\n")

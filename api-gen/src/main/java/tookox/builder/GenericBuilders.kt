@@ -20,11 +20,25 @@ fun StringBuilder.buildImport(vararg packages: String) {
     else append(".*\n")
 }
 
+fun StringBuilder.buildJavaImport(vararg packages: String) {
+    append("import ")
+    if (packages.isNotEmpty()) packages.joinTo(this, ".", "", ".*;\n", transform = String::trim)
+    else append(".*;\n")
+}
+
+
 fun StringBuilder.buildPackage(vararg packages: String) {
     append("package ")
     if (packages.isNotEmpty()) packages.joinTo(this, ".", "", "\n", transform = String::trim)
     else append("\n")
 }
+
+fun StringBuilder.buildJavaPackage(vararg packages: String) {
+    append("package ")
+    if (packages.isNotEmpty()) packages.joinTo(this, ".", "", ";\n", transform = String::trim)
+    else append(";\n")
+}
+
 
 fun StringBuilder.buildTypealias(from: String, to: String) {
     append("typealias ").append(from.trim()).append(" = ").append(to.trim()).append("\n")

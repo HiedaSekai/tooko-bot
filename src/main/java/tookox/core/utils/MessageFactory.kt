@@ -546,7 +546,9 @@ class MessageFactory(val context: TdAbsHandler) : CaptionInterface {
 
     fun photo(path: String, block: (PhotoBuilder.() -> Unit)? = null): InputMessagePhoto {
 
-        return InputMessagePhoto(InputFileLocal(path)).apply {
+        return InputMessagePhoto().apply {
+
+            photo = InputFileLocal(path)
 
             block?.invoke(PhotoBuilder((this)))
 
@@ -556,7 +558,9 @@ class MessageFactory(val context: TdAbsHandler) : CaptionInterface {
 
     fun photoId(fileId: String, block: (PhotoBuilder.() -> Unit)? = null): InputMessagePhoto {
 
-        return InputMessagePhoto(InputFileRemote(fileId)).apply {
+        return InputMessagePhoto().apply {
+
+            photo = InputFileRemote(fileId)
 
             block?.invoke(PhotoBuilder((this)))
 

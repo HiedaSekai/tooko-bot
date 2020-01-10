@@ -56,13 +56,13 @@ object TdApiGenerator {
         }
 
         fun String.file(name: String, block: StringBuilder.() -> Unit) {
-            val nested = "$this/$name.kt"
+            val nested = "$this/$name"
             map[nested] = buildString(block)
         }
 
         with("td") {
 
-            file("TdApi") {
+            file("TdApi.java") {
 
                 buildApi(tlScheme)
 
@@ -74,7 +74,7 @@ object TdApiGenerator {
 
             functionsMap.forEach { (type, functions) ->
 
-                file(type) {
+                file("$type.kt") {
 
                     buildHeader()
 
@@ -99,7 +99,7 @@ object TdApiGenerator {
 
             }
 
-            file("Static") {
+            file("Static.kt") {
 
                 buildHeader()
 

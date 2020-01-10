@@ -5,60 +5,87 @@ import tookox.tl.*
 fun StringBuilder.buildClass(data: TlData, metadata: TlDataMetadata, paramNullable: Boolean) {
 
     val declaration = when (data) {
-        is TlAbstract -> "abstract class "
-        is TlClass -> "class "
+        is TlAbstract -> "public static abstract class "
+        is TlClass -> "public static class "
     }
+
+    val className = data.type.capitalize()
 
     buildDescription(data.descriptionsWithProperties())
     // buildAnnotations(listOf(TlAddition.JvmOverloads))
-    append(declaration).append(data.type.capitalize())
-    append(" : ").append(data.parentType.capitalize())
+    append(declaration).append(className)
+    append(" extends ").append(data.parentType.capitalize()).append(spaceToken)
 
-    if (data.metadata.properties.isEmpty()) append("()")
+    if (data is TlClass) {
 
-    if (data is TlClass || data.metadata.properties.isNotEmpty()) append(spaceToken).withCurlyBrackets {
-
-        append("\n")
-
-        if (data.metadata.properties.isNotEmpty()) {
-
-            data.metadata.properties.forEach {
-
-                append(it.toField(metadata,paramNullable)).append("\n")
-
-            }
-
-            append("\nconstructor()\n\nconstructor")
-
-            append("(")
-
-            data.metadata.properties.joinTo(this) {
-
-                it.toParameter(metadata, nullable = paramNullable)
-
-            }
-
-            append(")")
-
-            append(spaceToken)
-
-            withCurlyBrackets {
-
-                data.metadata.properties.joinTo(this, "\n", "\n", "\n") {
-
-                    val propName = it.name.snakeToCamel()
-
-                    "this.$propName = $propName"
-
-                }
-
-            }
+        withCurlyBrackets {
 
             append("\n")
 
-        }
+            if (data.metadata.properties.isNotEmpty()) {
 
-        if (data is TlClass) {
+                data.metadata.properties.joinTo(this, "\n") {
+
+                    val type = if (it.additions.any { it is TlAddition.Nullable }) {
+
+                        "@Nullable "
+
+                    } else {
+
+                        emptyToken
+
+                    }
+
+                    type + "public ${it.toJavaParamter()};"
+
+                }
+
+                append("\n")
+
+            }
+
+            if (data.metadata.properties.isNotEmpty()) {
+
+
+                append("\npublic $className() {}\n\n")
+
+                append("public $className(")
+
+                data.metadata.properties.joinTo(this) {
+
+                    val type = if (it.additions.any { it is TlAddition.Nullable }) {
+
+                        "@Nullable "
+
+                    } else {
+
+                        emptyToken
+
+                    }
+
+                    type + it.toJavaParamter()
+
+                }
+
+                append(")")
+
+                append(spaceToken)
+
+                withCurlyBrackets {
+
+                    data.metadata.properties.joinTo(this, "\n", "\n", "\n") {
+
+                        val propName = it.name.snakeToCamel()
+
+                        "this.$propName = $propName;"
+
+                    }
+
+                }
+
+                append("\n")
+
+            }
 
             buildConstructorField(data.crc)
 
@@ -66,14 +93,17 @@ fun StringBuilder.buildClass(data: TlData, metadata: TlDataMetadata, paramNullab
 
         }
 
-    }
+    } else append("{}")
 
     append("\n")
 
 }
 
 fun StringBuilder.buildConstructorField(crc: Int) {
-    append("override val constructor: Int @BsonIgnore get() = ").append(crc)
+
+    append("@BsonIgnore @Override\n")
+    append("public int getConstructor() { return $crc; }")
+
 }
 
 fun TlData.descriptions(): List<String> = metadata.descriptions + metadata.additions.strings()

@@ -49,7 +49,7 @@ val MessageContent.asInput: InputMessageContent?
 
         is MessageAnimation -> {
 
-            val file = InputFileRemote(this.animation.animation.remote.id)
+            val file = InputFileRemote(this.animation.animation.remote.id!!)
             val thumbnail = if (this.animation.thumbnail == null) null else InputThumbnail(InputFileRemote(this.animation.thumbnail!!.photo.remote.id), this.animation.thumbnail!!.width, this.animation.thumbnail!!.height)
 
             InputMessageAnimation(file, thumbnail, this.animation.duration, this.animation.width, this.animation.height, this.caption)

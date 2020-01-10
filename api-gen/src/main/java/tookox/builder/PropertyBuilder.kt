@@ -8,6 +8,14 @@ fun StringBuilder.buildParameters(parameters: List<String>, addEmptyBrackets: Bo
     } else if (addEmptyBrackets) append("()")
 }
 
+fun TlProperty.toJavaParamter(): String {
+
+    val propName = name.snakeToCamel()
+
+    return "${type.javaType} $propName"
+
+}
+
 fun TlProperty.toParameter(metadata: TlDataMetadata, prefix: String = "", nullable: Boolean = false): String {
     val (withDefault, withNullables) = metadata
     val propName = name.snakeToCamel()

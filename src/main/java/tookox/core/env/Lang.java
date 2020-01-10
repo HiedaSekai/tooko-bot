@@ -41,7 +41,7 @@ public class Lang {
 
     public static Lang get(TdApi.User user) {
 
-        return get(user.getId());
+        return get(user.id);
 
     }
 
