@@ -30,8 +30,8 @@ function installTDLib() {
   aarch64 | arm64) arch="aarch64" ;;
   x86_64 | amd64) arch="x86_64" ;;
   i[3-6]86 | x86) arch="x86" ;;
-  arm*) arch="armv7" ;;
-  #arm*) arch="armv5" ;;
+  armv[7-8]) arch="armv7" ;;
+  arm*) arch="armv5" ;;
 
   *)
 

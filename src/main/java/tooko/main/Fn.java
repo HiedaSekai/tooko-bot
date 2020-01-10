@@ -1,24 +1,15 @@
 package tooko.main;
 
 import cn.hutool.core.collection.*;
-import cn.hutool.core.io.*;
-import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.*;
-import cn.hutool.http.*;
-import tooko.td.TdApi.User;
-import tooko.td.TdApi.*;
-import tooko.td.client.*;
-import tooko.td.core.*;
-import tookox.core.utils.*;
 import twitter4j.*;
-import twitter4j.conf.*;
 
-import java.io.File;
 import java.io.*;
-import java.math.*;
 import java.util.*;
 
 public class Fn {
+
+    /*
 
     public static long s = 1000L;
     public static long m = 60 * s;
@@ -216,89 +207,7 @@ public class Fn {
 
     }
 
-    public static byte[] mkData(int id, int subId, byte[]... dataArray) {
 
-        ByteArrayOutputStream format = new ByteArrayOutputStream();
-
-        format.write(id - 129);
-        format.write(subId);
-
-        for (byte[] data : dataArray) {
-
-            format.write(31);
-
-            try {
-
-                format.write(data);
-
-            } catch (IOException ignored) {
-            }
-
-        }
-
-        format.write(dataArray.length - 128);
-
-        byte[] data = format.toByteArray();
-
-        byte[] zlibData = ZipUtil.zlib(data, 9);
-
-        return data.length < zlibData.length ? data : zlibData;
-
-    }
-
-    public static byte[][] readData(byte[] data) {
-
-        int length = data[data.length - 1] + 128;
-
-        data = ArrayUtil.sub(data, 3, data.length - 1);
-
-        byte[][] arr = new byte[length][];
-
-        int current = 0;
-
-        ByteArrayOutputStream cache = new ByteArrayOutputStream();
-
-        for (int index = 0; index < data.length; index++) {
-
-            if (data[index] == 31) {
-
-                arr[current] = cache.toByteArray();
-
-                cache = new ByteArrayOutputStream();
-
-            } else {
-
-                cache.write(data[index]);
-
-                if (index == data.length - 1 && current == arr.length - 1) {
-
-                    arr[current] = cache.toByteArray();
-
-                }
-
-            }
-
-        }
-
-        return arr;
-
-    }
-
-    public static void finishEvent() {
-
-        // 拦截 Event
-
-        throw new TdHandler.Break();
-
-    }
-
-    public static void rejectFunction() {
-
-        // 跳出 Function / Payload, 作为普通消息处理
-
-        throw new TdHandler.Reject();
-
-    }
 
     public static boolean isPrivate(long chatId) {
 
@@ -415,15 +324,11 @@ public class Fn {
 
     }
 
-    /*
-
     public static FormattedText parseMarkdown(String text, java.lang.Object... params) {
 
         return Launcher.INSTANCE.sync(new ParseTextEntities(StrUtil.format(text, params), new TextParseModeMarkdown()));
 
     }
-
-    */
 
     public static SendMessage sendText(long chatId, FormattedText inputMessageContent) {
 
@@ -1159,15 +1064,6 @@ public class Fn {
 
     }
 
-    public static String parseError(Throwable error) {
-
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-
-        error.printStackTrace(new PrintWriter(out, true));
-
-        return StrUtil.utf8Str(out);
-
-    }
 
     public static String b(Object text) {
 
@@ -1493,6 +1389,8 @@ public class Fn {
 
     }
 
+     */
+
     public static String parseTwitterException(Lang L, TwitterException ex) {
 
         String info = L.TWI_ERR;
@@ -1646,26 +1544,81 @@ public class Fn {
 
     }
 
-    public static class DataId {
+    public static byte[] mkData(int id, int subId, byte[]... dataArray) {
 
-        public static int _1 = 1;
-        public static int _2 = 2;
-        public static int _3 = 3;
-        public static int _4 = 4;
-        public static int _5 = 5;
-        public static int _6 = 6;
+        ByteArrayOutputStream format = new ByteArrayOutputStream();
+
+        format.write(id - 129);
+        format.write(subId);
+
+        for (byte[] data : dataArray) {
+
+            format.write(31);
+
+            try {
+
+                format.write(data);
+
+            } catch (IOException ignored) {
+            }
+
+        }
+
+        format.write(dataArray.length - 128);
+
+        byte[] data = format.toByteArray();
+
+        byte[] zlibData = ZipUtil.zlib(data, 9);
+
+        return data.length < zlibData.length ? data : zlibData;
 
     }
 
-    public static class PerststId {
+    public static byte[][] readData(byte[] data) {
 
-        public static int _1 = 1;
-        public static int _2 = 2;
-        public static int _3 = 3;
-        public static int _4 = 4;
-        public static int _5 = 5;
-        public static int _6 = 6;
-        public static int _7 = 7;
+        int length = data[data.length - 1] + 128;
+
+        data = ArrayUtil.sub(data, 3, data.length - 1);
+
+        byte[][] arr = new byte[length][];
+
+        int current = 0;
+
+        ByteArrayOutputStream cache = new ByteArrayOutputStream();
+
+        for (int index = 0; index < data.length; index++) {
+
+            if (data[index] == 31) {
+
+                arr[current] = cache.toByteArray();
+
+                cache = new ByteArrayOutputStream();
+
+            } else {
+
+                cache.write(data[index]);
+
+                if (index == data.length - 1 && current == arr.length - 1) {
+
+                    arr[current] = cache.toByteArray();
+
+                }
+
+            }
+
+        }
+
+        return arr;
+
+    }
+
+    public static String parseError(Throwable error) {
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+        error.printStackTrace(new PrintWriter(out, true));
+
+        return StrUtil.utf8Str(out);
 
     }
 
