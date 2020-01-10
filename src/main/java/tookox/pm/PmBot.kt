@@ -41,7 +41,7 @@ class PmBot(val image: BotImage) : TdBot(image.data.botToken) {
 
             _data.welcome = main
 
-            PmData.DATA.idIndex[data.id] = _data
+            PmData.DATA.idIndex[_data.id] = _data
 
         }
 
