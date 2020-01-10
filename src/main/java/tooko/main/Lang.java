@@ -1,7 +1,7 @@
 package tooko.main;
 
 import td.*;
-import tooko.td.core.*;
+import tookox.core.db.*;
 
 import java.lang.reflect.*;
 import java.util.*;
