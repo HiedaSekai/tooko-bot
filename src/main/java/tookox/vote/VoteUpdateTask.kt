@@ -1,5 +1,6 @@
 package tookox.vote
 
+import cn.hutool.core.thread.ThreadUtil
 import cn.hutool.http.HttpUtil
 import tookox.Launcher
 import tookox.core.*
@@ -11,45 +12,51 @@ object VoteUpdateTask : TimerTask() {
     @JvmStatic
     fun main(args: Array<String>) {
 
-        val html = HttpUtil.createGet("https://www.cec.gov.tw/pc/zh_TW/P1/n00000000000000000.html")
-                .disableCache()
-                .execute()
-                .body()
+        while(true) {
 
-        val pfp = html.substringAfter("宋楚瑜")
-                .substringAfter("tdAlignRight\">")
-                .substringBefore("<")
+            val html = HttpUtil.createGet("https://www.cec.gov.tw/pc/zh_TW/P1/n00000000000000000.html")
+                    .disableCache()
+                    .execute()
+                    .body()
 
-        val pfpPer = html.substringAfter("宋楚瑜")
-                .substringAfter("tdAlignRight")
-                .substringAfter("tdAlignRight\">")
-                .substringBefore("<")
+            val pfp = html.substringAfter("宋楚瑜")
+                    .substringAfter("tdAlignRight\">")
+                    .substringBefore("<")
 
-        val tnp = html.substringAfter("韓國瑜")
-                .substringAfter("tdAlignRight\">")
-                .substringBefore("<")
+            val pfpPer = html.substringAfter("宋楚瑜")
+                    .substringAfter("tdAlignRight")
+                    .substringAfter("tdAlignRight\">")
+                    .substringBefore("<")
 
-        val tnpPer = html.substringAfter("韓國瑜")
-                .substringAfter("tdAlignRight")
-                .substringAfter("tdAlignRight\">")
-                .substringBefore("<")
+            val tnp = html.substringAfter("韓國瑜")
+                    .substringAfter("tdAlignRight\">")
+                    .substringBefore("<")
 
-        val dpp = html.substringAfter("蔡英文")
-                .substringAfter("tdAlignRight\">")
-                .substringBefore("<")
+            val tnpPer = html.substringAfter("韓國瑜")
+                    .substringAfter("tdAlignRight")
+                    .substringAfter("tdAlignRight\">")
+                    .substringBefore("<")
 
-        val dppPer = html.substringAfter("蔡英文")
-                .substringAfter("tdAlignRight")
-                .substringAfter("tdAlignRight\">")
-                .substringBefore("<")
+            val dpp = html.substringAfter("蔡英文")
+                    .substringAfter("tdAlignRight\">")
+                    .substringBefore("<")
 
-        println("""
+            val dppPer = html.substringAfter("蔡英文")
+                    .substringAfter("tdAlignRight")
+                    .substringAfter("tdAlignRight\">")
+                    .substringBefore("<")
+
+            println("""
                 
                 宋楚瑜 (親民黨): 得票 {}(万) 占比 {}%
                 韓國瑜 (中國國民黨): 得票 {}(万) 占比 {}%
                 蔡英文 (民主進步黨): 得票 {}(万) 占比 {}%
                 
-            """.trimIndent().input(pfp,pfpPer,tnp,tnpPer,dpp,dppPer))
+            """.trimIndent().input(pfp, pfpPer, tnp, tnpPer, dpp, dppPer))
+
+            ThreadUtil.sleep(10000)
+
+        }
 
     }
 
@@ -91,13 +98,13 @@ object VoteUpdateTask : TimerTask() {
 
             inputText = """
                 
-                宋楚瑜 (親民黨): 得票 {}(万) 占比 {}%
-                韓國瑜 (中國國民黨): 得票 {}(万) 占比 {}%
-                蔡英文 (民主進步黨): 得票 {}(万) 占比 {}%
+                宋楚瑜 (親民黨): 得票 {} 占比 {}%
+                韓國瑜 (中國國民黨): 得票 {} 占比 {}%
+                蔡英文 (民主進步黨): 得票 {} 占比 {}%
                 
             """.trimIndent().input(pfp,pfpPer,tnp,tnpPer,dpp,dppPer)
 
-        } sendTo -1001367035152L
+        } sendTo -1001159814911L
 
     }
 }
