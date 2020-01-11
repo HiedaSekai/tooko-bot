@@ -100,7 +100,7 @@ class CreateAgent : TdBotHandler() {
 
                            // sudo make "Hello" syncTo superSudo.me.id
 
-                            superSudo makeHtml "${getMe().asInlineMention} : ChatId ${chat.id}" syncTo chatId
+                            superSudo makeHtml "${getMe().asInlineMention}" syncTo chatId
 
                             sudo.stop()
 
