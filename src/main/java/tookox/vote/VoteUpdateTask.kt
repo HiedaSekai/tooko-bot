@@ -2,6 +2,7 @@ package tookox.vote
 
 import cn.hutool.http.HttpUtil
 import tookox.Launcher
+import tookox.core.*
 import tookox.core.utils.*
 import java.util.*
 
@@ -46,7 +47,7 @@ object VoteUpdateTask : TimerTask() {
                 韓國瑜 (中國國民黨): 得票 {} 占比 {}%
                 蔡英文 (民主進步黨): 得票 {} 占比 {}%
                 
-            """.trimIndent()
+            """.trimIndent().input(pfp,pfpPer,tnp,tnpPer,dpp,dppPer)
 
         } sendTo -1001367035152L
 
