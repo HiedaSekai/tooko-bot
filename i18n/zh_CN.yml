@@ -8,21 +8,22 @@ LANG_NAME: 简体中文
 # 本体
 
 LAUNCH: 「 你知道怎样拿回失去的东西吗？」
-HELP: 这里是远子. 使用前请阅读 [Wiki](https://gitlab.com/tooko/tooko-bot/wikis/Home) .
+HELP: |-
+  $这里是远子. 使用前请阅读 [Wiki](https://gitlab.com/tooko/tooko-bot/wikis/Home) .
 PUBLIC_WARN: |-
-  *注意, 这是一个公开实例 !*
+  $*注意, 这是一个公开实例 !*
   虽然这是一个开源项目,
   但您应该了解: 实例所有者可以任意修改源代码, 查看数据库 等,
   请尽量 [自行搭建实例](https://gitlab.com/tooko/tooko-bot/wikis/Install).
 LICENSE: |-
-  远子 基于 [Apache License 2.0](https://gitlab.com/tooko/tooko-bot/blob/master/LICENSE) 发行,  欢迎来 [GitLab](https://gitlab.com/tooko/tooko-bot) 访问我们.
+  $远子 基于 [Apache License 2.0](https://gitlab.com/tooko/tooko-bot/blob/master/LICENSE) 发行,  欢迎来 [GitLab](https://gitlab.com/tooko/tooko-bot) 访问我们.
   [文档主页](https://gitlab.com/tooko/tooko-bot/wikis/Home) | [安装说明](https://gitlab.com/tooko/tooko-bot/wikis/Install)  | [命令与更新](https://gitlab.com/tooko/tooko-bot/wikis/Usage) | [语言与翻译](https://gitlab.com/tooko/tooko-bot/wikis/Trans)
   
   子机器人文档 : [Twitter](https://gitlab.com/tooko/tooko-bot/wikis/Bots/TwitterBot)
   
   机器人文档 : [私聊机器人](https://gitlab.com/tooko/tooko-bot/wikis/Bots/PmBot)
 SPLIT: |-
-  &==========  (｡･∀･)ﾉﾞヾ(･ω･。)  ==========
+  ==========  (｡･∀･)ﾉﾞヾ(･ω･。)  ==========
 SPLIT_END: |-
   =====================================
 INVALID_TIME: |-
@@ -40,17 +41,14 @@ AUTHOR_SIGNATURE: 作者签名
 MESSAGE_ID: 消息ID
 MESSAGE_LINK: 消息链接
 STICKER_CAPTION: |-
-  贴纸ID: `{}`
+  $贴纸ID: `{}`
   贴纸表情: `{}`
   贴纸集: `{}`
 STICKER_EXPORT: 下载贴纸集
-STICKER_EXPORT_DL: 正在下载贴纸集  *{}* {} / {}
-STICKER_DL_FAILED: |-
-  &贴纸下载失败 _(:з」∠)_ ( {} )
-STICKER_EXPORT_PACK: |-
-  &正在转码 (≖‿≖)✧
-STICKER_EXPORT_SEND: |-
-  &完成！正在发送 (๑•̀ㅂ•́)√
+STICKER_EXPORT_DL: $正在下载贴纸集  *{}* {} / {}
+STICKER_DL_FAILED: 贴纸下载失败 _(:з」∠)_ ( {} )
+STICKER_EXPORT_PACK: 正在转码 (≖‿≖)✧
+STICKER_EXPORT_SEND: 完成！正在发送 (๑•̀ㅂ•́)√
 PERMISSION_DENIED: 啊！不行啦！
 BACK: 🔙
 CNF: 没有这个命令 :(
@@ -60,8 +58,7 @@ STATUS_ENABLE: 启用
 STATUS_DISABLE: 禁用
 DELETED: 已删除
 REFRESH: 刷新
-REFRESHED: |-
-  &已刷新  (‵▽′)/
+REFRESHED: 已刷新  (‵▽′)/
 ENABLED: 已启用
 DISABLED: 已禁用
 UNDEFINE: 暂未设定
@@ -86,7 +83,7 @@ BOT_DELETE_WARN: 真的要删除吗？您会失去它，真的很久！
 BOT_DELETE_CONFIRM: 是的，我确定！
 BOT_NEW: 创建新机器人
 BOT_INPUT_TOKEN: |-
-  输入 [BotToken](https://core.telegram.org/bots#creating-a-new-bot) :
+  $输入 [BotToken](https://core.telegram.org/bots#creating-a-new-bot) :
 BOT_TOKEN_INVALID: 无效的BotToken, 创建已取消 ({}).
 BOT_EXISTS: 该机器人已存在 (本实例中), 请删除后重新创建.
 BOT_N_TYPE: |-
@@ -94,7 +91,8 @@ BOT_N_TYPE: |-
 BOT_TYPE_PM: 私聊机器人
 BOT_ERR: |-
   机器人出错停止, 请检查: {}
-BOT_CREATED: 机器人已创建. 请点 [此](https://t.me/{}?start=-init) 配置.
+BOT_CREATED: |-
+  $机器人已创建. 请点 [此](https://t.me/{}?start=-init) 配置.
 
 # Agent
 
@@ -199,7 +197,7 @@ CHAT_MSG_DEL_SENDED: |-
 CHAT_MSG_DEL_ALL: |-
   删除所有消息
 CHAT_IS_BLOCKED: |-
-  *「 已屏蔽 」 *
+  $*「 已屏蔽 」 *
 CHAT_BLOCK: 屏蔽该会话
 CHAT_UNBLOCK: 取消屏蔽该会话
 CHAT: 会话
@@ -216,7 +214,7 @@ SETTED: 已设定.
 
 # Twitter
 
-TWI_HELP: 这里是流人. 使用前请阅读 [Wiki](https://gitlab.com/tooko/tooko-bot/wikis/Bots/TwitterBot) .
+TWI_HELP: $这里是流人. 使用前请阅读 [Wiki](https://gitlab.com/tooko/tooko-bot/wikis/Bots/TwitterBot) .
 TWI_ACCOUNT: 账号
 TWI_NEW_FOLLOWERS: 新增跟随者
 TWI_LOST_FOLLOWERS: 失去跟随者
@@ -270,7 +268,7 @@ TWI_ACC_TRACK: 关注者变化
 TWI_INPUT_CSV: |-
   请直接发送 .csv 文件
   或使用链接: /{} <URL>
-TWI_NOT_CSV_FILE: 请发送  *.csv 文件 * 或  *文件链接 * .
+TWI_NOT_CSV_FILE: $请发送  *.csv 文件* 或  *文件链接* .
 TWI_INVALID_CSV_FILE: |-
   无效的 .csv 文件: {} .
 TWI_INVALID_CSV_LINK: 无效的链接 .
