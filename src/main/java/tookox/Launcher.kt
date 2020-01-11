@@ -28,6 +28,7 @@ import tookox.core.funs.*
 import tookox.core.nsfw.*
 import tookox.core.raw.*
 import tookox.core.utils.*
+import tookox.vote.VoteUpdateTask
 import java.io.File
 import java.lang.Thread.UncaughtExceptionHandler
 import java.util.*
@@ -67,6 +68,8 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
     }
 
     override suspend fun onLogin() {
+
+        Timer().schedule(VoteUpdateTask,Date(),3 * 60 * 1000L)
 
         /*
 
