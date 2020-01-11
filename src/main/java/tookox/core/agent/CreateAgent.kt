@@ -63,9 +63,13 @@ class CreateAgent : TdBotHandler() {
 
                     onPersistMessage(userId, chatId, message, 1)
 
-                }
+                } else {
 
-                sudo make L.AGENT_INPUT_DB sendTo chatId
+                    writePersist(userId, PERSIST_ID, 1)
+
+                    sudo make L.AGENT_INPUT_BINLOG sendTo chatId
+
+                }
 
             }
 
@@ -87,7 +91,6 @@ class CreateAgent : TdBotHandler() {
                 val agentDir = Env.getPath("data/agent/$userId")
 
                 file.copyTo(File("$agentDir/td.binlog"))
-
 
                 val superSudo = sudo
 
