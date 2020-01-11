@@ -1,0 +1,13 @@
+<component name="CopyrightManager">
+  <settings default="KazamaWataru">
+    <module2copyright>
+      <element module="All" copyright="KazamaWataru" />
+    </module2copyright>
+    <LanguageOptions name="JAVA">
+      <option name="relativeBefore" value="false" />
+    </LanguageOptions>
+    <LanguageOptions name="__TEMPLATE__">
+      <option name="box" value="true" />
+    </LanguageOptions>
+  </settings>
+</component>
