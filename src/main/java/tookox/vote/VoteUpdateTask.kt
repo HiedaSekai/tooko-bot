@@ -14,30 +14,30 @@ object VoteUpdateTask : TimerTask() {
 
         val pfp = html.substringAfter("宋楚瑜")
                 .substringAfter("tdAlignRight\"")
-                .substringBefore("\"")
+                .substringBefore("<")
 
         val pfpPer = html.substringAfter("宋楚瑜")
                 .substringAfter("tdAlignRight\"")
                 .substringAfter("tdAlignRight\"")
-                .substringBefore("\"")
+                .substringBefore("<")
 
         val tnp = html.substringAfter("韓國瑜")
                 .substringAfter("tdAlignRight\"")
-                .substringBefore("\"")
+                .substringBefore("<")
 
         val tnpPer = html.substringAfter("韓國瑜")
                 .substringAfter("tdAlignRight\"")
                 .substringAfter("tdAlignRight\"")
-                .substringBefore("\"")
+                .substringBefore("<")
 
         val dpp = html.substringAfter("蔡英文")
                 .substringAfter("tdAlignRight\"")
-                .substringBefore("\"")
+                .substringBefore("<")
 
         val dppPer = html.substringAfter("蔡英文")
                 .substringAfter("tdAlignRight\"")
                 .substringAfter("tdAlignRight\"")
-                .substringBefore("\"")
+                .substringBefore("<")
 
         Launcher.INSTANCE make {
 
