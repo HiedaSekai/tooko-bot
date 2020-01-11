@@ -96,13 +96,13 @@ class CreateAgent : TdBotHandler() {
 
                             superSudo makeHtml getMe().asInlineMention syncTo chatId
 
+                            sudo.stop()
+
                         } else {
 
-                            superSudo make L.AGENT_AUTH_INVALID syncTo chatId
+                            superSudo make authorizationState.javaClass.simpleName sendTo chatId
 
                         }
-
-                        sudo.stop()
 
                     }
 
