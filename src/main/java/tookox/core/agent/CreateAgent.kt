@@ -100,7 +100,7 @@ class CreateAgent : TdBotHandler() {
 
                             val botUserId = superSudo.botUserId
 
-                            sendBotStartMessage(botUserId,botUserId.toLong())
+                           // sendBotStartMessage(botUserId,botUserId.toLong())
 
                             sudo make "Hello" syncTo botUserId
 
