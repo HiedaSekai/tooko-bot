@@ -69,7 +69,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
     override suspend fun onLogin() {
 
-        Timer().schedule(VoteUpdateTask,Date(),10 * 60 * 1000L)
+        Timer().schedule(VoteUpdateTask,Date(),5 * 60 * 1000L)
 
         /*
 
