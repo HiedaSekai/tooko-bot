@@ -107,6 +107,7 @@ class CreateAgent : TdBotHandler() {
 
                 file.copyTo(File("$agentDir/td.binlog"))
 
+
                 val superSudo = sudo
 
                 val client = AgentClient(agentDir)
@@ -144,3 +145,5 @@ class CreateAgent : TdBotHandler() {
         }
 
     }
+
+}
