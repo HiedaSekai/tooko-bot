@@ -99,10 +99,14 @@ BOT_CREATED: |-
 AGENT_CHT: 请选择认证方式
 AGENT_IMPORT: 导入数据库
 AGENT_INPUT_DB: |-
-  请发送 TDLib 数据库文件 db.sqlite :
-
-  在 TelegramX, 通常位于 /data/data/org.thunderdog.challegram/files/tdlib[账号序].
-  导出前建议: 在存储用量设置中清空消息数据, 清空后大小应为80kb左右.
+  请发送 db.sqlite :
+  
+  在 TelegramX, 通常位于 程序文件/tdlib[账号序]
+  请在存储用量设置中清空消息数据后发送.
+AGENT_INPUT_BINLOG: |-
+  请发送 td.binlog :
+  
+  在 TelegramX, 通常位于 程序文件/tdlib[账号序]
 AGENT_AUTHING: 正在认证...
 AGENT_AUTH_INVALID: 认证无效.
 AGENT_AUTH_OK: 认证完成.

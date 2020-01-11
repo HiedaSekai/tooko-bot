@@ -143,6 +143,7 @@ public class Lang {
     public String AGENT_CHT,
             AGENT_IMPORT,
             AGENT_INPUT_DB,
+            AGENT_INPUT_BINLOG,
             AGENT_AUTHING,
             AGENT_AUTH_INVALID,
             AGENT_AUTH_OK,

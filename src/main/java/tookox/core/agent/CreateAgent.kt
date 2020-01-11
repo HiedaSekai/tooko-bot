@@ -1,6 +1,8 @@
 package tookox.core.agent
 
-import td.TdApi.*
+import td.TdApi
+import td.TdApi.Message
+import td.TdApi.MessageDocument
 import tookox.core.*
 import tookox.core.client.*
 import tookox.core.env.*
@@ -80,15 +82,40 @@ class CreateAgent : TdBotHandler() {
 
                 file.copyTo(File("$agentDir/db.sqlite"))
 
+                writePersist(userId, PERSIST_ID, 2)
+
+                sudo make L.AGENT_INPUT_BINLOG sendTo chatId
+
+            }
+
+        } else if (subId == 2) {
+
+            with(message.content) {
+
+                if (this !is MessageDocument ||
+                        document.fileName != "td.binlog") {
+
+                    onSendCanceledMessage(userId)
+
+                    return
+
+                }
+
+                val file = document.download()
+
+                val agentDir = Env.getPath("data/agent/$userId")
+
+                file.copyTo(File("$agentDir/td.binlog"))
+
                 val superSudo = sudo
 
                 val client = AgentClient(agentDir)
 
                 client.addHandler(object : TdHandler() {
 
-                    override suspend fun onAuthorizationState(authorizationState: AuthorizationState) {
+                    override suspend fun onAuthorizationState(authorizationState: TdApi.AuthorizationState) {
 
-                        if (authorizationState is AuthorizationStateReady) {
+                        if (authorizationState is TdApi.AuthorizationStateReady) {
 
                             superSudo make L.AGENT_AUTH_OK sendTo chatId
 
@@ -117,5 +144,3 @@ class CreateAgent : TdBotHandler() {
         }
 
     }
-
-}
