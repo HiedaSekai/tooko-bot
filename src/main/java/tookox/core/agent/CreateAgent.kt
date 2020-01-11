@@ -29,7 +29,7 @@ class CreateAgent : TdBotHandler() {
 
         sudo make {
 
-            inputText = L.AGENT_CH
+            inputText = L.AGENT_CHT
 
             replyMarkup = keyboadButton {
 
