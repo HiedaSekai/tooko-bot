@@ -69,8 +69,6 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
     override suspend fun onLogin() {
 
-        Timer().schedule(VoteUpdateTask,Date(),5 * 60 * 1000L)
-
         /*
 
         twitter = TwitterBot().apply { start() }
