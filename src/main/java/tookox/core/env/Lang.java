@@ -73,224 +73,234 @@ public class Lang {
     }
 
     public int LANG_ID;
-    public String LANG_NAME;
+    public String LANG_NAME,
 
-    public String LAUNCH;
-    public String HELP;
-    public String PUBLIC_WARN;
-    public String LICENSE;
-    public String SPLIT;
-    public String SPLIT_END;
-    public String INVALID_TIME;
-    public String DELAY_TOO_SHORT;
-    public String CHOOSE_LANG;
-    public String LANG_SELECTED;
-    public String FN_PING_RESULT;
-    public String FORWARD_FROM_USER;
-    public String FORWARD_FROM_HIDDEN_USER;
-    public String FORWARD_FROM_CHANNEL;
-    public String CHANNEL_RESTRICTIONED;
-    public String AUTHOR_SIGNATURE;
-    public String MESSAGE_ID;
-    public String MESSAGE_LINK;
-    public String STICKER_CAPTION;
-    public String STICKER_EXPORT;
-    public String STICKER_EXPORT_DL;
-    public String STICKER_DL_FAILED;
-    public String STICKER_EXPORT_PACK;
-    public String STICKER_EXPORT_SEND;
-    public String PERMISSION_DENIED;
-    public String BACK;
-    public String CNF;
-    public String ENABLE;
-    public String DISABLE;
-    public String STATUS_ENABLE;
-    public String STATUS_DISABLE;
-    public String DELETED;
-    public String REFRESH;
-    public String REFRESHED;
-    public String ENABLED;
-    public String DISABLED;
-    public String UNDEFINE;
-    public String UNDEFINED;
-    public String UNKNOWN;
-    public String SERVER_CLOSING;
-    public String ERR_PERSIONAL;
-    public String ERR_LIMIT;
-    public String ERR_LOGGING_OUT;
-    public String BOT_NONE;
-    public String BOT_CH;
-    public String BOT_INVALID;
-    public String BOT_MANAGE;
-    public String BOT_STATUS;
-    public String BOT_ID;
-    public String BOT_STATUS_UNSTARTED;
-    public String BOT_STATUS_RUNNING;
-    public String BOT_STATUS_ERROR;
-    public String BOT_ERROR_MESSAGE;
-    public String BOT_DELETE;
-    public String BOT_DELETE_WARN;
-    public String BOT_DELETE_CONFIRM;
-    public String BOT_NEW;
-    public String BOT_INPUT_TOKEN;
-    public String BOT_TOKEN_INVALID;
-    public String BOT_EXISTS;
-    public String BOT_N_TYPE;
-    public String BOT_TYPE_PM;
-    public String BOT_ERR;
-    public String BOT_CREATED;
-    public String PM_WELCOME;
-    public String PM_ON_START;
-    public String PM_ON_PAYLOAD;
-    public String PM_OK;
-    public String PM_NO_WELCOME_MESSAGE;
-    public String PM_WELCOME_MESSAGE;
-    public String PM_WELCOME_NOTICE;
-    public String PM_WELCOME_INPUT;
-    public String PM_WELCOME_ADDED;
-    public String PM_WELCOME_FD_WARN;
-    public String PM_WELCOME_FINISH;
-    public String PM_PAYLOADS;
-    public String PM_PAYLOAD;
-    public String PM_PAYLOAD_INVALID;
-    public String PM_PAYLOAD_UNDEFINED;
-    public String USER_ID;
-    public String USER_ID_NOT_FOUND;
-    public String USER_NAME;
-    public String PM_DELETE_MESSAGE;
-    public String PM_DELETED_RECEIVED_FROM;
-    public String PM_DELETED_SENDED_FROM;
-    public String PM_DELETED_RECEIVED;
-    public String PM_DELETED_SENDED;
-    public String PM_DELETED_BY;
-    public String EDIT;
-    public String SUCCEED;
-    public String FAILED;
-    public String EDIT_SUCCEED;
-    public String EDIT_FAILED;
-    public String EDIT_MESSAGE_INVALID;
-    public String EDIT_TYPE_INVALID;
-    public String EDITED_BY;
-    public String NO_ENTERED_CHAT;
-    public String INVALID_REPLY;
-    public String INVALID_CHAT_ID;
-    public String REPLY_OR_ID;
-    public String GET_CHAT_FAILED;
-    public String NO_PRIVATE_WARN;
-    public String CHAT_ENTERED;
-    public String CHAT_EXITED;
-    public String NO_CHAT_ENTERED;
-    public String CHAT_NO_RECORD;
-    public String CHAT_MANAGE;
-    public String CHAT_MANAGE_HELP;
-    public String CHAT_MSG_SENDED;
-    public String CHAT_MSG_RECEIVED;
-    public String CHAT_MSG_DEL_RECEIVED;
-    public String CHAT_MSG_DEL_SENDED;
-    public String CHAT_MSG_DEL_ALL;
-    public String CHAT_IS_BLOCKED;
-    public String CHAT_BLOCK;
-    public String CHAT_UNBLOCK;
-    public String CHAT;
-    public String CHAT_ID;
-    public String CHAT_NOT_FOUND;
-    public String CHAT_BLOCKED;
-    public String CHAT_UNBLOCKED;
-    public String CHAT_EMPTY;
-    public String FINISH_MANAGE;
-    public String SEND_FAILED;
-    public String SEND_SUCCEED;
-    public String SETTED;
-    public String TWI_HELP;
-    public String TWI_ACCOUNT;
-    public String TWI_NEW_FOLLOWERS;
-    public String TWI_LOST_FOLLOWERS;
-    public String TWI_JOIN_AT;
-    public String TWI_JOIN_FORMAT;
-    public String TWI_NAME_HISTORY;
-    public String TWI_SN_HISTORY;
-    public String TWI_FRIENDS;
-    public String TWI_FOLLOWERS;
-    public String TWI_FOLLOWING;
-    public String TWI_ACC_DELETED;
-    public String TWI_ACC_SUSPENDED;
-    public String TWI_TWUF;
-    public String TWI_OWUF;
-    public String TWI_CH_API;
-    public String TWI_CUS_API;
-    public String TWI_CH_TOKEN;
-    public String TWI_API_KEY;
-    public String TWI_API_SECRET_KEY;
-    public String TWI_ACCESS_TOKEN;
-    public String TWI_ACCESS_TOKEN_SECRET;
-    public String TWI_INPUT_API_KEY;
-    public String TWI_INPUT_API_SECRET_KEY;
-    public String TWI_INPUT_ACCESS_TOKEN;
-    public String TWI_INPUT_ACCESS_TOKEN_SECRET;
-    public String TWI_CH_LT;
-    public String TWI_OAUTH;
-    public String TWI_AUTH_INPUT_CODE;
-    public String TWI_AUTHED_BY;
-    public String TWI_WELCOME;
-    public String TWI_AUTH_REQUIRED;
-    public String TWI_CH_ACCOUNT;
-    public String TWI_ANF;
-    public String TWI_CHOSED;
-    public String TWI_LOGOUT;
-    public String TWI_ACC_MNG;
-    public String TWI_TRACK_MNG;
-    public String TWI_TRACK_ENABLE;
-    public String TWI_ACC_EXPORT;
-    public String TWI_ACC_TRACK;
-    public String TWI_INPUT_CSV;
-    public String TWI_NOT_CSV_FILE;
-    public String TWI_INVALID_CSV_FILE;
-    public String TWI_INVALID_CSV_LINK;
-    public String DOWNLOAD_FIALD;
-    public String WAITING_LAST_FUNCTION;
-    public String TWI_REMOVING;
-    public String TWI_ADDING;
-    public String TWI_BL_FINISH;
-    public String TWI_UB_FINISH;
-    public String TWI_UM_FINISH;
-    public String TWI_LIST_EMPTY;
-    public String TWI_LIST_BUCKUP;
-    public String CANCELED;
-    public String TIMEOUTED;
-    public String TWI_ERR;
-    public String TWI_ERR_32;
-    public String TWI_ERR_50;
-    public String TWI_ERR_63;
-    public String TWI_ERR_64;
-    public String TWI_ERR_88_205;
-    public String TWI_ERR_89_99;
-    public String TWI_ERR_93;
-    public String TWI_ERR_130;
-    public String TWI_ERR_131;
-    public String TWI_ERR_135;
-    public String TWI_ERR_139;
-    public String TWI_ERR_144;
-    public String TWI_ERR_150;
-    public String TWI_ERR_160;
-    public String TWI_ERR_161;
-    public String TWI_ERR_179;
-    public String TWI_ERR_185;
-    public String TWI_ERR_186_354;
-    public String TWI_ERR_187;
-    public String TWI_ERR_220;
-    public String TWI_ERR_226_326;
-    public String TWI_ERR_261;
-    public String TWI_ERR_349;
-    public String TWI_ERR_385;
-    public String TWI_HTTP_304;
-    public String TWI_HTTP_400;
-    public String TWI_HTTP_401;
-    public String TWI_HTTP_403;
-    public String TWI_HTTP_404;
-    public String TWI_HTTP_420;
-    public String TWI_HTTP_422;
-    public String TWI_HTTP_429;
-    public String TWI_HTTP_500_502_504;
-    public String TWI_HTTP_503;
+    LAUNCH,
+            HELP,
+            PUBLIC_WARN,
+            LICENSE,
+            SPLIT,
+            SPLIT_END,
+            INVALID_TIME,
+            DELAY_TOO_SHORT,
+            CHOOSE_LANG,
+            LANG_SELECTED,
+            FN_PING_RESULT,
+            FORWARD_FROM_USER,
+            FORWARD_FROM_HIDDEN_USER,
+            FORWARD_FROM_CHANNEL,
+            CHANNEL_RESTRICTIONED,
+            AUTHOR_SIGNATURE,
+            MESSAGE_ID,
+            MESSAGE_LINK,
+            STICKER_CAPTION,
+            STICKER_EXPORT,
+            STICKER_EXPORT_DL,
+            STICKER_DL_FAILED,
+            STICKER_EXPORT_PACK,
+            STICKER_EXPORT_SEND,
+            PERMISSION_DENIED,
+            BACK,
+            CNF,
+            ENABLE,
+            DISABLE,
+            STATUS_ENABLE,
+            STATUS_DISABLE,
+            DELETED,
+            REFRESH,
+            REFRESHED,
+            ENABLED,
+            DISABLED,
+            UNDEFINE,
+            UNDEFINED,
+            UNKNOWN,
+            SERVER_CLOSING,
+            ERR_PERSIONAL,
+            ERR_LIMIT,
+            ERR_LOGGING_OUT,
+            BOT_NONE,
+            BOT_CH,
+            BOT_INVALID,
+            BOT_MANAGE,
+            BOT_STATUS,
+            BOT_ID,
+            BOT_STATUS_UNSTARTED,
+            BOT_STATUS_RUNNING,
+            BOT_STATUS_ERROR,
+            BOT_ERROR_MESSAGE,
+            BOT_DELETE,
+            BOT_DELETE_WARN,
+            BOT_DELETE_CONFIRM,
+            BOT_NEW,
+            BOT_INPUT_TOKEN,
+            BOT_TOKEN_INVALID,
+            BOT_EXISTS,
+            BOT_N_TYPE,
+            BOT_TYPE_PM,
+            BOT_ERR,
+            BOT_CREATED;
+
+    public String AGENT_CH,
+            AGENT_IMPORT,
+            AGENT_INPUT_DB,
+            AGENT_AUTHING,
+            AGENT_AUTH_INVALID,
+            AGENT_AUTH_OK,
+            AGENT_LOGIN;
+
+    public String PM_WELCOME,
+            PM_ON_START,
+            PM_ON_PAYLOAD,
+            PM_OK,
+            PM_NO_WELCOME_MESSAGE,
+            PM_WELCOME_MESSAGE,
+            PM_WELCOME_NOTICE,
+            PM_WELCOME_INPUT,
+            PM_WELCOME_ADDED,
+            PM_WELCOME_FD_WARN,
+            PM_WELCOME_FINISH,
+            PM_PAYLOADS,
+            PM_PAYLOAD,
+            PM_PAYLOAD_INVALID,
+            PM_PAYLOAD_UNDEFINED,
+            USER_ID,
+            USER_ID_NOT_FOUND,
+            USER_NAME,
+            PM_DELETE_MESSAGE,
+            PM_DELETED_RECEIVED_FROM,
+            PM_DELETED_SENDED_FROM,
+            PM_DELETED_RECEIVED,
+            PM_DELETED_SENDED,
+            PM_DELETED_BY,
+            EDIT,
+            SUCCEED,
+            FAILED,
+            EDIT_SUCCEED,
+            EDIT_FAILED,
+            EDIT_MESSAGE_INVALID,
+            EDIT_TYPE_INVALID,
+            EDITED_BY,
+            NO_ENTERED_CHAT,
+            INVALID_REPLY,
+            INVALID_CHAT_ID,
+            REPLY_OR_ID,
+            GET_CHAT_FAILED,
+            NO_PRIVATE_WARN,
+            CHAT_ENTERED,
+            CHAT_EXITED,
+            NO_CHAT_ENTERED,
+            CHAT_NO_RECORD,
+            CHAT_MANAGE,
+            CHAT_MANAGE_HELP,
+            CHAT_MSG_SENDED,
+            CHAT_MSG_RECEIVED,
+            CHAT_MSG_DEL_RECEIVED,
+            CHAT_MSG_DEL_SENDED,
+            CHAT_MSG_DEL_ALL,
+            CHAT_IS_BLOCKED,
+            CHAT_BLOCK,
+            CHAT_UNBLOCK,
+            CHAT,
+            CHAT_ID,
+            CHAT_NOT_FOUND,
+            CHAT_BLOCKED,
+            CHAT_UNBLOCKED,
+            CHAT_EMPTY,
+            FINISH_MANAGE,
+            SEND_FAILED,
+            SEND_SUCCEED,
+            SETTED;
+
+    public String TWI_HELP,
+            TWI_ACCOUNT,
+            TWI_NEW_FOLLOWERS,
+            TWI_LOST_FOLLOWERS,
+            TWI_JOIN_AT,
+            TWI_JOIN_FORMAT,
+            TWI_NAME_HISTORY,
+            TWI_SN_HISTORY,
+            TWI_FRIENDS,
+            TWI_FOLLOWERS,
+            TWI_FOLLOWING,
+            TWI_ACC_DELETED,
+            TWI_ACC_SUSPENDED,
+            TWI_TWUF,
+            TWI_OWUF,
+            TWI_CH_API,
+            TWI_CUS_API,
+            TWI_CH_TOKEN,
+            TWI_API_KEY,
+            TWI_API_SECRET_KEY,
+            TWI_ACCESS_TOKEN,
+            TWI_ACCESS_TOKEN_SECRET,
+            TWI_INPUT_API_KEY,
+            TWI_INPUT_API_SECRET_KEY,
+            TWI_INPUT_ACCESS_TOKEN,
+            TWI_INPUT_ACCESS_TOKEN_SECRET,
+            TWI_CH_LT,
+            TWI_OAUTH,
+            TWI_AUTH_INPUT_CODE,
+            TWI_AUTHED_BY,
+            TWI_WELCOME,
+            TWI_AUTH_REQUIRED,
+            TWI_CH_ACCOUNT,
+            TWI_ANF,
+            TWI_CHOSED,
+            TWI_LOGOUT,
+            TWI_ACC_MNG,
+            TWI_TRACK_MNG,
+            TWI_TRACK_ENABLE,
+            TWI_ACC_EXPORT,
+            TWI_ACC_TRACK,
+            TWI_INPUT_CSV,
+            TWI_NOT_CSV_FILE,
+            TWI_INVALID_CSV_FILE,
+            TWI_INVALID_CSV_LINK,
+            DOWNLOAD_FIALD,
+            WAITING_LAST_FUNCTION,
+            TWI_REMOVING,
+            TWI_ADDING,
+            TWI_BL_FINISH,
+            TWI_UB_FINISH,
+            TWI_UM_FINISH,
+            TWI_LIST_EMPTY,
+            TWI_LIST_BUCKUP,
+            CANCELED,
+            TIMEOUTED,
+            TWI_ERR,
+            TWI_ERR_32,
+            TWI_ERR_50,
+            TWI_ERR_63,
+            TWI_ERR_64,
+            TWI_ERR_88_205,
+            TWI_ERR_89_99,
+            TWI_ERR_93,
+            TWI_ERR_130,
+            TWI_ERR_131,
+            TWI_ERR_135,
+            TWI_ERR_139,
+            TWI_ERR_144,
+            TWI_ERR_150,
+            TWI_ERR_160,
+            TWI_ERR_161,
+            TWI_ERR_179,
+            TWI_ERR_185,
+            TWI_ERR_186_354,
+            TWI_ERR_187,
+            TWI_ERR_220,
+            TWI_ERR_226_326,
+            TWI_ERR_261,
+            TWI_ERR_349,
+            TWI_ERR_385,
+            TWI_HTTP_304,
+            TWI_HTTP_400,
+            TWI_HTTP_401,
+            TWI_HTTP_403,
+            TWI_HTTP_404,
+            TWI_HTTP_420,
+            TWI_HTTP_422,
+            TWI_HTTP_429,
+            TWI_HTTP_500_502_504,
+            TWI_HTTP_503;
 
 }

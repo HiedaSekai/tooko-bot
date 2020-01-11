@@ -1,7 +1,7 @@
 package tookox.core.client
 
 import td.TdApi.TdlibParameters
-import tookox.core.env.Env
+import tookox.core.env.*
 
 class TdOptions {
 
@@ -11,7 +11,7 @@ class TdOptions {
     private var useFileDatabase = true
     private var useChatInfoDatabase = true
     private var useMessageDatabase = true
-    private var useSecretChats = true
+    private var useSecretChats = false
     private var apiId = 971882
     private var apiHash = "1232533dd027dc2ec952ba91fc8e3f27"
     private var systemLanguageCode = "en"

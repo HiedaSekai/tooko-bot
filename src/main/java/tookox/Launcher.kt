@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory
 import org.yaml.snakeyaml.Yaml
 import td.TdApi
 import tookox.core.*
+import tookox.core.agent.*
 import tookox.core.bots.*
 import tookox.core.client.*
 import tookox.core.db.*
@@ -49,9 +50,17 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
         addHandler(StickerExport())
 
+        // Bots
+
         addHandler(CreateBot())
 
         addHandler(BotPanel())
+
+        // Agent
+
+        addHandler(CreateAgent())
+
+        // Licence
 
         addHandler(LICENCE())
 

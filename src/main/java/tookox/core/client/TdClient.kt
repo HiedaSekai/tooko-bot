@@ -21,6 +21,12 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     var handlers = LinkedList<TdAbsHandler>()
 
+    init {
+
+        handlers.add(this)
+
+    }
+
     var start by AtomicBoolean(false)
     var started by AtomicBoolean(false)
     var authing by AtomicBoolean(false)
@@ -59,13 +65,13 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         authing = true
 
-        addHandler(this)
+        onLoad(this)
 
         postAdd.add(this)
 
         if (!loopThreadInited) {
 
-            loopThread = Thread(::loopEvents, "Tooko Event Loop")
+            loopThread = Thread(::loopEvents, "Tooko Event Task")
 
             loopThread.start()
 

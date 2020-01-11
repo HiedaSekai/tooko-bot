@@ -3,9 +3,11 @@ package tookox.core.client
 import kotlinx.coroutines.CoroutineScope
 import td.TdApi
 import td.TdApi.*
+import tookox.core.raw.*
 import tookox.core.utils.*
 import java.util.*
 import kotlin.collections.HashMap
+import java.io.File as JFile
 
 interface TdAbsHandler {
 
@@ -208,6 +210,18 @@ interface TdAbsHandler {
 
     val Message.delete get() = DeleteMessages(chatId, longArrayOf(id), true)
     val Message.deleteForSelf get() = DeleteMessages(chatId, longArrayOf(id), false)
+
+    suspend fun Document.download() : JFile {
+
+        if (!document.local.isDownloadingCompleted) {
+
+            document = downloadFile(document.id,1,0,0,true)
+
+        }
+
+        return JFile(document.local.path!!)
+
+    }
 
     val Collection<Message>.deleteAll: List<DeleteMessages>
         get() {

@@ -96,6 +96,22 @@ BOT_ERR: |-
   机器人出错停止, 请检查: {}
 BOT_CREATED: 机器人已创建. 请点 [此](https://t.me/{}?start=-init) 配置.
 
+# Agent
+
+AGENT_CHT: 请选择认证方式
+
+AGENT_IMPOET: 导入数据库
+AGENT_INPUT_DB: |-
+  请发送 TDLib 数据库文件 db.sqlite :
+
+  在 TelegramX, 通常位于 /data/data/org.thunderdog.challegram/files/tdlib[账号序].
+  导出前建议: 在存储用量设置中清空消息数据, 清空后大小应为80kb左右.
+AGENT_AUTHING: 正在认证...
+AGENT_AUTH_INVALID: 认证无效.
+AGENT_AUTH_OK: 认证完成.
+
+AGENT_LOGIN: 登录
+
 # PM
 
 PM_WELCOME: |-

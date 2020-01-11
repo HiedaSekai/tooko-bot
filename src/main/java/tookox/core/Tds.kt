@@ -41,7 +41,6 @@ fun <T : Object> syncRaw(function: TdApi.Function): T {
     }
 
 }
-
 val MessageContent.asInput: InputMessageContent?
     get() = when (this) {
 

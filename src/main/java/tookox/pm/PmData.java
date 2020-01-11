@@ -11,7 +11,7 @@ import java.util.*;
 
 public class PmData {
 
-    public static CacheTable<Integer, PmData> DATA = new CacheTable<Integer, PmData>("pm", PmData.class) {
+    public static CacheTable<Integer, PmData> DATA = new CacheTable<>("pm", PmData.class) {
 
         @Override
         public boolean save(PmData data) {
