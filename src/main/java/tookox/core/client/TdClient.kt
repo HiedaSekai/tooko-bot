@@ -32,7 +32,6 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
     var authing by AtomicBoolean(false)
     var auth by AtomicBoolean(false)
     var stop by AtomicBoolean(false)
-    var stopped by AtomicBoolean(false)
     var closed by AtomicBoolean(false)
 
     private val clientId = TdNative.createNativeClient()
@@ -67,7 +66,11 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         onLoad(this)
 
-        postAdd.add(this)
+        synchronized(postAdd) {
+
+            postAdd.add(this)
+
+        }
 
         if (!loopThreadInited) {
 
@@ -103,13 +106,13 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         check(!stop) { "重复停止." }
 
+        stop = true
+
         handlers.forEach { it.onDestroy() }
 
         sendRaw(Close())
 
         while (!closed) delay(100)
-
-        TdNative.destroyNativeClient(clientId)
 
     }
 
@@ -186,7 +189,11 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         } else if (authorizationState is AuthorizationStateClosed) {
 
-            closed = true
+            synchronized(postDestroy) {
+
+                postDestroy.add(sudo)
+
+            }
 
         }
 
@@ -360,7 +367,9 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
                         clients.remove(toDestroy)
 
-                        toDestroy.stop = true
+                        TdNative.destroyNativeClient(toDestroy.clientId)
+
+                        toDestroy.closed = true
 
                         iter.remove()
 
