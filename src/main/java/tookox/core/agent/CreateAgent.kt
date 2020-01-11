@@ -57,19 +57,9 @@ class CreateAgent : TdBotHandler() {
 
             if (message.text == L.AGENT_IMPORT) {
 
-                val agentDir = Env.getPath("data/agent/$userId")
+                writePersist(userId, PERSIST_ID, 1)
 
-                if (File("$agentDir/td.binlog").isFile) {
-
-                    onPersistMessage(userId, chatId, message, 1)
-
-                } else {
-
-                    writePersist(userId, PERSIST_ID, 1)
-
-                    sudo make L.AGENT_INPUT_BINLOG sendTo chatId
-
-                }
+                sudo make L.AGENT_INPUT_BINLOG sendTo chatId
 
             }
 
@@ -88,9 +78,11 @@ class CreateAgent : TdBotHandler() {
 
                 val file = document.download()
 
-                val agentDir = Env.getPath("data/agent/$userId")
+                val agentDir = Env.getFile("data/agent/$userId")
 
-                file.copyTo(File("$agentDir/td.binlog"))
+                agentDir.deleteRecursively()
+
+                file.copyTo(File(agentDir,"td.binlog"))
 
                 val superSudo = sudo
 
@@ -104,7 +96,7 @@ class CreateAgent : TdBotHandler() {
 
                             superSudo make L.AGENT_AUTH_OK sendTo chatId
 
-                            val chat = createPrivateChat(superSudo.me.id,false)
+                            val chat = createPrivateChat(superSudo.me.id, false)
 
                             sudo make "Hello" syncTo chat.id
 
