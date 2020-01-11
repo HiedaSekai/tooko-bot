@@ -5,9 +5,8 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.runBlocking
 import org.yaml.snakeyaml.Yaml
-import tookox.core.env.Env
-import tookox.core.env.Lang
 import tookox.core.*
+import tookox.core.env.*
 import tookox.core.utils.*
 import java.util.*
 
@@ -103,17 +102,29 @@ object LibsLoader {
 
                         val resStr = field.get(language) as String
 
-                        if (resStr.startsWith("&")) {
-
-                            field.set(language, resStr.substring(1))
-
-                        } else {
+                        if (resStr.startsWith("$$")) {
 
                             async {
 
                                 runCatching {
 
-                                    field.set(language, resStr.asMarkdown.asHtml)
+                                    field.set(language, resStr.substring(2).asMarkdownV2.asHtml)
+
+                                }.onFailure { ex ->
+
+                                    defaultLog.warn(ex, "语言文件 ${it.name} 中 ${field.name} 解析错误 : $resStr, 已跳过.")
+
+                                }
+
+                            }.also(results::addLast)
+
+                        } else if(resStr.startsWith("$")) {
+
+                            async {
+
+                                runCatching {
+
+                                    field.set(language, resStr.substring(1).asMarkdown.asHtml)
 
                                 }.onFailure { ex ->
 
