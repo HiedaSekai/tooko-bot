@@ -82,7 +82,7 @@ class CreateAgent : TdBotHandler() {
 
                 agentDir.deleteRecursively()
 
-                file.copyTo(File(agentDir,"td.binlog"))
+                file.copyTo(File(agentDir, "td.binlog"))
 
                 val superSudo = sudo
 
@@ -96,11 +96,15 @@ class CreateAgent : TdBotHandler() {
 
                             superSudo make L.AGENT_AUTH_OK sendTo chatId
 
-                            sendBotStartMessage(superSudo.me.id,superSudo.me.id.toLong())
+                           // createPrivateChat(botUserId,getUser(superSudo.botUserId))
 
-                           // sudo make "Hello" syncTo superSudo.me.id
+                            val botUserId = superSudo.botUserId
 
-                            superSudo makeHtml "${getMe().asInlineMention}" syncTo chatId
+                            sendBotStartMessage(botUserId,botUserId.toLong())
+
+                            sudo make "Hello" syncTo botUserId
+
+                            superSudo makeHtml getMe().asInlineMention syncTo chatId
 
                             sudo.stop()
 
