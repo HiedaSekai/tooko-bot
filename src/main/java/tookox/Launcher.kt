@@ -28,7 +28,6 @@ import tookox.core.funs.*
 import tookox.core.nsfw.*
 import tookox.core.raw.*
 import tookox.core.utils.*
-import tookox.vote.VoteUpdateTask
 import java.io.File
 import java.lang.Thread.UncaughtExceptionHandler
 import java.util.*
