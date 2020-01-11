@@ -242,7 +242,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         val stackTrace = ThreadUtil.getStackTrace().shift(3)
 
-        withContext(Dispatchers.Unconfined) {
+        return withContext(Dispatchers.Unconfined) {
 
             val responseAtomicReference = AtomicReference<Any>()
 
