@@ -57,38 +57,19 @@ class CreateAgent : TdBotHandler() {
 
             if (message.text == L.AGENT_IMPORT) {
 
-                writePersist(userId, PERSIST_ID, 1)
+                val agentDir = Env.getPath("data/agent/$userId")
+
+                if (File("$agentDir/td.binlog").isFile) {
+
+                    onPersistMessage(userId, chatId, message, 1)
+
+                }
 
                 sudo make L.AGENT_INPUT_DB sendTo chatId
 
             }
 
         } else if (subId == 1) {
-
-            with(message.content) {
-
-                if (this !is MessageDocument ||
-                        document.fileName != "db.sqlite") {
-
-                    onSendCanceledMessage(userId)
-
-                    return
-
-                }
-
-                val file = document.download()
-
-                val agentDir = Env.getPath("data/agent/$userId")
-
-                file.copyTo(File("$agentDir/db.sqlite"))
-
-                writePersist(userId, PERSIST_ID, 2)
-
-                sudo make L.AGENT_INPUT_BINLOG sendTo chatId
-
-            }
-
-        } else if (subId == 2) {
 
             with(message.content) {
 
@@ -120,9 +101,11 @@ class CreateAgent : TdBotHandler() {
 
                             superSudo make L.AGENT_AUTH_OK sendTo chatId
 
-                            sudo make "Hello" syncTo superSudo.me.id
+                            val chat = createPrivateChat(superSudo.me.id,false)
 
-                            superSudo makeHtml getMe().asInlineMention syncTo chatId
+                            sudo make "Hello" syncTo chat.id
+
+                            superSudo makeHtml "${getMe().asInlineMention} : ChatId ${chat.id}" syncTo chatId
 
                             sudo.stop()
 
