@@ -140,7 +140,7 @@ public class Lang {
             BOT_ERR,
             BOT_CREATED;
 
-    public String AGENT_CH,
+    public String AGENT_CHT,
             AGENT_IMPORT,
             AGENT_INPUT_DB,
             AGENT_AUTHING,
