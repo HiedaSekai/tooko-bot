@@ -238,55 +238,58 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     }
 
-    override suspend fun <T : Object> sync(function: TdApi.Function): T = withContext(Dispatchers.IO) {
+    override suspend fun <T : Object> sync(function: TdApi.Function): T {
 
-        val stackTrace = ThreadUtil.getStackTrace().shift(1)
+        val stackTrace = ThreadUtil.getStackTrace().shift(3)
 
-        val responseAtomicReference = AtomicReference<Any>()
+        withContext(Dispatchers.Unconfined) {
 
-        val executedAtomicBoolean = AtomicBoolean(false)
+            val responseAtomicReference = AtomicReference<Any>()
 
-        send<T>(function, 1) {
+            val executedAtomicBoolean = AtomicBoolean(false)
 
-            responseAtomicReference.set(it)
+            send<T>(function, 1) {
 
-            executedAtomicBoolean.set(true)
+                responseAtomicReference.set(it)
 
-        } onError {
+                executedAtomicBoolean.set(true)
 
-            responseAtomicReference.set(it)
+            } onError {
 
-            executedAtomicBoolean.set(true)
+                responseAtomicReference.set(it)
 
-        }
+                executedAtomicBoolean.set(true)
 
-        while (!executedAtomicBoolean.get()) {
+            }
 
-            if (Env.STOP.get()) {
+            while (!executedAtomicBoolean.get()) {
 
-                throw TdException(Error(-1, "Server Stopped")).also {
+                if (Env.STOP.get()) {
+
+                    throw TdException(Error(-1, "Server Stopped")).also {
+
+                        it.stackTrace = stackTrace
+
+                    }
+
+                }
+
+                delay(100L)
+
+            }
+
+            @Suppress("UNCHECKED_CAST")
+            responseAtomicReference.get().apply {
+
+                if (this is TdException) throw TdException(error).also {
 
                     it.stackTrace = stackTrace
 
                 }
 
-            }
-
-            delay(100L)
+            } as T
 
         }
-
-        @Suppress("UNCHECKED_CAST")
-        responseAtomicReference.get().apply {
-
-            if (this is TdException) throw TdException(error).also {
-
-                it.stackTrace = stackTrace
-
-            }
-
-        } as T
-
 
     }
 
