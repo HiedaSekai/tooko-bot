@@ -14,7 +14,7 @@ object VoteUpdateTask : TimerTask() {
 
         while(true) {
 
-            val html = HttpUtil.createGet("https://www.cec.gov.tw/pc/zh_TW/P1/n00000000000000000.html")
+            val html = HttpUtil.createGet("https://www.cec.gov.tw/pc/zh_TW/P1/n00000000000000000.html?time=" + System.currentTimeMillis())
                     .disableCache()
                     .execute()
                     .body()
