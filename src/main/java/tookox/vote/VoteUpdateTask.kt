@@ -13,30 +13,30 @@ object VoteUpdateTask : TimerTask() {
         val html = HttpUtil.get("https://www.cec.gov.tw/pc/zh_TW/P1/n00000000000000000.html")
 
         val pfp = html.substringAfter("宋楚瑜")
-                .substringAfter("tdAlignRight\"")
+                .substringAfter("tdAlignRight\">")
                 .substringBefore("<")
 
         val pfpPer = html.substringAfter("宋楚瑜")
-                .substringAfter("tdAlignRight\"")
-                .substringAfter("tdAlignRight\"")
+                .substringAfter("tdAlignRight")
+                .substringAfter("tdAlignRight\">")
                 .substringBefore("<")
 
         val tnp = html.substringAfter("韓國瑜")
-                .substringAfter("tdAlignRight\"")
+                .substringAfter("tdAlignRight\">")
                 .substringBefore("<")
 
         val tnpPer = html.substringAfter("韓國瑜")
-                .substringAfter("tdAlignRight\"")
-                .substringAfter("tdAlignRight\"")
+                .substringAfter("tdAlignRight")
+                .substringAfter("tdAlignRight\">")
                 .substringBefore("<")
 
         val dpp = html.substringAfter("蔡英文")
-                .substringAfter("tdAlignRight\"")
+                .substringAfter("tdAlignRight\">")
                 .substringBefore("<")
 
         val dppPer = html.substringAfter("蔡英文")
-                .substringAfter("tdAlignRight\"")
-                .substringAfter("tdAlignRight\"")
+                .substringAfter("tdAlignRight")
+                .substringAfter("tdAlignRight\">")
                 .substringBefore("<")
 
         Launcher.INSTANCE make {
