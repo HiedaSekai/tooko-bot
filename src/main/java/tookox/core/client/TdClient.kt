@@ -1,5 +1,6 @@
 package tookox.core.client
 
+import cn.hutool.core.thread.ThreadUtil
 import kotlinx.coroutines.*
 import td.TdApi
 import td.TdApi.*
@@ -239,6 +240,8 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     override suspend fun <T : Object> sync(function: TdApi.Function): T = withContext(Dispatchers.IO) {
 
+        val stackTrace = ThreadUtil.getStackTrace().shift(1)
+
         val responseAtomicReference = AtomicReference<Any>()
 
         val executedAtomicBoolean = AtomicBoolean(false)
@@ -261,7 +264,11 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
             if (Env.STOP.get()) {
 
-                throw TdException(Error(-1, "Server Stopped"))
+                throw TdException(Error(-1, "Server Stopped")).also {
+
+                    it.stackTrace = stackTrace
+
+                }
 
             }
 
@@ -272,7 +279,11 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
         @Suppress("UNCHECKED_CAST")
         responseAtomicReference.get().apply {
 
-            if (this is TdException) throw TdException(error)
+            if (this is TdException) throw TdException(error).also {
+
+                it.stackTrace = stackTrace
+
+            }
 
         } as T
 
