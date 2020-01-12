@@ -17,6 +17,7 @@
 package tookox.core.agent
 
 import cn.hutool.core.util.StrUtil
+import kotlinx.coroutines.coroutineScope
 import td.TdApi.*
 import tookox.core.*
 import tookox.core.client.*
@@ -105,7 +106,15 @@ class CreateAgent : TdBotHandler() {
 
                 client.addHandler(object : TdHandler() {
 
-                    override suspend fun onNewMessage(userId: Int, chatId: Long, message: Message) {
+                    override suspend fun onNewMessage(userId: Int, chatId: Long, message: Message) = coroutineScope {
+
+                        if (message.fromPrivate) {
+
+                            sudo make "IS" to chatId send deleteDelay()
+
+                            deleteDelay()(message)
+
+                        }
 
                         if (message.replyMarkup is ReplyMarkupInlineKeyboard) {
 
@@ -146,6 +155,7 @@ class CreateAgent : TdBotHandler() {
 
                             }
 
+                            defaultLog.debug(msg)
 
                             superSudo make msg sendTo chatId
 
