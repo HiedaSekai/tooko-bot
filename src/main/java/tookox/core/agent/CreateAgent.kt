@@ -19,6 +19,7 @@ package tookox.core.agent
 import td.TdApi
 import td.TdApi.Message
 import td.TdApi.MessageDocument
+import tookox.Launcher
 import tookox.core.*
 import tookox.core.client.*
 import tookox.core.env.*
@@ -125,6 +126,8 @@ class CreateAgent : TdBotHandler() {
                     }
 
                     override suspend fun onLogin() {
+
+                        sudo make "/_agent_init" syncTo Launcher.INSTANCE.botUserId
 
                         stop()
 
