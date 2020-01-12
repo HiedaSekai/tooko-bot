@@ -108,7 +108,7 @@ class CreateAgent : TdBotHandler() {
 
                     override suspend fun onNewMessage(userId: Int, chatId: Long, message: Message) = coroutineScope {
 
-                        defaultLog.debug("$message")
+                        defaultLog.debug("${getUser(userId).displayName} : ${message.text}")
 
                         if (userId == sudo.me.id) return@coroutineScope
 
