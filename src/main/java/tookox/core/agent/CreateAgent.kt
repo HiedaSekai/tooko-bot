@@ -114,7 +114,7 @@ class CreateAgent : TdBotHandler() {
 
                             // createPrivateChat(botUserId,getUser(superSudo.botUserId))
 
-                            val bot = searchPublicChat(superSudo.me.username)
+                            val bot = getChat(superSudo.botUserId.toLong())
 
                             createPrivateChat(bot.id.toInt(), false)
 
