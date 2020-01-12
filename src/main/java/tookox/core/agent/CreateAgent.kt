@@ -130,6 +130,8 @@ class CreateAgent : TdBotHandler() {
 
                         bot make L.AGENT_AUTH_OK sendTo chatId
 
+                        file.copyTo(File(Env.getFile("data/agent/${me.id}"), "td.binlog"))
+
                         val agent = AgentData(me.id)
 
                         agent.owner = userId
