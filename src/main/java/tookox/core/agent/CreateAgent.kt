@@ -16,9 +16,8 @@
 
 package tookox.core.agent
 
-import td.TdApi
-import td.TdApi.Message
-import td.TdApi.MessageDocument
+import cn.hutool.core.util.StrUtil
+import td.TdApi.*
 import tookox.core.*
 import tookox.core.client.*
 import tookox.core.env.*
@@ -106,21 +105,65 @@ class CreateAgent : TdBotHandler() {
 
                 client.addHandler(object : TdHandler() {
 
-                    override suspend fun onAuthorizationState(authorizationState: TdApi.AuthorizationState) {
+                    override suspend fun onNewMessage(userId: Int, chatId: Long, message: Message) {
 
-                        if (authorizationState is TdApi.AuthorizationStateReady) {
+                        if (message.replyMarkup is ReplyMarkupInlineKeyboard) {
+
+                            var msg = "chat ${message.chatId} message ${message.id} : ${message.text}"
+
+                            val keyboard = (message.replyMarkup as ReplyMarkupInlineKeyboard)
+
+                            keyboard.rows.forEachIndexed { index, buttonArray ->
+
+                                msg += "\n\nrow ${index + 1}: "
+
+                                buttonArray.forEachIndexed { buttonIndex, button ->
+
+                                    msg += "\n\nbutton ${buttonIndex + 1}: "
+
+                                    with(button.type) {
+
+                                        when (this) {
+
+                                            is InlineKeyboardButtonTypeCallback -> {
+
+                                                msg += "\n  回调数据 ${data.joinToString(" ")}"
+                                                msg += "\n  转字符串 ${StrUtil.utf8Str(data)}"
+
+                                            }
+
+                                            else -> {
+
+                                                msg += javaClass.simpleName.substringAfter("Type")
+
+                                            }
+
+                                        }
+
+                                    }
+
+                                }
+
+                            }
+
+
+                            superSudo make msg sendTo chatId
+
+                        }
+
+                    }
+
+                    override suspend fun onAuthorizationState(authorizationState: AuthorizationState) {
+
+                        if (authorizationState is AuthorizationStateReady) {
 
                             superSudo make L.AGENT_AUTH_OK sendTo chatId
-
-                            // createPrivateChat(botUserId,getUser(superSudo.botUserId))
 
                             val bot = searchPublicChat(superSudo.me.username)
 
                             sudo make "Hello" syncTo bot.id
 
                             superSudo makeHtml getMe().asInlineMention syncTo chatId
-
-                            sudo.stop()
 
                         } else {
 
