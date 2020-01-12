@@ -34,6 +34,8 @@ class AgentTransfer : TdBotHandler() {
 
             sudo delete message
 
+            finishEvent()
+
         } else if (function == "_agent_forward") {
 
             if (!NumberUtil.isLong(param)) {
@@ -42,15 +44,15 @@ class AgentTransfer : TdBotHandler() {
 
             } else {
 
-                makeForward(chatId, message.replyToMessageId) sendTo param.toLong()
+                makeForward(chatId, message.replyToMessageId) syncTo param.toLong()
 
                 delete(chatId, message.id, message.replyToMessageId)
 
             }
 
-        }
+            finishEvent()
 
-        finishEvent()
+        }
 
     }
 
