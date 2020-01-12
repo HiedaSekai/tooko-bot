@@ -110,6 +110,8 @@ class AgentClient(val bot: TdBot, val ownerChat: Long, dir: File) : TdClient(TdO
 
             bot make "认证失败" sendTo ownerChat
 
+            stop()
+
         }
 
     }
