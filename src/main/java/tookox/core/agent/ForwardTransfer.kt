@@ -21,7 +21,6 @@ import kotlinx.coroutines.coroutineScope
 import td.TdApi
 import tookox.core.*
 import tookox.core.client.*
-import tookox.core.raw.*
 import tookox.core.utils.*
 
 class ForwardTransfer : TdBotHandler() {
@@ -34,7 +33,11 @@ class ForwardTransfer : TdBotHandler() {
 
         run fn@{
 
-            if (function == "_agent_forward") {
+            if (function == "_agent_init") {
+
+                sudo delete message
+
+            } else if (function == "_agent_forward") {
 
                 if (NumberUtil.isLong(param)) {
 
@@ -44,11 +47,9 @@ class ForwardTransfer : TdBotHandler() {
 
                 }
 
-                forwardMessages(param.toLong(), chatId,
-                        longArrayOf(message.replyToMessageId),
-                        null, false, false, false)
+                makeForward(chatId, message.replyToMessageId) sendTo param.toLong()
 
-                deleteMessages(chatId, longArrayOf(message.id, message.replyToMessageId), true)
+                delete(chatId, message.id, message.replyToMessageId)
 
             } else {
 
