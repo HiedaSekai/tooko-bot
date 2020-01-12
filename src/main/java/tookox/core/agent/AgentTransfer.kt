@@ -17,7 +17,6 @@
 package tookox.core.agent
 
 import cn.hutool.core.util.NumberUtil
-import kotlinx.coroutines.coroutineScope
 import td.TdApi
 import tookox.core.*
 import tookox.core.client.*
@@ -25,35 +24,27 @@ import tookox.core.utils.*
 
 class AgentTransfer : TdBotHandler() {
 
-    override suspend fun onUndefinedFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) = coroutineScope event@{
+    override suspend fun onUndefinedFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
 
-        if (!message.fromPrivate) return@event
+        if (!message.fromPrivate ||
+                userId !in AgentImage.agents ||
+                !function.startsWith("_agent")) return
 
-        if (userId !in AgentImage.agents) return@event
+        if (function == "_agent_init") {
 
-        run fn@{
+            sudo delete message
 
-            if (function == "_agent_init") {
+        } else if (function == "_agent_forward") {
+
+            if (!NumberUtil.isLong(param)) {
 
                 sudo delete message
 
-            } else if (function == "_agent_forward") {
-
-                if (NumberUtil.isLong(param)) {
-
-                    sudo delete message
-
-                    return@fn
-
-                }
+            } else {
 
                 makeForward(chatId, message.replyToMessageId) sendTo param.toLong()
 
                 delete(chatId, message.id, message.replyToMessageId)
-
-            } else {
-
-                return@event
 
             }
 
