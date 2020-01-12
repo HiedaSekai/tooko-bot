@@ -158,8 +158,6 @@ class BotPanel : TdBotHandler() {
 
         if (subId == 0) {
 
-            sudo confirmTo chatId
-
             showList(L, userId, chatId, messageId, false)
 
             return
@@ -170,12 +168,19 @@ class BotPanel : TdBotHandler() {
 
         val botData = BotData.DATA.getById(botId)
 
-        if (botData == null || botData.owner != userId) {
+        if (botData == null) {
 
             sudo makeAlert L.BOT_INVALID answerTo queryId
 
             fetchAndDelete(chatId, messageId)
 
+            return
+
+        } else if (botData.owner != userId) {
+
+            sudo makeAlert "${L.BOT_INVALID} :\n" +
+                    "userId: $userId\n" +
+                    "ownerId: ${botData.owner}" answerTo queryId
             return
 
         }

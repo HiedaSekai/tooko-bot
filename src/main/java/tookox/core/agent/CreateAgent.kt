@@ -16,6 +16,7 @@
 
 package tookox.core.agent
 
+import td.TdApi
 import td.TdApi.Message
 import td.TdApi.MessageDocument
 import tookox.core.*
@@ -107,17 +108,54 @@ class CreateAgent : TdBotHandler() {
 
                 val file = document.download()
 
-                val agentDir = Env.getFile("data/agent/$userId")
+                val agentDir = Env.getFile("data/agent_create/$userId")
 
                 agentDir.deleteRecursively()
 
                 file.copyTo(File(agentDir, "td.binlog"))
 
-                val client = AgentClient(sudo, chatId, agentDir)
-
                 sudo make L.AGENT_AUTHING sendTo chatId
 
-                client.start()
+                val bot = sudo
+
+                object : TdClient(TdOptions()
+                        .databaseDirectory("data/agent_create/")) {
+
+                    override suspend fun onAuthorizationState(authorizationState: TdApi.AuthorizationState) {
+
+                        super.onAuthorizationState(authorizationState)
+
+                        if (authorizationState is TdApi.AuthorizationStateWaitPhoneNumber) {
+
+                            stop()
+
+                            bot make L.AGENT_AUTH_INVALID sendTo chatId
+
+                        }
+
+                    }
+
+                    override suspend fun onLogin() {
+
+                        stop()
+
+                        bot make L.AGENT_AUTH_OK sendTo chatId
+
+                        val agentId = me.id
+
+                        val userData = AgentData.DATA.getById(userId) ?: AgentData(userId)
+
+                        userData.accounts.add(AgentData.AgentUser().apply {
+
+                            this.userId = agentId
+
+                        })
+
+                        AgentData.DATA.setById(userId, userData)
+
+                    }
+
+                }.start()
 
             }
 

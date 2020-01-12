@@ -19,29 +19,20 @@ package tookox.core.agent
 import cn.hutool.core.util.StrUtil
 import kotlinx.coroutines.coroutineScope
 import td.TdApi.*
+import tookox.Launcher
 import tookox.core.*
 import tookox.core.client.*
-import tookox.core.raw.*
+import tookox.core.env.*
 import tookox.core.utils.*
-import java.io.File
 
-class AgentClient(val bot: TdBot, val ownerChat: Long, dir: File) : TdClient(TdOptions().databaseDirectory(dir.path)) {
-
-    val L = ownerChat.langFor
+class AgentClient(val data: AgentData) : TdClient(TdOptions()
+        .databaseDirectory(Env.getPath("data/agent/${data.userId}"))) {
 
     override suspend fun onNewMessage(userId: Int, chatId: Long, message: Message) = coroutineScope {
 
         super.onNewMessage(userId, chatId, message)
 
-        defaultLog.debug("${getUserOrNull(userId)?.displayName} : ${message.text}")
-
         if (userId == sudo.me.id) return@coroutineScope
-
-        if (message.fromPrivate) {
-
-            deleteDelay()(message)
-
-        }
 
         if (message.replyMarkup is ReplyMarkupInlineKeyboard) {
 
@@ -82,9 +73,7 @@ class AgentClient(val bot: TdBot, val ownerChat: Long, dir: File) : TdClient(TdO
 
             }
 
-            defaultLog.debug(msg)
-
-            bot make msg sendTo ownerChat
+            Launcher.INSTANCE make msg sendTo data.owner
 
         }
 
@@ -94,21 +83,13 @@ class AgentClient(val bot: TdBot, val ownerChat: Long, dir: File) : TdClient(TdO
 
         super.onAuthorizationState(authorizationState)
 
-        if (authorizationState is AuthorizationStateReady) {
+        if (authorizationState is AuthorizationStateWaitPhoneNumber) {
 
-            bot make L.AGENT_AUTH_OK sendTo ownerChat
-
-            val chat = searchPublicChat(bot.me.username)
-
-            sudo make "Hello" syncTo chat.id
-
-            bot makeHtml getMe().asInlineMention syncTo ownerChat
-
-        } else if (authorizationState is AuthorizationStateWaitPhoneNumber) {
-
-            bot make "认证失败" sendTo ownerChat
+            Launcher.INSTANCE make "认证失败" sendTo data.owner
 
             stop()
+
+            AgentData.DATA.deleteById(data.userId)
 
         }
 

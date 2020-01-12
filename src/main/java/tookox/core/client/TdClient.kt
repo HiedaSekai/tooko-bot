@@ -133,6 +133,16 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     }
 
+    fun postStart() {
+
+        GlobalScope.launch {
+
+            start(false)
+
+        }
+
+    }
+
     fun postStop() {
 
         GlobalScope.launch {
