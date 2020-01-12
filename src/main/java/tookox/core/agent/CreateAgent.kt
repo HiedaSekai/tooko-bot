@@ -132,7 +132,7 @@ class CreateAgent : TdBotHandler() {
 
                                 buttonArray.forEachIndexed { buttonIndex, button ->
 
-                                    msg += "\n\nbutton ${buttonIndex + 1}: "
+                                    msg += "\n\nbutton ${buttonIndex + 1}: ${button.text}"
 
                                     with(button.type) {
 
@@ -147,7 +147,7 @@ class CreateAgent : TdBotHandler() {
 
                                             else -> {
 
-                                                msg += javaClass.simpleName.substringAfter("Type")
+                                                msg += "\n  Type : " + javaClass.simpleName.substringAfter("Type")
 
                                             }
 
