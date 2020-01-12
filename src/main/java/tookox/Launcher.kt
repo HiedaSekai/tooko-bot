@@ -25,7 +25,7 @@ import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings
 import com.mongodb.MongoException
 import com.mongodb.client.MongoClients
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import org.bson.codecs.configuration.CodecRegistries
 import org.bson.codecs.pojo.ArrayPropertyCodecProvider
 import org.bson.codecs.pojo.PojoCodecProvider
@@ -82,7 +82,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
     }
 
-    override suspend fun onLogin() {
+    override suspend fun onLogin() = coroutineScope {
 
         /*
 
@@ -90,7 +90,23 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
          */
 
-        BotData.DATA.all.forEach { BotImage.start(it) }
+        val deferreds = LinkedList<Deferred<*>>()
+
+        BotData.DATA.all.forEach { bot ->
+
+            run<Unit> {
+
+                deferreds.add(async<Unit> {
+
+                    BotImage.start(bot)
+
+                })
+
+            }
+
+        }
+
+        deferreds.awaitAll()
 
         defaultLog.info("远子 基于 Apache License 2.0 协议发行")
 
