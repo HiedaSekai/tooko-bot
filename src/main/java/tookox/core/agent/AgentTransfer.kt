@@ -28,7 +28,7 @@ class AgentTransfer : TdBotHandler() {
 
         if (!message.fromPrivate ||
                 userId !in AgentImage.agents ||
-                !function.startsWith("_agent")) return
+                !function.startsWith("_agent_")) return
 
         if (function == "_agent_init") {
 

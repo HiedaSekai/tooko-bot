@@ -98,7 +98,7 @@ infix fun TdAbsHandler.makePhotoId(text: String): MessageFactory {
 
 }
 
-fun TdAbsHandler.makeForward(charId: Number, messageId: Long): MessageFactory {
+fun TdAbsHandler.makeForward(chatId: Number, messageId: Long): MessageFactory {
 
     return make { input = inputForward(chatId, messageId) }
 
