@@ -140,7 +140,7 @@ class CreateAgent : TdBotHandler() {
 
                         val agent = AgentData(me.id)
 
-                        agent.owner = if (Env.isAdmin(userId)) -1 else userId
+                        agent.owner = userId
 
                         AgentData.DATA.setById(userId, agent)
 
