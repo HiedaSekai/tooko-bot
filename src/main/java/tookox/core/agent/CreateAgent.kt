@@ -128,7 +128,7 @@ class CreateAgent : TdBotHandler() {
 
                         stop()
 
-                        File(cacheDir, "td.binlog").copyTo(File(Env.getFile("data/agent/${me.id}"), "td.binlog"))
+                        File(cacheDir, "td.binlog").copyTo(File(Env.getFile("data/agent/${me.id}"), "td.binlog"), true)
 
                         cacheDir.deleteRecursively()
 
