@@ -108,6 +108,8 @@ class CreateAgent : TdBotHandler() {
 
                     override suspend fun onNewMessage(userId: Int, chatId: Long, message: Message) = coroutineScope {
 
+                        if (userId = sudo.me.id) return@coroutineScope
+
                         if (message.fromPrivate) {
 
                             sudo make "IS" to chatId send deleteDelay()
