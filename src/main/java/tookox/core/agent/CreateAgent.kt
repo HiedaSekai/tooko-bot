@@ -23,6 +23,7 @@ import tookox.Launcher
 import tookox.core.*
 import tookox.core.client.*
 import tookox.core.env.*
+import tookox.core.raw.*
 import tookox.core.utils.*
 import java.io.File
 import java.util.*
@@ -127,7 +128,7 @@ class CreateAgent : TdBotHandler() {
 
                     override suspend fun onLogin() {
 
-                        sudo make "/_agent_init" syncTo Launcher.INSTANCE.botUserId
+                        searchPublicChat(Launcher.INSTANCE.me.username)
 
                         stop()
 
