@@ -108,7 +108,7 @@ class CreateAgent : TdBotHandler() {
                 val bot = sudo
 
                 object : TdClient(TdOptions()
-                        .databaseDirectory("data/agent_create/")) {
+                        .databaseDirectory(agentDir.path)) {
 
                     override suspend fun onAuthorizationState(authorizationState: TdApi.AuthorizationState) {
 
