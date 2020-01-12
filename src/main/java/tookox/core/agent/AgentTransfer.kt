@@ -23,7 +23,7 @@ import tookox.core.*
 import tookox.core.client.*
 import tookox.core.utils.*
 
-class ForwardTransfer : TdBotHandler() {
+class AgentTransfer : TdBotHandler() {
 
     override suspend fun onUndefinedFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) = coroutineScope event@{
 
