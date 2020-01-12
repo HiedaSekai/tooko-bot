@@ -18,7 +18,7 @@ package tookox.core.agent
 
 import cn.hutool.core.util.StrUtil
 import kotlinx.coroutines.coroutineScope
-import td.TdApi
+import td.TdApi.*
 import tookox.core.*
 import tookox.core.client.*
 import tookox.core.raw.*
@@ -29,7 +29,7 @@ class AgentClient(val bot: TdBot, val ownerChat: Long, dir: File) : TdClient(TdO
 
     val L = ownerChat.langFor
 
-    override suspend fun onNewMessage(userId: Int, chatId: Long, message: TdApi.Message) = coroutineScope {
+    override suspend fun onNewMessage(userId: Int, chatId: Long, message: Message) = coroutineScope {
 
         super.onNewMessage(userId, chatId, message)
 
@@ -45,11 +45,11 @@ class AgentClient(val bot: TdBot, val ownerChat: Long, dir: File) : TdClient(TdO
 
         }
 
-        if (message.replyMarkup is TdApi.ReplyMarkupInlineKeyboard) {
+        if (message.replyMarkup is ReplyMarkupInlineKeyboard) {
 
             var msg = "chat ${message.chatId} message ${message.id} : ${message.text}"
 
-            val keyboard = (message.replyMarkup as TdApi.ReplyMarkupInlineKeyboard)
+            val keyboard = (message.replyMarkup as ReplyMarkupInlineKeyboard)
 
             keyboard.rows.forEachIndexed { index, buttonArray ->
 
@@ -63,7 +63,7 @@ class AgentClient(val bot: TdBot, val ownerChat: Long, dir: File) : TdClient(TdO
 
                         when (this) {
 
-                            is TdApi.InlineKeyboardButtonTypeCallback -> {
+                            is InlineKeyboardButtonTypeCallback -> {
 
                                 msg += "\n  回调数据 ${data.joinToString(" ")}"
                                 msg += "\n  转字符串 ${StrUtil.utf8Str(data)}"
@@ -92,11 +92,11 @@ class AgentClient(val bot: TdBot, val ownerChat: Long, dir: File) : TdClient(TdO
 
     }
 
-    override suspend fun onAuthorizationState(authorizationState: TdApi.AuthorizationState) {
+    override suspend fun onAuthorizationState(authorizationState: AuthorizationState) {
 
         super.onAuthorizationState(authorizationState)
 
-        if (authorizationState is TdApi.AuthorizationStateReady) {
+        if (authorizationState is AuthorizationStateReady) {
 
             bot make L.AGENT_AUTH_OK sendTo ownerChat
 
@@ -106,9 +106,9 @@ class AgentClient(val bot: TdBot, val ownerChat: Long, dir: File) : TdClient(TdO
 
             bot makeHtml getMe().asInlineMention syncTo ownerChat
 
-        } else {
+        } else if (authorizationState is AuthorizationStateWaitPhoneNumber) {
 
-            bot make authorizationState.javaClass.simpleName sendTo ownerChat
+            bot make "认证失败" sendTo ownerChat
 
         }
 
