@@ -39,8 +39,6 @@ class AgentClient(val bot: TdBot, val ownerChat: Long, dir: File) : TdClient(TdO
 
         if (message.fromPrivate) {
 
-            sudo make "IS" to chatId send deleteDelay()
-
             deleteDelay()(message)
 
         }
