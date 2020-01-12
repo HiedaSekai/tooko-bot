@@ -97,18 +97,18 @@ class CreateAgent : TdBotHandler() {
 
                 val file = document.download()
 
-                val agentDir = Env.getFile("data/agent_create/$userId")
+                val cacheDir = Env.getFile("data/agent_create/$userId")
 
-                agentDir.deleteRecursively()
+                cacheDir.deleteRecursively()
 
-                file.copyTo(File(agentDir, "td.binlog"))
+                file.copyTo(File(cacheDir, "td.binlog"))
 
                 sudo make L.AGENT_AUTHING sendTo chatId
 
                 val bot = sudo
 
                 object : TdClient(TdOptions()
-                        .databaseDirectory(agentDir.path)) {
+                        .databaseDirectory(cacheDir.path)) {
 
                     override suspend fun onAuthorizationState(authorizationState: TdApi.AuthorizationState) {
 
@@ -128,9 +128,11 @@ class CreateAgent : TdBotHandler() {
 
                         stop()
 
-                        bot make L.AGENT_AUTH_OK sendTo chatId
+                        File(cacheDir, "td.binlog").copyTo(File(Env.getFile("data/agent/${me.id}"), "td.binlog"))
 
-                        file.copyTo(File(Env.getFile("data/agent/${me.id}"), "td.binlog"))
+                        cacheDir.deleteRecursively()
+
+                        bot make L.AGENT_AUTH_OK sendTo chatId
 
                         val agent = AgentData(me.id)
 

@@ -76,6 +76,8 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
         addHandler(CreateAgent())
 
+        addHandler(ForwardTransfer())
+
         // Licence
 
         addHandler(LICENCE())
@@ -147,6 +149,8 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
     }
 
     override suspend fun onUndefinedFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
+
+        if (!message.fromPrivate) return
 
         val L = userId.langFor
 

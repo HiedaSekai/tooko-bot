@@ -28,11 +28,31 @@ import tookox.core.utils.*
 class AgentClient(val data: AgentData) : TdClient(TdOptions()
         .databaseDirectory(Env.getPath("data/agent/${data.userId}"))) {
 
-    override suspend fun onNewMessage(userId: Int, chatId: Long, message: Message) = coroutineScope {
+    override val sudo = this
+
+    infix fun transferForward(message: Message) {
+
+        sudo makeForward message to Launcher.INSTANCE.botUserId send {
+
+            sudo make "/_agent_forward ${data.owner}" replyTo it.id sendTo Launcher.INSTANCE.botUserId
+
+        }
+
+    }
+
+    override suspend fun onNewMessage(userId: Int, chatId: Long, message: Message) = coroutineScope event@{
 
         super.onNewMessage(userId, chatId, message)
 
-        if (userId == sudo.me.id) return@coroutineScope
+        if (userId == sudo.me.id) {
+
+            return@event
+
+        } else if (userId == 777000) {
+
+            sudo transferForward message
+
+        }
 
         if (message.replyMarkup is ReplyMarkupInlineKeyboard) {
 

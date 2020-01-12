@@ -166,6 +166,74 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     }
 
+    fun Message.parseFunction(): TdFunction? {
+
+        if (content !is MessageText) return null
+
+        var param = text!!
+
+        run fn@{
+
+            Env.FUN_PREFIX.forEach {
+
+                if (!param.startsWith(it)) return@forEach
+
+                param = param.substring(it.length)
+
+                return@fn
+
+            }
+
+            return null
+
+        }
+
+        var function = if (!param.contains(' ')) {
+
+            param.also {
+
+                param = ""
+
+            }
+
+        } else {
+
+            param.substringBefore(' ').also {
+
+                param = param.substringAfter(' ')
+
+            }
+
+        }
+
+        val validSuffix = "@${me.username}"
+
+        if (function.endsWith(validSuffix)) {
+
+            function = function.substring(0, function.length - validSuffix.length)
+
+        }
+
+        val params: List<String>
+
+        val originParams: List<String>
+
+        if (param.isBlank()) {
+
+            originParams = listOf()
+            params = originParams
+
+        } else {
+
+            originParams = param.split(' ')
+            params = param.replace("  ", " ").split(' ')
+
+        }
+
+        return TdFunction(function, param, params, originParams)
+
+    }
+
     override suspend fun onAuthorizationState(authorizationState: AuthorizationState) = coroutineScope<Unit> {
 
         // defaultLog.debug(authorizationState.javaClass.simpleName)

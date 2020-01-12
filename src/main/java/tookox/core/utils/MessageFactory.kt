@@ -98,6 +98,19 @@ infix fun TdAbsHandler.makePhotoId(text: String): MessageFactory {
 
 }
 
+fun TdAbsHandler.makeForward(charId: Number, messageId: Long): MessageFactory {
+
+    return make { input = inputForward(chatId, messageId) }
+
+}
+
+infix fun TdAbsHandler.makeForward(message: Message): MessageFactory {
+
+    return make { input = inputForward(message) }
+
+}
+
+
 infix fun TdAbsHandler.make(ex: Throwable): MessageFactory {
 
     val text = if (ex is TwitterException) {
@@ -484,6 +497,12 @@ class MessageFactory(val context: TdAbsHandler) : CaptionInterface {
     var inputFileId by WriteOnlyField<String> {
 
         input = fileId(it) { _captionInterface = this }
+
+    }
+
+    var inputForward by WriteOnlyField<Message> {
+
+        input = inputForward(it)
 
     }
 
