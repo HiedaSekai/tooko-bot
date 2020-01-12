@@ -94,6 +94,8 @@ class AgentClient(val bot: TdBot, val ownerChat: Long, dir: File) : TdClient(TdO
 
     override suspend fun onAuthorizationState(authorizationState: TdApi.AuthorizationState) {
 
+        super.onAuthorizationState(authorizationState)
+
         if (authorizationState is TdApi.AuthorizationStateReady) {
 
             bot make L.AGENT_AUTH_OK sendTo ownerChat
