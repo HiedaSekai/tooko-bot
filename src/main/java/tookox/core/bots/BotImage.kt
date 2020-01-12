@@ -47,7 +47,7 @@ class BotImage(var data: BotData) {
 
                 image.bot = PmBot(image)
 
-                return image.bot.start(true)
+                return image.bot.start()
 
             } else {
 

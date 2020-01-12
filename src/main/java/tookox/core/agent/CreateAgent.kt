@@ -32,7 +32,7 @@ class CreateAgent : TdBotHandler() {
 
     override fun onLoad() {
 
-        initFunction("new_agent", "start_agent")
+        initFunction("new_agent")
 
         initPersist(PERSIST_ID)
 
@@ -60,18 +60,7 @@ class CreateAgent : TdBotHandler() {
 
             } sendTo chatId
 
-        } else if (function.startsWith("start")) {
-
-            val agentDir = Env.getFile("data/agent/$userId")
-
-            val client = AgentClient(sudo, chatId, agentDir)
-
-            sudo make L.AGENT_AUTHING sendTo chatId
-
-            client.start()
-
         }
-
 
     }
 
@@ -141,17 +130,13 @@ class CreateAgent : TdBotHandler() {
 
                         bot make L.AGENT_AUTH_OK sendTo chatId
 
-                        val agentId = me.id
+                        val agent = AgentData(me.id)
 
-                        val userData = AgentData.DATA.getById(userId) ?: AgentData(userId)
+                        agent.owner = userId
 
-                        userData.accounts.add(AgentData.AgentUser().apply {
+                        AgentData.DATA.setById(userId, agent)
 
-                            this.userId = agentId
-
-                        })
-
-                        AgentData.DATA.setById(userId, userData)
+                        AgentImage.start(agent)
 
                     }
 

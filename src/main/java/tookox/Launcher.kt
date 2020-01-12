@@ -106,6 +106,20 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
         }
 
+        AgentData.DATA.all.forEach { agent ->
+
+            run<Unit> {
+
+                deferreds.add(async<Unit> {
+
+                    AgentImage.start(agent)
+
+                })
+
+            }
+
+        }
+
         deferreds.awaitAll()
 
         defaultLog.info("远子 基于 Apache License 2.0 协议发行")
