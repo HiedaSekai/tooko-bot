@@ -114,13 +114,11 @@ class CreateAgent : TdBotHandler() {
 
                             // createPrivateChat(botUserId,getUser(superSudo.botUserId))
 
-                            val botUserId = superSudo.botUserId
+                            val bot = searchPublicChat(superSudo.me.username)
 
-                            getUser(botUserId)
+                            createPrivateChat(bot.id.toInt(), false)
 
-                            createPrivateChat(botUserId, false)
-
-                            sudo make "Hello" syncTo botUserId
+                            sudo make "Hello" syncTo bot.id
 
                             superSudo makeHtml getMe().asInlineMention syncTo chatId
 
