@@ -1564,7 +1564,7 @@ public class Fn {
 
         ByteArrayOutputStream format = new ByteArrayOutputStream();
 
-        format.write(id - 129);
+        format.write(id - 128);
         format.write(subId);
 
         for (byte[] data : dataArray) {

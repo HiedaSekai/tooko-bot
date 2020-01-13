@@ -354,7 +354,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
         }
 
-        val dataId = data[0] + 129
+        val dataId = data[0] + 128
 
         val subId = data[1].toInt()
 
