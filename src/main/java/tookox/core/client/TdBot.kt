@@ -20,11 +20,10 @@ import cn.hutool.core.util.RuntimeUtil
 import cn.hutool.core.util.StrUtil
 import cn.hutool.core.util.ZipUtil
 import kotlinx.coroutines.coroutineScope
-import tookox.core.env.Env
-import tookox.core.env.Fn
 import td.TdApi.*
 import tookox.core.*
 import tookox.core.client.TdBotAbsHandler.*
+import tookox.core.env.*
 import tookox.core.utils.*
 import java.io.File
 import java.util.*
@@ -325,7 +324,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
         }
 
-        val dataId = data[0] + 129
+        val dataId = data[0] + 128
 
         val subId = data[1].toInt()
 
