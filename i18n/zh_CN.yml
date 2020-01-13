@@ -169,7 +169,6 @@ EDIT_TYPE_INVALID: |-
   修改失败: 消息类型未识别
 EDITED_BY: |-
   消息被对方修改, 新内容: {}
-NO_ENTERED_CHAT: 当前没有进入会话
 INVALID_REPLY: 在回复的消息中没有找到对应聊天.
 INVALID_CHAT_ID: 提供的会话ID/用户引用无效.
 REPLY_OR_ID: |-

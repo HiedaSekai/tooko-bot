@@ -100,7 +100,7 @@ class WelcomeConfig : TdBotHandler() {
 
         cache[userId] = edit
 
-        writePersist(userId, PERSISTD_ID)
+        writePersist(userId, PERSISTD_ID, allowFunction = false)
 
         sudo make L.PM_WELCOME_INPUT sendTo chatId
 
@@ -258,7 +258,7 @@ class WelcomeConfig : TdBotHandler() {
 
     suspend fun show(L: Lang, chatId: Long, params: Array<String>) {
 
-        val payload = if (params.size != 1) {
+        val payload = if (params.isNotEmpty()) {
 
             if (sudo.data.payloads == null || !sudo.data.payloads.containsKey(params[0])) {
 

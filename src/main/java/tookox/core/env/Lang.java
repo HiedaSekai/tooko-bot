@@ -197,7 +197,6 @@ public class Lang {
             EDIT_MESSAGE_INVALID,
             EDIT_TYPE_INVALID,
             EDITED_BY,
-            NO_ENTERED_CHAT,
             INVALID_REPLY,
             INVALID_CHAT_ID,
             REPLY_OR_ID,

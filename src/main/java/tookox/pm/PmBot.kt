@@ -152,4 +152,13 @@ class PmBot(val image: BotImage) : TdBot(image.data.botToken) {
         }
     }
 
+    override suspend fun onUndefinedFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
+
+        val L = userId.langFor
+
+        sudo make L.NO_CHAT_ENTERED sendTo chatId
+
+
+    }
+
 }
