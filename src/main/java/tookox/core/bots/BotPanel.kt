@@ -170,7 +170,7 @@ class BotPanel : TdBotHandler() {
 
         if (botData == null) {
 
-            sudo makeAlert L.BOT_INVALID answerTo queryId
+            sudo makeAlert "${L.BOT_INVALID}: $botId" answerTo queryId
 
             fetchAndDelete(chatId, messageId)
 
