@@ -251,17 +251,7 @@ class CreateAgent : TdBotHandler() {
 
                     }
 
-                    val dir = if (subId == 2) {
-
-                        "agent"
-
-                    } else {
-
-                        "agent_test_dc"
-
-                    }
-
-                    File(cacheDir, binlog).copyTo(File(Env.getFile("data/$dir/${me.id}"), "td.binlog"), true)
+                    File(cacheDir, binlog).copyTo(File(Env.getFile("data/agent/${me.id}"), binlog), true)
 
                     cacheDir.deleteRecursively()
 
