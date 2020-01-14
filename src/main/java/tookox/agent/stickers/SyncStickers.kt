@@ -93,78 +93,99 @@ class SyncStickers : TdBotHandler() {
 
         deferreds.awaitAll()
 
+        val stickerSets = LinkedList<String>()
+
         with(agent) {
 
             stickersBotId = searchPublicChat("Stickers").id
 
-            val anim = if (stickerSet.isAnimated) {
+            var curr = 0
 
-                sudo cmd "/newanimated"
+            for ((index, sticker) in stickerSet.stickers.withIndex()) {
 
-                true
+                if (curr == 0 || index % 20 == 0) {
 
-            } else if (stickerSet.isMasks) {
+                    curr++
 
-                sudo cmd "/newmasks"
+                    val anim = if (stickerSet.isAnimated) {
 
-                false
+                        sudo cmd "/newanimated"
 
-            } else {
+                        true
 
-                sudo cmd "/newpack"
+                    } else if (stickerSet.isMasks) {
 
-                false
+                        sudo cmd "/newmasks"
 
-            }
+                        false
 
-            sudo cmd stickerSet.title
+                    } else {
 
-            val first = stickerSet.stickers[0].cachePng()
+                        sudo cmd "/newpack"
 
-            sudo makeFile first.path syncTo stickersBotId
+                        false
 
-            sudo cmd stickerSet.stickers[0].emoji
+                    }
 
-            sudo cmd "/publish"
+                    sudo cmd "@ISSTC ${stickerSet.title} $curr / ${stickerSet.stickers.size / 10} "
 
-            if (stickerSet.thumbnail != null) {
+                    val firstFng = sticker.cachePng()
 
-                var icon = stickerSet.thumbnail!!.photo
+                    sudo makeFile firstFng.path syncTo stickersBotId
 
-                if (!icon.local.isDownloadingCompleted) {
+                    sudo cmd sticker.emoji
 
-                    icon = sync(DownloadFile(icon.id, 1, 0, 0, true))
+                    sudo cmd "/publish"
+
+                    if (stickerSet.thumbnail != null) {
+
+                        var icon = stickerSet.thumbnail!!.photo
+
+                        if (!icon.local.isDownloadingCompleted) {
+
+                            icon = sync(DownloadFile(icon.id, 1, 0, 0, true))
+
+                        }
+
+                        val iconFile = icon.cacheIcon()
+
+                        sudo makeFile iconFile.path syncTo stickersBotId
+
+                    } else {
+
+                        sudo cmd "/skip"
+
+                    }
+
+                    val set = if (curr == 1) {
+
+                        stickerSet.name
+
+                    } else {
+
+                        "${stickerSet.name}_$curr"
+
+                    }
+
+                    sudo cmd set
+
+                    sudo cmd "/addsticker"
+
+                    sudo cmd set
+
+                    stickerSets.add(set)
 
                 }
-
-                val iconFile = icon.cacheIcon()
-
-                sudo makeFile iconFile.path syncTo stickersBotId
-
-            } else {
-
-                sudo cmd "/skip"
-
-            }
-
-            sudo cmd stickerSet.name
-
-            sudo cmd "/addsticker"
-
-            sudo cmd stickerSet.name
-
-            stickerSet.stickers.shift().forEach {
-
-                val png = it.cachePng()
-
-                sudo makeFile png.path syncTo stickersBotId
-
-                sudo cmd it.emoji
 
             }
 
         }
 
+        sudo make stickerSets.joinToString("\n") {
+
+            "https://t.me/addstickers/$it"
+
+        } sendTo chatId
 
     }
 
