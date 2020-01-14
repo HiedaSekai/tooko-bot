@@ -31,9 +31,9 @@ suspend fun TdAbsHandler.forkMessage(message: String = "/ping", chatId: Number =
 
     originList.add(origin.id)
 
-    for (index in 1..6) {
+    for (index in 0..6) {
 
-        val messages = if (index < 7) {
+        val messages = if (index < 6) {
 
             forwardMessages(chatId.toLong(), chatId.toLong(), originList.toLongArray(), null, false, false, false)
 
