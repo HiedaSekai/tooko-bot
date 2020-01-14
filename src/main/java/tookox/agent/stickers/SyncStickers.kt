@@ -119,9 +119,9 @@ class SyncStickers : TdBotHandler() {
 
             sudo cmd stickerSet.title
 
-            val png = stickerSet.stickers[0].cachePng()
+            val first = stickerSet.stickers[0].cachePng()
 
-            sudo makeFile png.path syncTo stickersBotId
+            sudo makeFile first.path syncTo stickersBotId
 
             sudo cmd stickerSet.stickers[0].emoji
 
@@ -149,9 +149,22 @@ class SyncStickers : TdBotHandler() {
 
             sudo cmd stickerSet.name
 
+            sudo cmd "/addsticker"
+
+            sudo cmd stickerSet.name
+
+            stickerSet.stickers.shift().forEach {
+
+                val png = it.cachePng()
+
+                sudo makeFile png.path syncTo stickersBotId
+
+                sudo cmd it.emoji
+
+            }
+
         }
 
-        sudo cmd "/sddsticketr"
 
     }
 
