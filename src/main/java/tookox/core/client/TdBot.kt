@@ -276,15 +276,11 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
                     handlers.filterIsInstance<TdBotAbsHandler>().forEach {
 
-                        if (this == it) return@forEach
-
-                        println(it)
+                        if (this@TdBot == it) return@forEach
 
                         it.onUndefinedFunction(userId, chatId, message, function, param, params, originParams)
 
                     }
-
-                    println(this)
 
                     onUndefinedFunction(userId, chatId, message, function, param, params, originParams)
 
