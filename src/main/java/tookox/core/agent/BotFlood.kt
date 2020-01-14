@@ -18,6 +18,7 @@ package tookox.core.agent
 
 import kotlinx.coroutines.delay
 import td.TdApi
+import tookox.core.*
 import tookox.core.client.*
 import tookox.core.raw.*
 
@@ -37,7 +38,7 @@ class BotFlood : TdBotHandler() {
 
                 val target = searchPublicChat(params[0]).id
 
-                val originMessages = forkMessage()
+                val originMessages = forkMessage(originParams.shift().joinToString(" "))
 
                 repeat(50) {
 
