@@ -16,10 +16,7 @@
 
 package tookox.agent.stickers
 
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.*
 import td.TdApi.*
 import tookox.agent.AgentImage
 import tookox.core.client.*
@@ -117,7 +114,13 @@ class SyncStickers : TdBotHandler() {
 
         command(stickerSet.title)
 
-        sudo makeFile stickerSet.stickers[0].sticker.local.path!! syncTo stickersBotId
+        stickerSet.stickers.forEach {
+
+            sudo makeFile it.sticker.local.path!! syncTo stickersBotId
+
+            delay(100L)
+
+        }
 
     }
 
