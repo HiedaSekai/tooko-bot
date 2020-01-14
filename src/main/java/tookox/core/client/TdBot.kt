@@ -276,11 +276,15 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
                     handlers.filterIsInstance<TdBotAbsHandler>().forEach {
 
+                        println(it)
+
                         if (this == it) return@forEach
 
                         it.onUndefinedFunction(userId, chatId, message, function, param, params, originParams)
 
                     }
+
+                    print(this)
 
                     onUndefinedFunction(userId, chatId, message, function, param, params, originParams)
 
@@ -375,7 +379,17 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
     open suspend fun onLaunch(userId: Int, chatId: Long, message: Message) = Unit
 
     override suspend fun onFunction(userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>) = Unit
-    override suspend fun onUndefinedFunction(userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>) = Unit
+
+    override suspend fun onUndefinedFunction(userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
+
+        if (!message.fromPrivate) return
+
+        val L = userId.langFor
+
+        sudo make L.CNF sendTo chatId
+
+    }
+
     override suspend fun onNewCallbackQuery(userId: Int, chatId: Long, messageId: Long, queryId: Long, subId: Int, data: Array<ByteArray>) = Unit
     override suspend fun onNewInlineCallbackQuery(userId: Int, inlineMessageId: String, queryId: Long, subId: Int, data: Array<ByteArray>) = Unit
 

@@ -17,8 +17,8 @@
 package tookox.core.client
 
 import td.TdApi.Message
-import tookox.core.env.Lang
 import tookox.core.*
+import tookox.core.env.*
 import tookox.core.utils.*
 import java.util.*
 
@@ -132,13 +132,13 @@ interface TdBotAbsHandler : TdAbsHandler {
 
     suspend fun onSendCanceledMessage(userId: Int) {
 
-        sudo make Lang.get(userId).CANCELED sendTo userId
+        sudo make Lang.get(userId).CANCELED withMarkup removeKeyboard() sendTo userId
 
     }
 
     suspend fun onSendTimeoutedMessage(userId: Int) {
 
-        sudo make Lang.get(userId).TIMEOUTED sendTo userId
+        sudo make Lang.get(userId).TIMEOUTED withMarkup removeKeyboard() sendTo userId
 
     }
 
