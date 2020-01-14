@@ -189,7 +189,7 @@ class SyncStickers : TdBotHandler() {
 
             }
 
-            sudo cmd "/publish"
+            sudo cmd "/done"
 
         }
 
