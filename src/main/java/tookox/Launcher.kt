@@ -34,6 +34,9 @@ import org.bson.codecs.pojo.SubClassPropertyCodecProvider
 import org.slf4j.LoggerFactory
 import org.yaml.snakeyaml.Yaml
 import td.TdApi
+import tookox.agent.AgentData
+import tookox.agent.AgentImage
+import tookox.agent.BotFlood
 import tookox.core.*
 import tookox.core.agent.*
 import tookox.core.bots.*

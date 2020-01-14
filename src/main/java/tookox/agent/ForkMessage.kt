@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package tookox.core.agent
+package tookox.agent
 
 import kotlinx.coroutines.delay
 import tookox.core.*

@@ -164,6 +164,8 @@ public class Lang {
             AGENT_AUTH_INVALID,
             AGENT_AUTH_OK,
             AGENT_LOGIN,
+            AGENT_LOGIN_TEST_DC,
+            AGENT_LOGIN_NO_TEST_DC,
             AGENT_INPUT_PHONE,
             AGENT_PHONE_INVALID,
             AGENT_INPUT_CODE,

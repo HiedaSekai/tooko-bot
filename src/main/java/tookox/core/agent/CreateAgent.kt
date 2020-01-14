@@ -17,6 +17,8 @@
 package tookox.core.agent
 
 import td.TdApi.*
+import tookox.agent.AgentData
+import tookox.agent.AgentImage
 import tookox.core.*
 import tookox.core.client.*
 import tookox.core.env.*
@@ -53,7 +55,17 @@ class CreateAgent : TdBotHandler() {
 
                     textLine(L.AGENT_LOGIN)
 
-                    textLine(L.AGENT_IMPORT)
+                    if (Env.USE_TEST_DC) {
+
+                        textLine(L.AGENT_LOGIN_NO_TEST_DC)
+
+                    } else {
+
+                        textLine(L.AGENT_LOGIN_TEST_DC)
+
+                    }
+
+                    // textLine(L.AGENT_IMPORT)
 
                 }
 
@@ -87,7 +99,19 @@ class CreateAgent : TdBotHandler() {
 
             } else if (message.text == L.AGENT_LOGIN) {
 
+                writePersist(userId, PERSIST_ID, if (Env.USE_TEST_DC) 3 else 2)
+
+                sudo make L.AGENT_INPUT_PHONE sendTo chatId
+
+            } else if (message.text == L.AGENT_LOGIN_NO_TEST_DC) {
+
                 writePersist(userId, PERSIST_ID, 2)
+
+                sudo make L.AGENT_INPUT_PHONE sendTo chatId
+
+            } else if (message.text == L.AGENT_LOGIN_TEST_DC) {
+
+                writePersist(userId, PERSIST_ID, 3)
 
                 sudo make L.AGENT_INPUT_PHONE sendTo chatId
 
@@ -159,7 +183,7 @@ class CreateAgent : TdBotHandler() {
 
             }
 
-        } else if (subId == 2) {
+        } else if (subId == 2 || subId == 3) {
 
             val cacheDir = Env.getFile("data/agent_create/$userId")
 
@@ -170,7 +194,8 @@ class CreateAgent : TdBotHandler() {
             val bot = sudo
 
             object : TdClient(TdOptions()
-                    .databaseDirectory(cacheDir.path)) {
+                    .databaseDirectory(cacheDir.path)
+                    .useTestDc(subId == 3)) {
 
                 init {
 
@@ -198,13 +223,13 @@ class CreateAgent : TdBotHandler() {
 
                     } else if (authorizationState is AuthorizationStateWaitCode) {
 
-                        bot.writePersist(userId, PERSIST_ID, 3)
+                        bot.writePersist(userId, PERSIST_ID, 4)
 
                         bot make L.AGENT_INPUT_CODE sendTo chatId
 
                     } else if (authorizationState is AuthorizationStateWaitPassword) {
 
-                        bot.writePersist(userId, PERSIST_ID, 4, true)
+                        bot.writePersist(userId, PERSIST_ID, 5, true)
 
                         bot make L.AGENT_INPUT_PASSWORD sendTo chatId
 
@@ -216,7 +241,17 @@ class CreateAgent : TdBotHandler() {
 
                     bot removePersist userId
 
-                    File(cacheDir, "td.binlog").copyTo(File(Env.getFile("data/agent/${me.id}"), "td.binlog"), true)
+                    val dir = if (subId == 2) {
+
+                        "agent"
+
+                    } else {
+
+                        "agent_test_dc"
+
+                    }
+
+                    File(cacheDir, "td.binlog").copyTo(File(Env.getFile("data/$dir/${me.id}"), "td.binlog"), true)
 
                     cacheDir.deleteRecursively()
 
@@ -226,6 +261,12 @@ class CreateAgent : TdBotHandler() {
 
                     agent.owner = userId
 
+                    if (subId == 3) {
+
+                        agent.testDc = true
+
+                    }
+
                     AgentData.DATA.setById(userId, agent)
 
                     AgentImage.start(agent)
@@ -234,7 +275,7 @@ class CreateAgent : TdBotHandler() {
 
             }.start()
 
-        } else if (subId == 3) {
+        } else if (subId == 4) {
 
             if (!cache.containsKey(userId)) {
 
@@ -256,7 +297,7 @@ class CreateAgent : TdBotHandler() {
 
             }
 
-        } else if (subId == 4) {
+        } else if (subId == 5) {
 
             if (!cache.containsKey(userId)) {
 

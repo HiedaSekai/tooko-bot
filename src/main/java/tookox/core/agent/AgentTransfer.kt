@@ -18,6 +18,7 @@ package tookox.core.agent
 
 import cn.hutool.core.util.NumberUtil
 import td.TdApi
+import tookox.agent.AgentImage
 import tookox.core.*
 import tookox.core.client.*
 import tookox.core.utils.*

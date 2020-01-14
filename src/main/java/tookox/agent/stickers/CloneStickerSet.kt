@@ -14,20 +14,11 @@
  * limitations under the License.
  */
 
-package tookox.core.agent
+package tookox.agent.stickers
 
-object AgentImage {
+import tookox.core.client.*
 
-    val agents = HashMap<Int, AgentClient>()
+class CloneStickerSet : TdBotHandler() {
 
-    suspend fun start(data: AgentData): Boolean {
-
-        val agent = AgentClient(data)
-
-        agents[data.userId] = agent
-
-        return agent.start()
-
-    }
 
 }
