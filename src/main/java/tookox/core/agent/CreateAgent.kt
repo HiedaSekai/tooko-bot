@@ -277,8 +277,6 @@ class CreateAgent : TdBotHandler() {
 
             } catch (ex: TdException) {
 
-                sudo removePersist userId
-
                 sudo make L.AGENT_CODE_INVALID sendTo chatId
 
             }
@@ -300,8 +298,6 @@ class CreateAgent : TdBotHandler() {
                 cache[userId]!!.checkAuthenticationPassword(message.text)
 
             } catch (ex: TdException) {
-
-                sudo removePersist userId
 
                 sudo make L.AGENT_INVALID_PASSWORD sendTo chatId
 
