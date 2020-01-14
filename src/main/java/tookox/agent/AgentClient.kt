@@ -44,7 +44,7 @@ import tookox.core.raw.*
 import tookox.core.utils.*
 
 class AgentClient(val data: AgentData) : TdClient(TdOptions()
-        .databaseDirectory(Env.getPath("data/agent/${data.userId}"))
+        .databaseDirectory(Env.getPath("data/${if (data.testDc == null) "agent" else "agent_test_dc"}/${data.userId}"))
         .useTestDc(data.testDc != null)) {
 
     override val sudo = this
