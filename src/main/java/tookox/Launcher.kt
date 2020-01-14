@@ -490,9 +490,9 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
             val fields = arrayOf(
                     "db_address", "db_port", "db_name",
-                    "use_service", "service", "password",
+                    "use_service", "service", "use_test_dc",
                     "bot_token", "def_lang", "fun_prefix",
-                    "public_bot_create", "bot_create_max",
+                    "password", "public_bot_create", "bot_create_max",
                     "admins", "log_channel",
                     "twitter",
                     "nsfw_server",
