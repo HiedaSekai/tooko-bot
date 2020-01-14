@@ -17,6 +17,7 @@
 package tookox.agent.stickers
 
 import kotlinx.coroutines.*
+import net.coobird.thumbnailator.Thumbnails
 import td.TdApi.*
 import tookox.agent.AgentImage
 import tookox.core.client.*
@@ -25,6 +26,7 @@ import tookox.core.raw.*
 import tookox.core.utils.*
 import java.util.*
 import kotlin.properties.Delegates
+import java.io.File as JFile
 
 class SyncStickers : TdBotHandler() {
 
@@ -114,7 +116,11 @@ class SyncStickers : TdBotHandler() {
 
             stickerSet.stickers.forEach {
 
-                sudo makeFile it.sticker.local.path!! syncTo stickersBotId
+                val png = it.cachePng()
+
+                sudo makeFile png.path syncTo stickersBotId
+
+                png.delete()
 
                 delay(100L)
 
@@ -123,6 +129,26 @@ class SyncStickers : TdBotHandler() {
             }
 
         }
+
+    }
+
+    fun Sticker.cachePng(): JFile {
+
+        val webp = JFile(sticker.local.path!!)
+
+        val cache = Env.getFile("cache/sticker_png/${webp.nameWithoutExtension}.png")
+
+        if (!cache.isFile) {
+
+            Thumbnails
+                    .of(webp)
+                    .outputFormat("png")
+                    .outputQuality(1.0F)
+                    .toFile(cache)
+
+        }
+
+        return cache
 
     }
 
