@@ -165,7 +165,12 @@ public class Lang {
             AGENT_AUTH_OK,
             AGENT_LOGIN,
             AGENT_INPUT_PHONE,
-            AGENT_INPUT_CODE;
+            AGENT_PHONE_INVALID,
+            AGENT_INPUT_CODE,
+            AGENT_CODE_INVALID,
+            AGENT_INPUT_PASSWORD,
+            AGENT_INVALID_PASSWORD,
+            AGENT_WAIT_COMFIRM;
 
     public String PM_WELCOME,
             PM_ON_START,

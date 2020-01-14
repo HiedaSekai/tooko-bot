@@ -16,9 +16,7 @@
 
 package tookox.core.agent
 
-import td.TdApi
-import td.TdApi.Message
-import td.TdApi.MessageDocument
+import td.TdApi.*
 import tookox.Launcher
 import tookox.core.*
 import tookox.core.client.*
@@ -67,6 +65,14 @@ class CreateAgent : TdBotHandler() {
     }
 
     override fun onPersistStore(userId: Int, subId: Int, data: LinkedList<String>) = TODO()
+
+    val cache = HashMap<Int, TdClient>()
+
+    override suspend fun onPersistRemoveOrCancel(userId: Int, subId: Int) {
+
+        cache.remove(userId)?.stop()
+
+    }
 
     override suspend fun onPersistMessage(userId: Int, chatId: Long, message: Message, subId: Int) {
 
@@ -120,11 +126,11 @@ class CreateAgent : TdBotHandler() {
                 object : TdClient(TdOptions()
                         .databaseDirectory(cacheDir.path)) {
 
-                    override suspend fun onAuthorizationState(authorizationState: TdApi.AuthorizationState) {
+                    override suspend fun onAuthorizationState(authorizationState: AuthorizationState) {
 
                         super.onAuthorizationState(authorizationState)
 
-                        if (authorizationState is TdApi.AuthorizationStateWaitPhoneNumber) {
+                        if (authorizationState is AuthorizationStateWaitPhoneNumber) {
 
                             stop()
 
@@ -160,8 +166,154 @@ class CreateAgent : TdBotHandler() {
 
             }
 
+        } else if (subId == 2) {
+
+            val cacheDir = Env.getFile("data/agent_create/$userId")
+
+            cacheDir.deleteRecursively()
+
+            sudo make L.AGENT_AUTHING sendTo chatId
+
+            val bot = sudo
+
+            object : TdClient(TdOptions()
+                    .databaseDirectory(cacheDir.path)) {
+
+                init {
+
+                    cache[userId] = this
+
+                }
+
+                override suspend fun onAuthorizationState(authorizationState: AuthorizationState) {
+
+                    super.onAuthorizationState(authorizationState)
+
+                    if (authorizationState is AuthorizationStateWaitPhoneNumber) {
+
+                        try {
+
+                            setAuthenticationPhoneNumber(message.text)
+
+                        } catch (ex: TdException) {
+
+                            bot make L.AGENT_CODE_INVALID sendTo chatId
+
+                            bot removePersist userId
+
+                        }
+
+                    } else if (authorizationState is AuthorizationStateWaitCode) {
+
+                        bot.writePersist(userId, PERSIST_ID, 3)
+
+                        bot make L.AGENT_INPUT_CODE sendTo chatId
+
+                    } else if (authorizationState is AuthorizationStateWaitPassword) {
+
+                        bot.writePersist(userId, PERSIST_ID, 4)
+
+                        bot make L.AGENT_INPUT_PASSWORD sendTo chatId
+
+                    } else if (authorizationState is AuthorizationStateReady) {
+
+                        searchPublicChat(Launcher.INSTANCE.me.username)
+
+                        bot removePersist userId
+
+                        File(cacheDir, "td.binlog").copyTo(File(Env.getFile("data/agent/${me.id}"), "td.binlog"), true)
+
+                        cacheDir.deleteRecursively()
+
+                        bot make L.AGENT_AUTH_OK sendTo chatId
+
+                        val agent = AgentData(me.id)
+
+                        agent.owner = userId
+
+                        AgentData.DATA.setById(userId, agent)
+
+                        AgentImage.start(agent)
+
+                    }
+
+                }
+
+                override suspend fun onLogin() {
+
+                    searchPublicChat(Launcher.INSTANCE.me.username)
+
+                    stop()
+
+                    File(cacheDir, "td.binlog").copyTo(File(Env.getFile("data/agent/${me.id}"), "td.binlog"), true)
+
+                    cacheDir.deleteRecursively()
+
+                    bot make L.AGENT_AUTH_OK sendTo chatId
+
+                    val agent = AgentData(me.id)
+
+                    agent.owner = userId
+
+                    AgentData.DATA.setById(userId, agent)
+
+                    AgentImage.start(agent)
+
+                }
+
+            }.start()
+
+        } else if (subId == 3) {
+
+            if (!cache.containsKey(userId)) {
+
+                sudo removePersist userId
+
+                onSendCanceledMessage(userId)
+
+                return
+
+            }
+
+            try {
+
+                cache[userId]!!.checkAuthenticationCode(message.text)
+
+            } catch (ex: TdException) {
+
+                sudo removePersist userId
+
+                sudo make L.AGENT_CODE_INVALID sendTo chatId
+
+            }
+
+        } else if (subId == 4) {
+
+            if (!cache.containsKey(userId)) {
+
+                sudo removePersist userId
+
+                onSendCanceledMessage(userId)
+
+                return
+
+            }
+
+            try {
+
+                cache[userId]!!.checkAuthenticationPassword(message.text)
+
+            } catch (ex: TdException) {
+
+                sudo removePersist userId
+
+                sudo make L.AGENT_INVALID_PASSWORD sendTo chatId
+
+            }
+
         }
 
     }
+
 
 }
