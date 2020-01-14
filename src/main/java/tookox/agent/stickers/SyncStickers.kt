@@ -36,15 +36,9 @@ class SyncStickers : TdBotHandler() {
 
     var stickersBotId by Delegates.notNull<Long>()
 
-    override suspend fun onLogin() {
+    suspend infix fun TdAbsHandler.cmd(str: String) {
 
-        stickersBotId = searchPublicChat("Stickers").id
-
-    }
-
-    suspend fun command(msg: String) {
-
-        sudo make msg syncTo stickersBotId
+        sudo make str syncTo stickersBotId
 
     }
 
@@ -92,33 +86,41 @@ class SyncStickers : TdBotHandler() {
 
         deferreds.awaitAll()
 
-        val anim = if (stickerSet.isAnimated) {
+        with(agent) {
 
-            command("/newanimated")
+            stickersBotId = searchPublicChat("Stickers").id
 
-            true
+            val anim = if (stickerSet.isAnimated) {
 
-        } else if (stickerSet.isMasks) {
+                sudo cmd "/newanimated"
 
-            command("/newmasks")
+                true
 
-            false
+            } else if (stickerSet.isMasks) {
 
-        } else {
+                sudo cmd "/newmasks"
 
-            command("/newpack")
+                false
 
-            false
+            } else {
 
-        }
+                sudo cmd "/newpack"
 
-        command(stickerSet.title)
+                false
 
-        stickerSet.stickers.forEach {
+            }
 
-            sudo makeFile it.sticker.local.path!! syncTo stickersBotId
+            sudo cmd stickerSet.title
 
-            delay(100L)
+            stickerSet.stickers.forEach {
+
+                sudo makeFile it.sticker.local.path!! syncTo stickersBotId
+
+                delay(100L)
+
+                return@forEach
+
+            }
 
         }
 
