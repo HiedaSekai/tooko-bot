@@ -177,9 +177,19 @@ class SyncStickers : TdBotHandler() {
 
                     stickerSets.add(set)
 
+                } else {
+
+                    val currPng = sticker.cachePng()
+
+                    sudo makeFile currPng.path syncTo stickersBotId
+
+                    sudo cmd sticker.emoji
+
                 }
 
             }
+
+            sudo cmd "/publish"
 
         }
 
