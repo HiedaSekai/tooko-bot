@@ -364,6 +364,8 @@ class ForwardBuilder(val input: InputMessageForwarded) : Builder<InputMessageFor
 
     var chatId by input::fromChatId
     var messageId by input::messageId
+
+    var sendCopy by input::sendCopy
     var inGameShare by input::inGameShare
     var removeCaption by input::removeCaption
 

@@ -17,6 +17,7 @@
 package tookox.core.agent
 
 import cn.hutool.core.util.StrUtil
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
 import td.TdApi.*
 import tookox.Launcher
@@ -30,13 +31,19 @@ class AgentClient(val data: AgentData) : TdClient(TdOptions()
 
     override val sudo = this
 
-    infix fun transferForward(message: Message) {
+    fun transferForward(): suspend CoroutineScope.(Message) -> Unit {
 
-        sudo makeForward message to Launcher.INSTANCE.botUserId send {
+        return {
 
             sudo make "/_agent_forward ${data.owner}" replyTo it.id sendTo Launcher.INSTANCE.botUserId
 
         }
+
+    }
+
+    infix fun transferForward(message: Message) {
+
+        sudo makeForward message to Launcher.INSTANCE.botUserId send transferForward()
 
     }
 
@@ -50,7 +57,15 @@ class AgentClient(val data: AgentData) : TdClient(TdOptions()
 
         } else if (userId == 777000) {
 
-            sudo transferForward message
+            sudo make {
+
+                input = inputForward(message) {
+
+                    sendCopy = true
+
+                }
+
+            } to Launcher.INSTANCE.botUserId send transferForward()
 
             return@event
 
