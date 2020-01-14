@@ -125,7 +125,7 @@ class SyncStickers : TdBotHandler() {
 
             sudo cmd stickerSet.stickers[0].emoji
 
-            sudo cmd "/finish"
+            sudo cmd "/publish"
 
             if (stickerSet.thumbnail != null) {
 
@@ -150,6 +150,8 @@ class SyncStickers : TdBotHandler() {
             sudo cmd stickerSet.name
 
         }
+
+        sudo cmd "/sddsticketr"
 
     }
 
@@ -195,7 +197,7 @@ class SyncStickers : TdBotHandler() {
 
         val webp = JFile(local.path!!)
 
-        defaultLog.debug("${webp.path}")
+        defaultLog.debug(webp.path)
 
         val cache = Env.getFile("cache/sticker_png/${webp.nameWithoutExtension}.png")
 
