@@ -39,11 +39,11 @@ class BotFlood : TdBotHandler() {
 
                 val originMessages = forkMessage()
 
-                repeat(25) {
+                repeat(50) {
 
                     forwardMessages(target, sudo.me.id.toLong(), originMessages, null, false, false, false)
 
-                    delay(1000L)
+                    delay(100L)
 
                 }
 
