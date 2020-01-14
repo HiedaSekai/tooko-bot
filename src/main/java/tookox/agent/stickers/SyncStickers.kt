@@ -124,7 +124,7 @@ class SyncStickers : TdBotHandler() {
 
                 delay(100L)
 
-                return@forEach
+                return@event
 
             }
 
