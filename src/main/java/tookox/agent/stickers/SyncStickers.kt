@@ -222,8 +222,23 @@ class SyncStickers : TdBotHandler() {
                     .of(src)
                     .scale(1.0)
                     .outputFormat("png")
-                    .outputQuality(0.0)
+                    .outputQuality(1.0)
                     .toFile(cache)
+
+            var outputQuality = 1.0f
+
+            while (cache.length() > 256 * 1024L) {
+
+                outputQuality -= 0.05f
+
+                Thumbnails
+                        .of(src)
+                        .scale(1.0)
+                        .outputFormat("png")
+                        .outputQuality(outputQuality)
+                        .toFile(cache)
+
+            }
 
         }
 
