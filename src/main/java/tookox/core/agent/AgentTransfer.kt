@@ -32,7 +32,7 @@ class AgentTransfer : TdBotHandler() {
 
         if (function == "_agent_init") {
 
-            //sudo delete message
+            sudo delete message
 
             finishEvent()
 

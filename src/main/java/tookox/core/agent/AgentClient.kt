@@ -46,8 +46,6 @@ class AgentClient(val data: AgentData) : TdClient(TdOptions()
 
         if (userId == sudo.me.id) {
 
-            sudo delete message
-
             return@event
 
         } else if (userId == 777000) {
