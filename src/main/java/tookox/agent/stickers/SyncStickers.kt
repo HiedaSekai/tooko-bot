@@ -137,7 +137,7 @@ class SyncStickers : TdBotHandler() {
 
                     sudo cmd "/publish"
 
-                    if (stickerSet.thumbnail != null) {
+                    /*if (stickerSet.thumbnail != null) {
 
                         var icon = stickerSet.thumbnail!!.photo
 
@@ -153,9 +153,11 @@ class SyncStickers : TdBotHandler() {
 
                     } else {
 
+                     */
+
                         sudo cmd "/skip"
 
-                    }
+                    // }
 
                     val set = if (curr == 1) {
 
