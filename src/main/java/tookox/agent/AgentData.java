@@ -37,7 +37,7 @@ import tookox.core.db.*;
 
 public class AgentData {
 
-    public static Table<Integer, AgentData> DATA = new Table<>("agent", AgentData.class);
+    public static Table<Integer, AgentData> DATA = new Table<>("agents", AgentData.class);
 
     public AgentData() {
     }

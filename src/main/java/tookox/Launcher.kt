@@ -118,6 +118,8 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
         AgentData.DATA.all.forEach { agent ->
 
+            /*
+
             if (!Env.getFile("data/agent/${agent.userId}/td.binlog").isFile) {
 
                 AgentData.DATA.deleteById(agent.userId)
@@ -125,6 +127,8 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
                 return@forEach
 
             }
+
+             */
 
             run<Unit> {
 
