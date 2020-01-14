@@ -39,6 +39,7 @@ public class Env {
     public static Long LOG_CHANNEL;
     public static boolean USE_SERVICE;
     public static String SERVICE;
+    public static boolean USE_TEST_DC;
     public static String TWITTER_BOT_TOKEN;
     public static boolean TWITTER_PUBLIC;
     //  public static ApiToken[] TWITTER_API_TOKENS;

@@ -21,7 +21,7 @@ import tookox.core.env.*
 
 class TdOptions {
 
-    private var useTestDc = false
+    private var useTestDc = Env.USE_TEST_DC
     private var databaseDirectory = Env.getPath("data")
     private var filesDirectory = Env.getPath("cache/files")
     private var useFileDatabase = true

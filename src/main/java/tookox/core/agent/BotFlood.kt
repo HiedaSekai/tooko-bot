@@ -19,15 +19,17 @@ package tookox.core.agent
 import td.TdApi
 import tookox.core.client.*
 
-class BotBoom : TdBotHandler() {
+class BotFlood : TdBotHandler() {
 
     override fun onLoad() {
 
-        initFunction("start_boom")
+        initFunction("start_flood")
 
     }
 
     override suspend fun onFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
+
+        val target = params[0]
 
 
     }

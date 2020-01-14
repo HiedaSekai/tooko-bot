@@ -111,6 +111,10 @@ AGENT_AUTHING: 正在认证...
 AGENT_AUTH_INVALID: 认证无效.
 AGENT_AUTH_OK: 认证完成.
 AGENT_LOGIN: 登录
+AGENT_INPUT_PHONE: |-
+  输入电话号码:
+AGENT_INPUT_CODE: |-
+  输入验证代码:
 
 # PM
 

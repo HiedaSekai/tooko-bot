@@ -82,6 +82,14 @@ class CreateAgent : TdBotHandler() {
 
                 sudo make L.AGENT_INPUT_BINLOG sendTo chatId
 
+            } else if (message.text == L.AGENT_LOGIN) {
+
+                writePersist(userId, PERSIST_ID, 2)
+
+                sudo make L.AGENT_INPUT_BINLOG sendTo chatId
+
+                resendAuthenticationCode()
+
             }
 
         } else if (subId == 1) {

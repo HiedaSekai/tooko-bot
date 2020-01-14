@@ -312,6 +312,7 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
             Env.LOG_CHANNEL = config.getLong("log_channel")
             Env.USE_SERVICE = config.getBool("use_service")
             Env.SERVICE = config.getStr("service")
+            Env.USE_TEST_DC = config.getBool("use_test_dc")
 
             Env.PASSWORD = config.getStr("password")
             Env.BOT_TOKEN = config.getStr("bot_token")

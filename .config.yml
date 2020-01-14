@@ -8,6 +8,7 @@ db_port: 27017
 db_name: "Tooko"
 use_service: false
 service: "tooko.service"
+use_test_dc: false
 bot_token: "1234:XXXX"
 def_lang: "简体中文"
 fun_prefix:
