@@ -17,7 +17,6 @@
 package tookox.core.agent
 
 import td.TdApi.*
-import tookox.Launcher
 import tookox.core.*
 import tookox.core.client.*
 import tookox.core.env.*
@@ -138,8 +137,6 @@ class CreateAgent : TdBotHandler() {
 
                     override suspend fun onLogin() {
 
-                        searchPublicChat(Launcher.INSTANCE.me.username)
-
                         stop()
 
                         File(cacheDir, "td.binlog").copyTo(File(Env.getFile("data/agent/${me.id}"), "td.binlog"), true)
@@ -211,35 +208,13 @@ class CreateAgent : TdBotHandler() {
 
                         bot make L.AGENT_INPUT_PASSWORD sendTo chatId
 
-                    } else if (authorizationState is AuthorizationStateReady) {
-
-                        searchPublicChat(Launcher.INSTANCE.me.username)
-
-                        bot removePersist userId
-
-                        File(cacheDir, "td.binlog").copyTo(File(Env.getFile("data/agent/${me.id}"), "td.binlog"), true)
-
-                        cacheDir.deleteRecursively()
-
-                        bot make L.AGENT_AUTH_OK sendTo chatId
-
-                        val agent = AgentData(me.id)
-
-                        agent.owner = userId
-
-                        AgentData.DATA.setById(userId, agent)
-
-                        AgentImage.start(agent)
-
                     }
 
                 }
 
                 override suspend fun onLogin() {
 
-                    searchPublicChat(Launcher.INSTANCE.me.username)
-
-                    stop()
+                    bot removePersist userId
 
                     File(cacheDir, "td.binlog").copyTo(File(Env.getFile("data/agent/${me.id}"), "td.binlog"), true)
 

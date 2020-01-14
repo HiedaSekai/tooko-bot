@@ -24,12 +24,19 @@ import tookox.Launcher
 import tookox.core.*
 import tookox.core.client.*
 import tookox.core.env.*
+import tookox.core.raw.*
 import tookox.core.utils.*
 
 class AgentClient(val data: AgentData) : TdClient(TdOptions()
         .databaseDirectory(Env.getPath("data/agent/${data.userId}"))) {
 
     override val sudo = this
+
+    override suspend fun onLogin() {
+
+        searchPublicChat(Launcher.INSTANCE.me.username)
+
+    }
 
     fun transferForward(): suspend CoroutineScope.(Message) -> Unit {
 
