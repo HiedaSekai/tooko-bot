@@ -154,7 +154,7 @@ class SyncStickers : TdBotHandler() {
 
             while (cache.length() > 512 * 1024L) {
 
-                outputQuality -= 0.1f
+                outputQuality -= 0.05f
 
                 Thumbnails
                         .of(webp)
