@@ -17,10 +17,14 @@
 package tookox.agent.stickers
 
 import cn.hutool.core.io.FileUtil
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import net.coobird.thumbnailator.Thumbnails
 import td.TdApi.*
 import tookox.agent.AgentImage
+import tookox.core.*
 import tookox.core.client.*
 import tookox.core.env.*
 import tookox.core.raw.*
@@ -123,11 +127,25 @@ class SyncStickers : TdBotHandler() {
 
                 sudo cmd it.emoji
 
-                png.delete()
+            }
 
-                delay(100L)
+            sudo cmd "/finish"
 
-                return@event
+            if (stickerSet.thumbnail != null) {
+
+                var icon = stickerSet.thumbnail!!.photo
+
+                if (!icon.local.isDownloadingCompleted) {
+
+                    icon = sync(DownloadFile(icon.id, 1, 0, 0, true))
+
+                }
+
+                val png = icon.cacheIcon()
+
+                sudo makeFile png.path syncTo stickersBotId
+
+                sudo cmd stickerSet.name
 
             }
 
@@ -138,6 +156,8 @@ class SyncStickers : TdBotHandler() {
     fun Sticker.cachePng(): JFile {
 
         val webp = JFile(sticker.local.path!!)
+
+        defaultLog.debug("${webp.path}")
 
         val cache = Env.getFile("cache/sticker_png/${webp.nameWithoutExtension}.png")
 
@@ -166,6 +186,29 @@ class SyncStickers : TdBotHandler() {
                         .toFile(cache)
 
             }
+
+        }
+
+        return cache
+
+    }
+
+    fun File.cacheIcon(): JFile {
+
+        val webp = JFile(local.path!!)
+
+        val cache = Env.getFile("cache/sticker_png/${webp.nameWithoutExtension}.png")
+
+        if (!cache.isFile) {
+
+            FileUtil.touch(cache)
+
+            Thumbnails
+                    .of(webp)
+                    .scale(1.0)
+                    .outputFormat("png")
+                    .outputQuality(1.0F)
+                    .toFile(cache)
 
         }
 
