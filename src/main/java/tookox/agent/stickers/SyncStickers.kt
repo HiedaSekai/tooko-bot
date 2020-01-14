@@ -121,6 +121,8 @@ class SyncStickers : TdBotHandler() {
 
                 sudo makeFile png.path syncTo stickersBotId
 
+                sudo cmd it.emoji
+
                 png.delete()
 
                 delay(100L)
