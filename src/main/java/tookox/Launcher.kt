@@ -78,6 +78,8 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
         addHandler(AgentTransfer())
 
+        addHandler(BotFlood())
+
         // Licence
 
         addHandler(LICENCE())

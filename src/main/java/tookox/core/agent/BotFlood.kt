@@ -16,8 +16,10 @@
 
 package tookox.core.agent
 
+import kotlinx.coroutines.delay
 import td.TdApi
 import tookox.core.client.*
+import tookox.core.raw.*
 
 class BotFlood : TdBotHandler() {
 
@@ -29,8 +31,27 @@ class BotFlood : TdBotHandler() {
 
     override suspend fun onFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
 
-        val target = params[0]
+        AgentImage.agents.values.forEach {
 
+            with(it) {
+
+                val target = searchPublicChat(params[0]).id
+
+                val originMessages = forkMessage()
+
+                repeat(25) {
+
+                    forwardMessages(target, sudo.me.id.toLong(), originMessages, null, false, false, false)
+
+                    delay(1000L)
+
+                }
+
+                deleteMessages(sudo.me.id.toLong(), originMessages, true)
+
+            }
+
+        }
 
     }
 
