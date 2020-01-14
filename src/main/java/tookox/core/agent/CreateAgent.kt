@@ -92,9 +92,7 @@ class CreateAgent : TdBotHandler() {
 
                 writePersist(userId, PERSIST_ID, 2)
 
-                sudo make L.AGENT_INPUT_BINLOG sendTo chatId
-
-                resendAuthenticationCode()
+                sudo make L.AGENT_INPUT_PHONE sendTo chatId
 
             }
 
