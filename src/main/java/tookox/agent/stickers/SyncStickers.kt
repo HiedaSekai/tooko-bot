@@ -157,8 +157,6 @@ class SyncStickers : TdBotHandler() {
 
         val webp = JFile(sticker.local.path!!)
 
-        defaultLog.debug("${webp.path}")
-
         val cache = Env.getFile("cache/sticker_png/${webp.nameWithoutExtension}.png")
 
         if (!cache.isFile) {
@@ -196,6 +194,8 @@ class SyncStickers : TdBotHandler() {
     fun File.cacheIcon(): JFile {
 
         val webp = JFile(local.path!!)
+
+        defaultLog.debug("${webp.path}")
 
         val cache = Env.getFile("cache/sticker_png/${webp.nameWithoutExtension}.png")
 
