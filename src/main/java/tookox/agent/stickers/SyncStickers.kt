@@ -150,6 +150,21 @@ class SyncStickers : TdBotHandler() {
                     .outputQuality(1.0F)
                     .toFile(cache)
 
+            var outputQuality = 1.0f
+
+            while (cache.length() > 512 * 1024L) {
+
+                outputQuality -= 0.1f
+
+                Thumbnails
+                        .of(webp)
+                        .scale(1.0)
+                        .outputFormat("png")
+                        .outputQuality(outputQuality)
+                        .toFile(cache)
+
+            }
+
         }
 
         return cache
