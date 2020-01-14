@@ -208,21 +208,21 @@ class SyncStickers : TdBotHandler() {
 
     fun File.cacheIcon(): JFile {
 
-        val webp = JFile(local.path!!)
+        val src = JFile(local.path!!)
 
-        defaultLog.debug(webp.path)
+        defaultLog.debug(src.path)
 
-        val cache = Env.getFile("cache/sticker_png/${webp.nameWithoutExtension}.png")
+        val cache = Env.getFile("cache/sticker_png/${src.nameWithoutExtension}.png")
 
         if (!cache.isFile) {
 
             FileUtil.touch(cache)
 
             Thumbnails
-                    .of(webp)
-                    .scale(100.0, 100.0)
+                    .of(src)
+                    .scale(1.0)
                     .outputFormat("png")
-                    .outputQuality(1.0F)
+                    .outputQuality(1.0)
                     .toFile(cache)
 
         }
