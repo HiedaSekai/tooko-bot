@@ -142,6 +142,7 @@ class SyncStickers : TdBotHandler() {
 
             Thumbnails
                     .of(webp)
+                    .scale(1.0)
                     .outputFormat("png")
                     .outputQuality(1.0F)
                     .toFile(cache)
