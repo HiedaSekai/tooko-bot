@@ -222,7 +222,7 @@ class SyncStickers : TdBotHandler() {
                     .of(src)
                     .scale(1.0)
                     .outputFormat("png")
-                    .outputQuality(1.0)
+                    .outputQuality(0.0)
                     .toFile(cache)
 
         }
