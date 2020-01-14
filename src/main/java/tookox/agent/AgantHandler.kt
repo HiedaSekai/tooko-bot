@@ -14,11 +14,15 @@
  * limitations under the License.
  */
 
-package tookox.agent.stickers
+package tookox.agent
 
 import tookox.core.client.*
 
-class CloneStickerSet : TdBotHandler() {
+class AgantHandler : TdBotHandler() {
 
+    fun test() {
+
+
+    }
 
 }

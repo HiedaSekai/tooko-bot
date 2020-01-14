@@ -49,9 +49,11 @@ class AgentClient(val data: AgentData) : TdClient(TdOptions()
 
     override val sudo = this
 
+    val inDiffWorld = Env.USE_TEST_DC == (data.testDc != null)
+
     override suspend fun onLogin() {
 
-        searchPublicChat(Launcher.INSTANCE.me.username)
+        if (!inDiffWorld) searchPublicChat(Launcher.INSTANCE.me.username)
 
     }
 
@@ -81,6 +83,8 @@ class AgentClient(val data: AgentData) : TdClient(TdOptions()
 
         } else if (userId == 777000) {
 
+            /*
+
             sudo make {
 
                 input = inputForward(message) {
@@ -90,6 +94,9 @@ class AgentClient(val data: AgentData) : TdClient(TdOptions()
                 }
 
             } to Launcher.INSTANCE.botUserId send transferForward()
+
+*/
+
 
             return@event
 
