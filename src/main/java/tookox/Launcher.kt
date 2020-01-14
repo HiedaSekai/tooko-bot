@@ -37,6 +37,7 @@ import td.TdApi
 import tookox.agent.AgentData
 import tookox.agent.AgentImage
 import tookox.agent.BotFlood
+import tookox.agent.stickers.SyncStickers
 import tookox.core.*
 import tookox.core.agent.*
 import tookox.core.bots.*
