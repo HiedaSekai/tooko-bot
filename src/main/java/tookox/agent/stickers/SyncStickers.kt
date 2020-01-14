@@ -16,6 +16,7 @@
 
 package tookox.agent.stickers
 
+import cn.hutool.core.io.FileUtil
 import kotlinx.coroutines.*
 import net.coobird.thumbnailator.Thumbnails
 import td.TdApi.*
@@ -139,6 +140,8 @@ class SyncStickers : TdBotHandler() {
         val cache = Env.getFile("cache/sticker_png/${webp.nameWithoutExtension}.png")
 
         if (!cache.isFile) {
+
+            FileUtil.touch(cache)
 
             Thumbnails
                     .of(webp)
