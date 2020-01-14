@@ -81,7 +81,11 @@ if [ "$1" == "init" ]; then
 
   echo ">> 写入服务"
 
-  cat >/etc/systemd/system/tooko.service <<EOF
+  service="tooko"
+
+  [ $2 ] && service="$2"
+
+  cat >/etc/systemd/system/$service.service <<EOF
 [Unit]
 Description=Tooko
 After=network.target
@@ -98,7 +102,9 @@ RestartPreventExitStatus=100
 WantedBy=multi-user.target
 EOF
 
-  cat >/etc/systemd/system/nsfw-server.service <<EOF
+  if [ ! $2 ]; then
+
+    cat >/etc/systemd/system/nsfw-server.service <<EOF
 [Unit]
 Description=Tooko
 After=network.target
@@ -114,6 +120,8 @@ RestartPreventExitStatus=1
 [Install]
 WantedBy=multi-user.target
 EOF
+
+  fi
 
   systemctl daemon-reload
 
@@ -176,7 +184,7 @@ elif [ "$1" == "update" ]; then
 
   echo ">> 检出更新 $(git rev-parse FETCH_HEAD)"
 
-  git reset --hard FETCH_HEAD &> /dev/null
+  git reset --hard FETCH_HEAD &>/dev/null
 
   mvn clean compile
 
