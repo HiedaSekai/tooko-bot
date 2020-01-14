@@ -23,7 +23,7 @@ import tookox.core.raw.*
 import tookox.core.utils.*
 import java.util.*
 
-suspend fun TdAbsHandler.forkMessage(message: String = "/ping", chatId: Number = sudo.me.id): LongArray {
+suspend fun TdAbsHandler.forkMessage(chatId: Number, message: String = "/ping"): LongArray {
 
     val origin = sudo make message syncTo chatId
 
