@@ -38,9 +38,9 @@ class BotFlood : TdBotHandler() {
 
                 val target = searchPublicChat(params[0]).id
 
-                val originMessages = forkMessage(originParams.shift().joinToString(" "))
+                val originMessages = forkMessage(originParams.shift(2).joinToString(" "))
 
-                repeat(50) {
+                repeat(params[1].toInt()) {
 
                     forwardMessages(target, sudo.me.id.toLong(), originMessages, null, false, false, false)
 
