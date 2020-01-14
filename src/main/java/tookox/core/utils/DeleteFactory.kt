@@ -41,13 +41,11 @@ suspend infix fun TdAbsHandler.syncDeleteForSelf(message: Message) = syncDeleteF
 
 suspend fun TdAbsHandler.syncDeleteForSelf(chatId: Number, vararg messageIds: Long) = syncUnit(DeleteMessages(chatId.toLong(), messageIds, false))
 
-fun TdAbsHandler.fetchAndDelete(chatId: Number, messageId: Long) {
+suspend fun TdAbsHandler.fetchAndDelete(chatId: Number, messageId: Long) {
 
-    getMessage(chatId.toLong(), messageId) {
+    fetchMessages(chatId, messageId)
 
-        delete(chatId, messageId)
-
-    }
+    syncDelete(chatId, messageId)
 
 }
 
