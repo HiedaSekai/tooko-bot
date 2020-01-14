@@ -76,8 +76,6 @@ class CreateAgent : TdBotHandler() {
 
     override suspend fun onPersistMessage(userId: Int, chatId: Long, message: Message, subId: Int) {
 
-        sudo removePersist userId
-
         val L = userId.langFor
 
         if (subId == 0) {
