@@ -326,7 +326,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
         val dataId = data[0] + 128
 
-        val subId = data[1].toInt()
+        val subId = data[1] + 128
 
         if (!callbacks.containsKey(dataId)) {
 
@@ -356,7 +356,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
         val dataId = data[0] + 128
 
-        val subId = data[1].toInt()
+        val subId = data[1] + 128
 
         if (!callbacks.containsKey(dataId)) {
 

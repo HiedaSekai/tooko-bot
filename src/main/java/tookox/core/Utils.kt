@@ -45,7 +45,7 @@ fun String.input(vararg params: Any): String {
 
 }
 
-val Number.asByteArray get() = BigInteger.valueOf(toLong()).toByteArray()
+val Number.asByteArray get() = BigInteger.valueOf(toLong()).toByteArray()!!
 
 val ByteArray.asLong get() = BigInteger(this).toLong()
 val ByteArray.asInt get() = BigInteger(this).toInt()

@@ -1565,11 +1565,11 @@ public class Fn {
         ByteArrayOutputStream format = new ByteArrayOutputStream();
 
         format.write(id - 128);
-        format.write(subId);
+        format.write(subId - 128);
 
         for (byte[] data : dataArray) {
 
-            format.write(31);
+            format.write(-1);
 
             try {
 
@@ -1604,7 +1604,7 @@ public class Fn {
 
         for (int index = 0; index < data.length; index++) {
 
-            if (data[index] == 31) {
+            if (data[index] == -1) {
 
                 arr[current] = cache.toByteArray();
 
