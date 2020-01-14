@@ -170,7 +170,7 @@ public class Lang {
             AGENT_CODE_INVALID,
             AGENT_INPUT_PASSWORD,
             AGENT_INVALID_PASSWORD,
-            AGENT_WAIT_COMFIRM;
+            AGENT_INPUT_REASON;
 
     public String PM_WELCOME,
             PM_ON_START,

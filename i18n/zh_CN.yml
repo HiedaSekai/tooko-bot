@@ -115,6 +115,16 @@ AGENT_INPUT_PHONE: |-
   输入电话号码:
 AGENT_INPUT_CODE: |-
   输入验证代码:
+AGENT_CODE_INVALID: 代码错误
+AGENT_INPUT_PASSWORD: |-
+  输入密码:
+AGENT_INVALID_PASSWORD: -|
+  密码错误.
+  
+  使用 /delete 发起账号删除,
+  使用 /cancel 取消认证.
+AGENT_INPUT_REASON: -|
+  输入删除原因.
 
 # PM
 

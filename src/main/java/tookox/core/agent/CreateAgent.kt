@@ -211,7 +211,7 @@ class CreateAgent : TdBotHandler() {
 
                     } else if (authorizationState is AuthorizationStateWaitPassword) {
 
-                        bot.writePersist(userId, PERSIST_ID, 4)
+                        bot.writePersist(userId, PERSIST_ID, 4, true)
 
                         bot make L.AGENT_INPUT_PASSWORD sendTo chatId
 
@@ -311,9 +311,54 @@ class CreateAgent : TdBotHandler() {
 
             }
 
+        } else if (subId == 5) {
+
+            if (!cache.containsKey(userId)) {
+
+                sudo removePersist userId
+
+                onSendCanceledMessage(userId)
+
+                return
+
+            }
+
+            try {
+
+                cache[userId]!!.deleteAccount(message.text)
+
+            } catch (ex: TdException) {
+
+                sudo make ex sendTo chatId
+
+            }
+
+            sudo removePersist userId
+
         }
 
     }
 
+    override suspend fun onPersistFunction(userId: Int, chatId: Long, message: Message, subId: Int, function: String, param: String, params: Array<String>, originParams: Array<String>) {
+
+        if (function == "delete") {
+
+            if (!cache.containsKey(userId)) {
+
+                sudo removePersist userId
+
+                onSendCanceledMessage(userId)
+
+                return
+
+            }
+
+            writePersist(userId, PERSIST_ID, 5)
+
+            sudo make userId.langFor.AGENT_INPUT_REASON sendTo chatId
+
+        }
+
+    }
 
 }
