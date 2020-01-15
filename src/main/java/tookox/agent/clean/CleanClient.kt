@@ -123,9 +123,9 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
         }.onFailure {
         }
 
-        log.debug("发起注销 : ${me.displayName}")
+        log.debug(me.displayName)
 
-        deleteAccount("Delete Test Account")
+        //deleteAccount("Delete Test Account")
 
         stop()
 
