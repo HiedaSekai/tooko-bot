@@ -93,9 +93,9 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
     override suspend fun onLogin() {
 
-        me = getMe()
-
         runCatching {
+
+            me = getMe()
 
             // if (!getPasswordState().hasPassword) {
 
