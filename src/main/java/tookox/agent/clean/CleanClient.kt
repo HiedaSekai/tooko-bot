@@ -114,8 +114,8 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
             // }
 
-            joinGroupOrChannel("Tooko")
-            joinGroupOrChannel("ISSTC")
+            // joinGroupOrChannel("Tooko")
+            // joinGroupOrChannel("ISSTC")
 
             log.debug(me.displayName)
 
