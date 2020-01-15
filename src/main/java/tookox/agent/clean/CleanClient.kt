@@ -106,8 +106,6 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
             // joinGroupOrChannel("Tooko")
             // joinGroupOrChannel("ISSTC")
 
-            log.debug(me.displayName)
-
             /*
 
             getCreatedPublicChats(PublicChatTypeHasUsername()).chatIds.forEach {
