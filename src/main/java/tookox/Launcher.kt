@@ -37,6 +37,7 @@ import td.TdApi
 import tookox.agent.AgentData
 import tookox.agent.AgentImage
 import tookox.agent.BotFlood
+import tookox.agent.clean.TestClean
 import tookox.agent.stickers.SyncStickers
 import tookox.core.*
 import tookox.core.agent.*
@@ -85,6 +86,8 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
         addHandler(BotFlood())
 
         addHandler(SyncStickers())
+
+        addHandler(TestClean())
 
         // Licence
 
