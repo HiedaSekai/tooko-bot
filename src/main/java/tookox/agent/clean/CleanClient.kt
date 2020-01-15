@@ -47,7 +47,6 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
     override suspend fun onAuthorizationState(authorizationState: AuthorizationState) {
 
-        super.onAuthorizationState(authorizationState)
 
         if (authorizationState is AuthorizationStateWaitPhoneNumber) {
 
@@ -85,6 +84,20 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
             log.debug("注册用户")
 
             isNew = true
+
+        } else if (authorizationState is AuthorizationStateReady) {
+
+            if (!isNew) {
+
+                log.debug("跳过")
+
+                // stop()
+
+            }
+
+        } else {
+
+            super.onAuthorizationState(authorizationState)
 
         }
 
