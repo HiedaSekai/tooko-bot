@@ -66,9 +66,9 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
             } catch (ex: TdException) {
 
-                log.debug("跳过")
+                log.debug("发起注销")
 
-                // deleteAccount("Delete Test Account")
+                deleteAccount("Delete Test Account")
 
                 stop()
 
@@ -89,8 +89,6 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
               //  log.debug("跳过")
 
                 // stop()
-
-                return
 
             }
 
