@@ -43,7 +43,7 @@ class BigFileTest : TdBotHandler() {
 
         cache.writeBytes(file)
 
-        for (index in 1 until 10) {
+        for (index in 1 until 16) {
 
             cache.appendBytes(file)
 
