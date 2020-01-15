@@ -45,7 +45,7 @@ class TestClean : TdBotHandler() {
 
             val dcId = param.toInt()
 
-            val pool = Executors.newSingleThreadExecutor()
+            val pool = Executors.newFixedThreadPool(3)
 
             val deferredes = LinkedList<Deferred<Unit>>()
 
@@ -59,7 +59,7 @@ class TestClean : TdBotHandler() {
 
                         client.start(false)
 
-                        while (!client.closed) delay(1 * 1000L)
+                        while (!client.closed) delay(100L)
 
                     }
 
