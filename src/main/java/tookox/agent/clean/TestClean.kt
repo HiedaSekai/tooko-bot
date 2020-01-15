@@ -74,7 +74,7 @@ class TestClean : TdBotHandler() {
 
         } else {
 
-            val pool = Executors.newFixedThreadPool(64)
+            val pool = Executors.newFixedThreadPool(16)
 
             for (dcId in 1..3) {
 
