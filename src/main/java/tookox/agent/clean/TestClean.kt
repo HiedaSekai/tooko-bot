@@ -26,7 +26,7 @@ class TestClean : TdBotHandler() {
 
     override fun onLoad() {
 
-        initFunction("clean", "clean_dc", "cleana_all")
+        initFunction("clean", "clean_dc", "clean_all")
 
     }
 
