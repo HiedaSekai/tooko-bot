@@ -41,7 +41,7 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
         .useTestDc(true)
         .databaseDirectory("data/test/$dcId${number.asXXXX}")) {
 
-    var processed = false
+    var processed = true
     var isNew = false
 
     val log = createLog("$dcId${number.asXXXX}")
@@ -55,6 +55,8 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
         } else if (authorizationState is AuthorizationStateWaitCode) {
 
             checkAuthenticationCode("$dcId$dcId$dcId$dcId$dcId")
+
+            processed = false
 
         } else if (authorizationState is AuthorizationStateWaitPassword) {
 
@@ -82,13 +84,17 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
             isNew = true
 
+            processed = false
+
         } else if (authorizationState is AuthorizationStateReady) {
 
             if (processed) {
 
-                //  log.debug("跳过")
+                log.debug("跳过")
 
-                // stop()
+                stop()
+
+                return
 
             }
 
