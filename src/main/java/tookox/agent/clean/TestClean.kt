@@ -59,9 +59,7 @@ class TestClean : TdBotHandler() {
 
                         client.start(false)
 
-                        while (!client.closed) delay(100L)
-
-                       / delay(1000L)
+                        while (!client.closed) delay(1 * 1000L)
 
                     }
 
