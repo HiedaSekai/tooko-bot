@@ -39,7 +39,7 @@ class BigFileTest : TdBotHandler() {
 
         }
 
-        val cache = Env.getFile("cache/30mb.bin")
+        val cache = Env.getFile("cache/test${param}mb.bin")
 
         cache.writeBytes(file)
 
