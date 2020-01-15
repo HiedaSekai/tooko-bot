@@ -57,7 +57,7 @@ class TestClean : TdBotHandler() {
 
                         val client = CleanClient(dcId, index)
 
-                        client.start()
+                        client.start(false)
 
                         while (!client.closed) delay(100L)
 
