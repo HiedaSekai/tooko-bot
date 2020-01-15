@@ -86,9 +86,9 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
             if (processed) {
 
-                log.debug("跳过")
+               // log.debug("跳过")
 
-                stop()
+                // stop()
 
                 return
 
