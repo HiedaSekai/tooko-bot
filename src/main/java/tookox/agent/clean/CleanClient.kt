@@ -41,7 +41,7 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
         .useTestDc(true)
         .databaseDirectory("data/test/$dcId${number.asXXXX}")) {
 
-    var processed = true
+    var processed = false
     var isNew = false
 
     val log = createLog("$dcId${number.asXXXX}")
