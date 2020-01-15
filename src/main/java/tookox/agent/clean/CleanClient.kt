@@ -103,11 +103,6 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
             // }
 
-            // joinGroupOrChannel("Tooko")
-            // joinGroupOrChannel("ISSTC")
-
-            /*
-
             getCreatedPublicChats(PublicChatTypeHasUsername()).chatIds.forEach {
 
                 val type = getChat(it).type
@@ -120,14 +115,12 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
             }
 
-             */
-
         }.onFailure {
         }
 
-        log.debug(me.displayName)
+        log.debug("发起注销: ${me.displayName}")
 
-        // deleteAccount("Delete Test Account")
+        deleteAccountOrNull("Delete Test Account")
 
         stop()
 
