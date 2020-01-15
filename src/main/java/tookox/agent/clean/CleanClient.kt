@@ -106,7 +106,12 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
         me = getMe()
 
+        log.debug(me.displayName)
+
         runCatching {
+
+            /*
+
 
             if (!getPasswordState().hasPassword) {
 
@@ -117,7 +122,9 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
            // joinGroupOrChannel("Tooko")
             // joinGroupOrChannel("ISSTC")
 
-            log.debug(me.displayName)
+
+             */
+
 
         }.onFailure {
 
