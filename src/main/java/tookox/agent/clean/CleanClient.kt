@@ -86,7 +86,7 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
             if (processed) {
 
-              //  log.debug("跳过")
+                //  log.debug("跳过")
 
                 // stop()
 
@@ -106,25 +106,20 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
         me = getMe()
 
-        log.debug(me.displayName)
+
 
         runCatching {
 
-            /*
+            // if (!getPasswordState().hasPassword) {
 
+            //setPassword(null, "114514", "_(:з」∠)_", false)
 
-            if (!getPasswordState().hasPassword) {
+            // }
 
-                setPassword(null, "114514", "_(:з」∠)_", false)
+            joinGroupOrChannel("Tooko")
+            joinGroupOrChannel("ISSTC")
 
-            }
-
-           // joinGroupOrChannel("Tooko")
-            // joinGroupOrChannel("ISSTC")
-
-
-             */
-
+            log.debug(me.displayName)
 
         }.onFailure {
 
