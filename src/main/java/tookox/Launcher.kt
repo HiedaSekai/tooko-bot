@@ -92,9 +92,6 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
 
         // Licence
 
-
-        addHandler(BigFileTest())
-
         addHandler(LICENCE())
 
     }
