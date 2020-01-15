@@ -17,6 +17,7 @@
 package tookox.agent.clean
 
 import td.TdApi.*
+import tookox.core.*
 import tookox.core.TookoLogFactory.createLog
 import tookox.core.client.*
 import tookox.core.raw.*
@@ -103,6 +104,8 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
     override suspend fun onLogin() {
 
+        me = getMe()
+
         runCatching {
 
             if (!getPasswordState().hasPassword) {
@@ -114,7 +117,7 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
             joinGroupOrChannel("Tooko")
             // joinGroupOrChannel("ISSTC")
 
-            log.debug("完成")
+            log.debug(me.displayName)
 
         }.onFailure {
 
