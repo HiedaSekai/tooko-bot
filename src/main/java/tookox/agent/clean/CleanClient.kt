@@ -106,6 +106,8 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
     override suspend fun onLogin() {
 
+        /*
+
         runCatching {
 
             if (!getPasswordState().hasPassword) {
@@ -121,9 +123,11 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
         }
 
+         */
+
         stop()
 
-        defaultLog.debug("执行完成: $dcId${number.asXXXX}")
+        defaultLog.debug("完成: $dcId${number.asXXXX}")
 
     }
 

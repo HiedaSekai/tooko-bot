@@ -45,7 +45,7 @@ class TestClean : TdBotHandler() {
 
             val dcId = param.toInt()
 
-            val pool = Executors.newFixedThreadPool(5)
+            val pool = Executors.newSingleThreadExecutor()
 
             val deferredes = LinkedList<Deferred<Unit>>()
 
