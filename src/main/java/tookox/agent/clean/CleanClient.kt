@@ -114,25 +114,10 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
             }
 
-            /*
-
-            getActiveSessions().sessions.forEach {
-
-                if (it.isCurrent) return@forEach
-
-                if (System.currentTimeMillis() / 1000 - it.logInDate > 3 * 24 * 60) {
-
-                    destroy()
-
-                }
-
-            }
-
 
             joinGroupOrChannel("Tooko")
             joinGroupOrChannel("ISSTC")
 
-             */
 
         }
 
