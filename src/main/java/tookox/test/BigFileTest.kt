@@ -31,7 +31,7 @@ class BigFileTest : TdBotHandler() {
 
     override suspend fun onFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
 
-        val file = ByteArray(30 * 1024)
+        val file = ByteArray(param.toInt() * 1024 * 1024)
 
         for (index in file.indices) {
 
