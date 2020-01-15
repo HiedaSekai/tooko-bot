@@ -18,6 +18,7 @@ package tookox.agent.clean
 
 import td.TdApi.*
 import tookox.core.*
+import tookox.core.TookoLogFactory.createLog
 import tookox.core.client.*
 import tookox.core.raw.*
 
@@ -42,15 +43,21 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
     var isNew = false
 
+    val log = createLog("$dcId${number.asXXXX}")
+
     override suspend fun onAuthorizationState(authorizationState: AuthorizationState) {
 
         super.onAuthorizationState(authorizationState)
 
         if (authorizationState is AuthorizationStateWaitPhoneNumber) {
 
+            log.debug("输入手机号")
+
             setAuthenticationPhoneNumber("99966$dcId${number.asXXXX}")
 
         } else if (authorizationState is AuthorizationStateWaitCode) {
+
+            log.debug("输入验证码")
 
             checkAuthenticationCode("$dcId$dcId$dcId$dcId$dcId")
 
@@ -58,11 +65,13 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
             try {
 
+                log.debug("输入密码")
+
                 checkAuthenticationPassword("114514")
 
             } catch (ex: TdException) {
 
-                defaultLog.debug("发起注销: $dcId${number.asXXXX}")
+                log.debug("发起注销")
 
                 deleteAccount("Delete Test Account")
 
@@ -72,7 +81,7 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
             registerUser("User#$dcId${number.asXXXX}")
 
-            defaultLog.debug("注册用户: $dcId${number.asXXXX}")
+            log.debug("注册用户")
 
             isNew = true
 
