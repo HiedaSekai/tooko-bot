@@ -95,6 +95,8 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
             }
 
+            onLogin()
+
         } else {
 
             super.onAuthorizationState(authorizationState)
