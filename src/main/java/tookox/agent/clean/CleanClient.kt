@@ -57,7 +57,7 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
             log.debug("发起注销")
 
-            deleteAccount("Delete Test Account")
+            deleteAccountOrNull("Delete Test Account")
 
             stop()
 
@@ -121,8 +121,6 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
         log.debug("发起注销: ${me.displayName}")
 
         deleteAccountOrNull("Delete Test Account")
-
-        stop()
 
     }
 
