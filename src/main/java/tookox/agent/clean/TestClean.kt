@@ -74,7 +74,7 @@ class TestClean : TdBotHandler() {
 
         } else {
 
-            val pool = Executors.newFixedThreadPool(30)
+            val pool = Executors.newFixedThreadPool(64)
 
             for (dcId in 1..3) {
 
@@ -89,6 +89,13 @@ class TestClean : TdBotHandler() {
                             client.start(false)
 
                             while (!client.closed) delay(100L)
+
+                            launch(Dispatchers.IO) {
+
+                                FileUtil.del("data/test/$dcId${index.asXXXX}")
+
+                            }
+
 
                         }
 
