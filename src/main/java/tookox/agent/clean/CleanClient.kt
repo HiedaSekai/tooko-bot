@@ -140,6 +140,8 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
         }
 
+        readAllChatMentions(chat.id)
+
     }
 
 }
