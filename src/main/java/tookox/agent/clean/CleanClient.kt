@@ -81,28 +81,7 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
              */
         } else if (authorizationState is AuthorizationStateReady) {
 
-            log.debug("发起注销")
-
-            deleteAccount("Delete Test Account")
-
-            stop()
-
-            /*
-            if (processed) {
-
-                log.debug("跳过")
-
-                stop()
-
-                return
-
-            }
-
-
-
             onLogin()
-
-             */
 
         } else {
 
@@ -129,29 +108,28 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
             log.debug(me.displayName)
 
+            getCreatedPublicChats(PublicChatTypeHasUsername()).chatIds.forEach {
+
+                val type = getChat(it).type
+
+                if (type is ChatTypeSupergroup) {
+
+                    deleteSupergroup(type.supergroupId)
+
+                }
+
+            }
+
         }.onFailure {
-
-            log.debug(it, "失败")
-
         }
+
+        log.debug("发起注销 : ${me.displayName}")
+
+        deleteAccount("Delete Test Account")
 
         stop()
 
-
     }
 
-    suspend fun joinGroupOrChannel(username: String) {
-
-        val chat = searchPublicChat(username)
-
-        if (getChatMember(chat.id, me.id).status is ChatMemberStatusLeft) {
-
-            joinChat(chat.id)
-
-        }
-
-        openChat(chat.id)
-
-    }
 
 }
