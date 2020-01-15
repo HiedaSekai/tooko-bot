@@ -55,11 +55,26 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
         } else if (authorizationState is AuthorizationStateWaitCode) {
 
+            if (authorizationState.codeInfo.type == AuthenticationCodeTypeTelegramMessage) {
+
+                log.debug("跳过")
+
+                stop()
+
+                return
+
+            }
+
             checkAuthenticationCode("$dcId$dcId$dcId$dcId$dcId")
 
         } else if (authorizationState is AuthorizationStateWaitPassword) {
 
             log.debug("跳过")
+
+            stop()
+
+            return
+
 
             // deleteAccount("Delete Test Account")
 
@@ -77,24 +92,28 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
     override suspend fun onLogin() {
 
-        getActiveSessions().sessions.forEach {
+        runCatching {
 
-            if (it.isCurrent) return@forEach
+            if (!getPasswordState().hasPassword) {
 
-            if (System.currentTimeMillis() / 1000 - it.logInDate > 3 * 24 * 60) {
-
-                destroy()
+                setPassword(null, "114514", "_(:з」∠)_", false)
 
             }
 
-        }
+            getActiveSessions().sessions.forEach {
 
-        joinGroupOrChannel("Tooko")
-        joinGroupOrChannel("ISSTC")
+                if (it.isCurrent) return@forEach
 
-        if (!getPasswordState().hasPassword) {
+                if (System.currentTimeMillis() / 1000 - it.logInDate > 3 * 24 * 60) {
 
-            setPassword(null, "114514", "_(:з」∠)_", false)
+                    destroy()
+
+                }
+
+            }
+
+            joinGroupOrChannel("Tooko")
+            joinGroupOrChannel("ISSTC")
 
         }
 
