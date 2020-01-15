@@ -51,31 +51,17 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
         if (authorizationState is AuthorizationStateWaitPhoneNumber) {
 
-            log.debug("输入手机号")
-
             setAuthenticationPhoneNumber("99966$dcId${number.asXXXX}")
 
         } else if (authorizationState is AuthorizationStateWaitCode) {
-
-            log.debug("输入验证码")
 
             checkAuthenticationCode("$dcId$dcId$dcId$dcId$dcId")
 
         } else if (authorizationState is AuthorizationStateWaitPassword) {
 
-            try {
+            log.debug("跳过")
 
-                log.debug("输入密码")
-
-                checkAuthenticationPassword("114514")
-
-            } catch (ex: TdException) {
-
-                log.debug("发起注销")
-
-                deleteAccount("Delete Test Account")
-
-            }
+            // deleteAccount("Delete Test Account")
 
         } else if (authorizationState is AuthorizationStateWaitRegistration) {
 
