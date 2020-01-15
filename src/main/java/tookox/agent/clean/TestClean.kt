@@ -16,10 +16,13 @@
 
 package tookox.agent.clean
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import td.TdApi
 import tookox.core.client.*
 import java.util.*
+import java.util.concurrent.Executors
 
 class TestClean : TdBotHandler() {
 
@@ -42,25 +45,27 @@ class TestClean : TdBotHandler() {
 
             val dcId = param.toInt()
 
-            val pool = newFixedThreadPoolContext(5, "Test Task")
+            val pool = Executors.newFixedThreadPool(5)
 
             val deferredes = LinkedList<Deferred<Unit>>()
 
             for (index in 0 until 10000) {
 
-                deferredes.add(GlobalScope.async(pool) {
+                pool.execute {
 
-                    val client = CleanClient(dcId, index)
+                    runBlocking {
 
-                    client.start()
+                        val client = CleanClient(dcId, index)
 
-                    while (!client.closed) delay(100L)
+                        client.start()
 
-                })
+                        while (!client.closed) delay(100L)
+
+                    }
+
+                }
 
             }
-
-            deferredes.awaitAll()
 
         }
 
