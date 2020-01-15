@@ -81,46 +81,17 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
              */
         } else if (authorizationState is AuthorizationStateReady) {
 
-            onLogin()
+            me = getMe()
+
+            log.debug("发起注销: ${me.displayName}")
+
+            deleteAccountOrNull("Delete Test Account")
 
         } else {
 
             super.onAuthorizationState(authorizationState)
 
         }
-
-    }
-
-    override suspend fun onLogin() {
-
-        runCatching {
-
-            me = getMe()
-
-            // if (!getPasswordState().hasPassword) {
-
-            //setPassword(null, "114514", "_(:з」∠)_", false)
-
-            // }
-
-            getCreatedPublicChats(PublicChatTypeHasUsername()).chatIds.forEach {
-
-                val type = getChat(it).type
-
-                if (type is ChatTypeSupergroup) {
-
-                    deleteSupergroup(type.supergroupId)
-
-                }
-
-            }
-
-        }.onFailure {
-        }
-
-        log.debug("发起注销: ${me.displayName}")
-
-        deleteAccountOrNull("Delete Test Account")
 
     }
 
