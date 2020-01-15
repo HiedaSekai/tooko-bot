@@ -41,9 +41,6 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
         .useTestDc(true)
         .databaseDirectory("data/test/$dcId${number.asXXXX}")) {
 
-    var processed = true
-    var isNew = false
-
     val log = createLog("$dcId${number.asXXXX}")
 
     override suspend fun onAuthorizationState(authorizationState: AuthorizationState) {
@@ -56,29 +53,17 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
             checkAuthenticationCode("$dcId$dcId$dcId$dcId$dcId")
 
-            processed = false
-
         } else if (authorizationState is AuthorizationStateWaitPassword) {
 
-            try {
+            log.debug("发起注销")
 
-                checkAuthenticationPassword("114514")
+            deleteAccount("Delete Test Account")
 
-                processed = true
-
-            } catch (ex: TdException) {
-
-                log.debug("发起注销")
-
-                deleteAccount("Delete Test Account")
-
-                stop()
-
-            }
+            stop()
 
         } else if (authorizationState is AuthorizationStateWaitRegistration) {
 
-            log.debug("跳过")
+            // log.debug("跳过")
 
             stop()
 
@@ -96,6 +81,13 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
              */
         } else if (authorizationState is AuthorizationStateReady) {
 
+            log.debug("发起注销")
+
+            deleteAccount("Delete Test Account")
+
+            stop()
+
+            /*
             if (processed) {
 
                 log.debug("跳过")
@@ -106,7 +98,11 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
             }
 
+
+
             onLogin()
+
+             */
 
         } else {
 
