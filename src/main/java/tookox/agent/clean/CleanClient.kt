@@ -106,8 +106,6 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
         me = getMe()
 
-
-
         runCatching {
 
             // if (!getPasswordState().hasPassword) {
