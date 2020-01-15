@@ -43,7 +43,7 @@ class BigFileTest : TdBotHandler() {
 
         cache.writeBytes(file)
 
-        sudo makeFile cache sendTo chatId
+        sudo makeFile cache.path sendTo chatId
 
     }
 
