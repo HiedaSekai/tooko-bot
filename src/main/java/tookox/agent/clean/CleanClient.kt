@@ -111,7 +111,6 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
             }
 
-
             joinGroupOrChannel("Tooko")
             // joinGroupOrChannel("ISSTC")
 
@@ -119,7 +118,7 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
         }.onFailure {
 
-            log.debug("失败 : ${it.message}")
+            log.debug(it, "失败")
 
         }
 
