@@ -104,8 +104,6 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
     override suspend fun onLogin() {
 
-        /*
-
         runCatching {
 
             if (!getPasswordState().hasPassword) {
@@ -116,12 +114,10 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
 
             joinGroupOrChannel("Tooko")
-            joinGroupOrChannel("ISSTC")
+           // joinGroupOrChannel("ISSTC")
 
 
         }
-
-         */
 
         stop()
 
