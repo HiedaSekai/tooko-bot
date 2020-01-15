@@ -108,6 +108,8 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
             log.debug(me.displayName)
 
+            /*
+
             getCreatedPublicChats(PublicChatTypeHasUsername()).chatIds.forEach {
 
                 val type = getChat(it).type
@@ -119,6 +121,8 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
                 }
 
             }
+
+             */
 
         }.onFailure {
         }
