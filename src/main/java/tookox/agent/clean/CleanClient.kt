@@ -55,7 +55,7 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
         } else if (authorizationState is AuthorizationStateWaitCode) {
 
-            if (authorizationState.codeInfo.type == AuthenticationCodeTypeTelegramMessage) {
+            if (authorizationState.codeInfo.type is AuthenticationCodeTypeTelegramMessage) {
 
                 log.debug("跳过")
 
