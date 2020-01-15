@@ -31,7 +31,7 @@ class BigFileTest : TdBotHandler() {
 
     override suspend fun onFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
 
-        val file = ByteArray(param.toInt() * 1024 * 1024)
+        val file = ByteArray(100 * 1024 * 1024)
 
         for (index in file.indices) {
 
@@ -42,6 +42,12 @@ class BigFileTest : TdBotHandler() {
         val cache = Env.getFile("cache/test${param}mb.bin")
 
         cache.writeBytes(file)
+
+        for (index in 1 until 10) {
+
+            cache.appendBytes(file)
+
+        }
 
         sudo makeFile cache.path sendTo chatId
 
