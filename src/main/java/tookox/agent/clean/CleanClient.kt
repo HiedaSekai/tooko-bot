@@ -127,7 +127,7 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
         log.debug(me.displayName)
 
-        //deleteAccount("Delete Test Account")
+        // deleteAccount("Delete Test Account")
 
         stop()
 
