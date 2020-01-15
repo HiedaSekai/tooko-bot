@@ -63,7 +63,7 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
         } else if (authorizationState is AuthorizationStateWaitRegistration) {
 
-            // log.debug("跳过")
+            log.debug("跳过")
 
             stop()
 
