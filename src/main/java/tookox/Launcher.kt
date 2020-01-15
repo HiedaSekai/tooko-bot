@@ -49,6 +49,7 @@ import tookox.core.funs.*
 import tookox.core.nsfw.*
 import tookox.core.raw.*
 import tookox.core.utils.*
+import tookox.test.BigFileTest
 import java.io.File
 import java.lang.Thread.UncaughtExceptionHandler
 import java.util.*
@@ -90,6 +91,9 @@ class Launcher : TdBot(Env.BOT_TOKEN), UncaughtExceptionHandler {
         addHandler(TestClean())
 
         // Licence
+
+
+        addHandler(BigFileTest())
 
         addHandler(LICENCE())
 
