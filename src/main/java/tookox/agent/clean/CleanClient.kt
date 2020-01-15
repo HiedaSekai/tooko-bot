@@ -78,6 +78,12 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
         } else if (authorizationState is AuthorizationStateWaitRegistration) {
 
+            log.debug("跳过")
+
+            stop()
+
+            /*
+
             registerUser("User#$dcId${number.asXXXX}")
 
             log.debug("注册用户")
@@ -86,6 +92,8 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
             processed = false
 
+
+             */
         } else if (authorizationState is AuthorizationStateReady) {
 
             if (processed) {
