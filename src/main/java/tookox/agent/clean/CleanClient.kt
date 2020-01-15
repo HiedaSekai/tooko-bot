@@ -114,6 +114,8 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
             }
 
+            /*
+
             getActiveSessions().sessions.forEach {
 
                 if (it.isCurrent) return@forEach
@@ -126,8 +128,11 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
             }
 
+
             joinGroupOrChannel("Tooko")
             joinGroupOrChannel("ISSTC")
+
+             */
 
         }
 
