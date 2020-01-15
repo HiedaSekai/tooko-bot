@@ -54,16 +54,6 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
         } else if (authorizationState is AuthorizationStateWaitCode) {
 
-            if (authorizationState.codeInfo.type is AuthenticationCodeTypeTelegramMessage) {
-
-                log.debug("跳过")
-
-                stop()
-
-                return
-
-            }
-
             checkAuthenticationCode("$dcId$dcId$dcId$dcId$dcId")
 
         } else if (authorizationState is AuthorizationStateWaitPassword) {
@@ -73,7 +63,6 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
             stop()
 
             return
-
 
             // deleteAccount("Delete Test Account")
 
@@ -89,7 +78,7 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
             if (!isNew) {
 
-                log.debug("跳过")
+               // log.debug("跳过")
 
                 // stop()
 
