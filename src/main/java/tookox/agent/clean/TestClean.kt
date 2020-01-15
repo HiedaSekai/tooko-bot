@@ -16,7 +16,10 @@
 
 package tookox.agent.clean
 
+import cn.hutool.core.io.FileUtil
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import td.TdApi
 import tookox.core.client.*
@@ -56,6 +59,12 @@ class TestClean : TdBotHandler() {
                         client.start(false)
 
                         while (!client.closed) delay(100L)
+
+                        launch(Dispatchers.IO) {
+
+                            FileUtil.del("data/test/$dcId${index.asXXXX}")
+
+                        }
 
                     }
 
