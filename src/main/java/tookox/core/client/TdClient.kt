@@ -424,6 +424,8 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     private fun sendRaw(requestId: Long, function: TdApi.Function) {
 
+        check(!closed) { "已停止" }
+
         TdNative.nativeClientSend(clientId, requestId, function)
 
     }
