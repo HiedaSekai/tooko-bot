@@ -25,7 +25,7 @@ import tookox.core.env.*
 import tookox.core.utils.*
 import java.util.*
 
-open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotAbsHandler {
+open class TdBot(val botToken: String) : TdClient(initDataDir("data/${botToken.substringBefore(":")}")), TdBotAbsHandler {
 
     val botUserId = botToken.substringBefore(':').toInt()
 

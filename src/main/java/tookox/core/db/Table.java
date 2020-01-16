@@ -55,87 +55,118 @@ public class Table<ID, T> {
 
     public List<T> getAll() {
 
-        LinkedList<T> all = new LinkedList<>();
+        synchronized (this) {
 
-        for (T t : collection.find()) {
+            LinkedList<T> all = new LinkedList<>();
 
-            all.add(t);
+            for (T t : collection.find()) {
+
+                all.add(t);
+
+            }
+
+            return all;
 
         }
-
-        return all;
 
     }
 
     @Nullable
     public T getById(ID id) {
 
-        return collection.find(eq(FIELD_ID, id)).first();
+        synchronized (this) {
+
+            return collection.find(eq(FIELD_ID, id)).first();
+        }
 
     }
 
     public long countByField(String field, Object value) {
 
-        return collection.countDocuments(eq(field, value));
+        synchronized (this) {
+
+            return collection.countDocuments(eq(field, value));
+        }
 
     }
 
     public boolean fieldEquals(ID id, String field, Object value) {
 
-        return collection.countDocuments(and(eq(FIELD_ID, id), eq(field, value))) > 0;
+        synchronized (this) {
+
+            return collection.countDocuments(and(eq(FIELD_ID, id), eq(field, value))) > 0;
+
+        }
 
     }
 
     public FindIterable<T> findByField(String field, Object value) {
 
-        return collection.find(eq(field, value));
+        synchronized (this) {
+
+            return collection.find(eq(field, value));
+
+        }
 
     }
 
     public List<T> getAllByField(String field, Object value) {
 
-        LinkedList<T> all = new LinkedList<>();
+        synchronized (this) {
 
-        for (T t : findByField(field, value)) {
+            LinkedList<T> all = new LinkedList<>();
 
-            all.add(t);
+            for (T t : findByField(field, value)) {
+
+                all.add(t);
+
+            }
+
+            return all;
 
         }
-
-        return all;
 
     }
 
 
     public T getByField(String field, Object value) {
 
-        return findByField(field, value).first();
+        synchronized (this) {
+
+            return findByField(field, value).first();
+
+        }
 
     }
 
     public T setById(ID id, T object) {
 
-        if (containsId(id)) {
 
-            collection.replaceOne(eq(FIELD_ID, id), object);
+        synchronized (this) {
 
-        } else {
+            if (containsId(id)) {
 
-            synchronized (this) {
+                collection.replaceOne(eq(FIELD_ID, id), object);
+
+            } else {
 
                 collection.insertOne(object);
 
             }
 
-        }
+            return object;
 
-        return object;
+        }
 
     }
 
     public boolean setInsert(ID id, String array, Object element) {
 
-        return setInsert(id, array, element, false);
+        synchronized (this) {
+
+            return setInsert(id, array, element, false);
+
+        }
 
     }
 
@@ -159,7 +190,11 @@ public class Table<ID, T> {
 
     public boolean updateField(ID id, String field, Object data) {
 
-        return updateField(id, field, data, false);
+        synchronized (this) {
+
+            return updateField(id, field, data, false);
+
+        }
 
     }
 
@@ -187,7 +222,11 @@ public class Table<ID, T> {
 
     public boolean arrayInsert(ID id, String array, Object element) {
 
-        return arrayInsert(id, array, element, false);
+        synchronized (this) {
+
+            return arrayInsert(id, array, element, false);
+
+        }
 
     }
 
@@ -214,13 +253,18 @@ public class Table<ID, T> {
         synchronized (this) {
 
             return collection.updateOne(eq("_id", id), and(set("_id", id), pull(array, element)), new UpdateOptions().upsert(true)).getModifiedCount() > 1;
+
         }
 
     }
 
     public boolean arrayIsIn(ID id, String array, Object element) {
 
-        return collection.countDocuments(and(eq(FIELD_ID, id), in(array, element))) > 0;
+        synchronized (this) {
+
+            return collection.countDocuments(and(eq(FIELD_ID, id), in(array, element))) > 0;
+
+        }
 
     }
 

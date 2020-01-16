@@ -91,99 +91,27 @@ class CreateAgent : TdBotHandler() {
 
         if (subId == 0) {
 
-            if (message.text == L.AGENT_IMPORT) {
+           if (message.text == L.AGENT_LOGIN) {
 
-                writePersist(userId, PERSIST_ID, 1)
+               writePersist(userId, PERSIST_ID, if (Env.USE_TEST_DC) 2 else 1)
 
-                sudo make L.AGENT_INPUT_BINLOG sendTo chatId
+               sudo make L.AGENT_INPUT_PHONE sendTo chatId
 
-            } else if (message.text == L.AGENT_LOGIN) {
+           } else if (message.text == L.AGENT_LOGIN_NO_TEST_DC) {
 
-                writePersist(userId, PERSIST_ID, if (Env.USE_TEST_DC) 3 else 2)
+               writePersist(userId, PERSIST_ID, 1)
 
-                sudo make L.AGENT_INPUT_PHONE sendTo chatId
+               sudo make L.AGENT_INPUT_PHONE sendTo chatId
 
-            } else if (message.text == L.AGENT_LOGIN_NO_TEST_DC) {
+           } else if (message.text == L.AGENT_LOGIN_TEST_DC) {
 
-                writePersist(userId, PERSIST_ID, 2)
+               writePersist(userId, PERSIST_ID, 2)
 
-                sudo make L.AGENT_INPUT_PHONE sendTo chatId
+               sudo make L.AGENT_INPUT_PHONE sendTo chatId
 
-            } else if (message.text == L.AGENT_LOGIN_TEST_DC) {
+           }
 
-                writePersist(userId, PERSIST_ID, 3)
-
-                sudo make L.AGENT_INPUT_PHONE sendTo chatId
-
-            }
-
-        } else if (subId == 1) {
-
-            with(message.content) {
-
-                if (this !is MessageDocument ||
-                        document.fileName != "td.binlog") {
-
-                    onSendCanceledMessage(userId)
-
-                    return
-
-                }
-
-                val file = document.download()
-
-                val cacheDir = Env.getFile("data/agent_create/$userId")
-
-                cacheDir.deleteRecursively()
-
-                file.copyTo(File(cacheDir, "td.binlog"))
-
-                sudo make L.AGENT_AUTHING sendTo chatId
-
-                val bot = sudo
-
-                object : TdClient(TdOptions()
-                        .databaseDirectory(cacheDir.path)) {
-
-                    override suspend fun onAuthorizationState(authorizationState: AuthorizationState) {
-
-                        super.onAuthorizationState(authorizationState)
-
-                        if (authorizationState is AuthorizationStateWaitPhoneNumber) {
-
-                            stop()
-
-                            bot make L.AGENT_AUTH_INVALID sendTo chatId
-
-                        }
-
-                    }
-
-                    override suspend fun onLogin() {
-
-                        stop()
-
-                        File(cacheDir, "td.binlog").copyTo(File(Env.getFile("data/agent/${me.id}"), "td.binlog"), true)
-
-                        cacheDir.deleteRecursively()
-
-                        bot make L.AGENT_AUTH_OK sendTo chatId
-
-                        val agent = AgentData(me.id)
-
-                        agent.owner = userId
-
-                        AgentData.DATA.setById(userId, agent)
-
-                        AgentImage.start(agent)
-
-                    }
-
-                }.start()
-
-            }
-
-        } else if (subId == 2 || subId == 3) {
+        } else if (subId == 1 || subId == 2) {
 
             val cacheDir = Env.getFile("data/agent_create/$userId")
 
@@ -195,7 +123,7 @@ class CreateAgent : TdBotHandler() {
 
             object : TdClient(TdOptions()
                     .databaseDirectory(cacheDir.path)
-                    .useTestDc(subId == 3)) {
+                    .useTestDc(subId == 2)) {
 
                 init {
 
@@ -223,13 +151,13 @@ class CreateAgent : TdBotHandler() {
 
                     } else if (authorizationState is AuthorizationStateWaitCode) {
 
-                        bot.writePersist(userId, PERSIST_ID, 4)
+                        bot.writePersist(userId, PERSIST_ID, 3)
 
                         bot make L.AGENT_INPUT_CODE sendTo chatId
 
                     } else if (authorizationState is AuthorizationStateWaitPassword) {
 
-                        bot.writePersist(userId, PERSIST_ID, 5, true)
+                        bot.writePersist(userId, PERSIST_ID, 4, true)
 
                         bot make L.AGENT_INPUT_PASSWORD sendTo chatId
 
@@ -261,7 +189,7 @@ class CreateAgent : TdBotHandler() {
 
                     agent.owner = userId
 
-                    if (subId == 3) {
+                    if (subId == 2) {
 
                         agent.testDc = true
 
@@ -275,7 +203,7 @@ class CreateAgent : TdBotHandler() {
 
             }.start()
 
-        } else if (subId == 4) {
+        } else if (subId == 3) {
 
             if (!cache.containsKey(userId)) {
 
@@ -297,7 +225,7 @@ class CreateAgent : TdBotHandler() {
 
             }
 
-        } else if (subId == 5) {
+        } else if (subId == 4) {
 
             if (!cache.containsKey(userId)) {
 
