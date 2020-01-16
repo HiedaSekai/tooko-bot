@@ -14,38 +14,22 @@
  * limitations under the License.
  */
 
-/*
- * Copyright (c) 2019 - 2020 KazamaWataru
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package tookox.agent
 
 import cn.hutool.core.util.StrUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
 import td.TdApi.*
-import tookox.Launcher
+import tookox.INSTANCE
 import tookox.core.*
 import tookox.core.client.*
 import tookox.core.env.*
 import tookox.core.raw.*
 import tookox.core.utils.*
 
-class AgentClient(val data: AgentData) : TdClient(TdOptions()
-        .databaseDirectory(Env.getPath("data/agent/${data.userId}"))
-        .useTestDc(data.testDc != null)) {
+class AgentClient(val data: AgentData) : TdClient(
+        initDataDir("data/agent/${data.userId}")
+                .useTestDc(data.testDc != null)) {
 
     override val sudo = this
 
@@ -53,7 +37,7 @@ class AgentClient(val data: AgentData) : TdClient(TdOptions()
 
     override suspend fun onLogin() {
 
-        if (!inDiffWorld) searchPublicChat(Launcher.INSTANCE.me.username)
+        if (!inDiffWorld) searchPublicChat(INSTANCE.me.username)
 
     }
 
@@ -61,7 +45,7 @@ class AgentClient(val data: AgentData) : TdClient(TdOptions()
 
         return {
 
-            sudo make "/_agent_forward ${data.owner}" replyTo it.id sendTo Launcher.INSTANCE.botUserId
+            sudo make "/_agent_forward ${data.owner}" replyTo it.id sendTo INSTANCE.botUserId
 
         }
 
@@ -69,7 +53,7 @@ class AgentClient(val data: AgentData) : TdClient(TdOptions()
 
     infix fun transferForward(message: Message) {
 
-        sudo makeForward message to Launcher.INSTANCE.botUserId send transferForward()
+        sudo makeForward message to INSTANCE.botUserId send transferForward()
 
     }
 
@@ -83,20 +67,7 @@ class AgentClient(val data: AgentData) : TdClient(TdOptions()
 
         } else if (userId == 777000) {
 
-            /*
-
-            sudo make {
-
-                input = inputForward(message) {
-
-                    sendCopy = true
-
-                }
-
-            } to Launcher.INSTANCE.botUserId send transferForward()
-
-*/
-
+            INSTANCE make "${me.asInlineMention}: \n\n${message.text}" sendTo data.owner
 
             return@event
 
@@ -141,7 +112,7 @@ class AgentClient(val data: AgentData) : TdClient(TdOptions()
 
             }
 
-            Launcher.INSTANCE make msg sendTo data.owner
+            defaultLog.debug(msg)
 
         }
 
@@ -153,7 +124,7 @@ class AgentClient(val data: AgentData) : TdClient(TdOptions()
 
         if (authorizationState is AuthorizationStateWaitPhoneNumber) {
 
-            Launcher.INSTANCE make "认证失败" sendTo data.owner
+            INSTANCE make "认证失败" sendTo data.owner
 
             stop()
 

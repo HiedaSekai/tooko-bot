@@ -17,12 +17,14 @@
 package tookox.core.client
 
 import cn.hutool.core.thread.ThreadUtil
+import cn.hutool.core.util.RuntimeUtil
 import kotlinx.coroutines.*
 import td.TdApi
 import td.TdApi.*
 import td.TdNative
 import tookox.core.*
 import tookox.core.env.*
+import tookox.core.raw.*
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicBoolean
@@ -30,7 +32,7 @@ import java.util.concurrent.atomic.AtomicLong
 import java.util.concurrent.atomic.AtomicReference
 import kotlin.reflect.KClass
 
-open class TdClient(private val options: TdOptions) : TdAbsHandler {
+open class TdClient(val options: TdOptions) : TdAbsHandler {
 
     override val sudo get() = this
 
@@ -73,7 +75,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     }
 
-    open suspend fun start(waitForAuth: Boolean = true): Boolean {
+    open fun start() {
 
         check(!start) { "已经启动过." }
 
@@ -97,27 +99,30 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         }
 
-        return if (waitForAuth) {
+    }
 
-            while (authing && !auth) {
+    suspend fun waitForStart() {
 
-                delay(100L)
-
-            }
-
-            auth
-
-        } else {
-
-            while (!started) delay(1000L)
-
-            true
-
-        }
+        while (!started) delay(100L)
 
     }
 
-    open suspend fun stop() {
+    suspend fun waitForAuth(): Boolean {
+
+        while (authing) delay(100L)
+
+        return auth
+
+    }
+
+    suspend fun waitForLogin() {
+
+        while (!auth) delay(100L)
+
+
+    }
+
+    open fun stop() {
 
         check(started) { "未启动." }
 
@@ -129,27 +134,11 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         sendRaw(Close())
 
+    }
+
+    suspend fun waitForClose() {
+
         while (!closed) delay(100)
-
-    }
-
-    fun postStart() {
-
-        GlobalScope.launch {
-
-            start(false)
-
-        }
-
-    }
-
-    fun postStop() {
-
-        GlobalScope.launch {
-
-            stop()
-
-        }
 
     }
 
@@ -260,23 +249,15 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
         } else if (authorizationState is AuthorizationStateReady) {
 
-            send<User>(GetMe()) { user ->
+            me = getMe()
 
-                me = user
+            defaultLog.info("认证正常 : [ ${me.displayName} @${me.username} ]")
 
-                authing = false
+            for (handler in handlers) handler.onLogin()
 
-                auth = true
+            authing = false
 
-                defaultLog.info("认证正常 : [ ${me.displayName} @${me.username} ]")
-
-                for (handler in handlers) handler.onLogin()
-
-            } onError {
-
-                onAuthorizationFailed(it)
-
-            }
+            auth = true
 
         } else if (authorizationState is AuthorizationStateLoggingOut) {
 
@@ -296,7 +277,6 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     open suspend fun onAuthorizationFailed(ex: TdException) {
 
-        authing = false
 
     }
 
@@ -431,6 +411,37 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
     }
 
     companion object {
+
+        fun initDataDir(dir: String): TdOptions {
+
+            val dataDir = Env.getFile(dir)
+
+            dataDir.mkdirs()
+
+            mkLink(dataDir, "stickers")
+            mkLink(dataDir, "profile_photos")
+            mkLink(dataDir, "thumbnails")
+            mkLink(dataDir, "wallpapers")
+
+            return TdOptions().databaseDirectory(dataDir.path)
+
+        }
+
+        private fun mkLink(dataDir: java.io.File, target: String) {
+
+            val sourceDir = java.io.File(dataDir, target)
+
+            val targetDir = Env.getFile("cache/files/$target")
+
+            if (!sourceDir.isDirectory) {
+
+                targetDir.mkdirs()
+
+                RuntimeUtil.execForStr("ln -s " + targetDir.path + " " + sourceDir.path)
+
+            }
+
+        }
 
         @Suppress("EXPERIMENTAL_API_USAGE")
         val events = CoroutineScope(newSingleThreadContext("Tooko Events Task"))
@@ -648,7 +659,7 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
 
     override suspend fun onLogout() = Unit
 
-    override suspend fun onDestroy() = Unit
+    override fun onDestroy() = Unit
 
     override suspend fun onNewMessage(userId: Int, chatId: Long, message: Message) = Unit
 
@@ -781,6 +792,5 @@ open class TdClient(private val options: TdOptions) : TdAbsHandler {
     override suspend fun onNewCustomQuery(id: Long, data: String, timeout: Int) = Unit
 
     override suspend fun onPoll(poll: Poll) = Unit
-
 
 }

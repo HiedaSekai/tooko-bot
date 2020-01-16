@@ -49,7 +49,7 @@ interface TdAbsHandler {
 
     suspend fun onLogout()
 
-    suspend fun onDestroy() {
+    fun onDestroy() {
 
         if (dataName == null) return
 

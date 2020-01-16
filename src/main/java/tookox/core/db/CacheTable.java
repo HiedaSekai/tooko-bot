@@ -24,7 +24,7 @@ public class CacheTable<ID, T> extends Table<ID, T> {
 
     {
 
-        Launcher.Companion.getCachedTables().add(this);
+        LauncherKt.INSTANCE.cachedTables.add(this);
 
     }
 

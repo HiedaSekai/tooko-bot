@@ -16,8 +16,6 @@
 
 package tookox.core.client
 
-import cn.hutool.core.util.RuntimeUtil
-import cn.hutool.core.util.StrUtil
 import cn.hutool.core.util.ZipUtil
 import kotlinx.coroutines.coroutineScope
 import td.TdApi.*
@@ -25,7 +23,6 @@ import tookox.core.*
 import tookox.core.client.TdBotAbsHandler.*
 import tookox.core.env.*
 import tookox.core.utils.*
-import java.io.File
 import java.util.*
 
 open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotAbsHandler {
@@ -77,7 +74,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
 
     }
 
-    override suspend fun onDestroy() {
+    override fun onDestroy() {
 
         super<TdBotAbsHandler>.onDestroy()
 
@@ -126,6 +123,8 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
         if (authorizationState is AuthorizationStateWaitPhoneNumber) {
 
             sendUnit(CheckAuthenticationBotToken(botToken)) onError {
+
+                authing = false
 
                 onAuthorizationFailed(it)
 
@@ -396,41 +395,5 @@ open class TdBot(val botToken: String) : TdClient(initDataDir(botToken)), TdBotA
     override fun onPersistStore(userId: Int, subId: Int, data: LinkedList<String>) = Unit
     override fun onPersistReStore(userId: Int, subId: Int, data: List<String>) = Unit
     override suspend fun onStartPayload(userId: Int, chatId: Long, message: Message, payload: String, params: Array<String>) = Unit
-
-    companion object {
-
-        private fun initDataDir(botToken: String): TdOptions {
-
-            val dataDir = Env.getFile("data/" + StrUtil.subBefore(botToken, ":", false))
-
-            dataDir.mkdirs()
-
-            mkLink(dataDir, "stickers")
-            mkLink(dataDir, "profile_photos")
-            mkLink(dataDir, "thumbnails")
-            mkLink(dataDir, "wallpapers")
-
-
-            return TdOptions().databaseDirectory(dataDir.path)
-
-        }
-
-        private fun mkLink(dataDir: File, target: String) {
-
-            val sourceDir = File(dataDir, target)
-
-            val targetDir = Env.getFile("cache/files/$target")
-
-            if (!sourceDir.isDirectory) {
-
-                targetDir.mkdirs()
-
-                RuntimeUtil.execForStr("ln -s " + targetDir.path + " " + sourceDir.path)
-
-            }
-
-        }
-
-    }
 
 }

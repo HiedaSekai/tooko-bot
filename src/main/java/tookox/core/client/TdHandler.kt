@@ -38,7 +38,7 @@ open class TdHandler : TdAbsHandler {
 
     override suspend fun onLogout() = Unit
 
-    override suspend fun onDestroy() = Unit
+    override fun onDestroy() = Unit
 
     override suspend fun onAuthorizationState(authorizationState: AuthorizationState) = Unit
 

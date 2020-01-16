@@ -14,55 +14,60 @@
  * limitations under the License.
  */
 
-package tookox.agent.clean
+package tookox.agent.fmt
 
 import cn.hutool.core.io.FileUtil
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import td.TdApi
 import tookox.core.client.*
 import java.util.concurrent.Executors
 
-class TestClean : TdBotHandler() {
+class TestNumberFormat : TdBotHandler() {
 
     override fun onLoad() {
 
-        initFunction("clean", "clean_dc", "clean_all")
+        initFunction("fmt", "fmt_dc", "fmt_all")
 
     }
 
     override suspend fun onFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
 
-        if (function == "clean") {
+        if (function == "fmt") {
 
-            val dcId = param.substring(0, 1).toInt()
-            val number = param.substring(1).toInt()
+            val dcId = param.substring(0, 1)
+            val number = param.substring(1)
 
-            CleanClient(dcId, number).start()
+            FormatClient(dcId, number).start()
 
-        } else if (function == "clean_dc") {
-
-            val dcId = param.toInt()
+        } else if (function == "fmt_dc") {
 
             val pool = Executors.newFixedThreadPool(30)
 
             for (index in 0 until 10000) {
 
+                var str = "$index"
+
+                while (str.length < 4) {
+
+                    str = "0$str"
+
+                }
+
                 pool.execute {
 
                     runBlocking {
 
-                        val client = CleanClient(dcId, index)
+                        val client = FormatClient(param, str)
 
-                        client.start(false)
+                        client.start()
 
-                        while (!client.closed) delay(100L)
+                        client.waitForClose()
 
                         launch(Dispatchers.IO) {
 
-                            FileUtil.del("data/test/$dcId${index.asXXXX}")
+                            FileUtil.del("data/test/$param$str")
 
                         }
 
@@ -80,22 +85,29 @@ class TestClean : TdBotHandler() {
 
                 for (index in 0 until 10000) {
 
+                    var str = "$index"
+
+                    while (str.length < 4) {
+
+                        str = "0$str"
+
+                    }
+
                     pool.execute {
 
                         runBlocking {
 
-                            val client = CleanClient(dcId, index)
+                            val client = FormatClient(param, str)
 
-                            client.start(false)
+                            client.start()
 
-                            while (!client.closed) delay(100L)
+                            client.waitForClose()
 
                             launch(Dispatchers.IO) {
 
-                                FileUtil.del("data/test/$dcId${index.asXXXX}")
+                                FileUtil.del("data/test/$param$str")
 
                             }
-
 
                         }
 

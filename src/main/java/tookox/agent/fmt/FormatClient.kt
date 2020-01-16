@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package tookox.agent.clean
+package tookox.agent.fmt
 
 import td.TdApi.*
 import tookox.core.*
@@ -22,32 +22,18 @@ import tookox.core.TookoLogFactory.createLog
 import tookox.core.client.*
 import tookox.core.raw.*
 
-val Int.asXXXX: String
-    get() {
 
-        var str = "$this"
-
-        while (str.length < 4) {
-
-            str = "0$str"
-
-        }
-
-        return str
-
-    }
-
-class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
+class FormatClient(val dcId: String, val number: String) : TdClient(TdOptions()
         .useTestDc(true)
-        .databaseDirectory("data/test/$dcId${number.asXXXX}")) {
+        .databaseDirectory("data/test/$dcId$number")) {
 
-    val log = createLog("$dcId${number.asXXXX}")
+    val log = createLog("$dcId$number")
 
     override suspend fun onAuthorizationState(authorizationState: AuthorizationState) {
 
         if (authorizationState is AuthorizationStateWaitPhoneNumber) {
 
-            setAuthenticationPhoneNumber("99966$dcId${number.asXXXX}")
+            setAuthenticationPhoneNumber("99966$dcId$number")
 
         } else if (authorizationState is AuthorizationStateWaitCode) {
 
@@ -63,7 +49,7 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
         } else if (authorizationState is AuthorizationStateWaitRegistration) {
 
-            if (number % 100 == 0) {
+            if (number.toInt() % 100 == 0) {
 
                 log.debug("跳过")
 
@@ -73,7 +59,7 @@ class CleanClient(val dcId: Int, val number: Int) : TdClient(TdOptions()
 
             /*
 
-            registerUser("User#$dcId${number.asXXXX}")
+            registerUser("User#$dcId$number")
 
             log.debug("注册用户")
 

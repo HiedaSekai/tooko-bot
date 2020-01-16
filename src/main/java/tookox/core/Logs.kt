@@ -25,10 +25,10 @@ import cn.hutool.log.Log
 import cn.hutool.log.LogFactory
 import cn.hutool.log.dialect.console.ConsoleLog
 import cn.hutool.log.level.Level
-import tookox.core.env.Env
-import tookox.core.env.Fn
-import tookox.Launcher
+import tookox.INSTANCE
+import tookox.core.env.*
 import tookox.core.utils.*
+import tookox.isInstanceInitialized
 
 object TookoLogFactory : LogFactory("Tooko Log") {
 
@@ -87,9 +87,9 @@ class TookoLog(name: String) : ConsoleLog(name) {
 
         if (level.ordinal >= Level.WARN.ordinal) {
 
-            if (Launcher.isInitialized) {
+            if (isInstanceInitialized) {
 
-                with(Launcher.INSTANCE) {
+                with(INSTANCE) {
 
                     sudo make logMsg sendTo Env.LOG_CHANNEL onError null
 

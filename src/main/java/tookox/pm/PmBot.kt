@@ -19,7 +19,7 @@ package tookox.pm
 import kotlinx.coroutines.coroutineScope
 import org.apache.commons.collections4.bidimap.DualHashBidiMap
 import td.TdApi
-import tookox.Launcher
+import tookox.INSTANCE
 import tookox.core.*
 import tookox.core.bots.*
 import tookox.core.client.*
@@ -94,7 +94,7 @@ class PmBot(val image: BotImage) : TdBot(image.data.botToken) {
         image.error = ex
         image.status = BotImage.STATUS_ERROR
 
-        Launcher.INSTANCE make bot.owner.langFor.ERR_LOGGING_OUT sendTo bot.owner
+        INSTANCE make bot.owner.langFor.ERR_LOGGING_OUT sendTo bot.owner
 
         stop()
 

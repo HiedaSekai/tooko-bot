@@ -71,8 +71,8 @@ class DeleteHandler : TdBotHandler() {
 
                     deleteSendedMessage[session.chatId].add(targetMessageId)
 
-                    data.sessions.arrayReomve(session.chatId, "sended", data.sended.remove(messageIdStr
-                    ))
+                    data.sessions.arrayReomve(session.chatId, "sended", data.sended.remove(messageIdStr))
+
                 } else {
 
                     session = data.getSessionByElement("reports", messageId)
@@ -211,7 +211,6 @@ class DeleteHandler : TdBotHandler() {
             }
 
         }
-
 
     }
 

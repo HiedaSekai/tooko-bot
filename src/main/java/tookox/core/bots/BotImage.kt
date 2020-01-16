@@ -35,7 +35,7 @@ class BotImage(var data: BotData) {
         const val STATUS_RUNNING = 0
         const val STATUS_ERROR = 1
 
-        suspend fun start(data: BotData) : Boolean {
+        fun start(data: BotData): TdBot {
 
             if (images.containsKey(data.botId)) error("重复启动.")
 
@@ -47,7 +47,9 @@ class BotImage(var data: BotData) {
 
                 image.bot = PmBot(image)
 
-                return image.bot.start()
+                image.bot.start()
+
+                return image.bot
 
             } else {
 
