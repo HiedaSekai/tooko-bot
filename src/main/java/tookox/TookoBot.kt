@@ -30,7 +30,6 @@ import tookox.core.*
 import tookox.core.agent.*
 import tookox.core.bots.*
 import tookox.core.client.*
-import tookox.core.db.*
 import tookox.core.env.*
 import tookox.core.funs.*
 import tookox.core.utils.*
@@ -38,9 +37,6 @@ import java.util.*
 import kotlin.system.exitProcess
 
 class TookoBot(botToken: String) : TdBot(botToken) {
-
-    @JvmField
-    val cachedTables = LinkedList<CacheTable<*, *>>()
 
     override fun onLoad() {
 
@@ -118,7 +114,7 @@ class TookoBot(botToken: String) : TdBot(botToken) {
 
         super.onDestroy()
 
-        cachedTables.forEach { it.saveAll() }
+        Launcher.cachedTables.forEach { it.saveAll() }
 
     }
 

@@ -22,14 +22,9 @@ import java.util.*;
 
 public class CacheTable<ID, T> extends Table<ID, T> {
 
-    {
-
-        LauncherKt.INSTANCE.cachedTables.add(this);
-
-    }
+    public static LinkedList<CacheTable> cachedTables = new LinkedList<>()
 
     public final HashMap<ID, T> idIndex = new HashMap<>();
-
 
     public CacheTable(Class<T> clazz) {
 
@@ -40,6 +35,12 @@ public class CacheTable<ID, T> extends Table<ID, T> {
     public CacheTable(String collectionName, Class<T> clazz) {
 
         super(collectionName, clazz);
+
+    }
+
+    {
+
+        cachedTables.add(this);
 
     }
 
