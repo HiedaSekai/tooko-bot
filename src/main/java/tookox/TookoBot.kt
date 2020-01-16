@@ -30,6 +30,7 @@ import tookox.core.*
 import tookox.core.agent.*
 import tookox.core.bots.*
 import tookox.core.client.*
+import tookox.core.db.*
 import tookox.core.env.*
 import tookox.core.funs.*
 import tookox.core.utils.*
@@ -114,7 +115,7 @@ class TookoBot(botToken: String) : TdBot(botToken) {
 
         super.onDestroy()
 
-        Launcher.cachedTables.forEach { it.saveAll() }
+        CacheTable.cachedTables.forEach { it.saveAll() }
 
     }
 
