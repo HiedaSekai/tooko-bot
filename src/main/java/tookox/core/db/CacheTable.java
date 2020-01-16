@@ -16,13 +16,11 @@
 
 package tookox.core.db;
 
-import tookox.*;
-
 import java.util.*;
 
 public class CacheTable<ID, T> extends Table<ID, T> {
 
-    public static LinkedList<CacheTable> cachedTables = new LinkedList<>()
+    public static LinkedList<CacheTable> cachedTables = new LinkedList<>();
 
     public final HashMap<ID, T> idIndex = new HashMap<>();
 
