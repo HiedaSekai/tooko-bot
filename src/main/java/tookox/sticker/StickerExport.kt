@@ -55,21 +55,19 @@ class StickerExport : TdBotHandler() {
 
             val L = Lang.get(userId)
 
-            val send = sudo make {
-
-                replyMarkup = inlineButton {
-
-                    dataLine(L.STICKER_EXPORT, DATA_1, 0, sticker.setId.asByteArray)
-
-                }
-
-            }
+            val send = sudo make {}
 
             with(send) {
 
                 if (!sticker.isAnimated) {
 
                     inputPhoto = stickerFile.local.path!!
+
+                    replyMarkup = inlineButton {
+
+                        dataLine(L.STICKER_EXPORT, DATA_1, 0, sticker.setId.asByteArray)
+
+                    }
 
                 } else {
 
