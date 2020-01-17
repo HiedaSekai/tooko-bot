@@ -79,9 +79,13 @@ class StickerExport : TdBotHandler() {
 
                         cache.parentFile.mkdirs()
 
+                        val shell = "tgsconvert.py ${stickerFile.local.path!!} ${cache.absolutePath}"
+
+                        defaultLog.debug(shell)
+
                         try {
 
-                            RuntimeUtil.exec("tgsconvert.py ${stickerFile.local.path!!} ${cache.absolutePath}").waitFor()
+                            RuntimeUtil.exec(shell).waitFor()
 
                         } catch (ex: Exception) {
 
