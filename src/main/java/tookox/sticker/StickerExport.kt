@@ -69,11 +69,13 @@ class StickerExport : TdBotHandler() {
 
                         try {
 
-                            RuntimeUtil.execForStr("tgsconvert.py \"${stickerFile.local.path!!}\" \"$cache\"")
+                            RuntimeUtil.exec("tgsconvert.py ${stickerFile.local.path!!} $cache").waitFor()
 
                         } catch (ex: Exception) {
 
                             sudo make "${ex.message}" sendTo chatId
+
+                            return
 
                         }
 
