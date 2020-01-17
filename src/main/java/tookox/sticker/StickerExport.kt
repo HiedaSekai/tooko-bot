@@ -85,7 +85,15 @@ class StickerExport : TdBotHandler() {
 
                         try {
 
-                            RuntimeUtil.exec(shell).waitFor()
+                            val result = RuntimeUtil.execForStr(shell)
+
+                            if (result.isNotBlank()) {
+
+                                sudo make result sendTo chatId
+
+                                return
+
+                            }
 
                         } catch (ex: Exception) {
 
