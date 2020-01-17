@@ -55,7 +55,17 @@ class StickerExport : TdBotHandler() {
 
             val L = Lang.get(userId)
 
-            sudo make {
+            val send = sudo make {
+
+                replyMarkup = inlineButton {
+
+                    dataLine(L.STICKER_EXPORT, DATA_1, 0, sticker.setId.asByteArray)
+
+                }
+
+            }
+
+            with(send) {
 
                 if (!sticker.isAnimated) {
 
@@ -83,17 +93,13 @@ class StickerExport : TdBotHandler() {
 
                     inputVideo = cache.path
 
-                }
-
-                captionHtml = L.STICKER_CAPTION.input(stickerFile.remote.id!!, sticker.emoji, sticker.setId)
-
-                replyMarkup = inlineButton {
-
-                    dataLine(L.STICKER_EXPORT, DATA_1, 0, sticker.setId.asByteArray)
+                    captionHtml = L.STICKER_CAPTION.input(stickerFile.remote.id!!, sticker.emoji, sticker.setId)
 
                 }
 
-            } sendTo chatId
+                this sendTo chatId
+
+            }
 
         }.onFailure {
 
