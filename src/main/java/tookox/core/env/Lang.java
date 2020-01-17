@@ -109,12 +109,6 @@ public class Lang {
             AUTHOR_SIGNATURE,
             MESSAGE_ID,
             MESSAGE_LINK,
-            STICKER_CAPTION,
-            STICKER_EXPORT,
-            STICKER_EXPORT_DL,
-            STICKER_DL_FAILED,
-            STICKER_EXPORT_PACK,
-            STICKER_EXPORT_SEND,
             PERMISSION_DENIED,
             BACK,
             CNF,
@@ -155,6 +149,14 @@ public class Lang {
             BOT_TYPE_PM,
             BOT_ERR,
             BOT_CREATED;
+
+    public String STICKER_CAPTION,
+            STICKER_EXPORT,
+            STICKER_TPYE,
+            STICKER_EXPORT_DL,
+            STICKER_DL_FAILED,
+            STICKER_EXPORT_PACK,
+            STICKER_EXPORT_SEND;
 
     public String AGENT_CHT,
             AGENT_IMPORT,

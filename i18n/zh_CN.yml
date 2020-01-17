@@ -40,15 +40,6 @@ CHANNEL_RESTRICTIONED: 频道被限制
 AUTHOR_SIGNATURE: 作者签名
 MESSAGE_ID: 消息ID
 MESSAGE_LINK: 消息链接
-STICKER_CAPTION: |-
-  $贴纸ID: `{}`
-  贴纸表情: `{}`
-  贴纸集: `{}`
-STICKER_EXPORT: 下载贴纸集
-STICKER_EXPORT_DL: $正在下载贴纸集  *{}* {} / {}
-STICKER_DL_FAILED: 贴纸下载失败 _(:з」∠)_ ( {} )
-STICKER_EXPORT_PACK: 正在转码 (≖‿≖)✧
-STICKER_EXPORT_SEND: 完成！正在发送 (๑•̀ㅂ•́)√
 PERMISSION_DENIED: 啊！不行啦！
 BACK: 🔙
 CNF: 没有这个命令 :(
@@ -93,6 +84,26 @@ BOT_ERR: |-
   机器人出错停止, 请检查: {}
 BOT_CREATED: |-
   $机器人已创建. 请点 [此](https://t.me/{}?start=-init) 配置.
+
+# Sticker
+
+STICKER_CAPTION: |-
+  $贴纸ID: `{}`
+  贴纸表情: `{}`
+  贴纸集: `{}`
+STICKER_EXPORT: 下载贴纸集
+STICKER_TPYE: |-
+  $下载贴纸集: *{}*
+  
+  WebP: 原图, 较小, 但一些应用不支持, 在 Telegram 中作为文件发出会直接变成贴纸.
+  
+  JPEG: 兼容性好, 文件较小, 将背景涂白防止在某些应用中显示为黑色.
+  
+  PNG: 文件较大, 用于在 @Stickers 添加贴纸, 会自动压至 512k 以下.
+STICKER_EXPORT_DL: $正在下载贴纸集  *{}* {} / {}
+STICKER_DL_FAILED: 贴纸下载失败 _(:з」∠)_ ( {} )
+STICKER_EXPORT_PACK: 正在转码 (≖‿≖)✧
+STICKER_EXPORT_SEND: 完成！正在发送 (๑•̀ㅂ•́)√
 
 # Agent
 

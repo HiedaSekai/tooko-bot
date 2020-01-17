@@ -34,6 +34,7 @@ import tookox.core.db.*
 import tookox.core.env.*
 import tookox.core.funs.*
 import tookox.core.utils.*
+import tookox.sticker.StickerExport
 import java.util.*
 import kotlin.system.exitProcess
 

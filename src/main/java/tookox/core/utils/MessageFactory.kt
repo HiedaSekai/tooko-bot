@@ -98,6 +98,18 @@ infix fun TdAbsHandler.makePhotoId(text: String): MessageFactory {
 
 }
 
+infix fun TdAbsHandler.makeVideo(text: String): MessageFactory {
+
+    return make { inputVideo = text }
+
+}
+
+infix fun TdAbsHandler.makeVideoId(text: String): MessageFactory {
+
+    return make { inputVideoId = text }
+
+}
+
 fun TdAbsHandler.makeForward(chatId: Number, messageId: Long): MessageFactory {
 
     return make { input = inputForward(chatId, messageId) }
@@ -490,6 +502,18 @@ class MessageFactory(val context: TdAbsHandler) : CaptionInterface {
 
     }
 
+    var inputVideo by WriteOnlyField<String> {
+
+        input = video(it) { _captionInterface = this }
+
+    }
+
+    var inputVideoId by WriteOnlyField<String> {
+
+        input = videoId(it) { _captionInterface = this }
+
+    }
+
     var inputFile by WriteOnlyField<String> {
 
         input = file(it) { _captionInterface = this }
@@ -566,7 +590,7 @@ class MessageFactory(val context: TdAbsHandler) : CaptionInterface {
 
     }
 
-    inner class PhotoBuilder(val photo: InputMessagePhoto) : CaptionInterface {
+    class PhotoBuilder(val photo: InputMessagePhoto) : CaptionInterface {
 
         var thumbnail by photo::thumbnail
 
@@ -606,7 +630,51 @@ class MessageFactory(val context: TdAbsHandler) : CaptionInterface {
 
     }
 
-    inner class FileBuilder(val file: InputMessageDocument) : CaptionInterface {
+    class VideoBuilder(val video: InputMessageVideo) : CaptionInterface {
+
+        var thumbnail by video::thumbnail
+
+        var addedStickerFileIds by video::addedStickerFileIds
+
+        var duration by video::duration
+
+        var width by video::width
+
+        var height by video::height
+
+        var supportsStreaming by video::supportsStreaming
+
+        var ttl by video::ttl
+
+        override var caption: FormattedText? by video::caption
+
+    }
+
+    fun video(path: String, block: (VideoBuilder.() -> Unit)? = null): InputMessageVideo {
+
+        return InputMessageVideo().apply {
+
+            video = InputFileLocal(path)
+
+            block?.invoke(VideoBuilder((this)))
+
+        }
+
+    }
+
+    fun videoId(fileId: String, block: (VideoBuilder.() -> Unit)? = null): InputMessageVideo {
+
+        return InputMessageVideo().apply {
+
+            video = InputFileRemote(fileId)
+
+            block?.invoke(VideoBuilder((this)))
+
+        }
+
+    }
+
+    class FileBuilder(val file: InputMessageDocument) : CaptionInterface {
 
         var document: InputFile? by file::document
 

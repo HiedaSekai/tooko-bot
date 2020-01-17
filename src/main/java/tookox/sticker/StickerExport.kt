@@ -14,18 +14,17 @@
  * limitations under the License.
  */
 
-package tookox.core.funs
+package tookox.sticker
 
 import cn.hutool.core.img.ImgUtil
 import cn.hutool.core.io.FileUtil
+import cn.hutool.core.util.RuntimeUtil
 import cn.hutool.core.util.ZipUtil
 import kotlinx.coroutines.*
 import td.TdApi.*
-import tookox.core.env.Env
-import tookox.core.env.Img
-import tookox.core.env.Lang
 import tookox.core.*
 import tookox.core.client.*
+import tookox.core.env.*
 import tookox.core.utils.*
 import java.awt.Color
 import java.io.File
@@ -41,14 +40,6 @@ class StickerExport : TdBotHandler() {
         if (!message.fromPrivate || message.content !is MessageSticker) return
 
         val sticker = (message.content as MessageSticker).sticker
-
-        if (sticker.isAnimated) {
-
-            sudo make "animated sticker not supported." at chatId
-
-            return
-
-        }
 
         runCatching {
 
@@ -66,7 +57,31 @@ class StickerExport : TdBotHandler() {
 
             sudo make {
 
-                inputPhoto = stickerFile.local.path!!
+                if (!sticker.isAnimated) {
+
+                    inputPhoto = stickerFile.local.path!!
+
+                } else {
+
+                    val cache = Env.getFile("cache/tgs_gif_cache/${stickerFile.remote.uniqueId}.gif")
+
+                    if (!cache.isFile) {
+
+                        try {
+
+                            RuntimeUtil.execForStr("tgsconvert.py \"${stickerFile.local.path!!}\" \"$cache\"")
+
+                        } catch (ex: Exception) {
+
+                            sudo make "${ex.message}" sendTo chatId
+
+                        }
+
+                    }
+
+                    inputVideo = cache.path
+
+                }
 
                 captionHtml = L.STICKER_CAPTION.input(stickerFile.remote.id!!, sticker.emoji, sticker.setId)
 
