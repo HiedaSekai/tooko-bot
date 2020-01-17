@@ -79,7 +79,7 @@ class StickerExport : TdBotHandler() {
 
                         try {
 
-                            RuntimeUtil.exec("tgsconvert.py ${stickerFile.local.path!!} $cache").waitFor()
+                            RuntimeUtil.exec("tgsconvert.py -if tgs -of gif ${stickerFile.local.path!!} $cache").waitFor()
 
                         } catch (ex: Exception) {
 
