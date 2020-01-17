@@ -77,9 +77,11 @@ class StickerExport : TdBotHandler() {
 
                     if (!cache.isFile) {
 
+                        cache.parentFile.mkdirs()
+
                         try {
 
-                            RuntimeUtil.exec("tgsconvert.py ${stickerFile.local.path!!} ${cache.path}").waitFor()
+                            RuntimeUtil.exec("tgsconvert.py ${stickerFile.local.path!!} ${cache.absolutePath}").waitFor()
 
                         } catch (ex: Exception) {
 
