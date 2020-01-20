@@ -76,11 +76,9 @@ class StickerExport : TdBotHandler() {
 
                     if (!cache.isFile) {
 
-                        cache.parentFile.mkdirs()
-
                         val json = Env.getFile("cache/tgs2json/$stickerId.json")
 
-                        json.appendBytes(ZipUtil.unGzip(rawFile.readBytes()))
+                        FileUtil.writeBytes(ZipUtil.unGzip(rawFile.readBytes()), json)
 
                         val shell = "puppeteer-lottie -i ${json.path} -o ${cache.path}"
 
