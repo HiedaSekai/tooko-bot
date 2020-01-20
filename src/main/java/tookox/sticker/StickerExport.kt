@@ -88,13 +88,9 @@ class StickerExport : TdBotHandler() {
 
                         try {
 
-                            val process = RuntimeUtil.exec(shell)
+                            val result = RuntimeUtil.execForStr(shell)
 
-                            if (process.waitFor() != 0) {
-
-                                error(RuntimeUtil.getErrorResult(process))
-
-                            }
+                            defaultLog.debug(result)
 
                         } catch (ex: Exception) {
 
