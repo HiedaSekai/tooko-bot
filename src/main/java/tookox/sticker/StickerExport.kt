@@ -69,7 +69,8 @@ class StickerExport : TdBotHandler() {
 
                 } else {
 
-                    val stickerId = File(stickerFile.local.path!!).nameWithoutExtension
+                    val rawFile = File(stickerFile.local.path!!)
+                    val stickerId = rawFile.nameWithoutExtension
 
                     val cache = Env.getFile("cache/tgs2mp4/$stickerId.mp4")
 
@@ -77,11 +78,21 @@ class StickerExport : TdBotHandler() {
 
                         cache.parentFile.mkdirs()
 
-                        val shell = "puppeteer-lottie -i ${stickerFile.local.path!!} -o ${cache.canonicalPath}"
+                        val json = Env.getFile("cache/tgs2json/$stickerId.json")
+
+                        json.appendBytes(ZipUtil.unGzip(rawFile.readBytes()))
+
+                        val shell = "puppeteer-lottie -i ${json.path} -o ${cache.path}"
 
                         try {
 
-                            RuntimeUtil.execForStr(shell)
+                            val process = RuntimeUtil.exec(shell)
+
+                            if (process.waitFor() != 0) {
+
+                                error(RuntimeUtil.getErrorResult(process))
+
+                            }
 
                         } catch (ex: Exception) {
 
