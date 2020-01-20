@@ -39,6 +39,8 @@ class StickerExport : TdBotHandler() {
 
         if (!message.fromPrivate || message.content !is MessageSticker) return
 
+        val L = Lang.get(userId)
+
         val sticker = (message.content as MessageSticker).sticker
 
         runCatching {
@@ -53,11 +55,7 @@ class StickerExport : TdBotHandler() {
 
             }
 
-            val L = Lang.get(userId)
-
-            val send = sudo make {}
-
-            with(send) {
+            with(sudo make {}) {
 
                 if (!sticker.isAnimated) {
 
@@ -71,27 +69,19 @@ class StickerExport : TdBotHandler() {
 
                 } else {
 
-                    val cache = Env.getFile("cache/tgs_gif_cache/${stickerFile.remote.uniqueId}.gif")
+                    val stickerId = File(stickerFile.local.path!!).nameWithoutExtension
+
+                    val cache = Env.getFile("cache/tgs2mp4/$stickerId.mp4")
 
                     if (!cache.isFile) {
 
                         cache.parentFile.mkdirs()
 
-                        val shell = "tgsconvert.py ${stickerFile.local.path!!} ${cache.absolutePath}"
-
-                        defaultLog.debug(shell)
+                        val shell = "puppeteer-lottie -i ${stickerFile.local.path!!} -o ${cache.canonicalPath}"
 
                         try {
 
-                            val result = RuntimeUtil.execForStr(shell)
-
-                            if (result.isNotBlank()) {
-
-                                sudo make result sendTo chatId
-
-                                return
-
-                            }
+                            RuntimeUtil.execForStr(shell)
 
                         } catch (ex: Exception) {
 
@@ -229,7 +219,7 @@ class StickerExport : TdBotHandler() {
 
                     sudo make {
 
-                        inputFile = zip.absolutePath
+                        inputFile = zip.canonicalPath
 
                         captionText = "https://t.me/addstickers/${set.name}"
 
