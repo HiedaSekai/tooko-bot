@@ -6,7 +6,7 @@ import cn.hutool.log.Log;
 import tooko.main.*;
 import tooko.td.*;
 import tooko.td.TdApi.*;
-import tookox.core.*;
+import tooko.core.*;
 
 import java.util.*;
 import java.util.concurrent.*;

@@ -3,7 +3,7 @@ package tooko.main.bots;
 import cn.hutool.core.util.*;
 import tooko.main.*;
 import tooko.td.client.*;
-import tookox.pm.*;
+import tooko.pm.*;
 
 import java.util.*;
 

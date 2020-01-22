@@ -7,9 +7,9 @@ import tooko.main.bots.*;
 import tooko.main.extras.*;
 import tooko.td.TdApi.*;
 import tooko.td.client.*;
-import tookox.*;
-import tookox.pm.*;
-import tookox.pm.PmData.*;
+import tooko.*;
+import tooko.pm.*;
+import tooko.pm.PmData.*;
 
 import java.io.File;
 import java.util.*;

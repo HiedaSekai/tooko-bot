@@ -6,8 +6,8 @@ import tooko.main.*;
 import tooko.td.core.*;
 import tooko.twitter.*;
 import tooko.twitter.archives.*;
-import tookox.*;
-import tookox.core.*;
+import tooko.*;
+import tooko.core.*;
 import twitter4j.*;
 
 import java.util.*;

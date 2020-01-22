@@ -1,24 +1,32 @@
-package tooko.main;
+/*
+ * Copyright (c) 2019 - 2020 KazamaWataru
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package tooko.core.env;
 
 import cn.hutool.core.collection.*;
-import cn.hutool.core.io.*;
-import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.*;
-import cn.hutool.http.*;
-import tooko.td.TdApi.User;
-import tooko.td.TdApi.*;
-import tooko.td.client.*;
-import tooko.td.core.*;
-import tooko.core.utils.*;
 import twitter4j.*;
 import twitter4j.conf.*;
 
-import java.io.File;
 import java.io.*;
-import java.math.*;
 import java.util.*;
 
 public class Fn {
+
+    /*
 
     public static long s = 1000L;
     public static long m = 60 * s;
@@ -216,89 +224,7 @@ public class Fn {
 
     }
 
-    public static byte[] mkData(int id, int subId, byte[]... dataArray) {
 
-        ByteArrayOutputStream format = new ByteArrayOutputStream();
-
-        format.write(id - 129);
-        format.write(subId);
-
-        for (byte[] data : dataArray) {
-
-            format.write(31);
-
-            try {
-
-                format.write(data);
-
-            } catch (IOException ignored) {
-            }
-
-        }
-
-        format.write(dataArray.length - 128);
-
-        byte[] data = format.toByteArray();
-
-        byte[] zlibData = ZipUtil.zlib(data, 9);
-
-        return data.length < zlibData.length ? data : zlibData;
-
-    }
-
-    public static byte[][] readData(byte[] data) {
-
-        int length = data[data.length - 1] + 128;
-
-        data = ArrayUtil.sub(data, 3, data.length - 1);
-
-        byte[][] arr = new byte[length][];
-
-        int current = 0;
-
-        ByteArrayOutputStream cache = new ByteArrayOutputStream();
-
-        for (int index = 0; index < data.length; index++) {
-
-            if (data[index] == 31) {
-
-                arr[current] = cache.toByteArray();
-
-                cache = new ByteArrayOutputStream();
-
-            } else {
-
-                cache.write(data[index]);
-
-                if (index == data.length - 1 && current == arr.length - 1) {
-
-                    arr[current] = cache.toByteArray();
-
-                }
-
-            }
-
-        }
-
-        return arr;
-
-    }
-
-    public static void finishEvent() {
-
-        // 拦截 Event
-
-        throw new TdHandler.Break();
-
-    }
-
-    public static void rejectFunction() {
-
-        // 跳出 Function / Payload, 作为普通消息处理
-
-        throw new TdHandler.Reject();
-
-    }
 
     public static boolean isPrivate(long chatId) {
 
@@ -402,28 +328,24 @@ public class Fn {
 
     }
 
-    public static FormattedText plainText(String text, java.lang.Object... params) {
+    public static FormattedText plainText(String text, Object... params) {
 
         return new FormattedText(StrUtil.format(text, params), new TextEntity[0]);
 
     }
 
 
-    public static FormattedText parseHtml(String text, java.lang.Object... params) {
+    public static FormattedText parseHtml(String text, Object... params) {
 
         return MessageFactoryKt.getAsHtml(StrUtil.format(text, params));
 
     }
-
-    /*
 
     public static FormattedText parseMarkdown(String text, java.lang.Object... params) {
 
         return Launcher.INSTANCE.sync(new ParseTextEntities(StrUtil.format(text, params), new TextParseModeMarkdown()));
 
     }
-
-    */
 
     public static SendMessage sendText(long chatId, FormattedText inputMessageContent) {
 
@@ -961,35 +883,35 @@ public class Fn {
 
     }
 
-    public static AnswerCallbackQuery answerText(long queryId, String text, java.lang.Object... params) {
+    public static AnswerCallbackQuery answerText(long queryId, String text, Object... params) {
 
         return answerText(queryId, 0, text, params);
     }
 
-    public static AnswerCallbackQuery answerText(long queryId, int cacheTime, String text, java.lang.Object... params) {
+    public static AnswerCallbackQuery answerText(long queryId, int cacheTime, String text, Object... params) {
 
         return new AnswerCallbackQuery(queryId, StrUtil.format(text, params), false, null, cacheTime);
 
     }
 
-    public static AnswerCallbackQuery answerAlert(long queryId, String alert, java.lang.Object... params) {
+    public static AnswerCallbackQuery answerAlert(long queryId, String alert, Object... params) {
 
         return answerAlert(queryId, 0, alert, params);
     }
 
-    public static AnswerCallbackQuery answerAlert(long queryId, int cacheTime, String alert, java.lang.Object... params) {
+    public static AnswerCallbackQuery answerAlert(long queryId, int cacheTime, String alert, Object... params) {
 
         return new AnswerCallbackQuery(queryId, StrUtil.format(alert, params), true, null, cacheTime);
 
     }
 
-    public static AnswerCallbackQuery answerUrl(long queryId, String url, java.lang.Object... params) {
+    public static AnswerCallbackQuery answerUrl(long queryId, String url, Object... params) {
 
         return answerUrl(queryId, 0, url, params);
 
     }
 
-    public static AnswerCallbackQuery answerUrl(long queryId, int cacheTime, String url, java.lang.Object... params) {
+    public static AnswerCallbackQuery answerUrl(long queryId, int cacheTime, String url, Object... params) {
 
         return new AnswerCallbackQuery(queryId, null, false, StrUtil.format(url, params), cacheTime);
 
@@ -1159,23 +1081,14 @@ public class Fn {
 
     }
 
-    public static String parseError(Throwable error) {
 
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-
-        error.printStackTrace(new PrintWriter(out, true));
-
-        return StrUtil.utf8Str(out);
-
-    }
-
-    public static String b(java.lang.Object text) {
+    public static String b(Object text) {
 
         return "<b>" + HtmlUtil.escape(text == null ? "" : text.toString()) + "</b>";
 
     }
 
-    public static String i(java.lang.Object text) {
+    public static String i(Object text) {
 
         return "<i>" + HtmlUtil.escape(text == null ? "" : text.toString()) + "</i>";
 
@@ -1213,7 +1126,7 @@ public class Fn {
 
     }
 
-    public static String code(java.lang.Object code) {
+    public static String code(Object code) {
 
         return "<code>" + HtmlUtil.escape(code == null ? "null" : code.toString()) + "</code>";
 
@@ -1349,9 +1262,9 @@ public class Fn {
 
     }
 
-    public static LinkedList<twitter4j.User> fetchUsers(Twitter api, Collection<Long> ids) throws TwitterException {
+    public static LinkedList<User> fetchUsers(Twitter api, Collection<Long> ids) throws TwitterException {
 
-        LinkedList<twitter4j.User> users = new LinkedList<>();
+        LinkedList<User> users = new LinkedList<>();
 
         while (!ids.isEmpty()) {
 
@@ -1381,6 +1294,8 @@ public class Fn {
 
     }
 
+    */
+
     public static Twitter mkApi(String apiKey, String apiSecret) {
 
         return new TwitterFactory(new ConfigurationBuilder().setOAuthConsumerKey(apiKey).setOAuthConsumerSecret(apiSecret).build()).getInstance();
@@ -1392,6 +1307,8 @@ public class Fn {
         return new TwitterFactory(new ConfigurationBuilder().setOAuthConsumerKey(apiKey).setOAuthConsumerSecret(apiSecret).setOAuthAccessToken(accessToken).setOAuthAccessTokenSecret(accessTokenSecret).build()).getInstance();
 
     }
+
+    /*
 
     public static LinkedList<Long> fetchFollowerIDs(Twitter api) throws TwitterException {
 
@@ -1492,6 +1409,8 @@ public class Fn {
         return ids;
 
     }
+
+     */
 
     public static String parseTwitterException(Lang L, TwitterException ex) {
 
@@ -1646,26 +1565,81 @@ public class Fn {
 
     }
 
-    public static class DataId {
+    public static byte[] mkData(int id, int subId, byte[]... dataArray) {
 
-        public static int _1 = 1;
-        public static int _2 = 2;
-        public static int _3 = 3;
-        public static int _4 = 4;
-        public static int _5 = 5;
-        public static int _6 = 6;
+        ByteArrayOutputStream format = new ByteArrayOutputStream();
+
+        format.write(id - 128);
+        format.write(subId - 128);
+
+        for (byte[] data : dataArray) {
+
+            format.write(-1);
+
+            try {
+
+                format.write(data);
+
+            } catch (IOException ignored) {
+            }
+
+        }
+
+        format.write(dataArray.length - 128);
+
+        byte[] data = format.toByteArray();
+
+        byte[] zlibData = ZipUtil.zlib(data, 9);
+
+        return data.length < zlibData.length ? data : zlibData;
 
     }
 
-    public static class PerststId {
+    public static byte[][] readData(byte[] data) {
 
-        public static int _1 = 1;
-        public static int _2 = 2;
-        public static int _3 = 3;
-        public static int _4 = 4;
-        public static int _5 = 5;
-        public static int _6 = 6;
-        public static int _7 = 7;
+        int length = data[data.length - 1] + 128;
+
+        data = ArrayUtil.sub(data, 3, data.length - 1);
+
+        byte[][] arr = new byte[length][];
+
+        int current = 0;
+
+        ByteArrayOutputStream cache = new ByteArrayOutputStream();
+
+        for (int index = 0; index < data.length; index++) {
+
+            if (data[index] == -1) {
+
+                arr[current] = cache.toByteArray();
+
+                cache = new ByteArrayOutputStream();
+
+            } else {
+
+                cache.write(data[index]);
+
+                if (index == data.length - 1 && current == arr.length - 1) {
+
+                    arr[current] = cache.toByteArray();
+
+                }
+
+            }
+
+        }
+
+        return arr;
+
+    }
+
+    public static String parseError(Throwable error) {
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+        error.printStackTrace(new PrintWriter(out, true));
+
+        return StrUtil.utf8Str(out);
 
     }
 
