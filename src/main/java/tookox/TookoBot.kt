@@ -34,6 +34,7 @@ import tookox.core.db.*
 import tookox.core.env.*
 import tookox.core.funs.*
 import tookox.core.utils.*
+import tookox.lottie.LottieRenderer
 import tookox.sticker.StickerExport
 import java.util.*
 import kotlin.system.exitProcess
@@ -41,6 +42,8 @@ import kotlin.system.exitProcess
 class TookoBot(botToken: String) : TdBot(botToken) {
 
     override fun onLoad() {
+
+        LottieRenderer.initDriverAsync()
 
         addHandler(BaseFuncs())
 

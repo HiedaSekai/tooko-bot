@@ -26,7 +26,6 @@ import cn.hutool.core.util.URLUtil
 import cn.hutool.json.JSONObject
 import com.baidu.aip.util.Base64Util
 import kotlinx.coroutines.*
-import org.openqa.selenium.WebDriver
 import tookox.core.env.*
 import tookox.core.utils.*
 import java.awt.Color
@@ -34,9 +33,9 @@ import java.io.ByteArrayInputStream
 import java.io.File
 import java.util.*
 
-object LottieExport {
+object LottieRenderer {
 
-    val driver by lazy {
+    private val driver by lazy {
 
         mkDriver().apply {
 
@@ -60,6 +59,9 @@ object LottieExport {
 
     }
 
+    fun initDriver() = driver
+    fun initDriverAsync() = GlobalScope.async { initDriver() }
+
     @JvmStatic
     fun main(args: Array<String>) = runBlocking<Unit> {
 
@@ -76,7 +78,7 @@ object LottieExport {
 
             deferreds.add(GlobalScope.async {
 
-                driver.renderLottie(File("D:\\sticker.json").readText(), File("D:/sticker_$it.mp4"), null)
+                renderLottie(File("D:\\sticker.json").readText(), File("D:/sticker_$it.mp4"), null)
 
             })
 

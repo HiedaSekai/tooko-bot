@@ -27,7 +27,7 @@ import tookox.core.client.*
 import tookox.core.env.*
 import tookox.core.raw.*
 import tookox.core.utils.*
-import tookox.lottie.LottieExport
+import tookox.lottie.LottieRenderer
 import java.awt.Color
 import java.io.File
 import java.util.*
@@ -82,7 +82,7 @@ class StickerExport : TdBotHandler() {
 
                     if (!cache.isFile) {
 
-                        LottieExport.renderLottie(StrUtil.utf8Str(ZipUtil.unGzip(rawFile.readBytes())), cache, null)
+                        LottieRenderer.renderLottie(StrUtil.utf8Str(ZipUtil.unGzip(rawFile.readBytes())), cache, null)
 
                         /*
 
