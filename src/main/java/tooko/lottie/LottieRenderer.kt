@@ -170,7 +170,7 @@ object LottieRenderer {
                 }
 
                 val ffArgs = listOf(
-                        "-v error",
+                       // "-v error",
                         "-stats",
                         "-hide_banner",
                         "-y",
