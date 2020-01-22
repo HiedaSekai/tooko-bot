@@ -110,7 +110,7 @@ object LottieRenderer {
             	rendererSettings: {},
             	animationData
             })
-            let numFrames = animation.getDuration()
+            let numFrames = animation.getDuration(true)
             let images = []
             for (let frame = 0; frame < numFrames; ++frame) {
                 animation.goToAndStop(frame + 1, true)
