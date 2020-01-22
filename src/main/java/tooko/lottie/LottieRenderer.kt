@@ -170,7 +170,7 @@ object LottieRenderer {
                 }
 
                 val ffArgs = listOf(
-                       // "-v error",
+                        // "-v error",
                         "-stats",
                         "-hide_banner",
                         "-y",
@@ -191,13 +191,9 @@ object LottieRenderer {
 
                 with(ffProc.outputStream) {
 
-                    runCatching {
+                    frames.forEach {
 
-                        frames.forEach {
-
-                            IoUtil.copy(ByteArrayInputStream(it), this)
-
-                        }
+                        IoUtil.copy(ByteArrayInputStream(it), this, 4096)
 
                     }
 
