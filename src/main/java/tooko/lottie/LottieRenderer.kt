@@ -29,6 +29,7 @@ import kotlinx.coroutines.*
 import tooko.core.env.Env
 import tooko.core.env.Img
 import tooko.core.utils.mkAsync
+import tooko.core.utils.mkTimeCount
 import java.awt.Color
 import java.io.ByteArrayInputStream
 import java.io.File
@@ -64,16 +65,15 @@ object LottieRenderer {
     @JvmStatic
     fun main(args: Array<String>) = runBlocking<Unit> {
 
-        var start = System.currentTimeMillis()
+        var time = mkTimeCount()
 
         driver
 
-        println("init: ${(System.currentTimeMillis() - start) / 1000}s")
-        start = System.currentTimeMillis()
+        time.printTime("init: ")
 
         val deferreds = LinkedList<Deferred<Unit>>()
 
-        (1..4).forEach {
+        (1..1).forEach {
 
             deferreds.add(GlobalScope.async {
 
@@ -85,11 +85,13 @@ object LottieRenderer {
 
         deferreds.awaitAll()
 
-        println("finish: ${(System.currentTimeMillis() - start) / 1000}s")
+        time.printTime("all: ")
 
     }
 
     suspend fun renderLottie(jsonStr: String, outputMp4: File?, outputGif: File?) {
+
+        val time = mkTimeCount()
 
         val json = JSONObject(jsonStr)
 
@@ -98,7 +100,7 @@ object LottieRenderer {
         val height = json.getInt("h")
 
         @Suppress("UNCHECKED_CAST")
-        val frames = (driver.execute("""
+        val strs = (driver.execute("""
             let animationData = $jsonStr
             let sticker = document.createElement("div")
             document.body.appendChild(sticker)
@@ -118,11 +120,19 @@ object LottieRenderer {
             }
             document.body.removeChild(sticker)
             return images
-        """.trimIndent()) as List<String>).map {
+        """.trimIndent()) as List<String>)
+
+        time.printTime("load: ")
+
+        val bytes = strs.map {
 
             Base64Util.decode(it.substringAfter(","))
 
-        }.map {
+        }
+
+        time.printTime("decode: ")
+
+        val frames = bytes.map {
 
             val img = ImgUtil.read(ByteArrayInputStream(it))
 
@@ -134,7 +144,9 @@ object LottieRenderer {
 
         }
 
-        val async = mkAsync<Int>()
+        time.printTime("render: ")
+
+        val async = mkAsync<Unit>()
 
         if (outputMp4 != null) {
 
@@ -187,13 +199,16 @@ object LottieRenderer {
 
                 }
 
+                time.printTime("write: ")
+
                 IoUtil.readLines(IoUtil.getReader(ffProc.inputStream, CharsetUtil.CHARSET_UTF_8), LineHandler {
 
                     println(it)
 
                 })
 
-                ffProc.waitFor()
+                //ffProc.waitFor()
+
 
             }
 
@@ -231,7 +246,7 @@ object LottieRenderer {
 
                 })
 
-                skiProc.waitFor()
+                // skiProc.waitFor()
 
             }
 
