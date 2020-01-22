@@ -193,7 +193,7 @@ object LottieRenderer {
 
                     frames.forEach {
 
-                        IoUtil.copy(ByteArrayInputStream(it), this, 4096)
+                        IoUtil.copy(ByteArrayInputStream(it), this, 1024)
 
                     }
 
