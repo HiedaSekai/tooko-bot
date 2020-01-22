@@ -176,7 +176,7 @@ object LottieRenderer {
                         "-y",
                         "-f image2pipe",
                         "-c:v png",
-                        "-r $fps",
+                        "-framerate $fps",
                         "-i -",
                         "-vf $scale",
                         "-c:v libx264",
@@ -193,7 +193,7 @@ object LottieRenderer {
 
                     frames.forEach {
 
-                        IoUtil.copy(ByteArrayInputStream(it), this, 1024)
+                        write(it)
 
                     }
 
