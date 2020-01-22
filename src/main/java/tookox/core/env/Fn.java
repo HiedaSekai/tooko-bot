@@ -19,6 +19,7 @@ package tookox.core.env;
 import cn.hutool.core.collection.*;
 import cn.hutool.core.util.*;
 import twitter4j.*;
+import twitter4j.conf.*;
 
 import java.io.*;
 import java.util.*;
@@ -1293,6 +1294,8 @@ public class Fn {
 
     }
 
+    */
+
     public static Twitter mkApi(String apiKey, String apiSecret) {
 
         return new TwitterFactory(new ConfigurationBuilder().setOAuthConsumerKey(apiKey).setOAuthConsumerSecret(apiSecret).build()).getInstance();
@@ -1304,6 +1307,8 @@ public class Fn {
         return new TwitterFactory(new ConfigurationBuilder().setOAuthConsumerKey(apiKey).setOAuthConsumerSecret(apiSecret).setOAuthAccessToken(accessToken).setOAuthAccessTokenSecret(accessTokenSecret).build()).getInstance();
 
     }
+
+    /*
 
     public static LinkedList<Long> fetchFollowerIDs(Twitter api) throws TwitterException {
 

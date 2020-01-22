@@ -179,6 +179,12 @@ class InlineButtonBuilder : LinkedList<InlineButtonBuilder.Line>(), Builder<Repl
 
         }
 
+        fun textButton(text: String) {
+
+            add(InlineKeyboardButton(text, InlineKeyboardButtonTypeCallback(byteArrayOf())))
+
+        }
+
     }
 
     fun newLine(block: (Line.() -> Unit)? = null): Line {
@@ -202,6 +208,8 @@ class InlineButtonBuilder : LinkedList<InlineButtonBuilder.Line>(), Builder<Repl
     fun switchLine(text: String, query: String, inCurrentChat: Boolean = true) = newLine().switchButton(text, query, inCurrentChat)
 
     fun dataLine(text: String, id: Int, subId: Int, vararg dataArray: ByteArray) = newLine().dataButton(text, id, subId, *dataArray)
+
+    fun textLine(text: String) = newLine().textButton(text)
 
     override fun build(): ReplyMarkupInlineKeyboard {
 

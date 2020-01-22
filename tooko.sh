@@ -156,7 +156,7 @@ elif [ "$1" == "run" ]; then
 
   [ -d "target/classes" ] || mvn compile
 
-  mvn exec:java -Dexec.mainClass="tookox.Launcher"
+  mvn exec:java -Dexec.mainClass="tooko.Launcher"
 
 elif [ "$1" == "start" ]; then
 

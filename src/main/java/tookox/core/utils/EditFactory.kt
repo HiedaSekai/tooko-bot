@@ -20,8 +20,7 @@ package tookox.core.utils
 
 import kotlinx.coroutines.CoroutineScope
 import td.TdApi.*
-import tookox.core.client.TdAbsHandler
-import tookox.core.client.TdCallback
+import tookox.core.client.*
 
 class EditButtonFactory(val context: TdAbsHandler) {
 
@@ -99,6 +98,16 @@ infix fun TdAbsHandler.makeInlineButton(block: (InlineButtonBuilder.() -> Unit)?
             replyMarkupInlineKeyboard = builder.build()
 
         }
+
+    }
+
+}
+
+infix fun TdAbsHandler.makeInlineButton(buttons: ReplyMarkupInlineKeyboard): EditButtonFactory {
+
+    return EditButtonFactory(this).apply {
+
+        replyMarkupInlineKeyboard = buttons
 
     }
 

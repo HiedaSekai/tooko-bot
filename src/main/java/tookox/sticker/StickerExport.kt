@@ -18,14 +18,16 @@ package tookox.sticker
 
 import cn.hutool.core.img.ImgUtil
 import cn.hutool.core.io.FileUtil
-import cn.hutool.core.util.RuntimeUtil
+import cn.hutool.core.util.StrUtil
 import cn.hutool.core.util.ZipUtil
 import kotlinx.coroutines.*
 import td.TdApi.*
 import tookox.core.*
 import tookox.core.client.*
 import tookox.core.env.*
+import tookox.core.raw.*
 import tookox.core.utils.*
+import tookox.lottie.LottieExport
 import java.awt.Color
 import java.io.File
 import java.util.*
@@ -33,7 +35,9 @@ import java.util.concurrent.atomic.AtomicInteger
 
 class StickerExport : TdBotHandler() {
 
-    override fun onLoad() = initData(DATA_1)
+    val DATA_ID = DATA_1
+
+    override fun onLoad() = initData(DATA_ID)
 
     override suspend fun onNewMessage(userId: Int, chatId: Long, message: Message) {
 
@@ -55,17 +59,19 @@ class StickerExport : TdBotHandler() {
 
             }
 
-            with(sudo make {}) {
+            with(sudo make {
+
+                replyMarkup = inlineButton {
+
+                    dataLine(L.STICKER_EXPORT, DATA_ID, if (!sticker.isAnimated) 0 else 1, sticker.setId.asByteArray)
+
+                }
+
+            }) {
 
                 if (!sticker.isAnimated) {
 
                     inputPhoto = stickerFile.local.path!!
-
-                    replyMarkup = inlineButton {
-
-                        dataLine(L.STICKER_EXPORT, DATA_1, 0, sticker.setId.asByteArray)
-
-                    }
 
                 } else {
 
@@ -76,11 +82,15 @@ class StickerExport : TdBotHandler() {
 
                     if (!cache.isFile) {
 
-                        cache.parentFile.mkdirs()
+                        LottieExport.renderLottie(StrUtil.utf8Str(ZipUtil.unGzip(rawFile.readBytes())), cache, null)
+
+                        /*
 
                         val json = Env.getFile("cache/tgs2json/$stickerId.json")
 
                         FileUtil.writeBytes(ZipUtil.unGzip(rawFile.readBytes()), json)
+
+
 
                         val shell = "puppeteer-lottie -i ${json.path} -o ${cache.path}"
 
@@ -99,6 +109,8 @@ class StickerExport : TdBotHandler() {
                             return
 
                         }
+
+                                 */
 
                     }
 
@@ -120,11 +132,85 @@ class StickerExport : TdBotHandler() {
 
     }
 
+    data class ExportOptions(val anim: Boolean = false) {
+
+        var src = false
+
+        var jpg = true
+        var png = false
+
+        var mp4 = false
+        var gif = false
+
+    }
+
+    val options = hashMapOf<Int, ExportOptions>()
+
     override suspend fun onNewCallbackQuery(userId: Int, chatId: Long, messageId: Long, queryId: Long, subId: Int, data: Array<ByteArray>) = coroutineScope {
 
         val L = Lang.get(userId)
 
-        if (subId == 0) {
+        if (subId >= 10) {
+
+            val message = getMessage(chatId, messageId)
+
+            val buttons = message.replyMarkup as ReplyMarkupInlineKeyboard
+
+            val button = buttons.rows[subId - 10][1]
+
+            button.text = if (button.text == "□") {
+
+                "■"
+
+            } else {
+
+                "□"
+            }
+
+            sudo makeInlineButton buttons editTo message
+
+        } else if (subId < 3) {
+
+            sudo makeInlineButton null at chatId syncEditTo messageId
+
+            if (subId == 0) {
+
+                sudo make {
+
+                    replyMarkup = inlineButton {
+
+                        newLine {
+
+                            textButton("WebP")
+                            dataButton("□", DATA_ID, 10)
+
+                        }
+
+                        newLine {
+
+                            textButton("JPG")
+                            dataButton("■", DATA_ID, 11)
+
+                        }
+
+                        newLine {
+
+                            textButton("PNG")
+                            dataButton("□", DATA_ID, 12)
+
+                        }
+
+                        dataLine(L.STICKER_EXPORT, DATA_ID, 2, *data)
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        if (subId == 2) {
 
             launch(Dispatchers.Unconfined) {
 
