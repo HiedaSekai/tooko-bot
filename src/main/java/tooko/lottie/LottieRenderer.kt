@@ -191,14 +191,18 @@ object LottieRenderer {
 
                 with(ffProc.outputStream) {
 
-                    frames.forEach {
+                    runCatching {
 
-                        write(it)
+                        frames.forEach {
+
+                            write(it)
+
+                        }
+
+                        flush()
+                        close()
 
                     }
-
-                    flush()
-                    close()
 
                 }
 
