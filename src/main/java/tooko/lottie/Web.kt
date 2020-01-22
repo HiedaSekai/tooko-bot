@@ -27,7 +27,7 @@ import org.openqa.selenium.support.ui.WebDriverWait
 
 fun mkDriver() = ChromeDriver(ChromeOptions().addArguments(
         "--no-sandbox",
-        // "--headless",
+        "--headless",
         "user-agent=\"Mozilla/5.0 (Linux; Android 9; KazamaWataru) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.116 Mobile Safari/537.36\"",
         "--hide-scrollbars",
         "--mute-audio",
