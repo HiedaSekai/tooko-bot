@@ -187,7 +187,7 @@ object LottieRenderer {
                         "-f image2pipe",
                         "-c:v png",
                         "-framerate $fps",
-                        "-i $cacheDir/*.png",
+                        "-i $cacheDir/%d.png",
                         "-vf $scale",
                         "-c:v libx264",
                         "-profile:v main",
