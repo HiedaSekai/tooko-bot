@@ -199,7 +199,11 @@ object LottieRenderer {
                         "-pix_fmt yuv420p",
                         "-an", outputMp4.path).joinToString(" ")
 
-                val ffProc = RuntimeUtil.exec("cat $cacheDir/*.png | ffmpeg $ffArgs")
+                val shell = "cat $cacheDir/*.png | ffmpeg $ffArgs"
+
+                println(shell)
+
+                val ffProc = RuntimeUtil.exec("cat ${cacheDir.path}/*.png | ffmpeg $ffArgs")
 
                 /*
 
