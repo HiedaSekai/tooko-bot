@@ -148,16 +148,6 @@ object LottieRenderer {
 
         val async = mkAsync<Unit>()
 
-        val cacheDir = Env.getFile("cache/tgs_frame_cache/${UUID.fastUUID().toString(true)}")
-
-        cacheDir.mkdirs()
-
-        frames.forEachIndexed { index, byteArray ->
-
-            File(cacheDir, "$index.png").writeBytes(byteArray)
-
-        }
-
         if (outputMp4 != null) {
 
             @Suppress("BlockingMethodInNonBlockingContext")
@@ -187,8 +177,8 @@ object LottieRenderer {
                         "-y",
                         "-f image2pipe",
                         "-c:v png",
-                        "-framerate $fps",
-                        "-i $cacheDir/*.png",
+                        "-f $fps",
+                        "-i -",
                         "-vf $scale",
                         "-c:v libx264",
                         "-profile:v main",
