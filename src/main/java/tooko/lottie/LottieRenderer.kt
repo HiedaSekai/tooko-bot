@@ -193,7 +193,11 @@ object LottieRenderer {
 
                     runCatching {
 
-                        frames.forEach { write(it) }
+                        frames.forEach {
+
+                            IoUtil.copy(ByteArrayInputStream(it), this)
+
+                        }
 
                     }
 

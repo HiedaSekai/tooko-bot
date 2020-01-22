@@ -21,6 +21,7 @@ package tooko.core
 import cn.hutool.core.collection.CollUtil
 import cn.hutool.core.util.ArrayUtil
 import cn.hutool.core.util.StrUtil
+import java.io.OutputStream
 import java.math.BigInteger
 import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
@@ -104,3 +105,8 @@ operator fun AtomicBoolean.setValue(thisRef: Any?, property: KProperty<*>, value
 
 operator fun AtomicInteger.getValue(thisRef: Any?, property: KProperty<*>): Int = get()
 operator fun AtomicInteger.setValue(thisRef: Any?, property: KProperty<*>, value: Int) = set(value)
+
+fun OutputStream.writeByteArray(array: ByteArray) {
+
+
+}
