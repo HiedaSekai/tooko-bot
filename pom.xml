@@ -9,9 +9,6 @@
     <artifactId>tooko-bot</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>extra/api-gen</module>
-    </modules>
 
     <repositories>
 
