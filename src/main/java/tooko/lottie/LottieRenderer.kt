@@ -51,10 +51,6 @@ object LottieRenderer {
 """
             get("data:text/html;charset=utf-8,${URLUtil.encode(html)}")
 
-        }.apply {
-
-            RuntimeUtil.addShutdownHook { close() }
-
         }
 
     }
