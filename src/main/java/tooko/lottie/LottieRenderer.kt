@@ -154,7 +154,7 @@ object LottieRenderer {
 
         frames.forEachIndexed { index, byteArray ->
 
-            File(cacheDir, "${index + 1}.png").writeBytes(byteArray)
+            File(cacheDir, "$index.png").writeBytes(byteArray)
 
         }
 
@@ -179,7 +179,8 @@ object LottieRenderer {
 
                 }
 
-                val ffArgs = listOf(
+                val ffArgs = arrayOf(
+                        "ffmpeg",
                         // "-v error",
                         "-stats",
                         "-hide_banner",
@@ -187,7 +188,7 @@ object LottieRenderer {
                         "-f image2pipe",
                         "-c:v png",
                         "-framerate $fps",
-                        "-i -",
+                        "-i $cacheDir/*.png",
                         "-vf $scale",
                         "-c:v libx264",
                         "-profile:v main",
@@ -195,15 +196,9 @@ object LottieRenderer {
                         "-crf 20",
                         "-movflags faststart",
                         "-pix_fmt yuv420p",
-                        "-an", outputMp4.path).joinToString(" ")
+                        "-an", outputMp4.path)
 
-                val shell = "bash -c \"cat $cacheDir/*.png | ffmpeg $ffArgs\""
-
-                println(shell)
-
-                val ffProc = RuntimeUtil.exec(shell)
-
-                /*
+                val ffProc = RuntimeUtil.exec(*ffArgs)
 
                 with(ffProc.outputStream) {
 
@@ -217,8 +212,6 @@ object LottieRenderer {
                     close()
 
                 }
-
-                 */
 
                 time.printTime("write: ")
 
