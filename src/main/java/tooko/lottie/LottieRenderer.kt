@@ -154,7 +154,7 @@ object LottieRenderer {
 
         frames.forEachIndexed { index, byteArray ->
 
-            File(cacheDir, "$index.png").writeBytes(byteArray)
+            File(cacheDir, "${index + 1}.png").writeBytes(byteArray)
 
         }
 
@@ -187,7 +187,9 @@ object LottieRenderer {
                         "-f image2pipe",
                         "-c:v png",
                         "-framerate $fps",
-                        "-i $cacheDir/%d.png",
+                        "-pattern_type glob",
+                        "-start_number 0",
+                        "-i -",
                         "-vf $scale",
                         "-c:v libx264",
                         "-profile:v main",
@@ -197,7 +199,7 @@ object LottieRenderer {
                         "-pix_fmt yuv420p",
                         "-an", outputMp4.path).joinToString(" ")
 
-                val ffProc = RuntimeUtil.exec("ffmpeg $ffArgs")
+                val ffProc = RuntimeUtil.exec("cat $cacheDir/*.png | ffmpeg $ffArgs")
 
                 /*
 
