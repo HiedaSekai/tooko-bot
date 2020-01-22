@@ -187,8 +187,6 @@ object LottieRenderer {
                         "-f image2pipe",
                         "-c:v png",
                         "-framerate $fps",
-                        "-pattern_type glob",
-                        "-start_number 0",
                         "-i -",
                         "-vf $scale",
                         "-c:v libx264",
@@ -199,11 +197,11 @@ object LottieRenderer {
                         "-pix_fmt yuv420p",
                         "-an", outputMp4.path).joinToString(" ")
 
-                val shell = "cat $cacheDir/*.png | ffmpeg $ffArgs"
+                val shell = "bash -c \"cat $cacheDir/*.png | ffmpeg $ffArgs\""
 
                 println(shell)
 
-                val ffProc = RuntimeUtil.exec("cat ${cacheDir.path}/*.png | ffmpeg $ffArgs")
+                val ffProc = RuntimeUtil.exec(shell)
 
                 /*
 
