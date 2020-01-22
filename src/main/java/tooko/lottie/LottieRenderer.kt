@@ -26,8 +26,9 @@ import cn.hutool.core.util.URLUtil
 import cn.hutool.json.JSONObject
 import com.baidu.aip.util.Base64Util
 import kotlinx.coroutines.*
-import tooko.core.env.*
-import tooko.core.utils.*
+import tooko.core.env.Env
+import tooko.core.env.Img
+import tooko.core.utils.mkAsync
 import java.awt.Color
 import java.io.ByteArrayInputStream
 import java.io.File
@@ -57,6 +58,8 @@ object LottieRenderer {
 
     fun initDriver() = driver
     fun initDriverAsync() = GlobalScope.async { initDriver() }
+
+    fun closeDriver() = driver.close()
 
     @JvmStatic
     fun main(args: Array<String>) = runBlocking<Unit> {

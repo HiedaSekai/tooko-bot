@@ -26,14 +26,21 @@ import tooko.agent.AgentImage
 import tooko.agent.BotFlood
 import tooko.agent.fmt.TestNumberFormat
 import tooko.agent.stickers.SyncStickers
-import tooko.core.*
-import tooko.core.agent.*
-import tooko.core.bots.*
-import tooko.core.client.*
-import tooko.core.db.*
-import tooko.core.env.*
-import tooko.core.funs.*
-import tooko.core.utils.*
+import tooko.core.agent.AgentTransfer
+import tooko.core.agent.CreateAgent
+import tooko.core.bots.BotData
+import tooko.core.bots.BotImage
+import tooko.core.bots.BotPanel
+import tooko.core.bots.CreateBot
+import tooko.core.client.TdBot
+import tooko.core.client.TdException
+import tooko.core.db.CacheTable
+import tooko.core.defaultLog
+import tooko.core.env.Env
+import tooko.core.funs.BaseFuncs
+import tooko.core.funs.LICENCE
+import tooko.core.langFor
+import tooko.core.utils.makeHtml
 import tooko.lottie.LottieRenderer
 import tooko.sticker.StickerExport
 import java.util.*
@@ -120,6 +127,8 @@ class TookoBot(botToken: String) : TdBot(botToken) {
         super.onDestroy()
 
         CacheTable.cachedTables.forEach { it.saveAll() }
+
+        LottieRenderer.closeDriver()
 
     }
 
