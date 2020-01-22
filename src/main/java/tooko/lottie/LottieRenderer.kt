@@ -65,7 +65,7 @@ object LottieRenderer {
     @JvmStatic
     fun main(args: Array<String>) = runBlocking<Unit> {
 
-        var time = mkTimeCount()
+        val time = mkTimeCount()
 
         driver
 
@@ -122,7 +122,7 @@ object LottieRenderer {
             return images
         """.trimIndent()) as List<String>)
 
-        time.printTime("load: ")
+        time.printTime("${strs.size} loaded : ")
 
         val bytes = strs.map {
 
