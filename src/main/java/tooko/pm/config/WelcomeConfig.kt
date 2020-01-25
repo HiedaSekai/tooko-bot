@@ -268,7 +268,7 @@ class WelcomeConfig : TdBotHandler() {
 
             }
 
-            sudo.data.payloads[params[1]]!!
+            sudo.data.payloads[params[0]]!!
 
         } else {
 
