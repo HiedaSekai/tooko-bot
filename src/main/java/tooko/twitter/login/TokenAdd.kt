@@ -137,48 +137,36 @@ class TokenAdd : TdBotHandler() {
 
         val apiToken = Env.TWITTER_API_TOKENS[0]
 
-        var api = apiToken.mkAppApi()
+        var api = apiToken.mkApi()
 
-        val accountId = api.showUser(screenName).id
+        sudo make L.TWI_GEN_API editTo status
 
-        if (AccessToken.DATA.containsId(accountId)) {
+        val requestToken = api.getOAuthRequestToken("oob")
 
-            api = AccessToken.getByAccountId(accountId)!!.mkApi()
+        driver.get(requestToken.authenticationURL)
 
-        } else {
+        driver.waitForId("allow").click()
 
-            sudo make L.TWI_GEN_API sendTo chatId
+        val code = driver.waitForTag("code").text
 
-            api = apiToken.mkApi()
+        val accessToken = api.getOAuthAccessToken(code)
 
-            val requestToken = api.getOAuthRequestToken("oob")
+        val account = AccessToken()
 
-            driver.get(requestToken.authenticationURL)
+        account.owner = userId
+        account.accountId = accessToken.userId
+        account.apiKey = apiToken.apiKey
+        account.apiSecretKey = apiToken.apiSecretKey
+        account.accessToken = accessToken.token
+        account.accessTokenSecret = accessToken.tokenSecret
 
-            driver.waitForId("allow").click()
+        AccessToken.DATA.setById(account.accountId, account)
 
-            val code = driver.waitForTag("code").text
-
-            val accessToken = api.getOAuthAccessToken(code)
-
-            val account = AccessToken()
-
-            account.owner = userId
-            account.accountId = accountId
-            account.apiKey = apiToken.apiKey
-            account.apiSecretKey = apiToken.apiSecretKey
-            account.accessToken = accessToken.token
-            account.accessTokenSecret = accessToken.tokenSecret
-
-            AccessToken.DATA.setById(accountId, account)
-
-            api = account.mkApi()
-
-        }
+        api = account.mkApi()
 
         driver.close()
 
-        sudo makeHtml L.TWI_WELCOME.input(api.verifyCredentials().asInlineMention) sendTo chatId
+        sudo makeHtml L.TWI_WELCOME.input(api.verifyCredentials().asInlineMention) editTo status
 
     }
 
