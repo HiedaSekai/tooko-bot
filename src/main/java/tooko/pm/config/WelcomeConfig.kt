@@ -100,7 +100,7 @@ class WelcomeConfig : TdBotHandler() {
 
         cache[userId] = edit
 
-        writePersist(userId, PERSISTD_ID, allowFunction = false)
+        writePersist(userId, PERSISTD_ID, true)
 
         sudo make L.PM_WELCOME_INPUT sendTo chatId
 

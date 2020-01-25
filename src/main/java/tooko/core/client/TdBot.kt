@@ -231,7 +231,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir("data/${botToken.s
 
                     }
 
-                    if (persist.allowFuction) {
+                    if (!persist.allowFuction && persist.allowCancel) {
 
                         sudo removePersist userId
 

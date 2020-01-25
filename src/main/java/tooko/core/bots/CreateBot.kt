@@ -17,9 +17,13 @@
 package tooko.core.bots
 
 import td.TdApi
-import tooko.core.*
-import tooko.core.client.*
-import tooko.core.env.*
+import tooko.core.PERSIST_1
+import tooko.core.client.TdBotHandler
+import tooko.core.env.Env
+import tooko.core.env.Lang
+import tooko.core.input
+import tooko.core.langFor
+import tooko.core.text
 import tooko.core.utils.*
 import com.pengrad.telegrambot.request.GetMe as HttpGetMe
 
