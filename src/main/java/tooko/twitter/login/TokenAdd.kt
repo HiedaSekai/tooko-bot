@@ -26,6 +26,7 @@ import tooko.lottie.mkTwitterDriver
 import tooko.lottie.waitForId
 import tooko.lottie.waitForTag
 import tooko.twitter.AccessToken
+import tooko.twitter.AuthToken
 import tooko.twitter.login.test.TokenAddTest
 
 class TokenAdd : TdBotHandler() {
@@ -137,6 +138,14 @@ class TokenAdd : TdBotHandler() {
         account.accessTokenSecret = accessToken.tokenSecret
 
         AccessToken.DATA.setById(account.accountId, account)
+
+        val token = AuthToken()
+
+        token.owner = userId
+        token.accountId = account.accountId
+        token.authToken = authToken
+
+        AuthToken.DATA.setById(account.accountId, token)
 
         api = account.mkApi()
 
