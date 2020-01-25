@@ -147,6 +147,8 @@ class TokenAdd : TdBotHandler() {
 
             sudo make L.TWI_GEN_API sendTo chatId
 
+            api = apiToken.mkApi()
+
             val requestToken = api.getOAuthRequestToken("oob")
 
             driver.get(requestToken.authenticationURL)
