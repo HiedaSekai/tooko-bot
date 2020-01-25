@@ -25,13 +25,13 @@ import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
 
-fun mkDriver(android: Boolean = false) = ChromeDriver(ChromeOptions().apply {
+fun mkDriver(android: Boolean = false, test: Boolean = false) = ChromeDriver(ChromeOptions().apply {
 
     if (android) addArguments("user-agent=\"Mozilla/5.0 (Linux; Android 9; KazamaWataru) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.116 Mobile Safari/537.36\"")
+    if (!test) addArguments("--headless")
 
 }.addArguments(
         "--no-sandbox",
-        // "--headless",
         "--hide-scrollbars",
         "--mute-audio",
         "--disable-background-networking",

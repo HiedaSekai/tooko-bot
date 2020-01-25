@@ -170,6 +170,8 @@ class TokenAdd : TdBotHandler() {
 
         }
 
+        driver.close()
+
         sudo makeHtml L.TWI_WELCOME.input(api.verifyCredentials().asInlineMention) sendTo chatId
 
     }
