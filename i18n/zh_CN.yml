@@ -361,7 +361,7 @@ TWI_HTTP_500_502_504: Twitter 炸了.
 TWI_HTTP_503: Twitter 服务器超载.
 
 TWI_INPUT_TOKEN: |-
-  $请输入 auth_token cookie ( [提取教程](https://wataru.moe/how-to-get-twitter-auth-token/ ) :
+  $请输入 auth_token cookie ( [提取教程](https://wataru.moe/how-to-get-twitter-auth-token/) ) :
 TWI_CHECKING: 正在检查 这可能需要几分钟的时间...
 TWI_INVALID_TOKEN: 无效的 auth_token.
 TWI_GEN_API: 正在创建Api接口 这可能需要几分钟的时间...
