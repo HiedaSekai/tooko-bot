@@ -51,7 +51,7 @@ class TookoBot(botToken: String) : TdBot(botToken) {
 
     override fun onLoad() {
 
-        LottieRenderer.initDriverAsync()
+        // LottieRenderer.initDriverAsync()
 
         addHandler(BaseFuncs())
 

@@ -21,11 +21,16 @@ import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.chrome.ChromeDriverService
 import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
 
-fun mkDriver(android: Boolean = false, test: Boolean = false) = ChromeDriver(ChromeOptions().apply {
+private val service = ChromeDriverService.Builder()
+        .withSilent(true)
+        .build()
+
+fun mkDriver(android: Boolean = false, test: Boolean = false) = ChromeDriver(service, ChromeOptions().apply {
 
     if (android) addArguments("user-agent=\"Mozilla/5.0 (Linux; Android 9; KazamaWataru) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.116 Mobile Safari/537.36\"")
     if (!test) addArguments("--headless")

@@ -106,9 +106,11 @@ class TokenAdd : TdBotHandler() {
 
     }
 
-    fun checkTwitterAuthToken(userId: Int, chatId: Long, authToken: String) {
+    suspend fun checkTwitterAuthToken(userId: Int, chatId: Long, authToken: String) {
 
         val L = userId.langFor
+
+        val status = sudo make L.TWI_CHECKING syncTo chatId
 
         val driver = mkDriver()
 
