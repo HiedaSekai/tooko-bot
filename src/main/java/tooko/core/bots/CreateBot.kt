@@ -53,7 +53,7 @@ class CreateBot : TdBotHandler() {
 
                 val count = BotData.DATA.countByField("owner", userId)
 
-                if (count >= Env.BOT_CREATE_MAX) {
+                if (Env.BOT_CREATE_MAX != -1 && count >= Env.BOT_CREATE_MAX) {
 
                     sudo make L.ERR_LIMIT sendTo chatId
 
