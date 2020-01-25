@@ -14,19 +14,35 @@
  * limitations under the License.
  */
 
-package tooko.twitter
+package tooko.twitter.login
 
-import tooko.core.client.TdBot
-import tooko.twitter.login.TokenAdd
-import tooko.twitter.report.UserReport
+import td.TdApi
+import tooko.core.PERSIST_4
+import tooko.core.client.TdBotHandler
 
-class TwitterBot(botToken: String) : TdBot(botToken) {
+class TokenLogin : TdBotHandler() {
+
+    val PERSIST_ID = PERSIST_4
 
     override fun onLoad() {
 
-        addHandler(TokenAdd())
+        initFunction("login")
 
-        addHandler(UserReport())
+        initPersist(PERSIST_ID)
+
+    }
+
+    override suspend fun onFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
+
+
+    }
+
+    companion object {
+
+        suspend fun suspendLogin() {
+
+
+        }
 
     }
 

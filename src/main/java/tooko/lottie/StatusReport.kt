@@ -107,9 +107,7 @@ object StatusReport {
 
     fun newTwitterDriver(authToken: String): ChromeDriver {
 
-        val driver = mkDriver()
-
-        // GlobalScope.async(Dispatchers.IO) {
+        val driver = mkDriver(true)
 
         driver.get("https://mobile.twitter.com/")
 
@@ -117,7 +115,7 @@ object StatusReport {
                 Date(System.currentTimeMillis() + 5 * 365 * 24 * 60 * 60 * 1000L)
                 , true, true))
 
-        // }
+        driver.get("https://mobile.twitter.com/")
 
         return driver
 

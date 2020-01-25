@@ -19,6 +19,7 @@ package tooko.twitter;
 import org.bson.codecs.pojo.annotations.*;
 import tooko.core.db.*;
 import tooko.twitter.archives.*;
+import twitter4j.*;
 
 import java.util.*;
 
@@ -50,5 +51,12 @@ public class AuthToken {
         return UserA.get(accountId);
 
     }
+
+    public Twitter mkApi() {
+
+        return AccessToken.getByAccountId(accountId).mkApi();
+
+    }
+
 
 }

@@ -16,17 +16,17 @@
 
 package tooko.lottie
 
-import org.openqa.selenium.By
-import org.openqa.selenium.JavascriptExecutor
-import org.openqa.selenium.WebDriver
-import org.openqa.selenium.WebElement
+import org.openqa.selenium.*
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeDriverService
 import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
+import tooko.twitter.login.test.TokenAddTest
+import java.util.*
 
 private val service = ChromeDriverService.Builder()
+        .withVerbose(false)
         .withSilent(true)
         .build()
 
@@ -62,6 +62,33 @@ fun mkDriver(android: Boolean = false, test: Boolean = false) = ChromeDriver(ser
         "--enable-automation",
         "--password-store=basic",
         "--use-mock-keychain"))
+
+fun mkTwitterDriver(authToken: String, test: Boolean = false): ChromeDriver {
+
+    val driver = mkDriver(false, test)
+
+    driver.get("https://twitter.com")
+
+    driver.manage().addCookie(Cookie("auth_token", authToken, ".twitter.com", "/",
+            Date(System.currentTimeMillis() + 5 * 365 * 24 * 60 * 60 * 1000L)
+            , true, true))
+
+    driver.get("https://twitter.com/home")
+
+    WebDriverWait(driver, 10).until(
+
+            ExpectedConditions.or(
+                    ExpectedConditions.urlContains("login"),
+                    ExpectedConditions.elementToBeClickable(By.xpath(TokenAddTest.userPage))
+            )
+
+    )
+
+    check(!driver.currentUrl.contains("login")) { "Invalid Token." }
+
+    return driver
+
+}
 
 fun WebDriver.waitForId(id: String): WebElement {
 

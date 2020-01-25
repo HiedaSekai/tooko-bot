@@ -16,22 +16,17 @@
 
 package tooko.twitter.login
 
-import org.openqa.selenium.By
-import org.openqa.selenium.Cookie
-import org.openqa.selenium.support.ui.ExpectedConditions
-import org.openqa.selenium.support.ui.WebDriverWait
 import td.TdApi
 import tooko.core.*
 import tooko.core.client.TdBotHandler
 import tooko.core.env.Env
 import tooko.core.utils.make
 import tooko.core.utils.makeHtml
-import tooko.lottie.mkDriver
+import tooko.lottie.mkTwitterDriver
 import tooko.lottie.waitForId
 import tooko.lottie.waitForTag
 import tooko.twitter.AccessToken
 import tooko.twitter.login.test.TokenAddTest
-import java.util.*
 
 class TokenAdd : TdBotHandler() {
 
@@ -106,32 +101,13 @@ class TokenAdd : TdBotHandler() {
 
     }
 
-    suspend fun checkTwitterAuthToken(userId: Int, chatId: Long, authToken: String) {
+    private suspend fun checkTwitterAuthToken(userId: Int, chatId: Long, authToken: String) {
 
         val L = userId.langFor
 
         val status = sudo make L.TWI_CHECKING syncTo chatId
 
-        val driver = mkDriver()
-
-        driver.get("https://twitter.com")
-
-        driver.manage().addCookie(Cookie("auth_token", authToken, ".twitter.com", "/",
-                Date(System.currentTimeMillis() + 5 * 365 * 24 * 60 * 60 * 1000L)
-                , true, true))
-
-        driver.get("https://twitter.com/home")
-
-        WebDriverWait(driver, 10).until(
-
-                ExpectedConditions.or(
-                        ExpectedConditions.urlContains("login"),
-                        ExpectedConditions.elementToBeClickable(By.xpath(TokenAddTest.userPage))
-                )
-
-        )
-
-        check(!driver.currentUrl.contains("login")) { "Invalid Token." }
+        val driver = mkTwitterDriver(authToken)
 
         val screenName = driver.findElementByXPath(TokenAddTest.userPage).getAttribute("href").substringAfterLast("/")
 

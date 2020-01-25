@@ -16,17 +16,20 @@
 
 package tooko.twitter
 
-import tooko.core.client.TdBot
-import tooko.twitter.login.TokenAdd
-import tooko.twitter.report.UserReport
+import tooko.core.client.TdBotHandler
 
-class TwitterBot(botToken: String) : TdBot(botToken) {
+open class TwitterHandler : TdBotHandler() {
 
-    override fun onLoad() {
+    suspend fun requestTwitter(userId: Int): AccessToken {
 
-        addHandler(TokenAdd())
+        val accounts = AccessToken.getByOwner(userId)
 
-        addHandler(UserReport())
+        if (accounts.isEmpty()) {
+
+
+        }
+
+        TODO()
 
     }
 

@@ -1179,6 +1179,8 @@ public class Fn {
 
     }
 
+    */
+
     public static String parseScreenName(String status) {
 
         if (status.contains("/status")) status = StrUtil.subBefore(status, "/status", false);
@@ -1204,6 +1206,8 @@ public class Fn {
         return -1;
 
     }
+
+    /*
 
     public static long parseTime(String message) {
 
