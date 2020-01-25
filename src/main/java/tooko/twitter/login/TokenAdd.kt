@@ -135,7 +135,7 @@ class TokenAdd : TdBotHandler() {
 
         val apiToken = Env.TWITTER_API_TOKENS[0]
 
-        var api = apiToken.mkApi()
+        var api = apiToken.mkAppApi()
 
         val accountId = api.showUser(screenName).id
 

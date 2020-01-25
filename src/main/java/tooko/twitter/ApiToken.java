@@ -25,5 +25,11 @@ public class ApiToken {
 
     }
 
+    public Twitter mkAppApi() {
+
+        return Fn.mkAppApi(apiKey, apiSecretKey);
+
+    }
+
 }
 

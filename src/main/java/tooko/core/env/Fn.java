@@ -1303,13 +1303,31 @@ public class Fn {
 
     public static Twitter mkApi(String apiKey, String apiSecret) {
 
-        return new TwitterFactory(new ConfigurationBuilder().setOAuthConsumerKey(apiKey).setOAuthConsumerSecret(apiSecret).build()).getInstance();
+        return new TwitterFactory(new ConfigurationBuilder()
+                .setOAuthConsumerKey(apiKey)
+                .setOAuthConsumerSecret(apiSecret)
+                .build()).getInstance();
+
+    }
+
+    public static Twitter mkAppApi(String apiKey, String apiSecret) {
+
+        return new TwitterFactory(new ConfigurationBuilder()
+                .setOAuthConsumerKey(apiKey)
+                .setOAuthConsumerSecret(apiSecret)
+                .setApplicationOnlyAuthEnabled(true)
+                .build()).getInstance();
 
     }
 
     public static Twitter mkApi(String apiKey, String apiSecret, String accessToken, String accessTokenSecret) {
 
-        return new TwitterFactory(new ConfigurationBuilder().setOAuthConsumerKey(apiKey).setOAuthConsumerSecret(apiSecret).setOAuthAccessToken(accessToken).setOAuthAccessTokenSecret(accessTokenSecret).build()).getInstance();
+        return new TwitterFactory(new ConfigurationBuilder()
+                .setOAuthConsumerKey(apiKey)
+                .setOAuthConsumerSecret(apiSecret)
+                .setOAuthAccessToken(accessToken)
+                .setOAuthAccessTokenSecret(accessTokenSecret)
+                .build()).getInstance();
 
     }
 
