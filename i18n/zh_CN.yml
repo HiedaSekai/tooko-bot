@@ -153,7 +153,7 @@ PM_ON_START: |-
   {} 开启了私聊机器人 ({}).
 PM_ON_PAYLOAD: |-
   {} 使用 payload '{}'开启了机器人.
-PM_OK: 机器人正常运行. 请勿停用本机器人, 否则将无法收到消息.  [私聊机器人文档](https://gitlab.com/tooko/tooko-bot/wikis/Bots/PmBot)
+PM_OK: $机器人正常运行. 请勿停用本机器人, 否则将无法收到消息.  [私聊机器人文档](https://gitlab.com/tooko/tooko-bot/wikis/Bots/PmBot)
 PM_NO_WELCOME_MESSAGE: 默认欢迎消息
 PM_WELCOME_MESSAGE: |-
   欢迎消息: 已设定 {} 条
@@ -312,11 +312,11 @@ WAITING_LAST_FUNCTION: 请等待上一条命令执行完成.
 TWI_REMOVING: 正在移除
 TWI_ADDING: 正在添加
 TWI_BL_FINISH: |-
-  &完成 屏蔽了 {} 人 (๑•̀ㅂ•́)√
+  完成 屏蔽了 {} 人 (๑•̀ㅂ•́)√
 TWI_UB_FINISH: |-
-  &完成 取消屏蔽了 {} 人 (๑•̀ㅂ•́)√
+  完成 取消屏蔽了 {} 人 (๑•̀ㅂ•́)√
 TWI_UM_FINISH: |-
-  &完成 取消静音了 {} 人 (๑•̀ㅂ•́)√
+  完成 取消静音了 {} 人 (๑•̀ㅂ•́)√
 TWI_LIST_EMPTY: |-
   错误: 列表为空
 TWI_LIST_BUCKUP: |-
@@ -359,3 +359,9 @@ TWI_HTTP_422: 内容无效.
 TWI_HTTP_429: 请求频繁.
 TWI_HTTP_500_502_504: Twitter 炸了.
 TWI_HTTP_503: Twitter 服务器超载.
+
+TWI_INPUT_TOKEN: |-
+  $请输入 auth_token cookie ( [提取教程](https://wataru.moe/how-to-get-twitter-auth-token/ ) :
+TWI_CHECKING: 正在检查 这可能需要几分钟的时间...
+TWI_INVALID_TOKEN: 无效的 auth_token.
+TWI_GEN_API: 正在创建Api接口 这可能需要几分钟的时间...

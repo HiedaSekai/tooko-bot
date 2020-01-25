@@ -34,10 +34,13 @@ import org.bson.codecs.pojo.SubClassPropertyCodecProvider
 import org.slf4j.LoggerFactory
 import org.yaml.snakeyaml.Yaml
 import td.TdApi
-import tooko.core.*
-import tooko.core.env.*
-import tooko.core.nsfw.*
-import tooko.core.raw.*
+import tooko.core.TookoLogFactory
+import tooko.core.defaultLog
+import tooko.core.env.Env
+import tooko.core.nsfw.NSRC
+import tooko.core.nsfw.TCRC
+import tooko.core.raw.setLogVerbosityLevel
+import tooko.twitter.ApiToken
 import java.io.File
 import java.lang.Thread.UncaughtExceptionHandler
 import java.util.*
@@ -217,103 +220,85 @@ object Launcher : UncaughtExceptionHandler {
 
         Env.ADMINS = (config["admins"] as List<*>).map { (it as Number).toInt() }.toIntArray()
 
-        INSTANCE = TookoBot(Env.BOT_TOKEN)
-
-        INSTANCE.start()
-
-        if (INSTANCE.waitForAuth()) {
-
-            defaultLog.info("远子 基于 Apache License 2.0 协议发行")
-
-            val time = (System.currentTimeMillis() - startAt).toDouble() / 1000
-
-            defaultLog.info("启动完成! 用时 ${time}s.")
-
-        }
-
-        /*
-
         val twitterObj = config["twitter"]!!.toTypedMap()
 
-        if (!twitterObj.isEmpty()) {
+        try {
 
-            try {
+            checkTwitter(twitterObj)
 
-                checkTwitter(twitterObj)
+        } catch (err: IllegalStateException) {
 
-            } catch (err: IllegalStateException) {
+            defaultLog.error(err)
 
-                defaultLog.error(err)
-
-                exitProcess(100)
-
-            }
-
-            Env.TWITTER_BOT_TOKEN = twitterObj.getStr("bot_token")
-
-            Env.TWITTER_PUBLIC = twitterObj.getBool("public")
-
-            @Suppress("UNCHECKED_CAST") val apiTokenArray = twitterObj.get("api_tokens") as List<Any>?
-
-            if (apiTokenArray == null || apiTokenArray.isEmpty()) {
-
-                defaultLog.error("启用了 Twitter 子机器人, 但没有填写 Twitter Api Token 列表.")
-
-                exitProcess(100)
-
-            }
-
-            val apiTokens = arrayOfNulls<ApiToken>(apiTokenArray.size)
-
-            for (index in apiTokenArray.indices) {
-
-                val apiObj = apiTokenArray[index].toTypedMap()
-
-                if (apiObj.isEmpty()) {
-
-                    defaultLog.error("Twitter Api Token 第 {} 项格式非法.", index + 1)
-
-                    exitProcess(100)
-
-                }
-
-                val name = apiObj.getStr("name")
-
-                if (name == null) {
-
-                    defaultLog.error("Twitter Api Token 第 {} 项没有填写名称 ( name 字段 ).", index + 1)
-
-                    exitProcess(100)
-
-                }
-
-                val apiKey = apiObj.getStr("api_key")
-
-                if (apiKey == null) {
-
-                    defaultLog.error("Twitter Api Token 第 {} 项没有填写 Api Key ( api_key 字段 ).", index + 1)
-
-                    exitProcess(100)
-
-                }
-
-                val apiSecretKey = apiObj.getStr("api_secret_key")
-
-                if (apiSecretKey == null) {
-
-                    defaultLog.error("Twitter Api Token 第 {} 项没有填写 Api Secret Key ( api_secret_key 字段 ).", index + 1)
-
-                    exitProcess(100)
-
-                }
-
-                apiTokens[index] = ApiToken(name, apiKey, apiSecretKey)
-
-            }
-
-            Env.TWITTER_API_TOKENS = apiTokens
+            exitProcess(100)
 
         }
+
+        Env.TWITTER_ENABLE = twitterObj.getBool("enable")
+
+        Env.TWITTER_BOT_TOKEN = twitterObj.getStr("bot_token")
+
+        Env.TWITTER_PUBLIC = twitterObj.getBool("public")
+
+        @Suppress("UNCHECKED_CAST") val apiTokenArray = twitterObj.get("api_tokens") as List<Any>?
+
+        if (apiTokenArray == null || apiTokenArray.isEmpty()) {
+
+            defaultLog.error("启用了 Twitter 子机器人, 但没有填写 Twitter Api Token 列表.")
+
+            exitProcess(100)
+
+        }
+
+        val apiTokens = arrayOfNulls<ApiToken>(apiTokenArray.size)
+
+        for (index in apiTokenArray.indices) {
+
+            val apiObj = apiTokenArray[index].toTypedMap()
+
+            if (apiObj.isEmpty()) {
+
+                defaultLog.error("Twitter Api Token 第 {} 项格式非法.", index + 1)
+
+                exitProcess(100)
+
+            }
+
+            val name = apiObj.getStr("name")
+
+            if (name == null) {
+
+                defaultLog.error("Twitter Api Token 第 {} 项没有填写名称 ( name 字段 ).", index + 1)
+
+                exitProcess(100)
+
+            }
+
+            val apiKey = apiObj.getStr("api_key")
+
+            if (apiKey == null) {
+
+                defaultLog.error("Twitter Api Token 第 {} 项没有填写 Api Key ( api_key 字段 ).", index + 1)
+
+                exitProcess(100)
+
+            }
+
+            val apiSecretKey = apiObj.getStr("api_secret_key")
+
+            if (apiSecretKey == null) {
+
+                defaultLog.error("Twitter Api Token 第 {} 项没有填写 Api Secret Key ( api_secret_key 字段 ).", index + 1)
+
+                exitProcess(100)
+
+            }
+
+            apiTokens[index] = ApiToken(name, apiKey, apiSecretKey)
+
+        }
+
+        Env.TWITTER_API_TOKENS = apiTokens
 
         Env.NSFW_SERVER = config.getStr("nsfw_server")
 
@@ -335,7 +320,19 @@ object Launcher : UncaughtExceptionHandler {
 
         }
 
-         */
+        INSTANCE = TookoBot(Env.BOT_TOKEN)
+
+        INSTANCE.start()
+
+        if (INSTANCE.waitForAuth()) {
+
+            defaultLog.info("远子 基于 Apache License 2.0 协议发行")
+
+            val time = (System.currentTimeMillis() - startAt).toDouble() / 1000
+
+            defaultLog.info("启动完成! 用时 ${time}s.")
+
+        }
 
     }
 
@@ -401,7 +398,7 @@ object Launcher : UncaughtExceptionHandler {
     private fun checkTwitter(config: TypedMap) {
 
         val fields = arrayOf(
-                "bot_token", "public", "api_tokens")
+                "enable", "bot_token", "public", "api_tokens")
 
         for (field in fields) {
 

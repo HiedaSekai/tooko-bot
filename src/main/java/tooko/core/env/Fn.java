@@ -18,6 +18,7 @@ package tooko.core.env;
 
 import cn.hutool.core.collection.*;
 import cn.hutool.core.util.*;
+import cn.hutool.http.*;
 import twitter4j.*;
 import twitter4j.conf.*;
 
@@ -1067,7 +1068,9 @@ public class Fn {
 
     }
 
-    public static String displayName(User user) {
+    */
+
+    public static String displayName(td.TdApi.User user) {
 
         String name = user.firstName;
 
@@ -1114,7 +1117,7 @@ public class Fn {
 
     }
 
-    public static String mention(User user) {
+    public static String mention(td.TdApi.User user) {
 
         return user == null ? "" : mention(displayName(user), user.id);
 
@@ -1131,6 +1134,8 @@ public class Fn {
         return "<code>" + HtmlUtil.escape(code == null ? "null" : code.toString()) + "</code>";
 
     }
+
+    /*
 
     public static Document getFile(Message message) {
 

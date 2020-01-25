@@ -330,4 +330,9 @@ public class Lang {
             TWI_HTTP_500_502_504,
             TWI_HTTP_503;
 
+    public String TWI_INPUT_TOKEN,
+            TWI_CHECKING,
+            TWI_INVALID_TOKEN,
+            TWI_GEN_API;
+
 }

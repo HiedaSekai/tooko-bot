@@ -16,7 +16,6 @@
 
 package tooko.lottie
 
-import cn.hutool.core.img.ImgUtil
 import cn.hutool.core.io.IoUtil
 import cn.hutool.core.io.LineHandler
 import cn.hutool.core.lang.UUID
@@ -27,11 +26,8 @@ import cn.hutool.json.JSONObject
 import com.baidu.aip.util.Base64Util
 import kotlinx.coroutines.*
 import tooko.core.env.Env
-import tooko.core.env.Img
 import tooko.core.utils.mkAsync
 import tooko.core.utils.mkTimeCount
-import java.awt.Color
-import java.io.ByteArrayInputStream
 import java.io.File
 import java.util.*
 
@@ -124,13 +120,16 @@ object LottieRenderer {
 
         time.printTime("${strs.size} loaded : ")
 
-        val bytes = strs.map {
+        val frames = strs.map {
 
             Base64Util.decode(it.substringAfter(","))
 
         }
 
         time.printTime("decode: ")
+
+        /*
+
 
         val frames = bytes.map {
 
@@ -144,7 +143,7 @@ object LottieRenderer {
 
         }
 
-        time.printTime("render: ")
+         */
 
         val async = mkAsync<Unit>()
 
@@ -171,7 +170,7 @@ object LottieRenderer {
 
                 val ffArgs = arrayOf(
                         "ffmpeg",
-                        // "-v error",
+                        "-v error",
                         "-stats",
                         "-hide_banner",
                         "-y",
@@ -188,15 +187,13 @@ object LottieRenderer {
                         "-pix_fmt yuv420p",
                         "-an", outputMp4.path)
 
-                val ffProc = RuntimeUtil.exec(*ffArgs)
+                val ffProc = ProcessBuilder(*ffArgs)
+                        .redirectInput(ProcessBuilder.Redirect.PIPE)
+                        .start()
 
                 with(ffProc.outputStream) {
 
-                    frames.forEach {
-
-                        write(it)
-
-                    }
+                    frames.forEach { write(it) }
 
                     flush()
                     close()
@@ -210,9 +207,6 @@ object LottieRenderer {
                     println(it)
 
                 })
-
-                //ffProc.waitFor()
-
 
             }
 

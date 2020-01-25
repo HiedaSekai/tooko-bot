@@ -29,4 +29,6 @@ val Any.asCode get() = "<code>${HtmlUtil.escape(toString())}</code>"
 
 fun String.toLink(url: String) = "<a href=\"$url\">${HtmlUtil.escape(this)}</a>"
 fun String.toInlineMention(userId: Int) = toLink("tg://user?id=$userId")
+fun String.toInlineMention(screenName: String) = toLink("https://twitter.com/$screenName")
 val User.asInlineMention get() = displayName.toInlineMention(id)
+val twitter4j.User.asInlineMention get() = name.toInlineMention(screenName)

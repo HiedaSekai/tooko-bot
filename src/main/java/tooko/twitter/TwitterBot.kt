@@ -14,15 +14,17 @@
  * limitations under the License.
  */
 
-package tooko.core
+package tooko.twitter
 
-// ids for callback metadata
+import tooko.core.client.TdBot
+import tooko.twitter.login.TokenAdd
 
-const val DATA_1 = 1
-const val DATA_2 = 2
-const val DATA_3 = 3
+class TwitterBot(botToken: String) : TdBot(botToken) {
 
-const val PERSIST_1 = 1
-const val PERSIST_2 = 2
-const val PERSIST_3 = 3
-const val PERSIST_4 = 4
+    override fun onLoad() {
+
+        addHandler(TokenAdd())
+
+    }
+
+}

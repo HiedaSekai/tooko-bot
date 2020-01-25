@@ -25,10 +25,13 @@ import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
 
-fun mkDriver() = ChromeDriver(ChromeOptions().addArguments(
+fun mkDriver(android: Boolean = false) = ChromeDriver(ChromeOptions().apply {
+
+    if (android) addArguments("user-agent=\"Mozilla/5.0 (Linux; Android 9; KazamaWataru) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.116 Mobile Safari/537.36\"")
+
+}.addArguments(
         "--no-sandbox",
-        "--headless",
-        "user-agent=\"Mozilla/5.0 (Linux; Android 9; KazamaWataru) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.116 Mobile Safari/537.36\"",
+        // "--headless",
         "--hide-scrollbars",
         "--mute-audio",
         "--disable-background-networking",
@@ -59,6 +62,13 @@ fun WebDriver.waitForId(id: String): WebElement {
 
     return WebDriverWait(this, 10)
             .until(ExpectedConditions.elementToBeClickable(By.id(id)))
+
+}
+
+fun WebDriver.waitForTag(tag: String): WebElement {
+
+    return WebDriverWait(this, 10)
+            .until(ExpectedConditions.elementToBeClickable(By.tagName(tag)))
 
 }
 

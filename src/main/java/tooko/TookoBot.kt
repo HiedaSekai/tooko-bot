@@ -43,6 +43,7 @@ import tooko.core.langFor
 import tooko.core.utils.makeHtml
 import tooko.lottie.LottieRenderer
 import tooko.sticker.StickerExport
+import tooko.twitter.TwitterBot
 import java.util.*
 import kotlin.system.exitProcess
 
@@ -87,6 +88,18 @@ class TookoBot(botToken: String) : TdBot(botToken) {
         twitter = TwitterBot().apply { start() }
 
          */
+
+        if (Env.TWITTER_ENABLE) {
+
+            TwitterBot(Env.TWITTER_BOT_TOKEN).apply {
+
+                start()
+
+                waitForAuth()
+
+            }
+
+        }
 
         val deferreds = LinkedList<Deferred<*>>()
 

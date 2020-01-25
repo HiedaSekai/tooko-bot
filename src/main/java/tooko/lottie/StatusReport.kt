@@ -20,8 +20,8 @@ import kotlinx.coroutines.*
 import org.openqa.selenium.Cookie
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
-import tooko.core.*
-import tooko.core.env.*
+import tooko.core.env.Fn
+import tooko.core.input
 import twitter4j.Paging
 import twitter4j.Status
 import java.util.*
@@ -45,8 +45,8 @@ object StatusReport {
 
         val apiKey = "z6FQzXfFNeiEr9XmYuJTxD9Qp"
         val apiSecKey = "ALzp3YJ2uPQHyxfrNxNGfQRQNKKtiQTYHvw30mwKe3NueO0DnY"
-        val accessToken = "975336050351591425-PiihXElTIL5frxzjC1P6wtrWwUzQNO5"
-        val accessTokenSecret = "Dido1lIwneF7TBUe3HFIICZ3CBWR7sAECBVsktckhEN4o"
+        val accessToken = "<hide>"
+        val accessTokenSecret = "<hide>"
 
         val accountId = accessToken.substringBefore("-").toLong()
 
@@ -54,10 +54,7 @@ object StatusReport {
 
         val authTokens = listOf(
 
-                "17ec81c0524049514aa8b8a3017d5c5ba71a31ca",
-                "df583c71630525fe7dcbf711953f9f9c68436f23",
-                "7cecc4a28a72f92ce6f5faef97a08c30b87bc20c",
-                "9a9e39e796b4ea1473431da1c833f5a7df56a397"
+                "<hide>"
 
         )
 
