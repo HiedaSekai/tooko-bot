@@ -53,7 +53,7 @@ class TokenAdd : TdBotHandler() {
 
             writePersist(userId, PERSIST_ID)
 
-            sudo make L.TWI_INPUT_TOKEN sendTo chatId
+            sudo makeHtml L.TWI_INPUT_TOKEN sendTo chatId
 
         } else {
 
@@ -97,7 +97,9 @@ class TokenAdd : TdBotHandler() {
 
         }.onFailure {
 
-            sudo make L.TWI_INVALID_TOKEN sendTo chatId
+            sudo make it sendTo chatId
+
+            // sudo make L.TWI_INVALID_TOKEN sendTo chatId
 
         }
 
