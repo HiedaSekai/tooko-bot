@@ -112,7 +112,7 @@ class UserReport : TdBotHandler() {
 
                 val drivers = tokens.map {
 
-                    GlobalScope.async {
+                    GlobalScope.async(Dispatchers.IO) {
 
                         newTwitterDriver(it.authToken, service)
 
@@ -150,7 +150,7 @@ class UserReport : TdBotHandler() {
 
                     drivers.forEach { driver ->
 
-                        deferreds.add(GlobalScope.async {
+                        deferreds.add(GlobalScope.async(Dispatchers.IO) {
 
                             reportStatus(driver, s, hateful)
 
