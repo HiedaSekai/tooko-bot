@@ -97,76 +97,80 @@ class UserReport : TdBotHandler() {
 
         }
 
-        val hateful = function.endsWith("hateful")
+        GlobalScope.launch {
 
-        params.forEach {
+            val hateful = function.endsWith("hateful")
 
-            val tokens = AuthToken.getByOwner(userId)
-            val apis = tokens.map { it.mkApi() }
+            params.forEach {
 
-            val drivers = tokens.map {
+                val tokens = AuthToken.getByOwner(userId)
+                val apis = tokens.map { it.mkApi() }
 
-                GlobalScope.async {
+                val drivers = tokens.map {
 
-                    newTwitterDriver(it.authToken)
+                    GlobalScope.async {
+
+                        newTwitterDriver(it.authToken)
+
+                    }
+
+                }.awaitAll()
+
+                val target = runCatching {
+
+                    if (NumberUtil.isLong(it)) {
+
+                        apis[0].showUser(it.toLong())
+
+                    } else {
+
+                        apis[0].showUser(Fn.parseScreenName(it))
+
+                    }
+
+                }.onFailure {
+
+                    sudo make it sendTo chatId
+
+                }.getOrNull() ?: return@launch
+
+                val timeline = apis[0].getUserTimeline(it, Paging().count(200))
+
+                val status = sudo make "reporting 0 / ${timeline.size}..." syncTo chatId
+
+                timeline.forEachIndexed { index, s ->
+
+                    val start = System.currentTimeMillis()
+
+                    val deferreds = LinkedList<Deferred<Unit>>()
+
+                    drivers.forEach { driver ->
+
+                        deferreds.add(GlobalScope.async {
+
+                            reportStatus(driver, s, hateful)
+
+                        })
+
+                    }
+
+                    deferreds.awaitAll()
+
+                    val used = System.currentTimeMillis() - start
+
+                    sudo make "reporting ${index + 1} / ${timeline.size}..." editTo status
+
+                    if (used < 5 * 1000L) {
+
+                        delay(5 * 1000L - used)
+
+                    }
 
                 }
 
-            }.awaitAll()
-
-            val target = runCatching {
-
-                if (NumberUtil.isLong(it)) {
-
-                    apis[0].showUser(it.toLong())
-
-                } else {
-
-                    apis[0].showUser(Fn.parseScreenName(it))
-
-                }
-
-            }.onFailure {
-
-                sudo make it sendTo chatId
-
-            }.getOrNull() ?: return
-
-            val timeline = apis[0].getUserTimeline(it, Paging().count(200))
-
-            val status = sudo make "reporting 0 / ${timeline.size}..." syncTo chatId
-
-            timeline.forEachIndexed { index, s ->
-
-                val start = System.currentTimeMillis()
-
-                val deferreds = LinkedList<Deferred<Unit>>()
-
-                drivers.forEach { driver ->
-
-                    deferreds.add(GlobalScope.async {
-
-                        reportStatus(driver, s, hateful)
-
-                    })
-
-                }
-
-                deferreds.awaitAll()
-
-                val used = System.currentTimeMillis() - start
-
-                sudo make "reporting ${index + 1} / ${timeline.size}..." editTo status
-
-                if (used < 5 * 1000L) {
-
-                    delay(5 * 1000L - used)
-
-                }
+                sudo make "reported ${timeline.size} status" editTo status
 
             }
-
-            sudo make "reported ${timeline.size} status" editTo status
 
         }
 

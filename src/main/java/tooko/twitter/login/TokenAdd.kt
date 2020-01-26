@@ -16,6 +16,8 @@
 
 package tooko.twitter.login
 
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import td.TdApi
 import tooko.core.*
 import tooko.core.client.TdBotHandler
@@ -104,54 +106,58 @@ class TokenAdd : TdBotHandler() {
 
     private suspend fun checkTwitterAuthToken(userId: Int, chatId: Long, authToken: String) {
 
-        val L = userId.langFor
+        GlobalScope.launch {
 
-        val status = sudo make L.TWI_CHECKING syncTo chatId
+            val L = userId.langFor
 
-        val driver = mkTwitterDriver(authToken)
+            val status = sudo make L.TWI_CHECKING syncTo chatId
 
-        val screenName = driver.findElementByXPath(TokenAddTest.userPage).getAttribute("href").substringAfterLast("/")
+            val driver = mkTwitterDriver(authToken)
 
-        val apiToken = Env.TWITTER_API_TOKENS[0]
+            val screenName = driver.findElementByXPath(TokenAddTest.userPage).getAttribute("href").substringAfterLast("/")
 
-        var api = apiToken.mkApi()
+            val apiToken = Env.TWITTER_API_TOKENS[0]
 
-        sudo make L.TWI_GEN_API editTo status
+            var api = apiToken.mkApi()
 
-        val requestToken = api.getOAuthRequestToken("oob")
+            sudo make L.TWI_GEN_API editTo status
 
-        driver.get(requestToken.authenticationURL)
+            val requestToken = api.getOAuthRequestToken("oob")
 
-        driver.waitForId("allow").click()
+            driver.get(requestToken.authenticationURL)
 
-        val code = driver.waitForTag("code").text
+            driver.waitForId("allow").click()
 
-        val accessToken = api.getOAuthAccessToken(code)
+            val code = driver.waitForTag("code").text
 
-        val account = AccessToken()
+            val accessToken = api.getOAuthAccessToken(code)
 
-        account.owner = userId
-        account.accountId = accessToken.userId
-        account.apiKey = apiToken.apiKey
-        account.apiSecretKey = apiToken.apiSecretKey
-        account.accessToken = accessToken.token
-        account.accessTokenSecret = accessToken.tokenSecret
+            val account = AccessToken()
 
-        AccessToken.DATA.setById(account.accountId, account)
+            account.owner = userId
+            account.accountId = accessToken.userId
+            account.apiKey = apiToken.apiKey
+            account.apiSecretKey = apiToken.apiSecretKey
+            account.accessToken = accessToken.token
+            account.accessTokenSecret = accessToken.tokenSecret
 
-        val token = AuthToken()
+            AccessToken.DATA.setById(account.accountId, account)
 
-        token.owner = userId
-        token.accountId = account.accountId
-        token.authToken = authToken
+            val token = AuthToken()
 
-        AuthToken.DATA.setById(account.accountId, token)
+            token.owner = userId
+            token.accountId = account.accountId
+            token.authToken = authToken
 
-        api = account.mkApi()
+            AuthToken.DATA.setById(account.accountId, token)
 
-        driver.close()
+            api = account.mkApi()
 
-        sudo makeHtml L.TWI_WELCOME.input(api.verifyCredentials().asInlineMention) editTo status
+            driver.close()
+
+            sudo makeHtml L.TWI_WELCOME.input(api.verifyCredentials().asInlineMention) editTo status
+
+        }
 
     }
 
