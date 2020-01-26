@@ -138,6 +138,8 @@ class UserReport : TdBotHandler() {
 
             timeline.forEachIndexed { index, s ->
 
+                val start = System.currentTimeMillis()
+
                 val deferreds = LinkedList<Deferred<Unit>>()
 
                 drivers.forEach { driver ->
@@ -152,9 +154,15 @@ class UserReport : TdBotHandler() {
 
                 deferreds.awaitAll()
 
+                val used = System.currentTimeMillis() - start
+
                 sudo make "reporting ${index + 1} / ${timeline.size}..." editTo status
 
-                delay(3 * 1000L)
+                if (used < 5 * 1000L) {
+
+                    delay(5 * 1000L - used)
+
+                }
 
             }
 
