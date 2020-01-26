@@ -25,12 +25,7 @@ import org.openqa.selenium.support.ui.WebDriverWait
 import tooko.twitter.login.test.TokenAddTest
 import java.util.*
 
-private val service = ChromeDriverService.Builder()
-        .withVerbose(false)
-        .withSilent(true)
-        .build()
-
-fun mkDriver(android: Boolean = false, test: Boolean = false) = ChromeDriver(service, ChromeOptions().apply {
+fun mkDriver(android: Boolean = false, test: Boolean = false) = ChromeDriver(ChromeOptions().apply {
 
     if (android) addArguments("user-agent=\"Mozilla/5.0 (Linux; Android 9; KazamaWataru) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.116 Mobile Safari/537.36\"")
     if (!test) addArguments("--headless")
