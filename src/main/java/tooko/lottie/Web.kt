@@ -25,7 +25,12 @@ import org.openqa.selenium.support.ui.WebDriverWait
 import tooko.twitter.login.test.TokenAddTest
 import java.util.*
 
-fun mkDriver(android: Boolean = false, test: Boolean = false) = ChromeDriver(ChromeOptions().apply {
+fun mkDriverService() = ChromeDriverService.Builder()
+        .withSilent(true)
+        .withVerbose(false)
+        .build()
+
+fun mkDriver(android: Boolean = false, test: Boolean = false, service: ChromeDriverService = mkDriverService()) = ChromeDriver(service, ChromeOptions().apply {
 
     if (android) addArguments("user-agent=\"Mozilla/5.0 (Linux; Android 9; KazamaWataru) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.116 Mobile Safari/537.36\"")
     if (!test) addArguments("--headless")
@@ -87,28 +92,28 @@ fun mkTwitterDriver(authToken: String, test: Boolean = false): ChromeDriver {
 
 fun WebDriver.waitForId(id: String): WebElement {
 
-    return WebDriverWait(this, 10)
+    return WebDriverWait(this, 5)
             .until(ExpectedConditions.elementToBeClickable(By.id(id)))
 
 }
 
 fun WebDriver.waitForTag(tag: String): WebElement {
 
-    return WebDriverWait(this, 10)
+    return WebDriverWait(this, 5)
             .until(ExpectedConditions.elementToBeClickable(By.tagName(tag)))
 
 }
 
 fun WebDriver.waitForClass(id: String): WebElement {
 
-    return WebDriverWait(this, 10)
+    return WebDriverWait(this, 5)
             .until(ExpectedConditions.elementToBeClickable(By.className(id)))
 
 }
 
 fun WebDriver.waitForSelector(id: String): WebElement {
 
-    return WebDriverWait(this, 10)
+    return WebDriverWait(this, 5)
             .until(ExpectedConditions.elementToBeClickable(By.cssSelector(id)))
 
 }

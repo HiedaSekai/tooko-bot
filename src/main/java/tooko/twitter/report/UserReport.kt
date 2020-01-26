@@ -21,12 +21,14 @@ import kotlinx.coroutines.*
 import org.openqa.selenium.Cookie
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.chrome.ChromeDriverService
 import td.TdApi
 import tooko.core.client.TdBotHandler
 import tooko.core.env.Fn
 import tooko.core.input
 import tooko.core.utils.make
 import tooko.lottie.mkDriver
+import tooko.lottie.mkDriverService
 import tooko.lottie.waitForId
 import tooko.twitter.AuthToken
 import twitter4j.Paging
@@ -43,7 +45,7 @@ class UserReport : TdBotHandler() {
 
     }
 
-    fun newTwitterDriver(authToken: String): ChromeDriver {
+    fun newTwitterDriver(authToken: String, service: ChromeDriverService): ChromeDriver {
 
         val driver = mkDriver(true)
 
@@ -106,11 +108,13 @@ class UserReport : TdBotHandler() {
                 val tokens = AuthToken.getByOwner(userId)
                 val apis = tokens.map { it.mkApi() }
 
+                val service = mkDriverService()
+
                 val drivers = tokens.map {
 
                     GlobalScope.async {
 
-                        newTwitterDriver(it.authToken)
+                        newTwitterDriver(it.authToken, service)
 
                     }
 
