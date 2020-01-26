@@ -170,6 +170,8 @@ class UserReport : TdBotHandler() {
 
                 sudo make "reported ${timeline.size} status" editTo status
 
+                drivers.forEach { it.close() }
+
             }
 
         }
