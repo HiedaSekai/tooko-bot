@@ -16,11 +16,7 @@
 
 package tooko.twitter.report
 
-import td.TdApi
-import twitter4j.Status
-import java.util.*
-
-class ReportTask(val userId: Int, val targets: LinkedList<Status>, val status: TdApi.Message) : Thread("Report Task") {
+class ReportTask(val userId: Int) : Thread("Report Task") {
 
     override fun run() {
 

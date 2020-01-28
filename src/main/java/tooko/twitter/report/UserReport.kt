@@ -99,6 +99,8 @@ class UserReport : TdBotHandler() {
 
         }
 
+        val status = sudo make "LAUNCHING..." syncTo chatId
+
         GlobalScope.launch {
 
             val hateful = function.endsWith("hateful")
@@ -140,7 +142,7 @@ class UserReport : TdBotHandler() {
 
                 val timeline = apis[0].getUserTimeline(it, Paging().count(200))
 
-                val status = sudo make "reporting 0 / ${timeline.size}..." syncTo chatId
+                sudo make "reporting 0 / ${timeline.size}..." editTo status
 
                 timeline.forEachIndexed { index, s ->
 
