@@ -283,7 +283,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir("data/${botToken.s
 
                     onLaunch(userId, chatId, message)
 
-                    return@function
+                    finishEvent()
 
                 } else if (!functions.containsKey(function)) {
 
