@@ -16,6 +16,8 @@
 
 package tooko.lottie
 
+/*
+
 import cn.hutool.core.io.IoUtil
 import cn.hutool.core.io.LineHandler
 import cn.hutool.core.lang.UUID
@@ -256,3 +258,5 @@ object LottieRenderer {
 
 
 }
+
+ */

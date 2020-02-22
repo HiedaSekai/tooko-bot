@@ -39,10 +39,10 @@ import tooko.core.defaultLog
 import tooko.core.env.Env
 import tooko.core.funs.BaseFuncs
 import tooko.core.funs.LICENCE
+import tooko.core.funs.StickerExport
 import tooko.core.langFor
 import tooko.core.utils.makeHtml
-import tooko.lottie.LottieRenderer
-import tooko.sticker.StickerExport
+//import tooko.lottie.LottieRenderer
 import tooko.twitter.TwitterBot
 import java.util.*
 import kotlin.system.exitProcess
@@ -141,7 +141,7 @@ class TookoBot(botToken: String) : TdBot(botToken) {
 
         CacheTable.cachedTables.forEach { it.saveAll() }
 
-        LottieRenderer.closeDriver()
+        // LottieRenderer.closeDriver()
 
     }
 

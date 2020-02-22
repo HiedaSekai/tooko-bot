@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-package tooko.sticker
+package tooko.core.funs
 
 import cn.hutool.core.img.ImgUtil
 import cn.hutool.core.io.FileUtil
-import cn.hutool.core.util.StrUtil
 import cn.hutool.core.util.ZipUtil
 import kotlinx.coroutines.*
 import td.TdApi.*
 import tooko.core.*
-import tooko.core.client.*
-import tooko.core.env.*
-import tooko.core.raw.*
+import tooko.core.client.TdBotHandler
+import tooko.core.env.Env
+import tooko.core.env.Img
+import tooko.core.env.Lang
+import tooko.core.raw.getMessage
 import tooko.core.utils.*
-import tooko.lottie.LottieRenderer
 import java.awt.Color
 import java.io.File
 import java.util.*
@@ -81,36 +81,6 @@ class StickerExport : TdBotHandler() {
                     val cache = Env.getFile("cache/tgs2mp4/$stickerId.mp4")
 
                     if (!cache.isFile) {
-
-                        LottieRenderer.renderLottie(StrUtil.utf8Str(ZipUtil.unGzip(rawFile.readBytes())), cache, null)
-
-                        /*
-
-                        val json = Env.getFile("cache/tgs2json/$stickerId.json")
-
-                        FileUtil.writeBytes(ZipUtil.unGzip(rawFile.readBytes()), json)
-
-
-
-                        val shell = "puppeteer-lottie -i ${json.path} -o ${cache.path}"
-
-                        defaultLog.debug(shell)
-
-                        try {
-
-                            val result = RuntimeUtil.execForStr(shell)
-
-                            defaultLog.debug(result)
-
-                        } catch (ex: Exception) {
-
-                            sudo make "${ex.message}" sendTo chatId
-
-                            return
-
-                        }
-
-                                 */
 
                     }
 
