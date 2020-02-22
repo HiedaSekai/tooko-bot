@@ -233,11 +233,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir("data/${botToken.s
 
                         handler.onSendCanceledMessage(userId)
 
-                        return@function
-
-                    }
-
-                    if (!persist.allowFuction && persist.allowCancel) {
+                    } else if (!persist.allowFuction && persist.allowCancel) {
 
                         sudo removePersist userId
 
@@ -249,15 +245,13 @@ open class TdBot(val botToken: String) : TdClient(initDataDir("data/${botToken.s
 
                         return@persist
 
+                    } else {
+
+                        handler.onPersistFunction(userId, chatId, message, persist.subId, function, param, params, originParams)
+
                     }
 
-                    handler.onPersistFunction(userId, chatId, message, persist.subId, function, param, params, originParams)
-
-                    return@function
-
-                }
-
-                if ("start" == function) {
+                } else if ("start" == function) {
 
                     if (param.isNotBlank()) {
 
@@ -271,19 +265,21 @@ open class TdBot(val botToken: String) : TdClient(initDataDir("data/${botToken.s
 
                             handlers.filterIsInstance<TdBotAbsHandler>().forEach {
 
-                                onUndefinedPayload(userId, chatId, message, data[0], data.shift())
+                                if (this@TdBot == it) return@forEach
+
+                                it.onUndefinedPayload(userId, chatId, message, data[0], data.shift())
 
                             }
 
+                            onUndefinedPayload(userId, chatId, message, data[0], data.shift())
+
                         }
 
-                        return@function
+                    } else {
+
+                        onLaunch(userId, chatId, message)
 
                     }
-
-                    onLaunch(userId, chatId, message)
-
-                    finishEvent()
 
                 } else if (!functions.containsKey(function)) {
 
@@ -303,15 +299,13 @@ open class TdBot(val botToken: String) : TdClient(initDataDir("data/${botToken.s
 
                 }
 
+                finishEvent()
 
             } catch (ex: Reject) {
 
                 return@predict
 
             }
-
-            return@function
-
 
         }
 

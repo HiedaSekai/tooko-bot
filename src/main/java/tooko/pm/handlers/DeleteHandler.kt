@@ -32,10 +32,6 @@ import tooko.pm.LongLongArrayMap
 import tooko.pm.PmBot
 import tooko.pm.PmData
 import java.util.*
-import kotlin.Boolean
-import kotlin.Long
-import kotlin.LongArray
-import kotlin.String
 
 class DeleteHandler : TdBotHandler() {
 
