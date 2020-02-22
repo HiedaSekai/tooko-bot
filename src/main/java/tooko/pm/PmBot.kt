@@ -170,7 +170,9 @@ class PmBot(val image: BotImage) : TdBot(image.data.botToken) {
 
                 sudo makeHtml userId.langFor.PM_OK sendTo chatId
 
-            }
+            } else rejectFunction()
+
+            return
 
         }
 
