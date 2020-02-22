@@ -169,7 +169,7 @@ class CreateAgent : TdBotHandler() {
 
                     bot removePersist userId
 
-                    val binlog = if (subId == 2) {
+                    val binlog = if (subId != 2) {
 
                         "td.binlog"
 
