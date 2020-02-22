@@ -50,8 +50,6 @@ class DeleteHandler : TdBotHandler() {
 
         val L = bot.owner.langFor
 
-        data.initSessions()
-
         if (chatId == bot.owner.toLong()) {
 
             val deleteReceivedMessage = LongLongArrayMap()
@@ -62,7 +60,7 @@ class DeleteHandler : TdBotHandler() {
             for (messageId in messageIds) {
 
                 val messageIdStr = messageId.toString() + ""
-                var session: PmData.Session
+                var session: PmData.Session?
 
                 if (data.received.containsKey(messageIdStr)) {
 
