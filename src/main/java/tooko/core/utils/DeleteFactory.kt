@@ -19,11 +19,13 @@
 package tooko.core.utils
 
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import td.TdApi.DeleteMessages
 import td.TdApi.Message
-import tooko.core.client.*
-import tooko.core.raw.*
+import tooko.core.client.TdAbsHandler
+import tooko.core.raw.fetchMessages
 
 infix fun TdAbsHandler.delete(message: Message) = delete(message.chatId, message.id)
 
@@ -46,6 +48,20 @@ suspend fun TdAbsHandler.fetchAndDelete(chatId: Number, messageId: Long) {
     fetchMessages(chatId, messageId)
 
     syncDelete(chatId, messageId)
+
+}
+
+suspend fun TdAbsHandler.delayDelete(message: Message, timeMs: Long = 3000L) = delayDelete(message.chatId, message.id, timeMs)
+
+suspend fun TdAbsHandler.delayDelete(chatId: Number, messageId: Long, timeMs: Long = 3000L) {
+
+    GlobalScope.launch {
+
+        delay(timeMs)
+
+        delete(chatId, messageId)
+
+    }
 
 }
 

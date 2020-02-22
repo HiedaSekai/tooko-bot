@@ -21,11 +21,12 @@ import org.apache.commons.collections4.bidimap.DualHashBidiMap
 import td.TdApi
 import tooko.INSTANCE
 import tooko.core.*
-import tooko.core.bots.*
-import tooko.core.client.*
-import tooko.core.env.*
-import tooko.core.funs.*
-import tooko.core.raw.*
+import tooko.core.bots.BotImage
+import tooko.core.client.TdBot
+import tooko.core.client.TdException
+import tooko.core.env.Lang
+import tooko.core.funs.LICENCE
+import tooko.core.raw.getUser
 import tooko.core.utils.*
 import tooko.pm.config.WelcomeConfig
 import tooko.pm.handlers.ChatPanel
@@ -158,6 +159,137 @@ class PmBot(val image: BotImage) : TdBot(image.data.botToken) {
 
         sudo make L.NO_CHAT_ENTERED sendTo chatId
 
+    }
+
+    override suspend fun onNewMessage(userId: Int, chatId: Long, message: TdApi.Message) {
+
+        if (data.blocked.contains(chatId)) finishEvent()
+
+        super.onNewMessage(userId, chatId, message)
+
+        val L = bot.owner.langFor
+
+        if (userId != bot.owner) {
+
+            data.initSessions()
+
+            if (current != userId) {
+
+                current = userId
+
+                var report = L.USER_ID + " : " + userId.asCode + " [ " + L.CHAT.toStartPayload("enter", chatId.toString() + "") + " ]"
+
+                report += "\n" + L.USER_NAME.toString() + " : " + getUser(userId).asInlineMention
+
+                val reportMessage = sudo makeHtml report syncTo bot.owner
+
+                data.sessions.arrayInsert(chatId, "reports", reportMessage.id)
+            }
+
+            val forwarded = try {
+
+                sudo makeForward message syncTo bot.owner
+
+            } catch (e: TdException) {
+
+                destory(e)
+
+                return
+
+            }
+
+            data.received[forwarded.id.toString() + ""] = message.id
+            data.sessions.arrayInsert(chatId, "received", message.id)
+
+            return
+
+        }
+
+        var targetChat = 0L
+        var replyTo = 0L
+
+        if (message.replyToMessageId != 0L) {
+
+            val actionMessage = message.replyToMessageId
+            val actionMessageStr = actionMessage.toString() + ""
+
+            if (data.received.containsKey(actionMessageStr)) {
+
+                replyTo = data.received[actionMessageStr]!!
+                targetChat = data.getSessionByElement("received", replyTo).chatId
+
+            } else if (data.sended.containsKey(actionMessageStr)) {
+
+                replyTo = data.sended[actionMessageStr]!!
+                targetChat = data.getSessionByElement("sended", replyTo).chatId
+
+            } else {
+
+                var session = data.getSessionByElement("reports", actionMessage)
+
+                if (session != null) targetChat = session.chatId
+
+                session = data.getSessionByElement("extras", actionMessage)
+
+                if (session != null) targetChat = session.chatId
+
+                if (targetChat != 0L) {
+
+                    chat = targetChat
+
+                    sudo makeHtml L.CHAT_ENTERED.input(getUser(session.chatId.toInt()).asInlineMention) to chatId send deleteDelay()
+
+                }
+
+            }
+
+            if (targetChat == 0L) {
+
+                sudo make L.CHAT_NO_RECORD sendTo chatId
+
+                return
+
+            }
+
+        } else if (chat != -1L) {
+
+            targetChat = chat
+
+        } else {
+
+            sudo make L.NO_CHAT_ENTERED to chatId send deleteDelay()
+
+            delayDelete(message)
+
+            return
+
+        }
+
+        var input = (if (message.forwardInfo == null) {
+
+            message.content.asInput
+
+        } else null) ?: inputForward(message)
+
+        val sended = try {
+
+            sudo make input replyTo replyTo syncTo targetChat
+
+        } catch (e: TdException) {
+
+            sudo make L.SEND_FAILED.input(e) replyTo message.id sendTo chatId
+
+            chat = -1
+
+            return
+
+        }
+
+        data.sended[message.id.toString() + ""] = sended.id
+
+        data.sessions.arrayInsert(chat, "sended", sended.id)
+
+        sudo make L.SEND_SUCCEED replyTo message.id to chatId send deleteDelay()
 
     }
 

@@ -17,9 +17,12 @@
 package tooko.core.client
 
 import td.TdApi.Message
-import tooko.core.*
-import tooko.core.env.*
-import tooko.core.utils.*
+import tooko.core.env.Lang
+import tooko.core.fromPrivate
+import tooko.core.toLink
+import tooko.core.utils.delete
+import tooko.core.utils.make
+import tooko.core.utils.removeKeyboard
 import java.util.*
 
 interface TdBotAbsHandler : TdAbsHandler {
@@ -148,5 +151,8 @@ interface TdBotAbsHandler : TdAbsHandler {
     class Reject : RuntimeException("Reject Function")
 
     fun rejectFunction(): Unit = throw Reject()
+
+    fun String.toStartPayload(vararg payload: String) = toLink("https://t.me/${sudo.me.username}?start=${payload.joinToString("-")}")
+
 
 }

@@ -19,10 +19,16 @@ package tooko.core.client
 import cn.hutool.core.util.ZipUtil
 import kotlinx.coroutines.coroutineScope
 import td.TdApi.*
-import tooko.core.*
-import tooko.core.client.TdBotAbsHandler.*
-import tooko.core.env.*
-import tooko.core.utils.*
+import tooko.core.client.TdBotAbsHandler.Reject
+import tooko.core.env.Env
+import tooko.core.env.Fn
+import tooko.core.fromPrivate
+import tooko.core.langFor
+import tooko.core.shift
+import tooko.core.utils.make
+import tooko.core.utils.makeAnswer
+import tooko.core.utils.readDataFrom
+import tooko.core.utils.writeDataTo
 import java.util.*
 
 open class TdBot(val botToken: String) : TdClient(initDataDir("data/${botToken.substringBefore(":")}")), TdBotAbsHandler {
@@ -255,7 +261,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir("data/${botToken.s
 
                     if (param.isNotBlank()) {
 
-                        val data = param.split('_').toTypedArray()
+                        val data = param.split('-').toTypedArray()
 
                         if (data.isNotEmpty() && payloads.containsKey(data[0])) {
 
