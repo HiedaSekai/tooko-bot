@@ -19,14 +19,23 @@ package tooko.pm.handlers
 import cn.hutool.core.collection.CollectionUtil
 import cn.hutool.core.util.NumberUtil
 import cn.hutool.core.util.StrUtil
-import tooko.core.*
-import tooko.core.client.*
-import tooko.core.raw.*
-import tooko.core.utils.*
+import tooko.core.asInlineMention
+import tooko.core.client.TdBotHandler
+import tooko.core.fromPrivate
+import tooko.core.langFor
+import tooko.core.raw.getUser
+import tooko.core.utils.asHtml
+import tooko.core.utils.delete
+import tooko.core.utils.deleteDelay
+import tooko.core.utils.make
 import tooko.pm.LongLongArrayMap
 import tooko.pm.PmBot
 import tooko.pm.PmData
 import java.util.*
+import kotlin.Boolean
+import kotlin.Long
+import kotlin.LongArray
+import kotlin.String
 
 class DeleteHandler : TdBotHandler() {
 
@@ -40,6 +49,8 @@ class DeleteHandler : TdBotHandler() {
         if (!chatId.fromPrivate || !isPermanent || fromCache) return
 
         val L = bot.owner.langFor
+
+        data.initSessions()
 
         if (chatId == bot.owner.toLong()) {
 
