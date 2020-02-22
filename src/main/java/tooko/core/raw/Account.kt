@@ -20,9 +20,9 @@
 
 package tooko.core.raw
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
 import td.TdApi.*
-import tooko.core.client.*
+import tooko.core.client.TdAbsHandler
 
 /**
  * Changes the period of inactivity after which the account of the current user will automatically be deleted

@@ -1,19 +1,3 @@
-/*
- * Copyright (c) 2019 - 2020 KazamaWataru
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package td;
 
 import org.jetbrains.annotations.*;
@@ -1121,6 +1105,58 @@ public class TdApi {
 
 
     /**
+     * Describes the type of a poll
+     */
+    public static abstract class PollType extends Object {}
+
+    /**
+     * A regular poll
+     *
+     * @allowMultipleAnswers - True, if multiple answer options can be chosen simultaneously
+     */
+    public static class PollTypeRegular extends PollType {
+
+        public boolean allowMultipleAnswers;
+
+        public PollTypeRegular() {}
+
+        public PollTypeRegular(boolean allowMultipleAnswers) {
+
+            this.allowMultipleAnswers = allowMultipleAnswers;
+
+        }
+
+        @BsonIgnore @Override
+        public int getConstructor() { return 641265698; }
+
+    }
+
+
+    /**
+     * A poll in quiz mode, which has exactly one correct answer option and can be answered only once
+     *
+     * @correctOptionId - 0-based identifier of the correct answer option
+     *                    -1 for a yet unanswered poll
+     */
+    public static class PollTypeQuiz extends PollType {
+
+        public int correctOptionId;
+
+        public PollTypeQuiz() {}
+
+        public PollTypeQuiz(int correctOptionId) {
+
+            this.correctOptionId = correctOptionId;
+
+        }
+
+        @BsonIgnore @Override
+        public int getConstructor() { return -354461930; }
+
+    }
+
+
+    /**
      * Describes an animation file
      * The animation must be encoded in GIF or MPEG4 format
      *
@@ -1625,6 +1661,9 @@ public class TdApi {
      * @question - Poll question, 1-255 characters
      * @options - List of poll answer options
      * @totalVoterCount - Total number of voters, participating in the poll
+     * @recentVoterUserIds - User identifiers of recent voters, if the poll is non-anonymous
+     * @isAnonymous - True, if the poll is anonymous
+     * @type - Type of the poll
      * @isClosed - True, if the poll is closed
      */
     public static class Poll extends Object {
@@ -1633,22 +1672,28 @@ public class TdApi {
         public String question;
         public PollOption[] options;
         public int totalVoterCount;
+        public int[] recentVoterUserIds;
+        public boolean isAnonymous;
+        public PollType type;
         public boolean isClosed;
 
         public Poll() {}
 
-        public Poll(long id, String question, PollOption[] options, int totalVoterCount, boolean isClosed) {
+        public Poll(long id, String question, PollOption[] options, int totalVoterCount, int[] recentVoterUserIds, boolean isAnonymous, PollType type, boolean isClosed) {
 
             this.id = id;
             this.question = question;
             this.options = options;
             this.totalVoterCount = totalVoterCount;
+            this.recentVoterUserIds = recentVoterUserIds;
+            this.isAnonymous = isAnonymous;
+            this.type = type;
             this.isClosed = isClosed;
 
         }
 
         @BsonIgnore @Override
-        public int getConstructor() { return -959396214; }
+        public int getConstructor() { return -964385924; }
 
     }
 
@@ -1715,7 +1760,7 @@ public class TdApi {
 
 
     /**
-     * Represents the type of the user
+     * Represents the type of a user
      * The following types are possible: regular users, deleted users and bots
      */
     public static abstract class UserType extends Object {}
@@ -2877,7 +2922,7 @@ public class TdApi {
      *               Otherwise false
      * @ttl - Current message Time To Live setting (self-destruct timer) for the chat, in seconds
      * @keyHash - Hash of the currently used key for comparison with the hash of the chat partner's key
-     *            This is a string of 36 little-endian bytes, which must be split into groups of 2 bits, each denoting a pixel of one of 4 colors
+     *            This is a string of 36 little-endian bytes, which must be split into groups of 2 bits, each denoting a pixel of one of 4 colors FFFFFF, D5E6F3, 2D5775, and 2F99C9
      *            The pixels must be used to make a 12x12 square image filled from left to right, top to bottom
      *            Alternatively, the first 32 bytes of the hash can be converted to the hexadecimal format and printed as 32 2-digit hex numbers
      * @layer - Secret chat layer
@@ -3889,6 +3934,33 @@ public class TdApi {
 
         @BsonIgnore @Override
         public int getConstructor() { return -125661955; }
+
+    }
+
+
+    /**
+     * A button that allows the user to create and send a poll when pressed
+     * Available only in private chats
+     *
+     * @forceRegular - If true, only regular polls must be allowed to create
+     * @forceQuiz - If true, only polls in quiz mode must be allowed to create
+     */
+    public static class KeyboardButtonTypeRequestPoll extends KeyboardButtonType {
+
+        public boolean forceRegular;
+        public boolean forceQuiz;
+
+        public KeyboardButtonTypeRequestPoll() {}
+
+        public KeyboardButtonTypeRequestPoll(boolean forceRegular, boolean forceQuiz) {
+
+            this.forceRegular = forceRegular;
+            this.forceQuiz = forceQuiz;
+
+        }
+
+        @BsonIgnore @Override
+        public int getConstructor() { return 1902435512; }
 
     }
 
@@ -5726,6 +5798,58 @@ public class TdApi {
 
         @BsonIgnore @Override
         public int getConstructor() { return 1092898169; }
+
+    }
+
+
+    /**
+     * Describes an action associated with a bank card number
+     *
+     * @text - Action text
+     * @url - The URL to be opened
+     */
+    public static class BankCardActionOpenUrl extends Object {
+
+        public String text;
+        public String url;
+
+        public BankCardActionOpenUrl() {}
+
+        public BankCardActionOpenUrl(String text, String url) {
+
+            this.text = text;
+            this.url = url;
+
+        }
+
+        @BsonIgnore @Override
+        public int getConstructor() { return -196454267; }
+
+    }
+
+
+    /**
+     * Information about a bank card
+     *
+     * @title - Title of the bank card description
+     * @actions - Actions that can be done with the bank card number
+     */
+    public static class BankCardInfo extends Object {
+
+        public String title;
+        public BankCardActionOpenUrl[] actions;
+
+        public BankCardInfo() {}
+
+        public BankCardInfo(String title, BankCardActionOpenUrl[] actions) {
+
+            this.title = title;
+            this.actions = actions;
+
+        }
+
+        @BsonIgnore @Override
+        public int getConstructor() { return -2116647730; }
 
     }
 
@@ -7865,7 +7989,7 @@ public class TdApi {
     /**
      * An animation message (GIF-style).
      *
-     * @animation - Message content
+     * @animation - The animation description
      * @caption - Animation caption
      * @isSecret - True, if the animation thumbnail must be blurred and the animation must be shown only while tapped
      */
@@ -7894,7 +8018,7 @@ public class TdApi {
     /**
      * An audio message
      *
-     * @audio - Message content
+     * @audio - The audio description
      * @caption - Audio caption
      */
     public static class MessageAudio extends MessageContent {
@@ -7920,7 +8044,7 @@ public class TdApi {
     /**
      * A document message (general file)
      *
-     * @document - Message content
+     * @document - The document description
      * @caption - Document caption
      */
     public static class MessageDocument extends MessageContent {
@@ -7946,7 +8070,7 @@ public class TdApi {
     /**
      * A photo message
      *
-     * @photo - Message content
+     * @photo - The photo description
      * @caption - Photo caption
      * @isSecret - True, if the photo must be blurred and must be shown only while tapped
      */
@@ -7986,7 +8110,7 @@ public class TdApi {
     /**
      * A sticker message
      *
-     * @sticker - Message content
+     * @sticker - The sticker description
      */
     public static class MessageSticker extends MessageContent {
 
@@ -8009,7 +8133,7 @@ public class TdApi {
     /**
      * A video message
      *
-     * @video - Message content
+     * @video - The video description
      * @caption - Video caption
      * @isSecret - True, if the video thumbnail must be blurred and the video must be shown only while tapped
      */
@@ -8049,7 +8173,7 @@ public class TdApi {
     /**
      * A video note message
      *
-     * @videoNote - Message content
+     * @videoNote - The video note description
      * @isViewed - True, if at least one of the recipients has viewed the video note
      * @isSecret - True, if the video note thumbnail must be blurred and the video note must be shown only while tapped
      */
@@ -8078,7 +8202,7 @@ public class TdApi {
     /**
      * A voice note message
      *
-     * @voiceNote - Message content
+     * @voiceNote - The voice note description
      * @caption - Voice note caption
      * @isListened - True, if at least one of the recipients has listened to the voice note
      */
@@ -8107,7 +8231,7 @@ public class TdApi {
     /**
      * A message with a location
      *
-     * @location - Message content
+     * @location - The location description
      * @livePeriod - Time relative to the message sent date until which the location can be updated, in seconds
      * @expiresIn - Left time for which the location can be updated, in seconds
      *              UpdateMessageContent is not sent when this field changes
@@ -8137,7 +8261,7 @@ public class TdApi {
     /**
      * A message with information about a venue
      *
-     * @venue - Message content
+     * @venue - The venue description
      */
     public static class MessageVenue extends MessageContent {
 
@@ -8160,7 +8284,7 @@ public class TdApi {
     /**
      * A message with a user contact
      *
-     * @contact - Message content
+     * @contact - The contact description
      */
     public static class MessageContact extends MessageContent {
 
@@ -8183,7 +8307,7 @@ public class TdApi {
     /**
      * A message with a game
      *
-     * @game - Game
+     * @game - The game description
      */
     public static class MessageGame extends MessageContent {
 
@@ -8206,7 +8330,7 @@ public class TdApi {
     /**
      * A message with a poll
      *
-     * @poll - Poll
+     * @poll - The poll description
      */
     public static class MessagePoll extends MessageContent {
 
@@ -8879,6 +9003,18 @@ public class TdApi {
 
 
     /**
+     * A bank card number
+     * The getBankCardInfo method can be used to get information about the bank card
+     */
+    public static class TextEntityTypeBankCardNumber extends TextEntityType {
+
+        @BsonIgnore @Override
+        public int getConstructor() { return 105986320; }
+
+    }
+
+
+    /**
      * A bold text
      */
     public static class TextEntityTypeBold extends TextEntityType {
@@ -9462,7 +9598,7 @@ public class TdApi {
      *
      * @location - Location to be sent
      * @livePeriod - Period for which the location can be updated, in seconds
-     *               Should bebetween 60 and 86400 for a live location and 0 otherwise
+     *               Should be between 60 and 86400 for a live location and 0 otherwise
      */
     public static class InputMessageLocation extends InputMessageContent {
 
@@ -9613,27 +9749,39 @@ public class TdApi {
 
     /**
      * A message with a poll
-     * Polls can't be sent to private or secret chats
+     * Polls can't be sent to secret chats
+     * Polls can be sent only to a private chat with a bot
      *
      * @question - Poll question, 1-255 characters
      * @options - List of poll answer options, 2-10 strings 1-100 characters each
+     * @isAnonymous - True, if the poll voters are anonymous
+     *                Non-anonymous polls can't be sent or forwarded to channels
+     * @type - Type of the poll
+     * @isClosed - True, if the poll needs to be sent already closed
+     *             For bots only
      */
     public static class InputMessagePoll extends InputMessageContent {
 
         public String question;
         public String[] options;
+        public boolean isAnonymous;
+        public PollType type;
+        public boolean isClosed;
 
         public InputMessagePoll() {}
 
-        public InputMessagePoll(String question, String[] options) {
+        public InputMessagePoll(String question, String[] options, boolean isAnonymous, PollType type, boolean isClosed) {
 
             this.question = question;
             this.options = options;
+            this.isAnonymous = isAnonymous;
+            this.type = type;
+            this.isClosed = isClosed;
 
         }
 
         @BsonIgnore @Override
-        public int getConstructor() { return -1791140518; }
+        public int getConstructor() { return 743307780; }
 
     }
 
@@ -12028,52 +12176,6 @@ public class TdApi {
 
 
     /**
-     * Contains the response of a request to TON lite server
-     *
-     * @response - The response
-     */
-    public static class TonLiteServerResponse extends Object {
-
-        public byte[] response;
-
-        public TonLiteServerResponse() {}
-
-        public TonLiteServerResponse(byte[] response) {
-
-            this.response = response;
-
-        }
-
-        @BsonIgnore @Override
-        public int getConstructor() { return 928306959; }
-
-    }
-
-
-    /**
-     * Contains the salt to be used with locally stored password to access a local TON-based wallet
-     *
-     * @salt - The salt
-     */
-    public static class TonWalletPasswordSalt extends Object {
-
-        public byte[] salt;
-
-        public TonWalletPasswordSalt() {}
-
-        public TonWalletPasswordSalt(byte[] salt) {
-
-            this.salt = salt;
-
-        }
-
-        @BsonIgnore @Override
-        public int getConstructor() { return -1406795233; }
-
-    }
-
-
-    /**
      * Represents a chat event
      */
     public static abstract class ChatEventAction extends Object {}
@@ -13283,7 +13385,7 @@ public class TdApi {
 
 
     /**
-     * Describes a type of a background
+     * Describes the type of a background
      */
     public static abstract class BackgroundType extends Object {}
 
@@ -13437,7 +13539,7 @@ public class TdApi {
      *
      * @background - Background file to use
      *               Only inputFileLocal and inputFileGenerated are supported
-     *               The file nust be in JPEG format for wallpapers and in PNG format for patterns
+     *               The file must be in JPEG format for wallpapers and in PNG format for patterns
      */
     public static class InputBackgroundLocal extends InputBackground {
 
@@ -13925,24 +14027,27 @@ public class TdApi {
      * A message with a poll
      *
      * @question - Poll question
+     * @isRegular - True, if the poll is regular and not in quiz mode
      * @isPinned - True, if the message is a pinned message with the specified content
      */
     public static class PushMessageContentPoll extends PushMessageContent {
 
         public String question;
+        public boolean isRegular;
         public boolean isPinned;
 
         public PushMessageContentPoll() {}
 
-        public PushMessageContentPoll(String question, boolean isPinned) {
+        public PushMessageContentPoll(String question, boolean isRegular, boolean isPinned) {
 
             this.question = question;
+            this.isRegular = isRegular;
             this.isPinned = isPinned;
 
         }
 
         @BsonIgnore @Override
-        public int getConstructor() { return -1545438580; }
+        public int getConstructor() { return -44403654; }
 
     }
 
@@ -14357,7 +14462,7 @@ public class TdApi {
 
 
     /**
-     * Describes type of notifications in the group
+     * Describes the type of notifications in a notification group
      */
     public static abstract class NotificationGroupType extends Object {}
 
@@ -16321,7 +16426,7 @@ public class TdApi {
 
 
     /**
-     * Describes the type of the proxy server
+     * Describes the type of a proxy server
      */
     public static abstract class ProxyType extends Object {}
 
@@ -18573,7 +18678,7 @@ public class TdApi {
 
 
     /**
-     * Information about a poll was updated
+     * A poll was updated
      * For bots only
      *
      * @poll - New data about the poll
@@ -18592,6 +18697,36 @@ public class TdApi {
 
         @BsonIgnore @Override
         public int getConstructor() { return -1771342902; }
+
+    }
+
+
+    /**
+     * A user changed the answer to a poll
+     * For bots only
+     *
+     * @pollId - Unique poll identifier
+     * @userId - The user, who changed the answer to the poll
+     * @optionIds - 0-based identifiers of answer options, chosen by the user
+     */
+    public static class UpdatePollAnswer extends Update {
+
+        public long pollId;
+        public int userId;
+        public int[] optionIds;
+
+        public UpdatePollAnswer() {}
+
+        public UpdatePollAnswer(long pollId, int userId, int[] optionIds) {
+
+            this.pollId = pollId;
+            this.userId = userId;
+            this.optionIds = optionIds;
+
+        }
+
+        @BsonIgnore @Override
+        public int getConstructor() { return 1606139344; }
 
     }
 
@@ -19217,7 +19352,7 @@ public class TdApi {
     /**
      * Returns all updates needed to restore current TDLib state, i.e
      * All actual UpdateAuthorizationState/UpdateUser/UpdateNewChat and others
-     * This is especially usefull if TDLib is run in a separate process
+     * This is especially useful if TDLib is run in a separate process
      * This is an offline method
      * Can be called before authorization
      */
@@ -21473,7 +21608,7 @@ public class TdApi {
 
 
     /**
-     * Returns all entities (mentions, hashtags, cashtags, bot commands, URLs, and email addresses) contained in the text
+     * Returns all entities (mentions, hashtags, cashtags, bot commands, bank card numbers, URLs, and email addresses) contained in the text
      * This is an offline method
      * Can be called before authorization
      * Can be called synchronously
@@ -21698,12 +21833,13 @@ public class TdApi {
 
 
     /**
-     * Changes user answer to a poll
+     * Changes the user answer to a poll
+     * A poll in quiz mode can be answered only once
      *
      * @chatId - Identifier of the chat to which the poll belongs
      * @messageId - Identifier of the message containing the poll
-     * @optionIds - 0-based identifiers of options, chosen by the user
-     *              Currently user can't choose more than 1 option
+     * @optionIds - 0-based identifiers of answer options, chosen by the user
+     *              User can choose more than 1 answer option only is the poll allows multiple answers
      */
     public static class SetPollAnswer extends Function {
 
@@ -21723,6 +21859,44 @@ public class TdApi {
 
         @BsonIgnore @Override
         public int getConstructor() { return -1399388792; }
+
+    }
+
+
+    /**
+     * Returns users voted for the specified option in a non-anonymous polls
+     * For the optimal performance the number of returned users is chosen by the library
+     *
+     * @chatId - Identifier of the chat to which the poll belongs
+     * @messageId - Identifier of the message containing the poll
+     * @optionId - 0-based identifier of the answer option
+     * @offset - Number of users to skip in the result
+     * @limit - The maximum number of users to be returned
+     *          Must be positive and can't be greater than 50
+     *          Fewer users may be returned than specified by the limit, even if the end of the voter list has not been reached
+     */
+    public static class GetPollVoters extends Function {
+
+        public long chatId;
+        public long messageId;
+        public int optionId;
+        public int offset;
+        public int limit;
+
+        public GetPollVoters() {}
+
+        public GetPollVoters(long chatId, long messageId, int optionId, int offset, int limit) {
+
+            this.chatId = chatId;
+            this.messageId = messageId;
+            this.optionId = optionId;
+            this.offset = offset;
+            this.limit = limit;
+
+        }
+
+        @BsonIgnore @Override
+        public int getConstructor() { return 2075288734; }
 
     }
 
@@ -23586,7 +23760,7 @@ public class TdApi {
 
 
     /**
-     * Informs TDLib on a file generation prograss
+     * Informs TDLib on a file generation progress
      *
      * @generationId - The identifier of the generation process
      * @expectedSize - Expected size of the generated file, in bytes
@@ -24720,7 +24894,7 @@ public class TdApi {
      * @text - Text to search for
      * @exactMatch - True, if only emojis, which exactly match text needs to be returned
      * @inputLanguageCode - IETF language tag of the user's input language
-     *                      Can be empty if unknown
+     *                      May be empty if unknown
      */
     public static class SearchEmojis extends Function {
 
@@ -25062,6 +25236,30 @@ public class TdApi {
 
         @BsonIgnore @Override
         public int getConstructor() { return 439901214; }
+
+    }
+
+
+    /**
+     * Changes the location of the current user
+     * Needs to be called if GetOption("is_location_visible") is true and location changes for more than 1 kilometer
+     *
+     * @location - The new location of the user
+     */
+    public static class SetLocation extends Function {
+
+        public Location location;
+
+        public SetLocation() {}
+
+        public SetLocation(Location location) {
+
+            this.location = location;
+
+        }
+
+        @BsonIgnore @Override
+        public int getConstructor() { return 93926257; }
 
     }
 
@@ -25421,7 +25619,7 @@ public class TdApi {
 
 
     /**
-     * Closes a secret chat, effectively transfering its state to secretChatStateClosed
+     * Closes a secret chat, effectively transferring its state to secretChatStateClosed
      *
      * @secretChatId - Secret chat identifier
      */
@@ -25759,7 +25957,7 @@ public class TdApi {
     /**
      * Removes background from the list of installed backgrounds
      *
-     * @backgroundId - The background indentifier
+     * @backgroundId - The background identifier
      */
     public static class RemoveBackground extends Function {
 
@@ -26308,7 +26506,7 @@ public class TdApi {
 
     /**
      * Reports a chat to the Telegram moderators
-     * Supported only for supergroups, channels, or private chats with bots, since other chats can't be checked by moderators, or when the report is done from the chat action bar
+     * A chat can be reported only from the chat action bar, or if this is a private chats with a bot, a private chat with a user sharing their location, a supergroup, or a channel, since other chats can't be checked by moderators
      *
      * @chatId - Chat identifier
      * @reason - The reason for reporting the chat
@@ -26590,6 +26788,29 @@ public class TdApi {
 
         @BsonIgnore @Override
         public int getConstructor() { return -353671948; }
+
+    }
+
+
+    /**
+     * Returns information about a bank card
+     *
+     * @bankCardNumber - The bank card number
+     */
+    public static class GetBankCardInfo extends Function {
+
+        public String bankCardNumber;
+
+        public GetBankCardInfo() {}
+
+        public GetBankCardInfo(String bankCardNumber) {
+
+            this.bankCardNumber = bankCardNumber;
+
+        }
+
+        @BsonIgnore @Override
+        public int getConstructor() { return -1310515792; }
 
     }
 
@@ -27304,41 +27525,6 @@ public class TdApi {
 
         @BsonIgnore @Override
         public int getConstructor() { return -1293603521; }
-
-    }
-
-
-    /**
-     * Sends a request to TON lite server through Telegram servers
-     * Can be called before authorization
-     *
-     * @request - The request
-     */
-    public static class SendTonLiteServerRequest extends Function {
-
-        public byte[] request;
-
-        public SendTonLiteServerRequest() {}
-
-        public SendTonLiteServerRequest(byte[] request) {
-
-            this.request = request;
-
-        }
-
-        @BsonIgnore @Override
-        public int getConstructor() { return 964887713; }
-
-    }
-
-
-    /**
-     * Returns a salt to be used with locally stored password to access a local TON-based wallet
-     */
-    public static class GetTonWalletPasswordSalt extends Function {
-
-        @BsonIgnore @Override
-        public int getConstructor() { return -642507025; }
 
     }
 

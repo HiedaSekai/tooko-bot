@@ -145,9 +145,9 @@ fun StringBuilder.buildHeader() {
     suppress("unused")
     //useExperimentalAnnotationsForFile()
     append("\n")
-    buildPackage("tookox.core.raw")
+    buildPackage("tooko.core.raw")
     append("\n")
     buildImport("kotlinx.coroutines")
     buildImport("td.TdApi")
-    buildImport("tookox.core.client")
+    buildImport("tooko.core.client")
 }

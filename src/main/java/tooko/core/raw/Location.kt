@@ -20,44 +20,37 @@
 
 package tooko.core.raw
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
 import td.TdApi.*
-import tooko.core.client.*
+import tooko.core.client.TdAbsHandler
 
 /**
- * Informs the server about the number of pending bot updates if they haven't been processed for a long time
- * For bots only
+ * Changes the location of the current user
+ * Needs to be called if GetOption("is_location_visible") is true and location changes for more than 1 kilometer
  *
- * @pendingUpdateCount - The number of pending updates
- * @errorMessage - The last error message
+ * @location - The new location of the user
  */
-suspend fun TdAbsHandler.setBotUpdatesStatus(
-    pendingUpdateCount: Int,
-    errorMessage: String? = null
+suspend fun TdAbsHandler.setLocation(
+    location: Location? = null
 ) = sync<Ok>(
-    SetBotUpdatesStatus(
-        pendingUpdateCount,
-        errorMessage
+    SetLocation(
+        location
     )
 )
 
-suspend fun TdAbsHandler.setBotUpdatesStatusOrNull(
-    pendingUpdateCount: Int,
-    errorMessage: String? = null
+suspend fun TdAbsHandler.setLocationOrNull(
+    location: Location? = null
 ) = syncOrNull<Ok>(
-    SetBotUpdatesStatus(
-        pendingUpdateCount,
-        errorMessage
+    SetLocation(
+        location
     )
 )
 
-fun TdAbsHandler.setBotUpdatesStatus(
-    pendingUpdateCount: Int,
-    errorMessage: String? = null,
+fun TdAbsHandler.setLocation(
+    location: Location? = null,
     block: (suspend CoroutineScope.(Ok) -> Unit)
 ) = send(
-    SetBotUpdatesStatus(
-        pendingUpdateCount,
-        errorMessage
+    SetLocation(
+        location
     ),block = block
 )

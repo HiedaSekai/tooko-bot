@@ -25,12 +25,13 @@ import td.TdApi.*
 import tooko.core.client.*
 
 /**
- * Changes user answer to a poll
+ * Changes the user answer to a poll
+ * A poll in quiz mode can be answered only once
  *
  * @chatId - Identifier of the chat to which the poll belongs
  * @messageId - Identifier of the message containing the poll
- * @optionIds - 0-based identifiers of options, chosen by the user
- *              Currently user can't choose more than 1 option
+ * @optionIds - 0-based identifiers of answer options, chosen by the user
+ *              User can choose more than 1 answer option only is the poll allows multiple answers
  */
 suspend fun TdAbsHandler.setPollAnswer(
     chatId: Long,

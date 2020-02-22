@@ -25,7 +25,7 @@ import td.TdApi.*
 import tooko.core.client.*
 
 /**
- * Returns all entities (mentions, hashtags, cashtags, bot commands, URLs, and email addresses) contained in the text
+ * Returns all entities (mentions, hashtags, cashtags, bot commands, bank card numbers, URLs, and email addresses) contained in the text
  * This is an offline method
  * Can be called before authorization
  * Can be called synchronously

@@ -86,7 +86,7 @@ object TdApiGenerator {
 
         }
 
-        with("/core/raw") {
+        with("tooko/core/raw") {
 
             functionsMap.forEach { (type, functions) ->
 

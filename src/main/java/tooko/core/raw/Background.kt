@@ -171,7 +171,7 @@ fun TdAbsHandler.setBackground(
 /**
  * Removes background from the list of installed backgrounds
  *
- * @backgroundId - The background indentifier
+ * @backgroundId - The background identifier
  */
 suspend fun TdAbsHandler.removeBackground(
     backgroundId: Long

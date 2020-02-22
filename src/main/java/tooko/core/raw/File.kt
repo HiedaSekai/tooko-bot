@@ -291,7 +291,7 @@ fun TdAbsHandler.writeGeneratedFilePart(
 )
 
 /**
- * Informs TDLib on a file generation prograss
+ * Informs TDLib on a file generation progress
  *
  * @generationId - The identifier of the generation process
  * @expectedSize - Expected size of the generated file, in bytes

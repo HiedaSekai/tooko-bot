@@ -20,10 +20,12 @@
 
 package tooko.core.raw
 
+import kotlinx.coroutines.*
 import td.TdApi.*
+import tooko.core.client.*
 
 /**
- * Returns all entities (mentions, hashtags, cashtags, bot commands, URLs, and email addresses) contained in the text
+ * Returns all entities (mentions, hashtags, cashtags, bot commands, bank card numbers, URLs, and email addresses) contained in the text
  * This is an offline method
  * Can be called before authorization
  * Can be called synchronously
@@ -39,14 +41,14 @@ fun getTextEntities(
 )
 
 /**
- * Returns all entities (mentions, hashtags, cashtags, bot commands, URLs, and email addresses) contained in the text
+ * Returns all entities (mentions, hashtags, cashtags, bot commands, bank card numbers, URLs, and email addresses) contained in the text
  * This is an offline method
  * Can be called before authorization
  * Can be called synchronously
  */
 fun syncRaw(
-        f: GetTextEntities
-) = tooko.core.syncRaw<TextEntities>(f)
+    f: GetTextEntities
+) = tookox.core.syncRaw<TextEntities>(f)
 
 /**
  * Parses Bold, Italic, Underline, Strikethrough, Code, Pre, PreCode, TextUrl and MentionName entities contained in the text
@@ -74,8 +76,8 @@ fun parseTextEntities(
  * Can be called synchronously
  */
 fun syncRaw(
-        f: ParseTextEntities
-) = tooko.core.syncRaw<FormattedText>(f)
+    f: ParseTextEntities
+) = tookox.core.syncRaw<FormattedText>(f)
 
 /**
  * Returns the MIME type of a file, guessed by its extension
@@ -102,8 +104,8 @@ fun getFileMimeType(
  * Can be called synchronously
  */
 fun syncRaw(
-        f: GetFileMimeType
-) = tooko.core.syncRaw<Text>(f)
+    f: GetFileMimeType
+) = tookox.core.syncRaw<Text>(f)
 
 /**
  * Returns the extension of a file, guessed by its MIME type
@@ -130,8 +132,8 @@ fun getFileExtension(
  * Can be called synchronously
  */
 fun syncRaw(
-        f: GetFileExtension
-) = tooko.core.syncRaw<Text>(f)
+    f: GetFileExtension
+) = tookox.core.syncRaw<Text>(f)
 
 /**
  * Removes potentially dangerous characters from the name of a file
@@ -160,8 +162,8 @@ fun cleanFileName(
  * Can be called synchronously
  */
 fun syncRaw(
-        f: CleanFileName
-) = tooko.core.syncRaw<Text>(f)
+    f: CleanFileName
+) = tookox.core.syncRaw<Text>(f)
 
 /**
  * Returns a string stored in the local database from the specified localization target and language pack by its key
@@ -197,8 +199,8 @@ fun getLanguagePackString(
  * Can be called synchronously
  */
 fun syncRaw(
-        f: GetLanguagePackString
-) = tooko.core.syncRaw<LanguagePackStringValue>(f)
+    f: GetLanguagePackString
+) = tookox.core.syncRaw<LanguagePackStringValue>(f)
 
 /**
  * Converts a JSON-serialized string to corresponding JsonValue object
@@ -223,8 +225,8 @@ fun getJsonValue(
  * Can be called synchronously
  */
 fun syncRaw(
-        f: GetJsonValue
-) = tooko.core.syncRaw<JsonValue>(f)
+    f: GetJsonValue
+) = tookox.core.syncRaw<JsonValue>(f)
 
 /**
  * Converts a JsonValue object to corresponding JSON-serialized string
@@ -249,8 +251,8 @@ fun getJsonString(
  * Can be called synchronously
  */
 fun syncRaw(
-        f: GetJsonString
-) = tooko.core.syncRaw<Text>(f)
+    f: GetJsonString
+) = tookox.core.syncRaw<Text>(f)
 
 /**
  * Returns a globally unique push notification subscription identifier for identification of an account, which has received a push notification
@@ -275,8 +277,8 @@ fun getPushReceiverId(
  * Can be called synchronously
  */
 fun syncRaw(
-        f: GetPushReceiverId
-) = tooko.core.syncRaw<PushReceiverId>(f)
+    f: GetPushReceiverId
+) = tookox.core.syncRaw<PushReceiverId>(f)
 
 /**
  * Sets new log stream for internal logging of TDLib
@@ -301,8 +303,8 @@ fun setLogStream(
  * Can be called synchronously
  */
 fun syncRaw(
-        f: SetLogStream
-) = tooko.core.syncRaw<Ok>(f)
+    f: SetLogStream
+) = tookox.core.syncRaw<Ok>(f)
 
 /**
  * Returns information about currently used log stream for internal logging of TDLib
@@ -321,8 +323,8 @@ fun getLogStream() = syncRaw(
  * Can be called synchronously
  */
 fun syncRaw(
-        f: GetLogStream
-) = tooko.core.syncRaw<LogStream>(f)
+    f: GetLogStream
+) = tookox.core.syncRaw<LogStream>(f)
 
 /**
  * Sets the verbosity level of the internal logging of TDLib
@@ -348,8 +350,8 @@ fun setLogVerbosityLevel(
  * Can be called synchronously
  */
 fun syncRaw(
-        f: SetLogVerbosityLevel
-) = tooko.core.syncRaw<Ok>(f)
+    f: SetLogVerbosityLevel
+) = tookox.core.syncRaw<Ok>(f)
 
 /**
  * Returns current verbosity level of the internal logging of TDLib
@@ -368,8 +370,8 @@ fun getLogVerbosityLevel() = syncRaw(
  * Can be called synchronously
  */
 fun syncRaw(
-        f: GetLogVerbosityLevel
-) = tooko.core.syncRaw<LogVerbosityLevel>(f)
+    f: GetLogVerbosityLevel
+) = tookox.core.syncRaw<LogVerbosityLevel>(f)
 
 /**
  * Returns list of available TDLib internal log tags, for example, ["actor", "binlog", "connections", "notifications", "proxy"]
@@ -388,8 +390,8 @@ fun getLogTags() = syncRaw(
  * Can be called synchronously
  */
 fun syncRaw(
-        f: GetLogTags
-) = tooko.core.syncRaw<LogTags>(f)
+    f: GetLogTags
+) = tookox.core.syncRaw<LogTags>(f)
 
 /**
  * Sets the verbosity level for a specified TDLib internal log tag
@@ -417,8 +419,8 @@ fun setLogTagVerbosityLevel(
  * Can be called synchronously
  */
 fun syncRaw(
-        f: SetLogTagVerbosityLevel
-) = tooko.core.syncRaw<Ok>(f)
+    f: SetLogTagVerbosityLevel
+) = tookox.core.syncRaw<Ok>(f)
 
 /**
  * Returns current verbosity level for a specified TDLib internal log tag
@@ -443,8 +445,8 @@ fun getLogTagVerbosityLevel(
  * Can be called synchronously
  */
 fun syncRaw(
-        f: GetLogTagVerbosityLevel
-) = tooko.core.syncRaw<LogVerbosityLevel>(f)
+    f: GetLogTagVerbosityLevel
+) = tookox.core.syncRaw<LogVerbosityLevel>(f)
 
 /**
  * Adds a message to TDLib internal log
@@ -472,5 +474,5 @@ fun addLogMessage(
  * Can be called synchronously
  */
 fun syncRaw(
-        f: AddLogMessage
-) = tooko.core.syncRaw<Ok>(f)
+    f: AddLogMessage
+) = tookox.core.syncRaw<Ok>(f)

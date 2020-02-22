@@ -141,6 +141,67 @@ fun TdAbsHandler.getUserFullInfo(
 )
 
 /**
+ * Returns users voted for the specified option in a non-anonymous polls
+ * For the optimal performance the number of returned users is chosen by the library
+ *
+ * @chatId - Identifier of the chat to which the poll belongs
+ * @messageId - Identifier of the message containing the poll
+ * @optionId - 0-based identifier of the answer option
+ * @offset - Number of users to skip in the result
+ * @limit - The maximum number of users to be returned
+ *          Must be positive and can't be greater than 50
+ *          Fewer users may be returned than specified by the limit, even if the end of the voter list has not been reached
+ */
+suspend fun TdAbsHandler.getPollVoters(
+    chatId: Long,
+    messageId: Long,
+    optionId: Int,
+    offset: Int,
+    limit: Int
+) = sync<Users>(
+    GetPollVoters(
+        chatId,
+        messageId,
+        optionId,
+        offset,
+        limit
+    )
+)
+
+suspend fun TdAbsHandler.getPollVotersOrNull(
+    chatId: Long,
+    messageId: Long,
+    optionId: Int,
+    offset: Int,
+    limit: Int
+) = syncOrNull<Users>(
+    GetPollVoters(
+        chatId,
+        messageId,
+        optionId,
+        offset,
+        limit
+    )
+)
+
+fun TdAbsHandler.getPollVoters(
+    chatId: Long,
+    messageId: Long,
+    optionId: Int,
+    offset: Int,
+    limit: Int,
+    block: (suspend CoroutineScope.(Users) -> Unit)
+) = send(
+    GetPollVoters(
+        chatId,
+        messageId,
+        optionId,
+        offset,
+        limit
+    ),block = block
+)
+
+/**
  * Adds a user to the blacklist
  *
  * @userId - User identifier

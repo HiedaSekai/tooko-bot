@@ -20,7 +20,7 @@
 
 package tooko.core.raw
 
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.*
 import td.TdApi.*
 import tooko.core.client.*
 

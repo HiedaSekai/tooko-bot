@@ -62,7 +62,7 @@ fun TdAbsHandler.getStickerEmojis(
  * @text - Text to search for
  * @exactMatch - True, if only emojis, which exactly match text needs to be returned
  * @inputLanguageCode - IETF language tag of the user's input language
- *                      Can be empty if unknown
+ *                      May be empty if unknown
  */
 suspend fun TdAbsHandler.searchEmojis(
     text: String? = null,
