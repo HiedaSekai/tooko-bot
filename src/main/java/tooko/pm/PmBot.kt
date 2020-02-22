@@ -151,6 +151,7 @@ class PmBot(val image: BotImage) : TdBot(image.data.botToken) {
             }
 
         }
+
     }
 
     override suspend fun onUndefinedFunction(userId: Int, chatId: Long, message: TdApi.Message, function: String, param: String, params: Array<String>, originParams: Array<String>) {
@@ -161,7 +162,45 @@ class PmBot(val image: BotImage) : TdBot(image.data.botToken) {
 
     }
 
+    override suspend fun onUndefinedPayload(userId: Int, chatId: Long, message: TdApi.Message, payload: String, params: Array<String>) {
+
+        if (userId == bot.owner || !data.payloads.containsKey(payload)) {
+
+            rejectFunction()
+
+            return
+
+        }
+
+        val data = data.payloads[payload]!!
+
+        val L = Lang.get(userId)
+
+        if (data.notice) {
+
+            sudo make L.PM_ON_START.input(getUser(userId).displayName.toInlineMention(userId), message.text!!).asHtml sendTo bot.owner
+
+        }
+
+        if (data.messages == null || data.messages.isEmpty()) {
+
+            sudo make L.PM_WELCOME syncTo chatId
+
+        } else {
+
+            data.messages.forEach {
+
+                sudo make it syncTo chatId
+
+            }
+
+        }
+
+    }
+
     override suspend fun onNewMessage(userId: Int, chatId: Long, message: TdApi.Message) {
+
+        if (userId == bot.botId) return
 
         if (data.blocked.contains(chatId)) finishEvent()
 
@@ -265,7 +304,7 @@ class PmBot(val image: BotImage) : TdBot(image.data.botToken) {
 
         }
 
-        var input = (if (message.forwardInfo == null) {
+        val input = (if (message.forwardInfo == null) {
 
             message.content.asInput
 

@@ -267,9 +267,17 @@ open class TdBot(val botToken: String) : TdClient(initDataDir("data/${botToken.s
 
                             payloads[data[0]]!!.onStartPayload(userId, chatId, message, data[0], data.shift())
 
-                            return@function
+                        } else {
+
+                            handlers.filterIsInstance<TdBotAbsHandler>().forEach {
+
+                                onUndefinedPayload(userId, chatId, message, data[0], data.shift())
+
+                            }
 
                         }
+
+                        return@function
 
                     }
 
@@ -401,5 +409,9 @@ open class TdBot(val botToken: String) : TdClient(initDataDir("data/${botToken.s
     override fun onPersistStore(userId: Int, subId: Int, data: LinkedList<String>) = Unit
     override fun onPersistReStore(userId: Int, subId: Int, data: List<String>) = Unit
     override suspend fun onStartPayload(userId: Int, chatId: Long, message: Message, payload: String, params: Array<String>) = Unit
+    override suspend fun onUndefinedPayload(userId: Int, chatId: Long, message: Message, payload: String, params: Array<String>) {
 
+        onLaunch(userId, chatId, message)
+
+    }
 }

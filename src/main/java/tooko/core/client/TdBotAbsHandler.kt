@@ -113,6 +113,7 @@ interface TdBotAbsHandler : TdAbsHandler {
     suspend fun onUndefinedFunction(userId: Int, chatId: Long, message: Message, function: String, param: String, params: Array<String>, originParams: Array<String>)
 
     suspend fun onStartPayload(userId: Int, chatId: Long, message: Message, payload: String, params: Array<String>)
+    suspend fun onUndefinedPayload(userId: Int, chatId: Long, message: Message, payload: String, params: Array<String>)
 
     suspend fun onNewCallbackQuery(userId: Int, chatId: Long, messageId: Long, queryId: Long, subId: Int, data: Array<ByteArray>)
     suspend fun onNewInlineCallbackQuery(userId: Int, inlineMessageId: String, queryId: Long, subId: Int, data: Array<ByteArray>)
