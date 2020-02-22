@@ -156,7 +156,7 @@ open class TdBot(val botToken: String) : TdClient(initDataDir("data/${botToken.s
 
             val content = (message.content as MessageText).text
 
-            var param = content.text
+            var param = content.text ?: error("empty text")
 
             run fn@{
 
