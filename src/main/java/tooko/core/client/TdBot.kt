@@ -413,5 +413,6 @@ open class TdBot(val botToken: String) : TdClient(initDataDir("data/${botToken.s
 
         onLaunch(userId, chatId, message)
 
+        finishEvent()
     }
 }

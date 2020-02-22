@@ -24,7 +24,7 @@ import java.util.*;
 
 public class Lang {
 
-    public static CacheTable<Integer, DB> DATA = new CacheTable<>("lang", DB.class);
+    public static CacheTable<Long, DB> DATA = new CacheTable<>("lang", DB.class);
 
     public static HashMap<Integer, Lang> ALL = new HashMap<>();
     public static HashMap<String, Lang> BY_NAME = new HashMap<>();
@@ -61,9 +61,9 @@ public class Lang {
 
     }
 
-    public static Lang get(Number userId) {
+    public static Lang get(Number chatId) {
 
-        DB config = DATA.getById(userId.intValue());
+        DB config = DATA.getById(chatId.longValue());
 
         if (config != null && ALL.containsKey(config.lang)) return ALL.get(config.lang);
 
@@ -75,13 +75,13 @@ public class Lang {
 
     public static class DB {
 
-        public int id;
+        public long id;
         public int lang;
 
         public DB() {
         }
 
-        public DB(int id, int lang) {
+        public DB(long id, int lang) {
             this.id = id;
             this.lang = lang;
         }
