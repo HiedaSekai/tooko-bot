@@ -48,7 +48,7 @@ fun getTextEntities(
  */
 fun syncRaw(
     f: GetTextEntities
-) = tookox.core.syncRaw<TextEntities>(f)
+) = tooko.core.syncRaw<TextEntities>(f)
 
 /**
  * Parses Bold, Italic, Underline, Strikethrough, Code, Pre, PreCode, TextUrl and MentionName entities contained in the text
@@ -77,7 +77,7 @@ fun parseTextEntities(
  */
 fun syncRaw(
     f: ParseTextEntities
-) = tookox.core.syncRaw<FormattedText>(f)
+) = tooko.core.syncRaw<FormattedText>(f)
 
 /**
  * Returns the MIME type of a file, guessed by its extension
@@ -105,7 +105,7 @@ fun getFileMimeType(
  */
 fun syncRaw(
     f: GetFileMimeType
-) = tookox.core.syncRaw<Text>(f)
+) = tooko.core.syncRaw<Text>(f)
 
 /**
  * Returns the extension of a file, guessed by its MIME type
@@ -133,7 +133,7 @@ fun getFileExtension(
  */
 fun syncRaw(
     f: GetFileExtension
-) = tookox.core.syncRaw<Text>(f)
+) = tooko.core.syncRaw<Text>(f)
 
 /**
  * Removes potentially dangerous characters from the name of a file
@@ -163,7 +163,7 @@ fun cleanFileName(
  */
 fun syncRaw(
     f: CleanFileName
-) = tookox.core.syncRaw<Text>(f)
+) = tooko.core.syncRaw<Text>(f)
 
 /**
  * Returns a string stored in the local database from the specified localization target and language pack by its key
@@ -200,7 +200,7 @@ fun getLanguagePackString(
  */
 fun syncRaw(
     f: GetLanguagePackString
-) = tookox.core.syncRaw<LanguagePackStringValue>(f)
+) = tooko.core.syncRaw<LanguagePackStringValue>(f)
 
 /**
  * Converts a JSON-serialized string to corresponding JsonValue object
@@ -226,7 +226,7 @@ fun getJsonValue(
  */
 fun syncRaw(
     f: GetJsonValue
-) = tookox.core.syncRaw<JsonValue>(f)
+) = tooko.core.syncRaw<JsonValue>(f)
 
 /**
  * Converts a JsonValue object to corresponding JSON-serialized string
@@ -252,7 +252,7 @@ fun getJsonString(
  */
 fun syncRaw(
     f: GetJsonString
-) = tookox.core.syncRaw<Text>(f)
+) = tooko.core.syncRaw<Text>(f)
 
 /**
  * Returns a globally unique push notification subscription identifier for identification of an account, which has received a push notification
@@ -278,7 +278,7 @@ fun getPushReceiverId(
  */
 fun syncRaw(
     f: GetPushReceiverId
-) = tookox.core.syncRaw<PushReceiverId>(f)
+) = tooko.core.syncRaw<PushReceiverId>(f)
 
 /**
  * Sets new log stream for internal logging of TDLib
@@ -304,7 +304,7 @@ fun setLogStream(
  */
 fun syncRaw(
     f: SetLogStream
-) = tookox.core.syncRaw<Ok>(f)
+) = tooko.core.syncRaw<Ok>(f)
 
 /**
  * Returns information about currently used log stream for internal logging of TDLib
@@ -324,7 +324,7 @@ fun getLogStream() = syncRaw(
  */
 fun syncRaw(
     f: GetLogStream
-) = tookox.core.syncRaw<LogStream>(f)
+) = tooko.core.syncRaw<LogStream>(f)
 
 /**
  * Sets the verbosity level of the internal logging of TDLib
@@ -351,7 +351,7 @@ fun setLogVerbosityLevel(
  */
 fun syncRaw(
     f: SetLogVerbosityLevel
-) = tookox.core.syncRaw<Ok>(f)
+) = tooko.core.syncRaw<Ok>(f)
 
 /**
  * Returns current verbosity level of the internal logging of TDLib
@@ -371,7 +371,7 @@ fun getLogVerbosityLevel() = syncRaw(
  */
 fun syncRaw(
     f: GetLogVerbosityLevel
-) = tookox.core.syncRaw<LogVerbosityLevel>(f)
+) = tooko.core.syncRaw<LogVerbosityLevel>(f)
 
 /**
  * Returns list of available TDLib internal log tags, for example, ["actor", "binlog", "connections", "notifications", "proxy"]
@@ -391,7 +391,7 @@ fun getLogTags() = syncRaw(
  */
 fun syncRaw(
     f: GetLogTags
-) = tookox.core.syncRaw<LogTags>(f)
+) = tooko.core.syncRaw<LogTags>(f)
 
 /**
  * Sets the verbosity level for a specified TDLib internal log tag
@@ -420,7 +420,7 @@ fun setLogTagVerbosityLevel(
  */
 fun syncRaw(
     f: SetLogTagVerbosityLevel
-) = tookox.core.syncRaw<Ok>(f)
+) = tooko.core.syncRaw<Ok>(f)
 
 /**
  * Returns current verbosity level for a specified TDLib internal log tag
@@ -446,7 +446,7 @@ fun getLogTagVerbosityLevel(
  */
 fun syncRaw(
     f: GetLogTagVerbosityLevel
-) = tookox.core.syncRaw<LogVerbosityLevel>(f)
+) = tooko.core.syncRaw<LogVerbosityLevel>(f)
 
 /**
  * Adds a message to TDLib internal log
@@ -475,4 +475,4 @@ fun addLogMessage(
  */
 fun syncRaw(
     f: AddLogMessage
-) = tookox.core.syncRaw<Ok>(f)
+) = tooko.core.syncRaw<Ok>(f)

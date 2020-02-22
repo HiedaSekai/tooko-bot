@@ -20,9 +20,9 @@
 
 package tooko.core.raw
 
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.*
 import td.TdApi.*
-import tooko.core.client.TdAbsHandler
+import tooko.core.client.*
 
 /**
  * Changes the location of the current user

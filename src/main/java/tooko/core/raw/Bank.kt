@@ -20,10 +20,9 @@
 
 package tooko.core.raw
 
-import kotlinx.coroutines.CoroutineScope
-import td.TdApi.BankCardInfo
-import td.TdApi.GetBankCardInfo
-import tooko.core.client.TdAbsHandler
+import kotlinx.coroutines.*
+import td.TdApi.*
+import tooko.core.client.*
 
 /**
  * Returns information about a bank card

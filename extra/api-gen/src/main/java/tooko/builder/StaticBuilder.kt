@@ -27,7 +27,7 @@ fun StringBuilder.buildRawSyncFunction(function: TlFunction) {
         append("f: ").append(function.type.capitalize())
     }
     val returnType = function.returnType.capitalize()
-    append(" = tookox.core.syncRaw<$returnType>(f)")
+    append(" = tooko.core.syncRaw<$returnType>(f)")
     append("\n")
 }
 
