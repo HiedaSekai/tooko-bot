@@ -16,13 +16,9 @@
 
 package tooko.agent
 
-import tooko.core.client.*
+import tooko.core.client.TdBotHandler
 
 class AgantHandler : TdBotHandler() {
 
-    fun test() {
-
-
-    }
 
 }

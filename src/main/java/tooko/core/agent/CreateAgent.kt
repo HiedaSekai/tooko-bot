@@ -19,11 +19,20 @@ package tooko.core.agent
 import td.TdApi.*
 import tooko.agent.AgentData
 import tooko.agent.AgentImage
-import tooko.core.*
-import tooko.core.client.*
-import tooko.core.env.*
-import tooko.core.raw.*
-import tooko.core.utils.*
+import tooko.core.PERSIST_3
+import tooko.core.client.TdBotHandler
+import tooko.core.client.TdClient
+import tooko.core.client.TdException
+import tooko.core.client.TdOptions
+import tooko.core.env.Env
+import tooko.core.langFor
+import tooko.core.raw.checkAuthenticationCode
+import tooko.core.raw.checkAuthenticationPassword
+import tooko.core.raw.deleteAccount
+import tooko.core.raw.setAuthenticationPhoneNumber
+import tooko.core.text
+import tooko.core.utils.keyboadButton
+import tooko.core.utils.make
 import java.io.File
 import java.util.*
 

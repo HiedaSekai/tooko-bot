@@ -37,4 +37,5 @@ open class TdBotHandler : TdHandler(), TdBotAbsHandler {
     override fun onPersistReStore(userId: Int, subId: Int, data: List<String>) = Unit
     override suspend fun onStartPayload(userId: Int, chatId: Long, message: TdApi.Message, payload: String, params: Array<String>) = Unit
     override suspend fun onUndefinedPayload(userId: Int, chatId: Long, message: TdApi.Message, payload: String, params: Array<String>) = Unit
+
 }

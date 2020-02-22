@@ -85,7 +85,7 @@ BOT_TYPE_PM: 私聊机器人
 BOT_ERR: |-
   机器人出错停止, 请检查: {}
 BOT_CREATED: |-
-  $机器人已创建. 请点 [此](https://t.me/{}?start=-init) 配置.
+  $机器人已创建. 请点 [此](https://t.me/{}?start=_init) 配置.
 
 # Sticker
 
