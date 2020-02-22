@@ -31,6 +31,8 @@ INVALID_TIME: |-
   格式: 1d2h3s (一小时二分钟三秒）/ 10m （十分钟）/ 30s （三十秒）
 DELAY_TOO_SHORT: 延时时间过短 ( < {} )
 CHOOSE_LANG: 请选择语言 _(:з」∠)_
+CHOOSE_GROUP_LANG: 请选择群组语言.
+CHOOSE_CHANNEL_LANG: 请选择频道语言.
 LANG_SELECTED: 欢迎使用 ~
 FN_PING_RESULT: 喵...
 FORWARD_FROM_USER: 来自用户

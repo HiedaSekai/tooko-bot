@@ -100,6 +100,8 @@ public class Lang {
             INVALID_TIME,
             DELAY_TOO_SHORT,
             CHOOSE_LANG,
+            CHOOSE_GROUP_LANG,
+            CHOOSE_CHANNEL_LANG,
             LANG_SELECTED,
             FN_PING_RESULT,
             FORWARD_FROM_USER,

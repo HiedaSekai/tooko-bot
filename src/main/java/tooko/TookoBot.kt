@@ -40,6 +40,7 @@ import tooko.core.env.Env
 import tooko.core.funs.BaseFuncs
 import tooko.core.funs.LICENCE
 import tooko.core.funs.StickerExport
+import tooko.core.funs.SwitchLang
 import tooko.core.langFor
 import tooko.core.utils.makeHtml
 //import tooko.lottie.LottieRenderer
@@ -56,6 +57,8 @@ class TookoBot(botToken: String) : TdBot(botToken) {
         addHandler(BaseFuncs())
 
         addHandler(StickerExport())
+
+        addHandler(SwitchLang())
 
         // Bots
 
