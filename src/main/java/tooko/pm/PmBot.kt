@@ -164,7 +164,17 @@ class PmBot(val image: BotImage) : TdBot(image.data.botToken) {
 
     override suspend fun onUndefinedPayload(userId: Int, chatId: Long, message: TdApi.Message, payload: String, params: Array<String>) {
 
-        if (userId == bot.owner || !data.payloads.containsKey(payload)) {
+        if (userId == bot.owner) {
+
+            if (payload == "_init") {
+
+                sudo makeHtml userId.langFor.PM_OK sendTo chatId
+
+            }
+
+        }
+
+        if (!data.payloads.containsKey(payload)) {
 
             rejectFunction()
 
