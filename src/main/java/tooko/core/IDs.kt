@@ -21,7 +21,7 @@ package tooko.core
 const val DATA_1 = 1
 const val DATA_2 = 2
 const val DATA_3 = 3
-const val DATA_4 = 3
+const val DATA_4 = 4
 
 const val PERSIST_1 = 1
 const val PERSIST_2 = 2
