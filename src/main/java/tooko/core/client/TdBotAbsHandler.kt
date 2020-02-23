@@ -48,7 +48,7 @@ interface TdBotAbsHandler : TdAbsHandler {
 
             sudo.functions.put(function, this)?.apply {
 
-                error("function name alredy used.")
+                error("function name alredy used by $this.")
 
             }
 
@@ -60,7 +60,7 @@ interface TdBotAbsHandler : TdAbsHandler {
 
         sudo.callbacks.put(dataId, this)?.apply {
 
-            error("data id alredy used.")
+            error("data id alredy used by $this.")
 
         }
 
@@ -70,7 +70,7 @@ interface TdBotAbsHandler : TdAbsHandler {
 
         sudo.persistHandlers.put(persistId, this)?.apply {
 
-            error("perisst id alredy used.")
+            error("perisst id alredy used by $this.")
 
         }
 
@@ -80,7 +80,7 @@ interface TdBotAbsHandler : TdAbsHandler {
 
         sudo.payloads.put(payload, this)?.apply {
 
-            error("payload prefix alredy used.")
+            error("payload prefix alredy used by $this.")
 
         }
 
