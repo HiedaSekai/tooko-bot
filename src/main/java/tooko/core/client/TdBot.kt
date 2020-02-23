@@ -18,6 +18,7 @@ package tooko.core.client
 
 import cn.hutool.core.util.ZipUtil
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import td.TdApi.*
 import tooko.core.client.TdBotAbsHandler.Reject
 import tooko.core.env.Env
@@ -142,7 +143,9 @@ open class TdBot(val botToken: String) : TdClient(initDataDir("data/${botToken.s
 
     override suspend fun onNewMessage(userId: Int, chatId: Long, message: Message) = coroutineScope function@{
 
-        if (auth && userId == me.id) return@function
+        while (!auth) delay(100L)
+
+        if (userId == me.id) return@function
 
         val persist = if (message.fromPrivate && persists.containsKey(userId)) {
 

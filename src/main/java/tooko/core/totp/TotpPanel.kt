@@ -65,7 +65,7 @@ class TotpPanel : TdBotHandler() {
 
                 val key = SecretKeySpec(secret.toByteArray(), totp.algorithm)
 
-                code += name.asBlod + ": " + totp.generateOneTimePassword(key, Instant.now())
+                code += name.asBlod + ": " + totp.generateOneTimePassword(key, Instant.now()) + "\n"
 
             }
 
@@ -176,7 +176,7 @@ class TotpPanel : TdBotHandler() {
 
             val key = SecretKeySpec(secret.toByteArray(), totp.algorithm)
 
-            code += name.asBlod + ": " + totp.generateOneTimePassword(key, Instant.now())
+            code += name.asBlod + ": " + totp.generateOneTimePassword(key, Instant.now()) + "\n"
 
         }
 
