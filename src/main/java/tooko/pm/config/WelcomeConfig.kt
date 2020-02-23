@@ -172,6 +172,8 @@ class WelcomeConfig : TdBotHandler() {
 
             }
 
+            PmData.DATA.setById(sudo.data.id, sudo.data)
+
             payload.messages = edit.messages.toArray(arrayOf<InputMessageContent>())
 
             sudo make L.PM_WELCOME_FINISH sendTo chatId
