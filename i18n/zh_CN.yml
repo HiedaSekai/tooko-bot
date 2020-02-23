@@ -87,6 +87,15 @@ BOT_ERR: |-
 BOT_CREATED: |-
   $机器人已创建. 请点 [此](https://t.me/{}?start=_init) 配置.
 
+# TOTP
+
+TOTP_EMPTY: 还没有添加2FA账号.
+TOTP_ADDED: 已添加.
+TOTP_REMOVED: 已移除.
+TOTP_KEY_INVALID: 不是有效的 HmacSHA1 密钥.
+TOTP_EXISTS: 此2FA密钥别名已被使用, 请选择其他别名.
+TOTP_NOT_FOUNT: 此2FA密钥别名不存在.
+
 # Sticker
 
 STICKER_CAPTION: |-

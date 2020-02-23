@@ -152,6 +152,13 @@ public class Lang {
             BOT_ERR,
             BOT_CREATED;
 
+    public String TOTP_EMPTY,
+            TOTP_ADDED,
+            TOTP_REMOVED,
+            TOTP_KEY_INVALID,
+            TOTP_EXISTS,
+            TOTP_NOT_FOUNT;
+
     public String STICKER_CAPTION,
             STICKER_EXPORT,
             STICKER_TPYE,
